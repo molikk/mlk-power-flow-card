@@ -1,0 +1,66 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Get latest tag or fail
+        id: get-latest-tag
+        run: |
+          latest_tag=$( git for-each-ref --sort=creatordate --format '%(refname)' refs/tags/ | tail -1 | sed 's/^.*v//')
+          if [ -z "$latest_tag" ]; then
+            echo "No tags found for the commit."
+            exit 1
+          fi
+          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
+
+      - name: Get current version
+        id: get-version
+        run: echo ::set-output name=version::$(node -pe "require('./package.json').version")
+
+      - name: Install semver
+        run: npm install semver
+
+      - name: Check if version is higher
+        id: check-version
+        run: |
+          is_higher=$(node -pe "const semver = require('semver'); semver.gt('${{ steps.get-version.outputs.version }}', '${{ steps.get-latest-tag.outputs.tag }}')")
+          if [ -z "$is_higher" ]; then
+            echo "The version is not higher than the latest release"
+            exit 1
+          fi
+          echo "is_higher=$is_higher" >> $GITHUB_OUTPUT
+
+      - name: Build project
+        if: steps.check-version.outputs.is_higher == 'true'
+        run: |
+          yarn install
+          yarn run build
+
+      - name: 🛎️ Create release
+        if: steps.check-version.outputs.is_higher == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/mlk-power-flow-card.js
+          tag_name: v${{ steps.get-version.outputs.version }}
+          name: v${{ steps.get-version.outputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
+
+      - name: 🏷️ Update latest tag
+        if: steps.check-version.outputs.is_higher == 'true'
+        uses: EndBug/latest-tag@latest
