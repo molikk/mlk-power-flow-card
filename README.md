@@ -32,8 +32,8 @@ See the original project [wiki](https://github.com/slipx06/sunsynk-power-flow-ca
 
 ## Screenshots
 
-![image](https://github.com/slipx06/sunsynk-power-flow-card/assets/7227275/b1e437a8-d1f7-4d6a-a549-1cc908950002)
-![image](https://github.com/slipx06/sunsynk-power-flow-card/assets/7227275/49c499c5-9d2b-43e7-8f5d-5b9da5e07fb9)
+
+![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/256c43de-4062-48f9-b0b4-f9cb0153d71f)
 
 ## Installation
 
