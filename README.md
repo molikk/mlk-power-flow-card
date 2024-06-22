@@ -32,7 +32,9 @@ See the original project [wiki](https://github.com/slipx06/sunsynk-power-flow-ca
 
 ## Screenshots
 
-
+![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/25d458f7-9137-442e-a2c0-85e179ee07d0)
+![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/3cfcff4b-a609-41b6-9da1-eea63ff44c2d)
+![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/a269a066-f8e1-41a7-af1f-1411d89cd438)
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/256c43de-4062-48f9-b0b4-f9cb0153d71f)
 
 ## Installation
@@ -54,6 +56,6 @@ The card can be installed via HACS (recommended) or manually.
 2. Copy the `mlk-power-flow-card.js` into the directory.
 3. Add the resource to your Dashboard. You can append the filename with a `?ver=x` and increment x each time you download a new version to force a reload and avoid using a cached version. It is also a good idea to clear your browser cache.
 
-![image](https://user-images.githubusercontent.com/7227275/235441241-93ab0c7d-341d-428f-8ca8-60ec932dde2d.png)
+![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/e5d0618e-b4f8-4534-8e68-130cd220b618)
 
 
