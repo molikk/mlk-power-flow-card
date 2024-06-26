@@ -1,20 +1,24 @@
 import {html, svg} from 'lit';
 import {localize} from '../localize/localize';
 import {Utils} from '../helpers/utils';
-import { DataDto,  sunsynkPowerFlowCardConfig} from '../types';
+import {DataDto, sunsynkPowerFlowCardConfig} from '../types';
 import {UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower} from '../const';
 import {icons} from '../helpers/icons';
-import { EssentialLoad } from './compact/essentialLoad';
-import { Autarky } from './compact/autarky';
-import { Style } from './compact/style';
-import { Load } from './compact/load';
-import { Solar } from './compact/solar';
-import { Battery } from './compact/battery';
-import { Grid } from './compact/grid';
-import { Inverter } from './compact/inverter';
+import {EssentialLoad} from './compact/essentialLoad';
+import {Autarky} from './compact/autarky';
+import {Style} from './compact/style';
+import {Load} from './compact/load';
+import {Solar} from './compact/solar';
+import {Battery} from './compact/battery';
+import {Grid} from './compact/grid';
+import {Inverter} from './compact/inverter';
 
 
 export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: string, data: DataDto) => {
+    Solar.solarColour = data.solarColour;
+    Solar.decimalPlacesEnergy = data.decimalPlacesEnergy; //should be config
+    Solar.decimalPlaces = data.decimalPlaces;
+
     return html`
         <ha-card>
             ${Style.getStyle(data)}
@@ -22,12 +26,12 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                 ${config.title ? html`<h1
                         style="text-align: center; color: ${config.title_colour || 'inherit'}; data.largeFont-size: ${config.title_size || '32px'};">
                     ${config.title}</h1>` : ''}
-                <svg viewBox="0 ${!config.show_solar ? (data.additionalLoad !== 0 || !config.show_battery ? 80 : 145.33) : 1} 483 ${!config.show_solar ? (config.show_battery ? (data.additionalLoad !== 0 ? 350 : 270.67) : 270.67) : (!config.show_battery ? ([2, 3, 4, 5, 6, 7 ,8].includes(data.additionalLoad) ? 400 : 300) : 408)}"
+                <svg viewBox="0 ${!config.show_solar ? (data.additionalLoad !== 0 || !config.show_battery ? 80 : 145.33) : 1} 483 ${!config.show_solar ? (config.show_battery ? (data.additionalLoad !== 0 ? 350 : 270.67) : 270.67) : (!config.show_battery ? ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? 400 : 300) : 408)}"
                      preserveAspectRatio="xMidYMid meet"
                      height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
                      width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}"
                      xmlns:xlink="http://www.w3.org/1999/xlink">
-                    
+
                     ${Battery.generateShapes(data, config)}
                     ${Battery.generateDuration(data, config)}
                     ${Battery.generateDailyCharge(data, config)}
@@ -62,14 +66,18 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                     ${EssentialLoad.generateLoad6(data, config)}
                     ${EssentialLoad.generateLoad7(data, config)}
                     ${EssentialLoad.generateLoad8(data, config)}
-                    ${Solar.generateDailySolar(data, config)}
-                    ${Solar.generateMppt1(data, config)}
-                    ${Solar.generateMppt2(data, config)}
-                    ${Solar.generateMppt3(data, config)}
-                    ${Solar.generateMppt4(data, config)}
-                    ${Solar.generateMppt5(data, config)}
-                    ${Solar.generateSolarPower(data, config)}
-                    ${Solar.generateIcon(data, config)}
+                    ${config.show_solar ?
+                            svg`
+                            ${Solar.generateSolarHeader(data, config)}
+                            ${Solar.generateMppt1(data, config)}
+                            ${Solar.generateMppt2(data, config)}
+                            ${Solar.generateMppt3(data, config)}
+                            ${Solar.generateMppt4(data, config)}
+                            ${Solar.generateMppt5(data, config)}
+                            ${Solar.generateSolarPower(data, config)}
+                        `
+                            : svg``
+                    }
                     ${Autarky.getTexts(data)}
                     ${Inverter.generateIcon(data)}
                     ${Inverter.generateTimerInfo(data, config)}
@@ -135,49 +143,13 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                         </svg>
                         <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_off" x="323" y="243" width="20"
                              height="18" viewBox="0 0 24 24">
-                             <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
+                            <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
                                   class="${data.inverterProg.charge === 'none' && (data.stateUseTimer.state === 'off' || data.stateUseTimer.state === 'on') ? '' : 'st12'}"
                                   fill="${data.inverterColour}"
                                   d="${icons.progGridOff}"/>
                         </svg>
                     </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_charge_70)}>
-                        <text id="daily_bat_charge_value" x="${data.compactMode ? '132' : '77.2'}" y="343"
-                              class="st10 left-align"
-                              display="${data.batteryShowDaily !== true || !config.show_battery || !data.stateDayBatteryCharge.isValid() ? 'none' : ''}"
-                              fill="${data.batteryColour}">
-                            ${data.stateDayBatteryCharge?.toPowerString(true, data.decimalPlacesEnergy)}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108)}>
-                        <text id="daily_solar_value" x="200" y="26" class="st10 left-align"
-                              display="${config.solar.display_mode === 1 && data.stateDayPVEnergy.isValid() ? '' : 'none'}"
-                              fill="${!data.solarShowDaily || !config.show_solar ? 'transparent' : `${data.solarColour}`}">
-                            ${data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108)}>
-                        <text id="remaining_solar_value" x="200" y="26" class="st10 left-align"
-                              display="${config.solar.display_mode === 2 && data.stateDayPVEnergy.isValid() ? '' : 'none'}"
-                              fill="${!data.solarShowDaily || !config.show_solar ? 'transparent' : `${data.solarColour}`}">
-                            ${data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy) + ' / ' + data.remainingSolar}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108)}>
-                        <text id="total_solar_value" x="200" y="26" class="st10 left-align"
-                              display="${config.solar.display_mode === 3 && data.stateDayPVEnergy.isValid() ? '' : 'none'}"
-                              fill="${!data.solarShowDaily || !config.show_solar ? 'transparent' : `${data.solarColour}`}">
-                            ${data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy) + ' / ' + data.totalSolarGeneration}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_discharge_71)}>
-                        <text id="daily_bat_discharge_value" x="${data.compactMode ? '132' : '77.2'}" y="380.1"
-                              class="st10 left-align"
-                              display="${data.batteryShowDaily !== true || !config.show_battery || !data.stateDayBatteryDischarge.isValid() ? 'none' : ''}"
-                              fill="${data.batteryColour}">
-                            ${data.stateDayBatteryDischarge?.toPowerString(true, data.decimalPlacesEnergy)}
-                        </text>
-                    </a>
+
 
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_import_76)}>
                         <text id="daily_grid_buy_value" x="5" y="267.9" class="st10 left-align"
@@ -195,10 +167,10 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                     </a>
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.max_sell_power)}>
                         <text id="max_sell_power" x="5" y="150" class="st3 left-align"
-                            fill="${['off', '0'].includes(data.stateSolarSell.state) ? 'grey' : data.gridColour}"
-                            display="${!config.show_grid || !data.stateMaxSellPower.isValid || !config.entities?.max_sell_power ? 'none' : ''}">
+                              fill="${['off', '0'].includes(data.stateSolarSell.state) ? 'grey' : data.gridColour}"
+                              display="${!config.show_grid || !data.stateMaxSellPower.isValid || !config.entities?.max_sell_power ? 'none' : ''}">
                             ${localize('common.limit')}: ${data.stateMaxSellPower.toPowerString(config.grid.auto_scale, data.decimalPlaces)}
-                    </text>
+                        </text>
                     </a>
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_voltage_154)}>
                         <text id="inverter_voltage_154" x="270.2" y="168.2"
@@ -356,7 +328,7 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                                         </text>
                                     </a>`
                     }
-                    
+
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_temp_182)}>
                         <text id="battery_temp_182" x="${data.compactMode ? '205' : '250'}"
                               y="${data.compactMode ? '332' : '324.5'}"
@@ -389,15 +361,8 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${data.stateDCTransformerTemp.toNum(1)}°
                         </text>
                     </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.environment_temp)}>
-                        <text id="environ_temp" x="154" y="45"
-                              class="${config.entities?.environment_temp ? 'st3 left-align' : 'st12'}"
-                              fill="${data.solarColour}"
-                              display="${!config.show_solar || !data.stateEnvironmentTemp.isValid() ? 'none' : ''}">
-                            ${data.stateEnvironmentTemp.toNum(1)}°
-                        </text>
-                    </a>
-                    
+
+
                 </svg>
             </div>
         </ha-card>

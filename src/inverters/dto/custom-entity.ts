@@ -49,11 +49,13 @@ export interface CustomEntity extends HassEntity {
 
 // Function to convert HassEntity to CustomEntity
 export function convertToCustomEntity(entity: any): CustomEntity {
+    let isValid = entity?.state !== null && entity.state !== 'unknown' && entity.state !== undefined && entity?.entity_id != null && entity.entity_id ;
+    let notEmpty = entity?.state !== '' && isValid;
     return {
         ...entity,
         toNum: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert),
-        isValid: () => entity?.state !== null && entity.state !== undefined && entity.state !== 'unknown' || false,
-        notEmpty: () => (entity?.state !== '' && entity?.state !== null && entity?.state !== 'unknown' && entity.state !== undefined)  || false,
+        isValid: () => isValid || false,
+        notEmpty: () => notEmpty  || false,
         isNaN: () => entity?.state === null || Number.isNaN(entity?.state),
         toPower: (invert?: boolean) => {
             const unit = (entity.attributes?.unit_of_measurement || '').toLowerCase();

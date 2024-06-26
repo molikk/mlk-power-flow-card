@@ -83,7 +83,6 @@ export interface sunsynkPowerFlowCardConfig extends LovelaceCardConfig {
     }
     solar: {
         colour: string;
-        show_daily: boolean;
         mppts: number;
         animation_speed: number;
         max_power: number;
@@ -98,11 +97,13 @@ export interface sunsynkPowerFlowCardConfig extends LovelaceCardConfig {
         pv5_name: string;
         pv5_max_power: number,
         auto_scale: boolean;
-        display_mode: number;
+        //display_mode: number; //deprecated
         dynamic_colour: boolean;
         efficiency: number;
+        visualize_efficiency: boolean;
         off_threshold: number;
         show_mppt_production: boolean;
+        show_mppt_efficiency: boolean;
     }
     load: {
         colour: string;
@@ -212,6 +213,8 @@ export interface CardConfigEntities {
     nonessential_power: string,
     aux_power_166: string,
     day_pv_energy_108: string,
+    monthly_pv_energy: string,
+    yearly_pv_energy: string,
     pv1_power_186: string,
     pv2_power_187: string,
     pv1_voltage_109: string,
@@ -335,7 +338,6 @@ export interface DataDto {
     essIconSize,
     essIcon,
     batteryStateMsg,
-    solarShowDaily,
     batteryPercentage,
     pvPercentage,
     loadShowDaily,
@@ -386,11 +388,6 @@ export interface DataDto {
     pv4LineWidth,
     pv5LineWidth,
     gridLineWidth,
-    pv1PowerWatts,
-    pv2PowerWatts,
-    pv3PowerWatts,
-    pv4PowerWatts,
-    pv5PowerWatts,
     batteryStateColour,
     inverterStateColour,
     iconEssentialLoad1,
@@ -404,8 +401,6 @@ export interface DataDto {
     enableTimer,
     priorityLoad,
     inverterImg,
-    remainingSolar,
-    totalSolarGeneration,
     minLineWidth,
     stopColour,
     gridStatus,
@@ -442,7 +437,11 @@ export interface DataDto {
     stateDayGridImport: CustomEntity,
     stateDayBatteryCharge: CustomEntity,
     stateDayGridExport: CustomEntity,
-    stateDayPVEnergy: CustomEntity,
+    stateDailyPVEnergy: CustomEntity,
+    stateMonthlyPVEnergy: CustomEntity,
+    stateYearlyPVEnergy: CustomEntity,
+    stateTotalSolarGeneration: CustomEntity,
+    stateRemainingSolar: CustomEntity,
     stateDayAuxEnergy: CustomEntity,
     inverterProg,
     stateUseTimer: CustomEntity,
@@ -467,23 +466,23 @@ export interface DataDto {
     stateEssentialLoad8Extra: CustomEntity,
     stateNonEssentialLoad1Extra: CustomEntity,
     stateNonEssentialLoad2Extra: CustomEntity,
+    stateRadiatorTemp: CustomEntity,
+    stateBatteryCurrent: CustomEntity,
+    stateEnvironmentTemp: CustomEntity,
+    stateBatteryTemp: CustomEntity,
+    statePrepaidUnits: CustomEntity,
+    stateDCTransformerTemp: CustomEntity,
+    stateSolarSell: CustomEntity,
     statePV1Current: CustomEntity,
     statePV2Current: CustomEntity,
     statePV3Current: CustomEntity,
     statePV4Current: CustomEntity,
     statePV5Current: CustomEntity,
-    stateRadiatorTemp: CustomEntity,
-    stateBatteryCurrent: CustomEntity,
-    stateEnvironmentTemp: CustomEntity,
     statePV1Voltage: CustomEntity,
     statePV2Voltage: CustomEntity,
     statePV3Voltage: CustomEntity,
     statePV4Voltage: CustomEntity,
     statePV5Voltage: CustomEntity,
-    stateBatteryTemp: CustomEntity,
-    statePrepaidUnits: CustomEntity,
-    stateDCTransformerTemp: CustomEntity,
-    stateSolarSell: CustomEntity,
     statePV1Power: CustomEntity,
     statePV2Power: CustomEntity,
     statePV3Power: CustomEntity,

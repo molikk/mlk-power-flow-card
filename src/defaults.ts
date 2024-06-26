@@ -42,7 +42,6 @@ export default {
     },
     solar: {
         colour: 'orange',
-        show_daily: false,
         mppts: 2,
         animation_speed: 9,
         max_power: 8000,
@@ -54,9 +53,10 @@ export default {
         auto_scale: true,
         display_mode: 1,
         dynamic_colour: true,
-        efficiency: 3,
+        visualize_efficiency: true,
         off_threshold: 10,
-        show_mppt_production: false
+        show_mppt_production: true,
+        show_mppt_efficiency: false
     },
     load: {
         colour: '#5fb6ad',

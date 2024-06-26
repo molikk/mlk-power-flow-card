@@ -1,6 +1,11 @@
 import { CSSResultGroup, css } from "lit";
 
 export const styles: CSSResultGroup = css`
+   text_debug {
+       outline: 1px solid blue;
+   }
+    
+   
     .container {
     display: flex;
     flex-direction: column;
@@ -16,7 +21,7 @@ export const styles: CSSResultGroup = css`
     box-shadow: var(--ha-card-box-shadow, 0px 0px 0px 1px rgba(0, 0, 0, 0.12), 0px 0px 0px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 0px rgba(0, 0, 0, 0.12));
     background: var(--ha-card-background, var(--card-background-color, white));
     border-width: var(--ha-card-border-width);
-    padding: 0px;
+    padding: 0;
     }
 
     text { text-anchor: middle; dominant-baseline: middle; }

@@ -56,6 +56,14 @@ export class Battery {
 				  fill="${data.batteryShowDaily !== true || !config.show_battery ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_charge')}
 			</text>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_charge_70)}>
+				<text id="daily_bat_charge_value" x="${data.compactMode ? '132' : '77.2'}" y="343"
+					  class="st10 left-align"
+					  display="${data.batteryShowDaily !== true || !config.show_battery || !data.stateDayBatteryCharge.isValid() ? 'none' : ''}"
+					  fill="${data.batteryColour}">
+					${data.stateDayBatteryCharge?.toPowerString(true, data.decimalPlacesEnergy)}
+				</text>
+			</a>
 		`;
 	}
 
@@ -66,6 +74,14 @@ export class Battery {
 				  fill="${data.batteryShowDaily !== true || !config.show_battery ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_discharge')}
 			</text>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_discharge_71)}>
+				<text id="daily_bat_discharge_value" x="${data.compactMode ? '132' : '77.2'}" y="380.1"
+					  class="st10 left-align"
+					  display="${data.batteryShowDaily !== true || !config.show_battery || !data.stateDayBatteryDischarge.isValid() ? 'none' : ''}"
+					  fill="${data.batteryColour}">
+					${data.stateDayBatteryDischarge?.toPowerString(true, data.decimalPlacesEnergy)}
+				</text>
+			</a>
 		`;
 	}
 
