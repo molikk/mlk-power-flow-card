@@ -4,7 +4,7 @@ An animated Home Assistant card to emulate the power flow that's shown on the Su
 You can use this to display data from many inverters e.g. Sunsynk, Deye, Solis, Lux, FoxESS, Goodwe, Huawei etc as long as you have the required sensor data. 
 This project was based and heavily influenced by [sunsynk-power-flow-card](https://github.com/slipx06/sunsynk-power-flow-card)
 
-See the original project [wiki](https://github.com/slipx06/sunsynk-power-flow-card/wiki) and [documentation](https://molikk.github.io/mlk-power-flow-card/index.html) for integration methods and examples.
+See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/index.html) for integration methods and examples.
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=molikk&repository=mlk-power-flow-card&category=plugin)
 ![GitHub latest version](https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?include_prereleases&style=for-the-badge&label=Latest%20version)
@@ -25,7 +25,7 @@ See the original project [wiki](https://github.com/slipx06/sunsynk-power-flow-ca
 * AUX and Non-essential can be hidden from the full card or assigned configurable labels.
 * Customisable - Change colours and images.
 * Most entities can be clicked to show more-info dialog.
-* Optional data points include self sufficiency and ratio percentages, battery temperature, AC and DC temperature.
+* Optional data points include self-sufficiency and ratio percentages, battery temperature, AC and DC temperature.
 * Display additional non-essential, essential and AUX loads.
 * Display energy cost per kWh and solar sell status.
 * Select your inverter model for custom inverter status and battery status messages i.e. Sunsynk, Lux, Goodwe, Solis.
@@ -33,8 +33,11 @@ See the original project [wiki](https://github.com/slipx06/sunsynk-power-flow-ca
 ## Screenshots
 
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/25d458f7-9137-442e-a2c0-85e179ee07d0)
+
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/3cfcff4b-a609-41b6-9da1-eea63ff44c2d)
+
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/a269a066-f8e1-41a7-af1f-1411d89cd438)
+
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/256c43de-4062-48f9-b0b4-f9cb0153d71f)
 
 ## Installation
