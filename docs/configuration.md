@@ -398,11 +398,11 @@ load_power_L1 +  load_power_L2 +  load_power_L3
 * For non 3 phase mode (`three_phase:false`)  when `essential_power` is not provided one of 2 calculations mode will be used:
   * when `inverter_power_175` is provided:
     ```
-    essential_power = inverter_power_175 + grid_power_169- aux_power_166
+    essential_power = inverter_power_175 + grid_power_169 - aux_power_166
     ```
   * or  
     ```
-    essential_power = totalPV + battery_power_190 + grid_power_169- aux_power_166
+    essential_power = totalPV + battery_power_190 + grid_power_169 - aux_power_166
     ```
 
 ### Non essential Load Calculation
