@@ -16,6 +16,13 @@ export interface CustomEntity extends HassEntity {
      */
     toNum(decimals?: number, invert?: boolean): number;
 
+    /**
+     * Extension of Utils.toNum, returns the state in a string
+     * @param decimals
+     * @param invert
+     */
+    toStr(decimals?: number, invert?: boolean): string;
+
     toString(): string;
 
     /**
@@ -54,6 +61,7 @@ export function convertToCustomEntity(entity: any): CustomEntity {
     return {
         ...entity,
         toNum: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert),
+        toStr: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert).toFixed(decimals),
         isValid: () => isValid || false,
         notEmpty: () => notEmpty  || false,
         isNaN: () => entity?.state === null || Number.isNaN(entity?.state),

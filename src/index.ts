@@ -193,9 +193,15 @@ export class SunsynkPowerFlowCard extends LitElement {
         const stateAuxLoad2Extra = this.getEntity('entities.aux_load2_extra');
 
         //Grid
-        const stateGridCTPower = this.getEntity('entities.grid_ct_power_172');
-        const stateGridCTPowerL2 = this.getEntity('entities.grid_ct_power_L2');
-        const stateGridCTPowerL3 = this.getEntity('entities.grid_ct_power_L3');
+        const stateGridPowerL1 = this.getEntity('entities.grid_ct_power_172');
+        const stateGridPowerL2 = this.getEntity('entities.grid_ct_power_L2');
+        const stateGridPowerL3 = this.getEntity('entities.grid_ct_power_L3');
+        const stateGridVoltageL1 = this.getEntity('entities.grid_voltage_L1');
+        const stateGridVoltageL2 = this.getEntity('entities.grid_voltage_L2');
+        const stateGridVoltageL3 = this.getEntity('entities.grid_voltage_L3');
+        const stateGridCurrentL1 = this.getEntity('entities.grid_current_L1');
+        const stateGridCurrentL2 = this.getEntity('entities.grid_current_L2');
+        const stateGridCurrentL3 = this.getEntity('entities.grid_current_L3');
         const stateGridCTPowerTotal = this.getEntity('entities.grid_ct_power_total');
         const stateGridConnectedStatus = this.getEntity('entities.grid_connected_status_194', {state: 'on'});
         const stateGridPower = this.getEntity('entities.grid_power_169');
@@ -245,14 +251,14 @@ export class SunsynkPowerFlowCard extends LitElement {
         const auxPower = stateAuxPower.toPower(invert_aux);
 
         const {invert_grid} = config.grid;
-        const gridPower = stateGridCTPower.toPower(invert_grid);
-        const gridPowerL2 = stateGridCTPowerL2.toPower(invert_grid);
-        const gridPowerL3 = stateGridCTPowerL3.toPower(invert_grid);
+        const gridPowerL1 = stateGridPower.toPower(invert_grid);
+        const gridPowerL2 = stateGridPowerL2.toPower(invert_grid);
+        const gridPowerL3 = stateGridPowerL3.toPower(invert_grid);
         const gridPowerTotal = config.entities?.grid_ct_power_total
             ? stateGridCTPowerTotal.toPower(invert_grid)
-            : gridPower + gridPowerL2 + gridPowerL3;
+            : gridPowerL1 + gridPowerL2 + gridPowerL3;
 
-        const totalGridPower = config.inverter.three_phase ? gridPowerTotal : gridPower;
+        const totalGridPower = config.inverter.three_phase ? gridPowerTotal : gridPowerL1;
 
         const gridVoltage = !stateGridVoltage.isNaN() ? stateGridVoltage.toNum(0) : null;
         const batteryCurrentDirection = !stateBatteryCurrentDirection.isNaN() ? stateBatteryCurrentDirection.toNum(0) : null;
@@ -475,12 +481,12 @@ export class SunsynkPowerFlowCard extends LitElement {
         if (threePhase === false) {
             nonessentialPower =
                 nonessential_power === 'none' || !nonessential_power
-                    ? gridPower - autoScaledGridPower
+                    ? gridPowerL1 - autoScaledGridPower
                     : stateNonessentialPower.toPower();
         } else {
             nonessentialPower =
                 nonessential_power === 'none' || !nonessential_power
-                    ? gridPower
+                    ? gridPowerL1
                     + gridPowerL2
                     + gridPowerL3
                     - autoScaledGridPower
@@ -920,8 +926,8 @@ export class SunsynkPowerFlowCard extends LitElement {
 
         //console.log(`${normalizedPvPercentage} % normalizedPVPercentage to load, ${normalizedBatteryPercentage} % normalizedBatteryPercentage to load`);
 
-        let pvPercentage = 0;
-        let batteryPercentage = 0;
+        let pvPercentage;
+        let batteryPercentage;
         let gridPercentage = 0;
         if (totalPercentage > 100) {
             pvPercentage = Utils.toNum(normalizedPvPercentage, 0);
@@ -956,8 +962,8 @@ export class SunsynkPowerFlowCard extends LitElement {
         const normalizedPvPercentage_bat = totalPercentageBat === 0 ? 0 : (pvPercentageRawBat / totalPercentageBat) * 100;
         const normalizedGridPercentage = totalPercentageBat === 0 ? 0 : (gridPercentageRawBat / totalPercentageBat) * 100;
 
-        let pvPercentageBat = 0;
-        let gridPercentageBat = 0;
+        let pvPercentageBat;
+        let gridPercentageBat;
         if (totalPercentageBat > 100) {
             pvPercentageBat = Utils.toNum(normalizedPvPercentage_bat, 0);
             gridPercentageBat = Utils.toNum(normalizedGridPercentage, 0);
@@ -1089,6 +1095,8 @@ export class SunsynkPowerFlowCard extends LitElement {
             loadColour,
             batteryColour,
             gridColour,
+            gridImportColour,
+            gridExportColour,
             isFloating,
             inverterColour,
             solarColour,
@@ -1122,9 +1130,15 @@ export class SunsynkPowerFlowCard extends LitElement {
             stateEssentialLoad6,
             stateEssentialLoad7,
             stateEssentialLoad8,
-            gridPower,
-            gridPowerL2,
-            gridPowerL3,
+            stateGridPowerL1,
+            stateGridPowerL2,
+            stateGridPowerL3,
+            stateGridVoltageL1,
+            stateGridVoltageL2,
+            stateGridVoltageL3,
+            stateGridCurrentL1,
+            stateGridCurrentL2,
+            stateGridCurrentL3,
             decimalPlaces,
             decimalPlacesEnergy,
             stateEssentialLoad1Extra,
