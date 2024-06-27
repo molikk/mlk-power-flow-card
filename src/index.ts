@@ -443,7 +443,7 @@ export class SunsynkPowerFlowCard extends LitElement {
         if (this.isCompactCard) {
             compactMode = true;
         }
-        //totalsolar = pv1_power_186 + pv2_power_187 + pv3_power_188 + pv4_power_189 + pv5_power
+        //totalSolar = pv1_power_186 + pv2_power_187 + pv3_power_188 + pv4_power_189 + pv5_power
 
         const pv1PowerWatts = statePV1Power.toPower();
         const pv2PowerWatts = statePV2Power.toPower();
@@ -451,8 +451,8 @@ export class SunsynkPowerFlowCard extends LitElement {
         const pv4PowerWatts = statePV4Power.toPower();
         const pv5PowerWatts = statePV5Power.toPower();
 
-        const totalsolar = pv1PowerWatts + pv2PowerWatts + pv3PowerWatts + pv4PowerWatts + pv5PowerWatts;
-        const totalPV = config.entities?.pv_total ? statePVTotal.toNum() : totalsolar;
+        const totalSolar = pv1PowerWatts + pv2PowerWatts + pv3PowerWatts + pv4PowerWatts + pv5PowerWatts;
+        const totalPV = config.entities?.pv_total ? statePVTotal.toNum() : totalSolar;
 
         const solarColour =
             !config.solar.dynamic_colour
