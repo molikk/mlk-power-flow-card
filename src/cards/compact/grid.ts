@@ -38,7 +38,7 @@ export class Grid {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
 				<text id="grid-power-L1" x="80" y="241"
-					  display="${config.inverter.three_phase ? '' : 'none'}"
+					  display="${config.inverter.three_phase && config.entities?.grid_ct_power_172  ? '' : 'none'}"
 					  class="${!config.show_grid ? 'st12' : 'st3 left-align'}"
 					  fill="${data.gridColour}">
 					${config.load.auto_scale ? `${Utils.convertValue(data.gridPower, data.decimalPlaces) || 0}` : `${data.gridPower || 0} ${UnitOfPower.WATT}`}
