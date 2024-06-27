@@ -1047,12 +1047,12 @@ export class SunsynkPowerFlowCard extends LitElement {
         const pv4MaxPower = this.getEntity('solar.pv4_max_power', {state: config.solar.pv4_max_power?.toString() ?? ''});
         const pv5MaxPower = this.getEntity('solar.pv5_max_power', {state: config.solar.pv5_max_power?.toString() ?? ''});
 
-        const totalPVEfficiency = (!config.solar.max_power || !config.solar.visualize_efficiency) ? 100 : Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 200), 0);
-        const PV1Efficiency = (!config.solar.pv1_max_power || !config.solar.visualize_efficiency) ? 100 : Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 200), 0);
-        const PV2Efficiency = (!config.solar.pv2_max_power || !config.solar.visualize_efficiency) ? 100 : Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 200), 0);
-        const PV3Efficiency = (!config.solar.pv3_max_power || !config.solar.visualize_efficiency) ? 100 : Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 200), 0);
-        const PV4Efficiency = (!config.solar.pv4_max_power || !config.solar.visualize_efficiency) ? 100 : Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 200), 0);
-        const PV5Efficiency = (!config.solar.pv5_max_power || !config.solar.visualize_efficiency) ? 100 : Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 200), 0);
+        const totalPVEfficiency = (config.solar.max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 200), 0) : 100;
+        const PV1Efficiency = (config.solar.pv1_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 200), 0) : 100;
+        const PV2Efficiency = (config.solar.pv2_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 200), 0) : 100;
+        const PV3Efficiency = (config.solar.pv3_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 200), 0) : 100;
+        const PV4Efficiency = (config.solar.pv4_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 200), 0) : 100;
+        const PV5Efficiency = (config.solar.pv5_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 200), 0) : 100;
 
         let customGridIcon: string;
         let customGridIconColour: string;
