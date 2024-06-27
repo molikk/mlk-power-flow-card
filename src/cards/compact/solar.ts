@@ -464,7 +464,7 @@ export class Solar {
 
     private static generateEnergy(X: (number | string)[], energyEntity: CustomEntity, showProduction: boolean, showEfficiency: boolean) {
         return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, energyEntity.entity_id)}>
+            <a href="#" @click=${(e) => Utils.handlePopup(e, energyEntity.entity_id)} >
                 <text x="${showEfficiency ? X[5] : X[2]}" y="${showEfficiency ? '118' : '106'}" class="st3 st8 ${showEfficiency ? X[6] : 'right-align'}" 
                     display="${showProduction ? '' : 'none'}" 
                     fill="${this.solarColour}">
