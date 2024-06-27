@@ -79,28 +79,24 @@ export class Solar {
 				  display="${config.solar.mppts === 1 ? 'none' : ''}"
 				  fill="${data.solarColour}">${data.totalPVEfficiency}%
 			</text>
-			${config.entities?.pv_total
+			${data.statePVTotal.isValid()
             ? svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.pv_total)}>
 					<text id="pvtotal_power" x="238.8" y="133.9" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
-						  display="${!config.show_solar || config.solar.mppts === 1 || !data.statePVTotal.isValid() ? 'none' : ''}" 
+						  display="${!config.show_solar || config.solar.mppts === 1 ? 'none' : ''}" 
 						  fill="${data.solarColour}">
 						${config.solar.auto_scale
-                ? config.entities?.pv_total
-                    ? Utils.convertValueNew(data.totalPV, data.statePVTotal.getUOM(), data.decimalPlaces)
-                    : Utils.convertValue(data.totalPV, data.decimalPlaces) || 0
+                ? Utils.convertValueNew(data.totalPV, data.statePVTotal.getUOM(), data.decimalPlaces)
                 : `${Utils.toNum(data.totalPV || 0, 0)} ${UnitOfPower.WATT}`
             }
 				</text>
 			</a>`
             : svg`
 				<text id="pvtotal_power" x="238.8" y="133.9" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
-					  display="${!config.show_solar || config.solar.mppts === 1 || !data.statePVTotal.isValid() ? 'none' : ''}" 
+					  display="${!config.show_solar || config.solar.mppts === 1 ? 'none' : ''}" 
 					  fill="${data.solarColour}">
 					${config.solar.auto_scale
-                ? config.entities?.pv_total
-                    ? Utils.convertValueNew(data.totalPV, data.statePVTotal.getUOM(), data.decimalPlaces)
-                    : Utils.convertValue(data.totalPV, data.decimalPlaces) || 0
+                ? Utils.convertValue(data.totalPV, data.decimalPlaces) || 0
                 : `${Utils.toNum(data.totalPV || 0, 0)} ${UnitOfPower.WATT}`
             }
 				</text>`
@@ -306,13 +302,13 @@ export class Solar {
         return svg`${config.show_solar ?
             svg`
                 ${this.generateFrame(X, 'pv1', data.PV1Efficiency, config.solar.visualize_efficiency)}
-				${this.generateFlowLine(X, 'pv1', data.statePV1Power, data.durationCur['pv1'], data.pv1LineWidth, data.minLineWidth)}
-			    ${this.generateName(X, config.solar.pv1_name)}
+                ${this.generateFlowLine(X, 'pv1', data.statePV1Power, data.durationCur['pv1'], data.pv1LineWidth, data.minLineWidth)}
+                ${this.generateName(X, config.solar.pv1_name)}
                 ${this.generateEfficiency(X, data.PV1Efficiency, config.solar.show_mppt_efficiency)}
                 ${this.generateEnergy(X, data.statePV1Energy, config.solar.show_mppt_production, config.solar.show_mppt_efficiency)}
-				${this.generateVoltage(X, data.statePV1Voltage)}
-			    ${this.generateAmperage(X, data.statePV1Current)}
-			    ${this.generatePower(X, data.statePV1Power, config.solar.auto_scale, data.largeFont)}
+                ${this.generateVoltage(X, data.statePV1Voltage)}
+                ${this.generateAmperage(X, data.statePV1Current)}
+                ${this.generatePower(X, data.statePV1Power, config.solar.auto_scale, data.largeFont)}
             `
             : svg``
         }`;
@@ -331,7 +327,7 @@ export class Solar {
                 ${this.generateEnergy(X, data.statePV2Energy, config.solar.show_mppt_production, config.solar.show_mppt_efficiency)}
                 ${this.generateVoltage(X, data.statePV2Voltage)}
                 ${this.generateAmperage(X, data.statePV2Current)}
-			    ${this.generatePower(X, data.statePV2Power, config.solar.auto_scale, data.largeFont)}
+			          ${this.generatePower(X, data.statePV2Power, config.solar.auto_scale, data.largeFont)}
             `
             : svg``
         }`;
@@ -349,7 +345,7 @@ export class Solar {
                 ${this.generateEnergy(X, data.statePV3Energy, config.solar.show_mppt_production, config.solar.show_mppt_efficiency)}
                 ${this.generateVoltage(X, data.statePV3Voltage)}
                 ${this.generateAmperage(X, data.statePV3Current)}
-			    ${this.generatePower(X, data.statePV3Power, config.solar.auto_scale, data.largeFont)}
+			          ${this.generatePower(X, data.statePV3Power, config.solar.auto_scale, data.largeFont)}
             `
             : svg``
         }`;
@@ -366,7 +362,7 @@ export class Solar {
                 ${this.generateEnergy(X, data.statePV4Energy, config.solar.show_mppt_production, config.solar.show_mppt_efficiency)}
                 ${this.generateVoltage(X, data.statePV4Voltage)}
                 ${this.generateAmperage(X, data.statePV4Current)}
-			    ${this.generatePower(X, data.statePV4Power, config.solar.auto_scale, data.largeFont)}
+                ${this.generatePower(X, data.statePV4Power, config.solar.auto_scale, data.largeFont)}
             `
             : svg``
         }`;
@@ -383,8 +379,8 @@ export class Solar {
                 ${this.generateEnergy(X, data.statePV5Energy, config.solar.show_mppt_production, config.solar.show_mppt_efficiency)}
                 ${this.generateVoltage(X, data.statePV5Voltage)}
                 ${this.generateAmperage(X, data.statePV5Current)}
-			    ${this.generatePower(X, data.statePV5Power, config.solar.auto_scale, data.largeFont)}
-			`
+			          ${this.generatePower(X, data.statePV5Power, config.solar.auto_scale, data.largeFont)}
+			      `
             : svg``
         }`;
     }
@@ -393,12 +389,12 @@ export class Solar {
     private static generatePower(X: (number | string)[], entity: CustomEntity, autoScale: boolean, largeFont) {
         return svg`
             <a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
-				<text x="${X[4]}" y="71" class="${largeFont !== true ? 'st14' : 'st4'} st8" 
-					  display="${entity.isValid() ? '' : 'none'}" 
-					  fill="${this.solarColour}">
-					  ${autoScale ? Utils.convertValue(entity, this.decimalPlaces) || 0 : entity.toNum(0) + " " + UnitOfPower.WATT}
-                </text>
-			</a>`;
+                <text x="${X[4]}" y="71" class="${largeFont !== true ? 'st14' : 'st4'} st8" 
+                    display="${entity.isValid() ? '' : 'none'}" 
+                    fill="${this.solarColour}">
+                    ${autoScale ? Utils.convertValue(entity, this.decimalPlaces) || 0 : entity.toNum(0) + " " + UnitOfPower.WATT}
+                        </text>
+			      </a>`;
     }
 
     private static generateFrame(
@@ -466,13 +462,15 @@ export class Solar {
             </text>`;
     }
 
-    private static generateEnergy(X: (number | string)[], energy: CustomEntity, showProduction: boolean, showEfficiency: boolean) {
+    private static generateEnergy(X: (number | string)[], energyEntity: CustomEntity, showProduction: boolean, showEfficiency: boolean) {
         return svg`
-            <text x="${showEfficiency ? X[5] : X[2]}" y="${showEfficiency ? '118' : '106'}" class="st3 st8 ${showEfficiency ? X[6] : 'right-align'}" 
-                display="${showProduction ? '' : 'none'}" 
-                fill="${this.solarColour}">
-                ${energy.toPowerString(true, 0)}
-            </text>`;
+            <a href="#" @click=${(e) => Utils.handlePopup(e, energyEntity.entity_id)}>
+                <text x="${showEfficiency ? X[5] : X[2]}" y="${showEfficiency ? '118' : '106'}" class="st3 st8 ${showEfficiency ? X[6] : 'right-align'}" 
+                    display="${showProduction ? '' : 'none'}" 
+                    fill="${this.solarColour}">
+                    ${energyEntity.toPowerString(true, 0)}
+                </text>
+            </a>`;
     }
 
     private static generateVoltage(X: (number | string)[], voltageEntity: CustomEntity) {
