@@ -461,7 +461,6 @@ export class SunsynkPowerFlowCard extends LitElement {
                     ? this.colourConvert(config.solar?.colour)
                     : 'grey';
 
-        //essentialPower = inverter_power_175 + grid_power_169 - aux_power_166
         //nonessentialPower = grid_ct_power_172 - grid_power_169
 
         let threePhase = config.inverter?.three_phase;
@@ -488,11 +487,12 @@ export class SunsynkPowerFlowCard extends LitElement {
                     : stateNonessentialPower.toPower();
         }
 
+        //essentialPower = inverter_power_175 + grid_power_169 - aux_power_166 or  totalPV + battery_power_190 + grid_power_169 - aux_power_166
         essentialPower =
             essential_power === 'none' || !essential_power
                 ? threePhase === true && config.entities.load_power_L1 && config.entities.load_power_L2 && config.entities.load_power_L3
                     ? Number(loadPowerL1) + Number(loadPowerL2) + Number(loadPowerL3)
-                    : totalPV + batteryPower + autoScaledGridPower - auxPower
+                    : (config.entities.inverter_power_175 ? autoScaledInverterPower + autoScaledGridPower - auxPower : totalPV + batteryPower + autoScaledGridPower - auxPower)
                 : stateEssentialPower.toPower(invert_load);
 
         //Timer entities
