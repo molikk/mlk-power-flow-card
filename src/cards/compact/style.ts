@@ -55,6 +55,21 @@ export class Style {
 					color: ${data.dynamicColourEssentialLoad8} !important;
 					--mdc-icon-size: 20px;
 				}
+				
+				.nes-load1_small-icon {
+					color: ${data.dynamicColourNonEssentialLoad1} !important;
+					--mdc-icon-size: 24px;
+				}
+
+				.nes-load2_small-icon {
+					color: ${data.dynamicColourNonEssentialLoad2} !important;
+					--mdc-icon-size: 24px;
+				}
+
+				.nes-load3_small-icon {
+					color: ${data.dynamicColourNonEssentialLoad3} !important;
+					--mdc-icon-size: 24px;
+				}
 
 				.grid-icon {
 					color: ${data.customGridIconColour} !important;
