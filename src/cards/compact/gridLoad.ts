@@ -49,7 +49,7 @@ export class GridLoad {
 				config.grid?.load1_name, X[2], 390,
 				data.stateNonessentialLoad1, X[2], 372,
 				data.stateNonEssentialLoad1Extra, X[2], 402,
-				'', config.grid.auto_scale, data.decimalPlaces,
+				data.stateNonEssentialLoad1Toggle, config.grid.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -70,7 +70,7 @@ export class GridLoad {
 				config.grid?.load2_name, X[2], 390,
 				data.stateNonessentialLoad2, X[2], 372,
 				data.stateNonEssentialLoad2Extra, X[2], 402,
-				'', config.grid.auto_scale, data.decimalPlaces,
+				data.stateNonEssentialLoad2Toggle, config.grid.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -92,7 +92,7 @@ export class GridLoad {
 				config.grid?.load3_name, X[2], 390,
 				data.stateNonessentialLoad3, X[2], 372,
 				data.stateNonEssentialLoad3Extra, X[2], 402,
-				'', config.grid.auto_scale, data.decimalPlaces,
+				data.stateNonEssentialLoad3Toggle, config.grid.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
