@@ -125,6 +125,12 @@ export class GridLoad {
 		return ``;
 	}
 
+	static generateIcon(data: DataDto){
+		const icon = LoadUtils.getIconWithCondition(data.nonessentialLoads >= 1, 68, 290, data.nonessentialIcon, 'nes-load-icon', 32);
+
+		return svg`${icon}`;
+
+	}
 
 	static generateLines(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		return svg`

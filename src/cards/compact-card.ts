@@ -68,6 +68,7 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${GridLoad.generateFlowLine(data, config)}
                             ${GridLoad.generateShapes(data)}
                             ${GridLoad.generateTotalPower(data, config)}
+                            ${GridLoad.generateIcon(data)}
                         `:``
                     }
 
