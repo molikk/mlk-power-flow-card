@@ -88,7 +88,7 @@ export class EssentialLoad {
 			<rect id="es-load1" x="${shapeColumn1}" y="107" width="41" height="20" rx="4.5" ry="4.5" fill="none"
 						stroke="${data.dynamicColourEssentialLoad1}" pointer-events="all"
 						display="${data.additionalLoad >= 4 ? '' : 'none'}" />
-			<text id="es-load1" x="${nameColumn1}" y="136" class="st3 st8 right-align"
+			<text id="es-load1" x="${nameColumn1}" y="136" class="st3 st8"
 					display="${data.additionalLoad >= 4 ? '' : 'none'}" fill="${data.dynamicColourEssentialLoad1}">
 				${config.load?.load1_name ? `${config.load.load1_name}` : ''}
 			</text>
@@ -103,7 +103,7 @@ export class EssentialLoad {
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1_extra)}>
 				<text id="ess_load1_extra" x="${nameColumn1}" y="147"
 							display="${(config.entities?.essential_load1_extra && data.additionalLoad >= 4) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
-							class="st3 right-align" fill="${data.dynamicColourEssentialLoad1}">
+							class="st3" fill="${data.dynamicColourEssentialLoad1}">
 					${data.stateEssentialLoad1Extra.toNum(1)}
 					${data.stateEssentialLoad1Extra.getUOM()}
 				</text>
