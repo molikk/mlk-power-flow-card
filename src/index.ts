@@ -168,6 +168,9 @@ export class PowerFlowCard extends LitElement {
 		const stateNonEssentialLoad1Extra = this.getEntity('entities.non_essential_load1_extra');
 		const stateNonEssentialLoad2Extra = this.getEntity('entities.non_essential_load2_extra');
 		const stateNonEssentialLoad3Extra = this.getEntity('entities.non_essential_load3_extra');
+		const stateNonEssentialLoad1Toggle = this.getEntity('entities.non_essential_load1_toggle');
+		const stateNonEssentialLoad2Toggle = this.getEntity('entities.non_essential_load2_toggle');
+		const stateNonEssentialLoad3Toggle = this.getEntity('entities.non_essential_load3_toggle');
 		const stateEssentialLoad1 = this.getEntity('entities.essential_load1');
 		const stateEssentialLoad2 = this.getEntity('entities.essential_load2');
 		const stateEssentialLoad3 = this.getEntity('entities.essential_load3');
@@ -187,6 +190,14 @@ export class PowerFlowCard extends LitElement {
 		const stateEssentialLoad6Extra = this.getEntity('entities.essential_load6_extra');
 		const stateEssentialLoad7Extra = this.getEntity('entities.essential_load7_extra');
 		const stateEssentialLoad8Extra = this.getEntity('entities.essential_load8_extra');
+		const stateEssentialLoad1Toggle = this.getEntity('entities.essential_load1_toggle');
+		const stateEssentialLoad2Toggle = this.getEntity('entities.essential_load2_toggle');
+		const stateEssentialLoad3Toggle = this.getEntity('entities.essential_load3_toggle');
+		const stateEssentialLoad4Toggle = this.getEntity('entities.essential_load4_toggle');
+		const stateEssentialLoad5Toggle = this.getEntity('entities.essential_load5_toggle');
+		const stateEssentialLoad6Toggle = this.getEntity('entities.essential_load6_toggle');
+		const stateEssentialLoad7Toggle = this.getEntity('entities.essential_load7_toggle');
+		const stateEssentialLoad8Toggle = this.getEntity('entities.essential_load8_toggle');
 		const stateLoadPowerL1 = this.getEntity('entities.load_power_L1');
 		const stateLoadPowerL2 = this.getEntity('entities.load_power_L2');
 		const stateLoadPowerL3 = this.getEntity('entities.load_power_L3');
@@ -269,18 +280,18 @@ export class PowerFlowCard extends LitElement {
 		const decimalPlacesEnergy = config.decimal_places_energy;
 
 		const loadColour = this.colourConvert(config.load?.colour);
-		const auxDynamicColour = this.calculateAuxLoadColour(stateAuxPower.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
+		const auxDynamicColour = this.calculateAuxLoadColour(stateAuxPower, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour; //FIXME
 		const auxOffColour = this.colourConvert(config.load?.aux_off_colour || auxDynamicColour);
-		const auxDynamicColourLoad1 = this.calculateAuxLoadColour(stateAuxLoad1.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const auxDynamicColourLoad2 = this.calculateAuxLoadColour(stateAuxLoad2.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad1 = this.calculateEssentialLoadColour(stateEssentialLoad1.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad2 = this.calculateEssentialLoadColour(stateEssentialLoad2.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad3 = this.calculateEssentialLoadColour(stateEssentialLoad3.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad4 = this.calculateEssentialLoadColour(stateEssentialLoad4.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad5 = this.calculateEssentialLoadColour(stateEssentialLoad5.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad6 = this.calculateEssentialLoadColour(stateEssentialLoad6.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad7 = this.calculateEssentialLoadColour(stateEssentialLoad7.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
-		const dynamicColourEssentialLoad8 = this.calculateEssentialLoadColour(stateEssentialLoad8.toPower(false), Utils.toNum(config.load?.off_threshold, 0)) || loadColour;
+		const auxDynamicColourLoad1 = this.calculateAuxLoadColour(stateAuxLoad1, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour; //FIXME
+		const auxDynamicColourLoad2 = this.calculateAuxLoadColour(stateAuxLoad2, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour; //FIXME
+		const dynamicColourEssentialLoad1 = this.calculateEssentialLoadColour(stateEssentialLoad1, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad2 = this.calculateEssentialLoadColour(stateEssentialLoad2, stateEssentialLoad2Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad3 = this.calculateEssentialLoadColour(stateEssentialLoad3, stateEssentialLoad3Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad4 = this.calculateEssentialLoadColour(stateEssentialLoad4, stateEssentialLoad4Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad5 = this.calculateEssentialLoadColour(stateEssentialLoad5, stateEssentialLoad5Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad6 = this.calculateEssentialLoadColour(stateEssentialLoad6, stateEssentialLoad6Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad7 = this.calculateEssentialLoadColour(stateEssentialLoad7, stateEssentialLoad7Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad8 = this.calculateEssentialLoadColour(stateEssentialLoad8, stateEssentialLoad8Toggle, config.load?.off_threshold) || loadColour;
 
 		config.title_colour = this.colourConvert(config.title_colour);
 
@@ -357,15 +368,9 @@ export class PowerFlowCard extends LitElement {
 			? stateNonessentialLoad1.toPower(false) + stateNonessentialLoad2.toPower(false) + stateNonessentialLoad3.toPower(false) > 0 ? gridImportColour : gridExportColour
 			: 'grey';
 
-		const dynamicColourNonEssentialLoad1 = Math.abs(stateNonessentialLoad1.toPower(false)) > Utils.toNum(config.grid?.off_threshold, 0)
-			? stateNonessentialLoad1.toPower(false) > 0 ? gridImportColour : gridExportColour
-			: 'grey';
-		const dynamicColourNonEssentialLoad2 = Math.abs(stateNonessentialLoad2.toPower(false)) > Utils.toNum(config.grid?.off_threshold, 0)
-			? stateNonessentialLoad2.toPower(false) > 0 ? gridImportColour : gridExportColour
-			: 'grey';
-		const dynamicColourNonEssentialLoad3 = Math.abs(stateNonessentialLoad3.toPower(false)) > Utils.toNum(config.grid?.off_threshold, 0)
-			? stateNonessentialLoad3.toPower(false) > 0 ? gridImportColour : gridExportColour
-			: 'grey';
+		const dynamicColourNonEssentialLoad1 = this.getDynamicColorWithToggle(stateNonessentialLoad1, stateNonEssentialLoad1Toggle, config.grid?.off_threshold, gridImportColour, gridExportColour);
+		const dynamicColourNonEssentialLoad2 = this.getDynamicColorWithToggle(stateNonessentialLoad2, stateNonEssentialLoad2Toggle, config.grid?.off_threshold, gridImportColour, gridExportColour);
+		const dynamicColourNonEssentialLoad3 = this.getDynamicColorWithToggle(stateNonessentialLoad3, stateNonEssentialLoad3Toggle, config.grid?.off_threshold, gridImportColour, gridExportColour);
 
 		const gridOffColour = this.colourConvert(config.grid?.grid_off_colour || gridColour);
 
@@ -1157,9 +1162,20 @@ export class PowerFlowCard extends LitElement {
 			stateEssentialLoad6Extra,
 			stateEssentialLoad7Extra,
 			stateEssentialLoad8Extra,
+			stateEssentialLoad1Toggle,
+			stateEssentialLoad2Toggle,
+			stateEssentialLoad3Toggle,
+			stateEssentialLoad4Toggle,
+			stateEssentialLoad5Toggle,
+			stateEssentialLoad6Toggle,
+			stateEssentialLoad7Toggle,
+			stateEssentialLoad8Toggle,
 			stateNonEssentialLoad1Extra,
 			stateNonEssentialLoad2Extra,
 			stateNonEssentialLoad3Extra,
+			stateNonEssentialLoad1Toggle,
+			stateNonEssentialLoad2Toggle,
+			stateNonEssentialLoad3Toggle,
 			loadFrequency,
 			gridShowDailyBuy,
 			gridShowDailySell,
@@ -1319,15 +1335,16 @@ export class PowerFlowCard extends LitElement {
 		return compactCard(config, inverterImg, data);
 	}
 
+
 	/**
 	 * Fetches the entity object, returned the defaultValue when the entity is not found. Pass null for no default.
 	 * @param entity
 	 * @param defaultValue
 	 */
 	getEntity(entity: keyof sunsynkPowerFlowCardConfig,
-			  defaultValue: Partial<CustomEntity> | null = {
-				  state: '0', attributes: { unit_of_measurement: '' },
-			  }): CustomEntity {
+	          defaultValue: Partial<CustomEntity> | null = {
+		          state: '0', attributes: { unit_of_measurement: '' },
+	          }): CustomEntity {
 
 		let entityString;
 
@@ -1378,20 +1395,36 @@ export class PowerFlowCard extends LitElement {
 		return lineWidth;
 	}
 
-	calculateAuxLoadColour(state, threshold) {
+	calculateAuxLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
+		let colour = this.colourConvert(this._config.load?.aux_colour);
 		return !this._config.load.aux_dynamic_colour
-			? this.colourConvert(this._config.load?.aux_colour)
-			: Math.abs(state) > threshold
-				? this.colourConvert(this._config.load?.aux_colour)
-				: 'grey';
+			? colour
+			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : 'grey') : (
+				Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
+					? colour
+					: 'grey'
+			);
 	}
 
-	calculateEssentialLoadColour(state, threshold) {
+	calculateEssentialLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
+		let colour = this.colourConvert(this._config.load?.colour);
 		return !this._config.load.dynamic_colour
-			? this.colourConvert(this._config.load?.colour)
-			: Math.abs(state) > threshold
-				? this.colourConvert(this._config.load?.colour)
-				: 'grey';
+			? colour
+			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : 'grey') : (
+				Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
+					? colour
+					: 'grey'
+			);
+	}
+
+	private getDynamicColorWithToggle(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number, gridImportColour, gridExportColour, gridOffColour = 'grey') {
+		return toggleEntity.isValidSwitch() ?
+			toggleEntity.toOnOff() === 'on' ? gridImportColour : gridOffColour :
+			(
+				Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
+					? powerEntity.toPower(false) > 0 ? gridImportColour : gridExportColour
+					: 'grey'
+			);
 	}
 
 	setConfig(config) {
