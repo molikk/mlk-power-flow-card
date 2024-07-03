@@ -54,62 +54,49 @@ export class EssentialLoad {
 		const icon1_link = LoadUtils.getIconLink(config.entities.essential_load1_toggle, icon1);
 
 
-		return svg`${data.additionalLoad >= 1 ?
+		return svg`${data.additionalLoad >= 4?
 			svg`
-			${icon1_big_link}
-			${icon1_link}
-			
-			<rect id="es-load1" x="${shapeColumn1}" y="116.5" width="82" height="30" rx="4.5" ry="4.5" fill="none"
-						stroke="${data.dynamicColourEssentialLoad1}" pointer-events="all"
-						display="${[1, 2, 3].includes(data.additionalLoad) ? '' : 'none'}" />
-						
-			<text id="es-load1" x="${powerColumn0}" y="108" class="st3"
-					display="${[1, 2, 3].includes(data.additionalLoad) ? '' : 'none'}"
-				fill="${data.dynamicColourEssentialLoad1}">${config.load?.load1_name ? `${config.load.load1_name}` : ''}
-			</text>
-			
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1)}>
-				<text id="ess_load1" x="${powerColumn0}" y="133"
-							display="${[1, 2, 3].includes(data.additionalLoad) && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
-							class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
+				${LoadUtils.generateLoad(
+					'es', 2, icon1_link,
+					data.dynamicColourEssentialLoad1, shapeColumn1, 107,
+					config.load?.load1_name, nameColumn1, 136,
+					data.stateEssentialLoad1, nameColumn1, 118,
+					data.stateEssentialLoad1Extra, nameColumn1, 147,
+					data.stateEssentialLoad1Toggle, config.load.auto_scale, data.decimalPlaces,
+				)}`
+			:
+				svg`${data.additionalLoad >= 1 ?
+					svg`
+					${icon1_big_link}
+					
+					<rect id="es-load1" x="${shapeColumn1}" y="116.5" width="82" height="30" rx="4.5" ry="4.5" fill="none"
+								stroke="${data.dynamicColourEssentialLoad1}" pointer-events="all"
+								display="${[1, 2, 3].includes(data.additionalLoad) ? '' : 'none'}" />	
+					<text id="es-load1" x="${powerColumn0}" y="108" class="st3"
+							display="${[1, 2, 3].includes(data.additionalLoad) ? '' : 'none'}"
 							fill="${data.dynamicColourEssentialLoad1}">
-					${data.stateEssentialLoad1?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
-				</text>
-			</a>					
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1_extra)}>
-				<text id="ess_load1_extra" x="${extraColumn2}" y="157"
-							display="${(config.entities?.essential_load1_extra && [1, 2, 3].includes(data.additionalLoad)) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
-							class="st3 left-align" fill="${data.dynamicColourEssentialLoad1}">
-					${data.stateEssentialLoad1Extra.toNum(1)}
-					${data.stateEssentialLoad1Extra.getUOM()}
-				</text>
-			</a>
-
-			<rect id="es-load1" x="${shapeColumn1}" y="107" width="41" height="20" rx="4.5" ry="4.5" fill="none"
-						stroke="${data.dynamicColourEssentialLoad1}" pointer-events="all"
-						display="${data.additionalLoad >= 4 ? '' : 'none'}" />
-			<text id="es-load1" x="${nameColumn1}" y="136" class="st3 st8"
-					display="${data.additionalLoad >= 4 ? '' : 'none'}" fill="${data.dynamicColourEssentialLoad1}">
-				${config.load?.load1_name ? `${config.load.load1_name}` : ''}
-			</text>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1)}>
-				<text id="ess_load1" x="${nameColumn1}" y="118"
-							display="${data.additionalLoad >= 4 && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
-							class="st3"
-							fill="${data.dynamicColourEssentialLoad1}">
-					${data.stateEssentialLoad1?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
-				</text>
-			</a>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1_extra)}>
-				<text id="ess_load1_extra" x="${nameColumn1}" y="147"
-							display="${(config.entities?.essential_load1_extra && data.additionalLoad >= 4) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
-							class="st3" fill="${data.dynamicColourEssentialLoad1}">
-					${data.stateEssentialLoad1Extra.toNum(1)}
-					${data.stateEssentialLoad1Extra.getUOM()}
-				</text>
-			</a>`
-			: svg``
-		}`;
+						${config.load?.load1_name ? `${config.load.load1_name}` : ''}
+					</text>
+					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1)}>
+						<text id="ess_load1" x="${powerColumn0}" y="133"
+								display="${[1, 2, 3].includes(data.additionalLoad) && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
+								class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
+								fill="${data.dynamicColourEssentialLoad1}">
+							${data.stateEssentialLoad1?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
+						</text>
+					</a>				
+					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1_extra)}>
+						<text id="ess_load1_extra" x="${extraColumn2}" y="157"
+									display="${(config.entities?.essential_load1_extra && [1, 2, 3].includes(data.additionalLoad)) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
+									class="st3 left-align" fill="${data.dynamicColourEssentialLoad1}">
+							${data.stateEssentialLoad1Extra.toNum(1)}
+							${data.stateEssentialLoad1Extra.getUOM()}
+						</text>
+					</a>`			
+				:``
+			}
+			`
+			}`;
 	}
 
 	static generateLoad2(data: DataDto, config: sunsynkPowerFlowCardConfig) {
@@ -141,7 +128,7 @@ export class EssentialLoad {
 				config.load?.load2_name, nameColumn2, 136,
 				data.stateEssentialLoad2, nameColumn2, 118,
 				data.stateEssentialLoad2Extra, nameColumn2, 147,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad2Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg`${data.additionalLoad === 3 ?
 				svg`
@@ -151,7 +138,7 @@ export class EssentialLoad {
 					config.load?.load2_name, nameColumn1, 310,
 					data.stateEssentialLoad2, nameColumn1, 291,
 					data.stateEssentialLoad2Extra, nameColumn1, 322,
-					'', config.load.auto_scale, data.decimalPlaces,
+					data.stateEssentialLoad2Toggle, config.load.auto_scale, data.decimalPlaces,
 				)}`
 				: svg`${data.additionalLoad === 2 ?
 					svg`
@@ -207,7 +194,7 @@ export class EssentialLoad {
 				config.load?.load3_name, nameColumn2, 310,
 				data.stateEssentialLoad3, nameColumn2, 291,
 				data.stateEssentialLoad3Extra, nameColumn2, 322,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad3Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg`${data.additionalLoad >= 4 ?
 				svg`
@@ -217,7 +204,7 @@ export class EssentialLoad {
 					config.load?.load3_name, nameColumn1, 310,
 					data.stateEssentialLoad3, nameColumn1, 291,
 					data.stateEssentialLoad3Extra, nameColumn1, 322,
-					'', config.load.auto_scale, data.decimalPlaces,
+					data.stateEssentialLoad3Toggle, config.load.auto_scale, data.decimalPlaces,
 				)}`
 				: svg``
 			}`
@@ -240,7 +227,7 @@ export class EssentialLoad {
 				config.load?.load4_name, nameColumn2, 310,
 				data.stateEssentialLoad4, nameColumn2, 291,
 				data.stateEssentialLoad4Extra, nameColumn2, 322,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad4Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -262,7 +249,7 @@ export class EssentialLoad {
 				config.load?.load5_name, nameColumn1, 390,
 				data.stateEssentialLoad5, nameColumn1, 372,
 				data.stateEssentialLoad5Extra, nameColumn1, 402,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad5Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -284,7 +271,7 @@ export class EssentialLoad {
 				config.load?.load6_name, nameColumn2, 390,
 				data.stateEssentialLoad6, nameColumn2, 372,
 				data.stateEssentialLoad6Extra, nameColumn2, 402,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad6Toggle,  config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -306,7 +293,7 @@ export class EssentialLoad {
 				config.load?.load7_name, nameColumn1, 60,
 				data.stateEssentialLoad7, nameColumn1, 42,
 				data.stateEssentialLoad7Extra, nameColumn1, 72,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad7Toggle,  config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -328,7 +315,7 @@ export class EssentialLoad {
 				config.load?.load8_name, nameColumn2, 60,
 				data.stateEssentialLoad8, nameColumn2, 42,
 				data.stateEssentialLoad8Extra, nameColumn2, 72,
-				'', config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad8Toggle,  config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;

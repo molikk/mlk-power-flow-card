@@ -1,6 +1,7 @@
 import { svg, TemplateResult } from 'lit';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { Utils } from '../../helpers/utils';
+import { localize } from '../../localize/localize';
 
 export class LoadUtils {
 
@@ -43,28 +44,39 @@ export class LoadUtils {
 		name: string, nameX: number, nameY: number,
 		power: CustomEntity, powerX: number, powerY: number,
 		energy: CustomEntity, energyX: number, energyY: number,
-		align: string, loadAutoScale: boolean, decimalPlaces: number,
+		toggle: CustomEntity, loadAutoScale: boolean, decimalPlaces: number,
 	) {
 		return svg`
 			${icon}
-			<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" rx="4.5" ry="4.5" fill="none"
-						stroke="${color}" pointer-events="all" />
-			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8 ${align}"
-					fill="${color}">
+			<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" 
+				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" />
+			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8" fill="${color}">
 				${name ? `${name}` : ''}
 			</text>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
-				<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
-							display="${power.isValid() ? '' : 'none'}"
-							class="st3 ${align}"
-							fill="${color}">
-					${power?.toPowerString(loadAutoScale, decimalPlaces)}
+			${!power.isValid() && toggle.isValidSwitch()?
+			svg`
+			<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle.entity_id)}>
+				<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
+						class="st3"
+						fill="${color}">
+					${localize('common.' + (toggle?.toOnOff() || 'off'))}
 				</text>
 			</a>
+			`
+			:svg`
+			<a href = "#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
+				<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
+						display="${power.isValid() ? '' : 'none'}"
+						class="st3"
+						fill="${color}">
+					${power?.toPowerString(loadAutoScale, decimalPlaces)}
+				</text>
+			</a>`
+			}
 			<a href="#" @click=${(e) => Utils.handlePopup(e, energy.entity_id)}>
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
 							display="${energy.entity_id && energy.isValid() ? '' : 'none'}"
-							class="st3 ${align}" fill="${color}">
+							class="st3" fill="${color}">
 					${energy.toNum(1)}
 					${energy.getUOM()}
 				</text>
