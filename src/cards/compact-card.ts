@@ -12,12 +12,15 @@ import {Solar} from './compact/solar';
 import {Battery} from './compact/battery';
 import {Grid} from './compact/grid';
 import {Inverter} from './compact/inverter';
+import { GridLoad } from './compact/gridLoad';
 
 
 export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: string, data: DataDto) => {
     Solar.solarColour = data.solarColour;
-    Solar.decimalPlacesEnergy = data.decimalPlacesEnergy; //should be config
+    Solar.decimalPlacesEnergy = data.decimalPlacesEnergy;
     Solar.decimalPlaces = data.decimalPlaces;
+    Grid.gridColour = data.gridColour;
+    Grid.decimalPlaces = data.decimalPlaces;
 
     return html`
         <ha-card>
@@ -41,15 +44,33 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                     ${Battery.generateShutdownSOC(data, config)}
                     ${Battery.generateFlowLines(data, config)}
                     ${Battery.generateBatteryGradient(data, config)}
-                    ${Grid.generateShapes(data, config)}
-                    ${Grid.generateDailyBuy(data, config)}
-                    ${Grid.generateDailySell(data, config)}
-                    ${Grid.generateGridName(data, config)}
-                    ${Grid.generateFlowLines(data, config)}
-                    ${Grid.generateIcon(data, config)}
-                    ${Grid.generateTotalPower(data, config)}
-                    ${Grid.generatePowers(data, config)}
-                    ${Grid.generatePrepaidUnits(data, config)}
+                    ${config.show_grid ?
+                        svg`
+                            ${Grid.generateShapes(data, config)}
+                            ${Grid.generateDailyImport(data, config)}
+                            ${Grid.generateDailyExport(data, config)}
+                            ${Grid.generateGridName(data, config)}
+                            ${Grid.generateFlowLines(data)}
+                            ${Grid.generateIcon(data, config)}
+                            ${Grid.generateEnergyCost(data, config)}
+                            ${Grid.generatePhases(data, config)}
+                            ${Grid.generatePrepaidUnits(data, config)}
+                            ${Grid.generateLimit(data, config)}
+                            ${Grid.generateTotalGridPower(data, config)}
+                        `:``
+                    }
+                    ${config.show_grid && config.grid.show_nonessential?
+                        svg`
+                            ${GridLoad.generateLoad1(data, config)}
+                            ${GridLoad.generateLoad2(data, config)}
+                            ${GridLoad.generateLoad3(data, config)}
+                            ${GridLoad.generateLines(data, config)}
+                            ${GridLoad.generateFlowLine(data, config)}
+                            ${GridLoad.generateShapes(data)}
+                            ${GridLoad.generateTotalPower(data, config)}
+                        `:``
+                    }
+
                     ${Load.generateShapes(data)}
                     ${Load.generateDailyLoadName(data)}
                     ${Load.generateFlowLines(data, config)}
@@ -76,7 +97,7 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${Solar.generateMppt5(data, config)}
                             ${Solar.generateSolarPower(data, config)}
                         `
-                            : svg``
+                            : ``
                     }
                     ${Autarky.getTexts(data)}
                     ${Inverter.generateIcon(data)}
@@ -151,27 +172,7 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                     </a>
 
 
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_import_76)}>
-                        <text id="daily_grid_buy_value" x="5" y="267.9" class="st10 left-align"
-                              display="${!config.show_grid || data.gridShowDailyBuy !== true || !data.stateDayGridImport.isValid() ? 'none' : ''}"
-                              fill="${data.gridColour}">
-                            ${data.stateDayGridImport?.toPowerString(true, data.decimalPlacesEnergy)}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_export_77)}>
-                        <text id="daily_grid_sell_value" x="5" y="165" class="st10 left-align"
-                              display="${!config.show_grid || data.gridShowDailySell !== true || !data.stateDayGridExport.isValid() ? 'none' : ''}"
-                              fill="${data.gridColour}">
-                            ${data.stateDayGridExport?.toPowerString(true, data.decimalPlacesEnergy)}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.max_sell_power)}>
-                        <text id="max_sell_power" x="5" y="150" class="st3 left-align"
-                              fill="${['off', '0'].includes(data.stateSolarSell.state) ? 'grey' : data.gridColour}"
-                              display="${!config.show_grid || !data.stateMaxSellPower.isValid || !config.entities?.max_sell_power ? 'none' : ''}">
-                            ${localize('common.limit')}: ${data.stateMaxSellPower.toPowerString(config.grid.auto_scale, data.decimalPlaces)}
-                        </text>
-                    </a>
+                    
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_voltage_154)}>
                         <text id="inverter_voltage_154" x="270.2" y="168.2"
                               display="${config.entities.inverter_voltage_154 === 'none' || !config.entities.inverter_voltage_154 ? 'none' : ''}"
@@ -279,55 +280,7 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${UnitOfElectricalCurrent.AMPERE}
                         </text>
                     </a>
-                    ${config.inverter.three_phase
-                            ? config.entities?.grid_ct_power_total
-                                    ? svg`
-                                        <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
-                                        <text id="data.totalGridPower" x="135" y="219.2"
-                                              display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
-                                              class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
-                                            ${config.grid.auto_scale
-                                            ? `${config.grid.show_absolute
-                                                    ? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-                                                    : Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-                                            : `${config.grid.show_absolute
-                                                    ? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-                                                    : `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-                                            }`
-                                    }
-                                        </text>
-                                    </a>`
-                                    : svg`
-                                        <text id="grid_total_power" x="135" y="219.2"
-                                              display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
-                                              class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
-                                              ${config.grid.auto_scale
-                                            ? `${config.grid.show_absolute
-                                                    ? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-                                                    : Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-                                            : `${config.grid.show_absolute
-                                                    ? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-                                                    : `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-                                            }`
-                                    }
-                                        </text>`
-                            : svg`
-                                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
-                                        <text id="grid_total_power" x="135" y="219.2"
-                                              display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
-                                              class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
-                                            ${config.grid.auto_scale
-                                    ? `${config.grid.show_absolute
-                                            ? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-                                            : Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-                                    : `${config.grid.show_absolute
-                                            ? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-                                            : `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-                                    }`
-                            }
-                                        </text>
-                                    </a>`
-                    }
+                    
 
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_temp_182)}>
                         <text id="battery_temp_182" x="${data.compactMode ? '205' : '250'}"

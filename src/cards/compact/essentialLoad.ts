@@ -1,14 +1,12 @@
-import { svg, TemplateResult } from 'lit';
+import { svg } from 'lit';
 import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
 import { Utils } from '../../helpers/utils';
 import { Load } from './load';
-import { CustomEntity } from '../../inverters/dto/custom-entity';
+import { LoadUtils } from './loadUtils';
 
 export class EssentialLoad {
 
-
-	private static readonly mainX = Load.LOAD_X;
-
+	private static readonly mainX = Load.ESSENTIAL_LOAD_X;
 
 	static generateLines(data: DataDto) {
 		const lineX = this.mainX + 42;
@@ -41,7 +39,6 @@ export class EssentialLoad {
 		`;
 	}
 
-
 	static generateLoad1(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const iconBig = this.mainX - 29;
@@ -53,11 +50,11 @@ export class EssentialLoad {
 		const extraColumn1 = this.mainX + 39;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon1_big = this.getIcon([1, 2, 3].includes(data.additionalLoad), iconBig, 114, data.iconEssentialLoad1, 'essload1-icon', 36);
-		const icon1_big_link = this.getIconLink(config.entities.essential_load1_toggle, icon1_big);
+		const icon1_big = LoadUtils.getIconWithCondition([1, 2, 3].includes(data.additionalLoad), iconBig, 114, data.iconEssentialLoad1, 'essload1-icon', 36);
+		const icon1_big_link = LoadUtils.getIconLink(config.entities.essential_load1_toggle, icon1_big);
 
-		const icon1 = this.getIcon(data.additionalLoad >= 4, iconLeft, 81, data.iconEssentialLoad1, 'essload1_small-icon');
-		const icon1_link = this.getIconLink(config.entities.essential_load1_toggle, icon1);
+		const icon1 = LoadUtils.getIconWithCondition(data.additionalLoad >= 4, iconLeft, 81, data.iconEssentialLoad1, 'essload1_small-icon');
+		const icon1_link = LoadUtils.getIconLink(config.entities.essential_load1_toggle, icon1);
 
 
 		return svg`${data.additionalLoad >= 1 ?
@@ -132,20 +129,20 @@ export class EssentialLoad {
 		const extraColumn1 = this.mainX + 39;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon2_big = this.getIcon(data.additionalLoad === 2, iconBig, 278, data.iconEssentialLoad2, 'essload2-icon', 36);
-		const icon2_big_link = this.getIconLink(config.entities.essential_load2_toggle, icon2_big);
+		const icon2_big = LoadUtils.getIcon(iconBig, 278, data.iconEssentialLoad2, 'essload2-icon', 36);
+		const icon2_big_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2_big);
 
-		const icon2_if3 = this.getIcon(data.additionalLoad === 3, iconLeft, 254, data.iconEssentialLoad2, 'essload2_small-icon');
-		const icon2_if3_link = this.getIconLink(config.entities.essential_load2_toggle, icon2_if3);
+		const icon2_if3 = LoadUtils.getIcon( iconLeft, 254, data.iconEssentialLoad2, 'essload2_small-icon');
+		const icon2_if3_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2_if3);
 
-		const icon2 = this.getIcon(data.additionalLoad >= 4, iconRight, 81, data.iconEssentialLoad2, 'essload2_small-icon');
-		const icon2_link = this.getIconLink(config.entities.essential_load2_toggle, icon2);
+		const icon2 = LoadUtils.getIcon(iconRight, 81, data.iconEssentialLoad2, 'essload2_small-icon');
+		const icon2_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2);
 
 
 		return svg`${data.additionalLoad >= 4 ?
 			svg`
-			${this.generateEssentialLoad(
-				2, icon2_link,
+			${LoadUtils.generateLoad(
+				'es', 2, icon2_link,
 				data.dynamicColourEssentialLoad2, shapeColumn2, 107,
 				config.load?.load2_name, nameColumn2, 136,
 				data.stateEssentialLoad2, powerColumn2, 118,
@@ -154,8 +151,8 @@ export class EssentialLoad {
 			)}`
 			: svg`${data.additionalLoad === 3 ?
 				svg`
-			${this.generateEssentialLoad(
-					2, icon2_if3_link,
+			${LoadUtils.generateLoad(
+					'es', 2, icon2_if3_link,
 					data.dynamicColourEssentialLoad2, shapeColumn1, 280,
 					config.load?.load2_name, nameColumn1, 310,
 					data.stateEssentialLoad2, powerColumn1, 291,
@@ -193,7 +190,6 @@ export class EssentialLoad {
 				}`
 			}`
 		}`;
-
 	}
 
 	static generateLoad3(data: DataDto, config: sunsynkPowerFlowCardConfig) {
@@ -208,16 +204,16 @@ export class EssentialLoad {
 		const extraColumn1 = this.mainX + 39;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon3_if3 = this.getIcon2(iconRight, 254, data.iconEssentialLoad3, 'essload3_small-icon');
-		const icon3_if3_link = this.getIconLink(config.entities.essential_load3_toggle, icon3_if3);
+		const icon3_if3 = LoadUtils.getIcon(iconRight, 254, data.iconEssentialLoad3, 'essload3_small-icon');
+		const icon3_if3_link = LoadUtils.getIconLink(config.entities.essential_load3_toggle, icon3_if3);
 
-		const icon3 = this.getIcon2(iconLeft, 254, data.iconEssentialLoad3, 'essload3_small-icon');
-		const icon3_link = this.getIconLink(config.entities.essential_load3_toggle, icon3);
+		const icon3 = LoadUtils.getIcon(iconLeft, 254, data.iconEssentialLoad3, 'essload3_small-icon');
+		const icon3_link = LoadUtils.getIconLink(config.entities.essential_load3_toggle, icon3);
 
 		return svg`${data.additionalLoad === 3 ?
 			svg`
-				${this.generateEssentialLoad(
-				3, icon3_if3_link,
+				${LoadUtils.generateLoad(
+				'es', 3, icon3_if3_link,
 				data.dynamicColourEssentialLoad3, shapeColumn2, 280,
 				config.load?.load3_name, nameColumn2, 310,
 				data.stateEssentialLoad3, powerColumn2, 291,
@@ -226,8 +222,8 @@ export class EssentialLoad {
 			)}`
 			: svg`${data.additionalLoad >= 4 ?
 				svg`
-				${this.generateEssentialLoad(
-					3, icon3_link,
+				${LoadUtils.generateLoad(
+					'es', 3, icon3_link,
 					data.dynamicColourEssentialLoad3, shapeColumn1, 280,
 					config.load?.load3_name, nameColumn1, 310,
 					data.stateEssentialLoad3, powerColumn1, 291,
@@ -239,7 +235,6 @@ export class EssentialLoad {
 		}`;
 	}
 
-
 	static generateLoad4(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		const iconRight = this.mainX + 53;
 		const shapeColumn2 = this.mainX + 43;
@@ -247,13 +242,13 @@ export class EssentialLoad {
 		const powerColumn2 = this.mainX + 63;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon4 = this.getIcon2(iconRight, 254, data.iconEssentialLoad4, 'essload4_small-icon');
-		const icon4_link = this.getIconLink(config.entities.essential_load4_toggle, icon4);
+		const icon4 = LoadUtils.getIcon(iconRight, 254, data.iconEssentialLoad4, 'essload4_small-icon');
+		const icon4_link = LoadUtils.getIconLink(config.entities.essential_load4_toggle, icon4);
 
 		return svg`${data.additionalLoad >= 4 ?
 			svg`
-			${this.generateEssentialLoad(
-				4, icon4_link,
+			${LoadUtils.generateLoad(
+				'es', 4, icon4_link,
 				data.dynamicColourEssentialLoad4, shapeColumn2, 280,
 				config.load?.load4_name, nameColumn2, 310,
 				data.stateEssentialLoad4, powerColumn2, 291,
@@ -264,7 +259,6 @@ export class EssentialLoad {
 		}`;
 	}
 
-
 	static generateLoad5(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const shapeColumn1 = this.mainX;
@@ -272,13 +266,13 @@ export class EssentialLoad {
 		const powerColumn1 = this.mainX + 23;
 		const extraColumn1 = this.mainX + 39;
 
-		const icon5 = this.getIcon2(iconLeft, 335, data.iconEssentialLoad5, 'essload5_small-icon');
-		const icon5_link = this.getIconLink(config.entities.essential_load5_toggle, icon5);
+		const icon5 = LoadUtils.getIcon(iconLeft, 335, data.iconEssentialLoad5, 'essload5_small-icon');
+		const icon5_link = LoadUtils.getIconLink(config.entities.essential_load5_toggle, icon5);
 
 		return svg`${data.additionalLoad >= 5 ?
 			svg`
-			${this.generateEssentialLoad(
-				5, icon5_link,
+			${LoadUtils.generateLoad(
+				'es', 5, icon5_link,
 				data.dynamicColourEssentialLoad5, shapeColumn1, 362,
 				config.load?.load5_name, nameColumn1, 390,
 				data.stateEssentialLoad5, powerColumn1, 372,
@@ -289,7 +283,6 @@ export class EssentialLoad {
 		}`;
 	}
 
-
 	static generateLoad6(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		const iconRight = this.mainX + 53;
 		const shapeColumn2 = this.mainX + 43;
@@ -297,13 +290,13 @@ export class EssentialLoad {
 		const powerColumn2 = this.mainX + 63;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon6 = this.getIcon2(iconRight, 335, data.iconEssentialLoad6, 'essload6_small-icon');
-		const icon6_link = this.getIconLink(config.entities.essential_load6_toggle, icon6);
+		const icon6 = LoadUtils.getIcon(iconRight, 335, data.iconEssentialLoad6, 'essload6_small-icon');
+		const icon6_link = LoadUtils.getIconLink(config.entities.essential_load6_toggle, icon6);
 
 		return svg`${data.additionalLoad >= 6 ?
 			svg`
-			${this.generateEssentialLoad(
-				6, icon6_link,
+			${LoadUtils.generateLoad(
+				'es', 6, icon6_link,
 				data.dynamicColourEssentialLoad6, shapeColumn2, 362,
 				config.load?.load6_name, nameColumn2, 390,
 				data.stateEssentialLoad6, powerColumn2, 372,
@@ -314,7 +307,6 @@ export class EssentialLoad {
 		}`;
 	}
 
-
 	static generateLoad7(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const shapeColumn1 = this.mainX;
@@ -322,13 +314,13 @@ export class EssentialLoad {
 		const powerColumn1 = this.mainX + 23;
 		const extraColumn1 = this.mainX + 39;
 
-		const icon7 = this.getIcon(data.additionalLoad >= 7, iconLeft, 7, data.iconEssentialLoad7, 'essload7_small-icon');
-		const icon7_link = this.getIconLink(config.entities.essential_load7_toggle, icon7);
+		const icon7 = LoadUtils.getIcon(iconLeft, 7, data.iconEssentialLoad7, 'essload7_small-icon');
+		const icon7_link = LoadUtils.getIconLink(config.entities.essential_load7_toggle, icon7);
 
 		return svg`${data.additionalLoad >= 7 ?
 			svg`
-			${this.generateEssentialLoad(
-				7, icon7_link,
+			${LoadUtils.generateLoad(
+				'es', 7, icon7_link,
 				data.dynamicColourEssentialLoad7, shapeColumn1, 31,
 				config.load?.load7_name, nameColumn1, 60,
 				data.stateEssentialLoad7, powerColumn1, 42,
@@ -346,13 +338,13 @@ export class EssentialLoad {
 		const powerColumn2 = this.mainX + 63;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon8 = this.getIcon2(iconRight, 7, data.iconEssentialLoad8, 'essload8_small-icon');
-		const icon8_link = this.getIconLink(config.entities.essential_load8_toggle, icon8);
+		const icon8 = LoadUtils.getIcon(iconRight, 7, data.iconEssentialLoad8, 'essload8_small-icon');
+		const icon8_link = LoadUtils.getIconLink(config.entities.essential_load8_toggle, icon8);
 
 		return svg`${data.additionalLoad >= 8 ?
 			svg`
-			${this.generateEssentialLoad(
-				8, icon8_link,
+			${LoadUtils.generateLoad(
+				'es', 8, icon8_link,
 				data.dynamicColourEssentialLoad8, shapeColumn2, 31,
 				config.load?.load8_name, nameColumn2, 60,
 				data.stateEssentialLoad8, powerColumn2, 42,
@@ -363,70 +355,6 @@ export class EssentialLoad {
 		}`;
 	}
 
-	private static getIcon(condition: boolean, x: number, y: number, icon: string, style_class: string, size = 30) {
-		return svg`
-				<g display="${condition ? '' : 'none'}">
-					<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
-						<body xmlns="http://www.w3.org/1999/xhtml">
-						<div style="position: fixed; ">
-							<ha-icon icon="${icon}" class="${style_class}"></ha-icon>
-						</div>
-						</body>
-					</foreignObject>
-				</g>`;
-	}
 
-	private static getIcon2(x: number, y: number, icon: string, style_class: string, size = 30) {
-		return svg`
-				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
-					<body xmlns="http://www.w3.org/1999/xhtml">
-					<div style="position: fixed; ">
-						<ha-icon icon="${icon}" class="${style_class}"></ha-icon>
-					</div>
-					</body>
-				</foreignObject>`;
-	}
 
-	private static getIconLink(entity: string, icon: TemplateResult<2>) {
-		return svg`
-		${entity
-			? svg`<a href="#" @click=${(e) => Utils.handlePopup(e, entity)}>${icon}</a>`
-			: svg`${icon}`
-		}
-		`;
-	}
-
-	private static generateEssentialLoad(
-		id: number, icon: TemplateResult,
-		color: string, shapeX: number, shapeY: number,
-		name: string, nameX: number, nameY: number,
-		power: CustomEntity, powerX: number, powerY: number,
-		energy: CustomEntity, energyX: number, energyY: number,
-		align: string, loadAutoScale: boolean, decimalPlaces: number,
-	) {
-		return svg`
-			${icon}
-			<rect id="es-load${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" rx="4.5" ry="4.5" fill="none"
-						stroke="${color}" pointer-events="all" />
-			<text id="es-load${id}" x="${nameX}" y="${nameY}" class="st3 st8 ${align}"
-					fill="${color}">
-				${name ? `${name}` : ''}
-			</text>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
-				<text id="ess_load${id}" x="${powerX}" y="${powerY}"
-							display="${power.isValid() ? '' : 'none'}"
-							class="st3"
-							fill="${color}">
-					${power?.toPowerString(loadAutoScale, decimalPlaces)}
-				</text>
-			</a>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, energy.entity_id)}>
-				<text id="ess_load${id}_extra" x="${energyX}" y="${energyY}"
-							display="${energy.entity_id && energy.isValid() ? '' : 'none'}"
-							class="st3 ${align}" fill="${color}">
-					${energy.toNum(1)}
-					${energy.getUOM()}
-				</text>
-			</a>`;
-	}
 }
