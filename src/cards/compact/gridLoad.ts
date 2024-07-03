@@ -11,23 +11,23 @@ export class GridLoad {
 			case 1:
 				switch (max) {
 					case 1:
-						return [86, 97, 106.5, 106.5];
+						return [86, 97, 106.5];
 					case 2:
-						return [43, 54, 63.5, 63.5];
+						return [43, 54, 63.5];
 					case 3:
-						return [0, 11, 20.5, 20.5];
+						return [0, 11, 20.5];
 				}
 				break;
 			case 2:
 				switch (max) {
 					case 2:
-						return [86, 97, 106.5, 106.5];
+						return [86, 97, 106.5];
 					case 3:
-						return [43, 54, 63.5, 63.5];
+						return [43, 54, 63.5];
 				}
 				break;
 			case 3:
-				return [86, 97, 106.5, 106.5];
+				return [86, 97, 106.5];
 
 		}
 		return[];
@@ -46,9 +46,9 @@ export class GridLoad {
 			${LoadUtils.generateLoad(
 				'nes', 1, icon_link,
 				data.dynamicColourNonEssentialLoad1, X[0], 362,
-				config.grid?.load1_name, X[3], 390,
+				config.grid?.load1_name, X[2], 390,
 				data.stateNonessentialLoad1, X[2], 372,
-				data.stateNonEssentialLoad1Extra, X[3], 402,
+				data.stateNonEssentialLoad1Extra, X[2], 402,
 				'', config.grid.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
@@ -67,9 +67,9 @@ export class GridLoad {
 			${LoadUtils.generateLoad(
 				'nes', 2, icon_link,
 				data.dynamicColourNonEssentialLoad2, X[0], 362,
-				config.grid?.load2_name, X[3], 390,
+				config.grid?.load2_name, X[2], 390,
 				data.stateNonessentialLoad2, X[2], 372,
-				data.stateNonEssentialLoad2Extra, X[3], 402,
+				data.stateNonEssentialLoad2Extra, X[2], 402,
 				'', config.grid.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
@@ -89,9 +89,9 @@ export class GridLoad {
 			${LoadUtils.generateLoad(
 				'nes', 3, icon_link,
 				data.dynamicColourNonEssentialLoad3, X[0], 362,
-				config.grid?.load3_name, X[3], 390,
+				config.grid?.load3_name, X[2], 390,
 				data.stateNonessentialLoad3, X[2], 372,
-				data.stateNonEssentialLoad3Extra, X[3], 402,
+				data.stateNonEssentialLoad3Extra, X[2], 402,
 				'', config.grid.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
