@@ -3,7 +3,7 @@ import { AutarkyType, DataDto } from '../../types';
 import { localize } from '../../localize/localize';
 
 export class Autarky {
-	private static readonly mainX = 120;
+	private static readonly mainX = 250;
 	private static readonly mainY = 267;
 
 	static getTexts(data: DataDto) {

@@ -299,7 +299,7 @@ mappings if using other integration methods.
 | aux_power_166:          | Optional     | `sensor.sunsynk_aux_power`                     | Auxilary power (W)                                                                                                                                                                                                                |
 | aux_load1:              | Optional     |                                                | Sensor that contains the power of your AUX load 1 (W)                                                                                                                                                                             |
 | aux_load2:              | Optional     |                                                | Sensor that contains the power of your AUX load 2 (W)                                                                                                                                                                             |
-| aux_load1_extra:        | Optional     |                                                | Sensor that contains additional information you want displayed for your aux load 1 e.g. Daily kWh, Temperature etc.  This entity can also be used to display additioanl sensor information above the aux icon when `aux_loads: 0` |
+| aux_load1_extra:        | Optional     |                                                | Sensor that contains additional information you want displayed for your aux load 1 e.g. Daily kWh, Temperature etc.  This entity can also be used to display additional sensor information above the aux icon when `aux_loads: 0` |
 | aux_load2_extra:        | Optional     |                                                | Sensor that contains additional information you want displayed for your aux load 2 e.g. Daily kWh, Temperature etc                                                                                                                |
 | aux_connected_status:   | Optional     |                                                | AUX Connected Status `on/off` or `1/0`                                                                                                                                                                                            |
 
@@ -409,21 +409,31 @@ load_power_L1 +  load_power_L2 +  load_power_L3
     ```
     essential_power = inverter_power_175 + grid_power_169 - aux_power_166
     ```
-  * or  
+  * otherwise  
     ```
     essential_power = totalPV + battery_power_190 + grid_power_169 - aux_power_166
     ```
 
+
 ### Non essential Load Calculation
 
-If `three_phase:false`
+Nonessential Load is provided through `nonessential_power` entity.
 
- ```
- nonessential = grid_ct_power_172 - grid_power_169
- ```
-
-If `three_phase:true`
-
+* If there is no  `nonessential_power` entity and there is no `grid_power_169` entity then
 ```
- nonessential = grid_ct_power_172 + grid_ct_power_L2 + grid_ct_power_L3 - grid_power_169
- ```
+nonessentialPower = non_essential_load1 + non_essential_load2 + non_essential_load3
+```
+
+* otherwise
+
+  * If `three_phase:false`
+
+  ```
+  nonessential = grid_ct_power_172 - grid_power_169
+  ```
+
+  * If `three_phase:true`
+
+  ```
+  nonessential = grid_ct_power_172 + grid_ct_power_L2 + grid_ct_power_L3 - grid_power_169
+  ```

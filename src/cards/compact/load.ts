@@ -5,12 +5,13 @@ import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
 
 export class Load {
-	public static readonly LOAD_X = 410;
+	public static readonly ESSENTIAL_LOAD_X = 410;
+	public static readonly NON_ESSENTIAL_LOAD_X = 10;
 
 	static generateDailyLoadName(data: DataDto) {
 
 		return svg`
-			<text id="daily_load" x="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? this.LOAD_X - 35 : this.LOAD_X + 12}"
+			<text id="daily_load" x="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? this.ESSENTIAL_LOAD_X - 35 : this.ESSENTIAL_LOAD_X + 12}"
 				  y="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '189' : '282.1'}"
 				  class="st3 left-align"
 				  fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
@@ -22,7 +23,7 @@ export class Load {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
 				<text id="daily_load_value"
-					  x="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? this.LOAD_X - 35 : this.LOAD_X + 12}"
+					  x="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? this.ESSENTIAL_LOAD_X - 35 : this.ESSENTIAL_LOAD_X + 12}"
 					  y="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '175' : '267.9'}"
 					  class="st10 left-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.loadColour}">
@@ -35,7 +36,7 @@ export class Load {
 	static generateFlowLines(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		const startX = 264.7;
 		const gap = 70;
-		const width = this.LOAD_X + 3 - startX - gap;
+		const width = this.ESSENTIAL_LOAD_X + 3 - startX - gap;
 		const start1 = startX;
 		const stop1 = start1 + width / 2;
 		const start2 = stop1 + gap;
@@ -74,7 +75,7 @@ export class Load {
 	}
 
 	static generatePowers(data: DataDto, config: sunsynkPowerFlowCardConfig) {
-		const x = 400 + (this.LOAD_X - 400) / 2 - 30;
+		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 30;
 		return svg`
 			<text id="load-power-L1" x="${x}" y="241"
 				  display="${config.inverter.three_phase && config.entities?.load_power_L1 ? '' : 'none'}"
@@ -95,7 +96,7 @@ export class Load {
 	}
 
 	static generateShapes(data: DataDto) {
-		const x = 400 + (this.LOAD_X - 400) / 2 - 101.3;
+		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 101.3;
 
 		return svg`
 			<rect x="${x}" y="203.5" width="70" height="30" rx="4.5" ry="4.5" fill="none"
@@ -104,7 +105,7 @@ export class Load {
 	}
 
 	static generateTotalLoad(data: DataDto, config: sunsynkPowerFlowCardConfig) {
-		const x = 400 + (this.LOAD_X - 400) / 2 - 65.3;
+		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 65.3;
 		return svg`
 			${config.entities?.essential_power && config.entities.essential_power !== 'none'
 			? svg`
@@ -125,7 +126,7 @@ export class Load {
 	static generateIcon(data: DataDto, config: sunsynkPowerFlowCardConfig){
 
 		return svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.LOAD_X +5: this.LOAD_X +2}"
+			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.ESSENTIAL_LOAD_X +5: this.ESSENTIAL_LOAD_X +2}"
 				 y="${data.essIconSize === 1 ? "186" : "177.5"}" width="${data.essIconSize === 1 ? "75" : "79"}"
 				 height="${data.essIconSize === 1 ? "75" : "79"}"
 				 viewBox="0 0 24 24">

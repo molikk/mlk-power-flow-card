@@ -11,14 +11,7 @@ export class Battery {
 			<rect x="205" y="290" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				  stroke="${data.batteryColour}" pointer-events="all"
 				  display="${config.show_battery ? '' : 'none'}"
-				  class="${data.compactMode ? '' : 'st12'}"/>
-			<rect x="159" y="${data.compactMode ? '348' : '329.75'}" width="70"
-				  height="${data.compactMode ? '50' : '70'}"
-				  rx="${data.compactMode ? '7.5' : '10.5'}" ry="${data.compactMode ? '7.5' : '10.5'}"
-				  fill="none"
-				  stroke="${data.batteryColour}" pointer-events="all"
-				  display="${!config.show_battery ? 'none' : ''}"
-				  class="${data.compactMode ? 'st12' : ''}"/>
+				  class=""/>
 		`;
 	}
 

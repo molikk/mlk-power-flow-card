@@ -12,6 +12,7 @@ import {Solar} from './compact/solar';
 import {Battery} from './compact/battery';
 import {Grid} from './compact/grid';
 import {Inverter} from './compact/inverter';
+import { GridLoad } from './compact/gridLoad';
 
 
 export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: string, data: DataDto) => {
@@ -51,13 +52,23 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${Grid.generateGridName(data, config)}
                             ${Grid.generateFlowLines(data)}
                             ${Grid.generateIcon(data, config)}
-                            ${Grid.generateTotalPower(data, config)}
+                            ${Grid.generateEnergyCost(data, config)}
                             ${Grid.generatePhases(data, config)}
                             ${Grid.generatePrepaidUnits(data, config)}
                             ${Grid.generateLimit(data, config)}
                             ${Grid.generateTotalGridPower(data, config)}
-                        `
-                        : ``
+                        `:``
+                    }
+                    ${config.show_grid && config.grid.show_nonessential?
+                        svg`
+                            ${GridLoad.generateLoad1(data, config)}
+                            ${GridLoad.generateLoad2(data, config)}
+                            ${GridLoad.generateLoad3(data, config)}
+                            ${GridLoad.generateLines(data, config)}
+                            ${GridLoad.generateFlowLine(data, config)}
+                            ${GridLoad.generateShapes(data)}
+                            ${GridLoad.generateTotalPower(data, config)}
+                        `:``
                     }
 
                     ${Load.generateShapes(data)}

@@ -107,7 +107,7 @@ export class Grid {
 			</a>`;
 	}
 
-	static generateTotalPower(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateEnergyCost(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
 				<text id="energy_cost" x="${this._col2X}" y="241" class="st3 left-align" 
@@ -213,6 +213,7 @@ export class Grid {
 			</a>
 		`;
 	}
+
 	static generateDailyImport(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_import_76)}>
@@ -229,7 +230,6 @@ export class Grid {
 			</text>
 		`;
 	}
-
 
 	static generateDailyExport(data: DataDto, config: sunsynkPowerFlowCardConfig) {
 		return svg`
@@ -265,7 +265,7 @@ export class Grid {
 			? config.entities?.grid_ct_power_total
 				? svg`
 					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
-						<text id="data.totalGridPower" x="135" y="219.2"
+						<text id="grid_total_power" x="140" y="219.2"
 							  display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 							  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 							${config.grid.auto_scale
@@ -280,7 +280,7 @@ export class Grid {
 						</text>
 					</a>`
 				: svg`
-					<text id="grid_total_power" x="135" y="219.2"
+					<text id="grid_total_power" x="140" y="219.2"
 						  display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 						${config.grid.auto_scale
@@ -295,7 +295,7 @@ export class Grid {
 					</text>`
 			: svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
-					<text id="grid_total_power" x="135" y="219.2"
+					<text id="grid_total_power" x="140" y="219.2"
 						  display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 						${config.grid.auto_scale

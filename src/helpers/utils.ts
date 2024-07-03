@@ -29,10 +29,10 @@ export class Utils {
     static convertValueNew(value: string | number, unit: UnitOfEnergyOrPower | string = '', decimal: number = 2) {
         decimal = isNaN(decimal) ? 2 : decimal;
         const numberValue = Number(value);
-        if (isNaN(numberValue)) return 0;
+        if (isNaN(numberValue)) return Number(0).toFixed(decimal);
 
         const rules = unitOfEnergyConversionRules[unit];
-        if (!rules) return `${Math.round(numberValue)} ${unit}`;
+        if (!rules) return `${Math.round(numberValue).toFixed(decimal)} ${unit}`;
 
         if (unit === UnitOfPower.WATT && Math.abs(numberValue) < 1000) {
             return `${Math.round(numberValue)} ${unit}`;
