@@ -1,4 +1,4 @@
-import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
+import { DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { icons } from '../../helpers/icons';
 import { Utils } from '../../helpers/utils';
@@ -19,7 +19,7 @@ export class Inverter {
 		`;
 	}
 
-	static generateTimerInfo(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateTimerInfo(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.use_timer_248)}>
 				<svg xmlns="http://www.w3.org/2000/svg" id="timer" x="267.7" y="243.3" width="18"

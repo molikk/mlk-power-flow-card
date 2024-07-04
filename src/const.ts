@@ -59,6 +59,9 @@ export const enum UnitOfElectricPotential {
     MILLIVOLT = "mV",
     VOLT = "V"
 }
+export const enum UnitOfFrequency {
+    HERTZ = "Hz"
+}
 
 export type UnitOfEnergyOrPower = UnitOfEnergy | UnitOfPower;
 

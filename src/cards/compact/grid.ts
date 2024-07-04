@@ -1,10 +1,11 @@
-import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
+import { DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower, validGridConnected, validGridDisconnected } from '../../const';
 import { icons } from '../../helpers/icons';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { localize } from '../../localize/localize';
+import { LoadUtils } from './loadUtils';
 
 export class Grid {
 
@@ -31,7 +32,7 @@ export class Grid {
 		this._decimalPlaces = value;
 	}
 
-	static generateShapes(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateShapes(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<rect x="105" y="203.5" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				stroke="${data.gridColour}" pointer-events="all"
@@ -39,7 +40,7 @@ export class Grid {
 		`;
 	}
 
-	static generatePhases(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generatePhases(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			${this.generatePhasePower('L1', data.stateGridPowerL1, this._col1X, 241, config.grid.auto_scale)}
 			${this.generatePhasePower('L2', data.stateGridPowerL2, this._col1X, 254, config.grid.auto_scale)}
@@ -53,6 +54,10 @@ export class Grid {
 			${this.generatePhaseAmperage('L2', data.stateGridCurrentL2, this._col2X, 182)}
 			${this.generatePhaseAmperage('L3', data.stateGridCurrentL3, this._col2X, 169)}
 		`;
+	}
+
+	static generateFrequency(data: DataDto) {
+		return svg`${LoadUtils.generateFrequency(data.stateGridFrequency, data.gridColour, 'grid_frequency', this._col1X, 208, 'right-align')}`;
 	}
 
 	private static generatePhaseAmperage(
@@ -107,7 +112,7 @@ export class Grid {
 			</a>`;
 	}
 
-	static generateEnergyCost(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateEnergyCost(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
 				<text id="energy_cost" x="${this._col2X}" y="241" class="st3 left-align" 
@@ -126,7 +131,7 @@ export class Grid {
 		`;
 	}
 
-	static generateGridName(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateGridName(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text x="5" y="${config.grid.show_daily_buy ? '296' : '267'}" class="st3 st8 left-align" fill="${data.gridColour}"
 				  display="${!config.show_grid ? 'none' : ''}">${config.grid.grid_name}
@@ -164,7 +169,7 @@ export class Grid {
 		`;
 	}
 
-	static generateIcon(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
 				<svg xmlns="http://www.w3.org/2000/svg" id="transmission_on" x="-0.5" y="187.5"
@@ -202,7 +207,7 @@ export class Grid {
 			`;
 	}
 
-	static generatePrepaidUnits(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generatePrepaidUnits(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.prepaid_units)}>
 				<text id="prepaid" x="31.5" y="257"
@@ -214,7 +219,7 @@ export class Grid {
 		`;
 	}
 
-	static generateDailyImport(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateDailyImport(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_import_76)}>
 				<text id="daily_grid_buy_value" x="5" y="270" class="st10 left-align"
@@ -231,7 +236,7 @@ export class Grid {
 		`;
 	}
 
-	static generateDailyExport(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateDailyExport(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_export_77)}>
 				<text id="daily_grid_sell_value" x="5" y="150" class="st10 left-align"
@@ -248,7 +253,7 @@ export class Grid {
 		`;
 	}
 
-	static generateLimit(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLimit(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.max_sell_power)}>
 				<text id="max_sell_power" x="5" y="179" class="st3 left-align"
@@ -259,7 +264,7 @@ export class Grid {
 			</a>`;
 	}
 
-	static generateTotalGridPower(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateTotalGridPower(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			${config.inverter.three_phase
 			? config.entities?.grid_ct_power_total

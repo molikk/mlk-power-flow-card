@@ -2,7 +2,7 @@ import { CSSResultGroup, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import { styles } from './style';
-import { DataDto, InverterModel, InverterSettings, sunsynkPowerFlowCardConfig } from './types';
+import { DataDto, InverterModel, InverterSettings, PowerFlowCardConfig } from './types';
 import defaultConfig from './defaults';
 import {
 	CARD_VERSION,
@@ -37,7 +37,7 @@ console.groupEnd();
 @customElement(MAIN_NAME)
 export class PowerFlowCard extends LitElement {
 	@property() public hass!: HomeAssistant;
-	@property() private _config!: sunsynkPowerFlowCardConfig;
+	@property() private _config!: PowerFlowCardConfig;
 	@query('#grid-flow') gridFlow?: SVGSVGElement;
 	@query('#grid1-flow') grid1Flow?: SVGSVGElement;
 	@query('#solar-flow') solarFlow?: SVGSVGElement;
@@ -114,7 +114,7 @@ export class PowerFlowCard extends LitElement {
 				pv2_voltage_111: 'sensor.sunsynk_pv2_voltage',
 				pv2_current_112: 'sensor.sunsynk_pv2_current',
 			},
-		} as unknown as sunsynkPowerFlowCardConfig;
+		} as unknown as PowerFlowCardConfig;
 	}
 
 	render() {
@@ -132,6 +132,7 @@ export class PowerFlowCard extends LitElement {
 		//Inverter
 		const stateInverterVoltage = this.getEntity('entities.inverter_voltage_154');
 		const stateLoadFrequency = this.getEntity('entities.load_frequency_192');
+		const stateGridFrequency = this.getEntity('entities.grid_frequency');
 		const stateInverterCurrent = this.getEntity('entities.inverter_current_164');
 		const stateInverterStatus = this.getEntity('entities.inverter_status_59', { state: '' });
 		const stateInverterPower = this.getEntity('entities.inverter_power_175');
@@ -303,7 +304,6 @@ export class PowerFlowCard extends LitElement {
 		}
 
 		const auxStatus = config.entities?.aux_connected_status ? stateAuxConnectedStatus.state : 'on';
-		const loadFrequency = config.entities?.load_frequency_192 ? stateLoadFrequency.toNum(2) : 0;
 		const inverterVoltage = config.entities?.inverter_voltage_154
 			? config.inverter.three_phase
 				? stateInverterVoltage.toNum(0)
@@ -1176,7 +1176,6 @@ export class PowerFlowCard extends LitElement {
 			stateNonEssentialLoad1Toggle,
 			stateNonEssentialLoad2Toggle,
 			stateNonEssentialLoad3Toggle,
-			loadFrequency,
 			gridShowDailyBuy,
 			gridShowDailySell,
 			batteryShowDaily,
@@ -1330,6 +1329,8 @@ export class PowerFlowCard extends LitElement {
 			stateBatterySOH,
 			customGridIcon,
 			customGridIconColour,
+			stateLoadFrequency,
+			stateGridFrequency,
 		};
 
 		return compactCard(config, inverterImg, data);
@@ -1341,7 +1342,7 @@ export class PowerFlowCard extends LitElement {
 	 * @param entity
 	 * @param defaultValue
 	 */
-	getEntity(entity: keyof sunsynkPowerFlowCardConfig,
+	getEntity(entity: keyof PowerFlowCardConfig,
 	          defaultValue: Partial<CustomEntity> | null = {
 		          state: '0', attributes: { unit_of_measurement: '' },
 	          }): CustomEntity {
@@ -1488,7 +1489,7 @@ export class PowerFlowCard extends LitElement {
 			}
 		}
 
-		const customConfig: sunsynkPowerFlowCardConfig = config;
+		const customConfig: PowerFlowCardConfig = config;
 
 		this._config = merge({}, defaultConfig, customConfig);
 	}
