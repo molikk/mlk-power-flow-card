@@ -1,5 +1,5 @@
 import { svg } from 'lit';
-import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
+import { DataDto, PowerFlowCardConfig } from '../../types';
 import { Utils } from '../../helpers/utils';
 import { Load } from './load';
 import { LoadUtils } from './loadUtils';
@@ -39,7 +39,7 @@ export class EssentialLoad {
 		`;
 	}
 
-	static generateLoad1(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad1(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const iconBig = this.mainX - 29;
 		const shapeColumn1 = this.mainX;
@@ -99,7 +99,7 @@ export class EssentialLoad {
 			}`;
 	}
 
-	static generateLoad2(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad2(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const iconRight = this.mainX + 53;
 		const iconBig = this.mainX - 29;
@@ -172,7 +172,7 @@ export class EssentialLoad {
 		}`;
 	}
 
-	static generateLoad3(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad3(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const iconRight = this.mainX + 53;
 		const shapeColumn1 = this.mainX;
@@ -211,7 +211,7 @@ export class EssentialLoad {
 		}`;
 	}
 
-	static generateLoad4(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad4(data: DataDto, config: PowerFlowCardConfig) {
 		const iconRight = this.mainX + 53;
 		const shapeColumn2 = this.mainX + 43;
 		const nameColumn2  = shapeColumn2 + 20.5;
@@ -233,7 +233,7 @@ export class EssentialLoad {
 		}`;
 	}
 
-	static generateLoad5(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad5(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const shapeColumn1 = this.mainX;
 		const nameColumn1 = shapeColumn1 + 20.5;
@@ -255,7 +255,7 @@ export class EssentialLoad {
 		}`;
 	}
 
-	static generateLoad6(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad6(data: DataDto, config: PowerFlowCardConfig) {
 		const iconRight = this.mainX + 53;
 		const shapeColumn2 = this.mainX + 43;
 		const nameColumn2 = shapeColumn2 + 20.5;
@@ -277,7 +277,7 @@ export class EssentialLoad {
 		}`;
 	}
 
-	static generateLoad7(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad7(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const shapeColumn1 = this.mainX;
 		const nameColumn1  = shapeColumn1 + 20.5;
@@ -299,7 +299,7 @@ export class EssentialLoad {
 		}`;
 	}
 
-	static generateLoad8(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad8(data: DataDto, config: PowerFlowCardConfig) {
 		const iconRight = this.mainX + 53;
 		const shapeColumn2 = this.mainX + 43;
 		const nameColumn2 = shapeColumn2 + 20.5;

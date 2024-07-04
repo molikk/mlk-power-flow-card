@@ -1,4 +1,4 @@
-import {DataDto, sunsynkPowerFlowCardConfig} from '../../types';
+import {DataDto, PowerFlowCardConfig} from '../../types';
 import {svg} from 'lit';
 import {localize} from '../../localize/localize';
 import {icons} from '../../helpers/icons';
@@ -36,7 +36,7 @@ export class Solar {
         this._decimalPlaces = value;
     }
 
-    static generateSolarPower(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateSolarPower(data: DataDto, config: PowerFlowCardConfig) {
         return svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="pvtotal" x="205" y="116.5" width="70" height="30"
 				 viewBox="0 0 70 30" overflow="visible">
@@ -105,7 +105,7 @@ export class Solar {
     }
 
 
-    static generateSolarHeader(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateSolarHeader(data: DataDto, config: PowerFlowCardConfig) {
         let startPosition;
         let daily = svg``, monthly = svg``, yearly = svg``, total = svg``, remaining = svg``;
 
@@ -296,7 +296,7 @@ export class Solar {
         pv5: '#pv5-line',
     }
 
-    static generateMppt1(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateMppt1(data: DataDto, config: PowerFlowCardConfig) {
         const X = this.getPositions(1, config.solar.mppts);
 
         return svg`${config.show_solar ?
@@ -316,7 +316,7 @@ export class Solar {
     }
 
 
-    static generateMppt2(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateMppt2(data: DataDto, config: PowerFlowCardConfig) {
         const X = this.getPositions(2, config.solar.mppts);
         return svg`${(config.show_solar && config.solar.mppts >= 2) ?
             svg`
@@ -334,7 +334,7 @@ export class Solar {
     }
 
 
-    static generateMppt3(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateMppt3(data: DataDto, config: PowerFlowCardConfig) {
         const X = this.getPositions(3, config.solar.mppts);
         return svg`${(config.show_solar && config.solar.mppts >= 3) ?
             svg`
@@ -351,7 +351,7 @@ export class Solar {
         }`;
     }
 
-    static generateMppt4(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateMppt4(data: DataDto, config: PowerFlowCardConfig) {
         const X = this.getPositions(4, config.solar.mppts);
         return svg`${(config.show_solar && config.solar.mppts >= 4) ?
             svg`
@@ -368,7 +368,7 @@ export class Solar {
         }`;
     }
 
-    static generateMppt5(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+    static generateMppt5(data: DataDto, config: PowerFlowCardConfig) {
         const X = this.getPositions(5, config.solar.mppts);
         return svg`${(config.show_solar && config.solar.mppts >= 5) ?
             svg`

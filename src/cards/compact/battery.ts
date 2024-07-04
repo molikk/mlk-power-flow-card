@@ -1,4 +1,4 @@
-import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
+import { DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { localize } from '../../localize/localize';
 import { Utils } from '../../helpers/utils';
@@ -6,7 +6,7 @@ import { UnitOfEnergy } from '../../const';
 
 export class Battery {
 
-	static generateShapes(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateShapes(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<rect x="205" y="290" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				  stroke="${data.batteryColour}" pointer-events="all"
@@ -15,7 +15,7 @@ export class Battery {
 		`;
 	}
 
-	static generateDuration(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateDuration(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text id="duration" x="${data.compactMode ? '270' : '290'}" y="377.5"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} left-align"
@@ -42,7 +42,7 @@ export class Battery {
 		`;
 	}
 
-	static generateDailyCharge(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateDailyCharge(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text id="daily_bat_charge" x="${data.compactMode ? '132' : '77.2'}" y="357.2"
 				  class="st3 left-align"
@@ -60,7 +60,7 @@ export class Battery {
 		`;
 	}
 
-	static generateDailyDischarge(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateDailyDischarge(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text id="daily_bat_dischcharge" x="${data.compactMode ? '132' : '77.2'}" y="393.7"
 				  class="st3 left-align"
@@ -78,7 +78,7 @@ export class Battery {
 		`;
 	}
 
-	static generateFlowLines(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
  			<svg id="battery-flow">
 				<path id="bat-line"
@@ -107,7 +107,7 @@ export class Battery {
 			</svg>`;
 	}
 
-	static generateState(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateState(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text x="169" y="${!config.battery.show_remaining_energy ? '320' : '311'}" class="st3 left-align"
 				  display="${!config.show_battery || data.compactMode ? 'none' : ''}"
@@ -116,7 +116,7 @@ export class Battery {
 			</text>`;
 	}
 
-	static generateCapacity(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateCapacity(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text x="${data.compactMode ? '270' : !config.entities?.battery_status ? '193' : '169'}"
 				  y="${data.compactMode ? '338' : '323'}"
@@ -128,7 +128,7 @@ export class Battery {
 			</text>`;
 	}
 
-	static generateShutdownSOC(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateShutdownSOC(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text id="battery_soc_184" x="${data.compactMode ? '343' : '363'}" y="351"
 				  fill=${data.batteryColour}
@@ -144,7 +144,7 @@ export class Battery {
 			</text>`;
 	}
 
-	static generateBatteryGradient(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="${data.compactMode ? '212.5' : '232.5'}"
 				 y="325.5" width="78.75"

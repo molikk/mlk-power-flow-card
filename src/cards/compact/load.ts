@@ -1,5 +1,5 @@
 import { svg } from 'lit';
-import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
+import { DataDto, PowerFlowCardConfig } from '../../types';
 import { localize } from '../../localize/localize';
 import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
@@ -19,7 +19,7 @@ export class Load {
 			</text>`;
 	}
 
-	static generateDailyLoadValue(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateDailyLoadValue(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
 				<text id="daily_load_value"
@@ -33,7 +33,7 @@ export class Load {
 		`;
 	}
 
-	static generateFlowLines(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
 		const startX = 264.7;
 		const gap = 70;
 		const width = this.ESSENTIAL_LOAD_X + 3 - startX - gap;
@@ -74,7 +74,7 @@ export class Load {
 	`;
 	}
 
-	static generatePowers(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generatePowers(data: DataDto, config: PowerFlowCardConfig) {
 		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 30;
 		return svg`
 			<text id="load-power-L1" x="${x}" y="241"
@@ -104,7 +104,7 @@ export class Load {
 		`;
 	}
 
-	static generateTotalLoad(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateTotalLoad(data: DataDto, config: PowerFlowCardConfig) {
 		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 65.3;
 		return svg`
 			${config.entities?.essential_power && config.entities.essential_power !== 'none'
@@ -123,7 +123,7 @@ export class Load {
 		}
 		`;
 	}
-	static generateIcon(data: DataDto, config: sunsynkPowerFlowCardConfig){
+	static generateIcon(data: DataDto, config: PowerFlowCardConfig){
 
 		return svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.ESSENTIAL_LOAD_X +5: this.ESSENTIAL_LOAD_X +2}"
