@@ -1,9 +1,8 @@
 import { DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { Utils } from '../../helpers/utils';
-import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower, validGridConnected, validGridDisconnected } from '../../const';
+import { UnitOfPower, validGridConnected, validGridDisconnected } from '../../const';
 import { icons } from '../../helpers/icons';
-import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { localize } from '../../localize/localize';
 import { LoadUtils } from './loadUtils';
 
@@ -42,17 +41,17 @@ export class Grid {
 
 	static generatePhases(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			${this.generatePhasePower('L1', data.stateGridPowerL1, this._col1X, 241, config.grid.auto_scale)}
-			${this.generatePhasePower('L2', data.stateGridPowerL2, this._col1X, 254, config.grid.auto_scale)}
-			${this.generatePhasePower('L3', data.stateGridPowerL3, this._col1X, 267, config.grid.auto_scale)}
+			${LoadUtils.generatePhasePower('L1', data.stateGridPowerL1, this._col1X, 241, config.grid.auto_scale, this.gridColour, this.decimalPlaces)}
+			${LoadUtils.generatePhasePower('L2', data.stateGridPowerL2, this._col1X, 254, config.grid.auto_scale, this.gridColour, this.decimalPlaces)}
+			${LoadUtils.generatePhasePower('L3', data.stateGridPowerL3, this._col1X, 267, config.grid.auto_scale, this.gridColour, this.decimalPlaces)}
 			
-			${this.generatePhaseVoltage('L1', data.stateGridVoltageL1, this._col1X, 195)}
-			${this.generatePhaseVoltage('L2', data.stateGridVoltageL2, this._col1X, 182)}
-			${this.generatePhaseVoltage('L3', data.stateGridVoltageL3, this._col1X, 169)}
+			${LoadUtils.generatePhaseVoltage('L1', data.stateGridVoltageL1, this._col1X, 195, this.gridColour)}
+			${LoadUtils.generatePhaseVoltage('L2', data.stateGridVoltageL2, this._col1X, 182, this.gridColour)}
+			${LoadUtils.generatePhaseVoltage('L3', data.stateGridVoltageL3, this._col1X, 169, this.gridColour)}
 			
-			${this.generatePhaseAmperage('L1', data.stateGridCurrentL1, this._col2X, 195)}
-			${this.generatePhaseAmperage('L2', data.stateGridCurrentL2, this._col2X, 182)}
-			${this.generatePhaseAmperage('L3', data.stateGridCurrentL3, this._col2X, 169)}
+			${LoadUtils.generatePhaseAmperage('L1', data.stateGridCurrentL1, this._col2X, 195, this.gridColour)}
+			${LoadUtils.generatePhaseAmperage('L2', data.stateGridCurrentL2, this._col2X, 182, this.gridColour)}
+			${LoadUtils.generatePhaseAmperage('L3', data.stateGridCurrentL3, this._col2X, 169, this.gridColour)}
 		`;
 	}
 
@@ -60,57 +59,6 @@ export class Grid {
 		return svg`${LoadUtils.generateFrequency(data.stateGridFrequency, data.gridColour, 'grid_frequency', this._col1X, 208, 'right-align')}`;
 	}
 
-	private static generatePhaseAmperage(
-		id: string,
-		entity: CustomEntity,
-		x: number,
-		y: number,
-	) {
-		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
-				<text id="grid-current-${id}" x="${x}" y="${y}"
-					  display="${entity.isValid() ? '' : 'none'}"
-					  class="st3 left-align"
-					  fill="${this.gridColour}">
-					${entity.toStr(1) || 0} ${UnitOfElectricalCurrent.AMPERE}
-				</text>
-			</a>`;
-	}
-
-	private static generatePhaseVoltage(
-		id: string,
-		entity: CustomEntity,
-		x: number,
-		y: number,
-	) {
-		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
-				<text id="grid-potencial-${id}" x="${x}" y="${y}"
-					  display="${entity.isValid() ? '' : 'none'}"
-					  class="st3 right-align"
-					  fill="${this.gridColour}">
-					${entity.toStr(1) || 0} ${UnitOfElectricPotential.VOLT}
-				</text>
-			</a>`;
-	}
-
-	private static generatePhasePower(
-		id: string,
-		entity: CustomEntity,
-		x: number,
-		y: number,
-		autoScale: boolean,
-	) {
-		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
-				<text id="grid-power-${id}" x="${x}" y="${y}"
-					  display="${entity.isValid() ? '' : 'none'}"
-					  class="st3 right-align"
-					  fill="${this.gridColour}">
-					${autoScale ? `${Utils.convertValue(entity, this.decimalPlaces) || 0}` : `${entity || 0} ${UnitOfPower.WATT}`}
-				</text>
-			</a>`;
-	}
 
 	static generateEnergyCost(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`

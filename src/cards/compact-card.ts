@@ -13,8 +13,6 @@ import {Battery} from './compact/battery';
 import {Grid} from './compact/grid';
 import {Inverter} from './compact/inverter';
 import { GridLoad } from './compact/gridLoad';
-import { LoadUtils } from './compact/loadUtils';
-
 
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
     Solar.solarColour = data.solarColour;
@@ -175,27 +173,10 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                     </a>
 
 
+                    ${Inverter.generatePhases(data)}
+                    ${Inverter.generateFrequency(data)}
                     
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_voltage_154)}>
-                        <text id="inverter_voltage_154" x="270.2" y="168.2"
-                              display="${config.entities.inverter_voltage_154 === 'none' || !config.entities.inverter_voltage_154 ? 'none' : ''}"
-                              class="st3 left-align" fill="${data.inverterColour}">${data.inverterVoltage}
-                            ${config.inverter.three_phase && config.entities?.inverter_voltage_L2 ? '| ' + data.inverterVoltageL2 : ''}
-                            ${config.inverter.three_phase && config.entities?.inverter_voltage_L3 ? '| ' + data.inverterVoltageL3 : ''}
-                            ${UnitOfElectricPotential.VOLT}
-                        </text>
-                    </a>
-                    ${LoadUtils.generateFrequency(data.stateLoadFrequency, data.inverterColour, 'load_frequency_192', 270.2, 192.6, 'left-align')}
                     
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_current_164)}>
-                        <text id="inverter_current_164" x="270.2" y="180.4"
-                              display="${config.entities.inverter_current_164 === 'none' || !config.entities.inverter_current_164 ? 'none' : ''}"
-                              class="st3 left-align" fill="${data.inverterColour}">${data.inverterCurrent}
-                            ${config.inverter.three_phase && config.entities?.inverter_current_L2 ? '| ' + data.inverterCurrentL2 : ''}
-                            ${config.inverter.three_phase && config.entities?.inverter_current_L3 ? '| ' + data.inverterCurrentL3 : ''}
-                            ${UnitOfElectricalCurrent.AMPERE}
-                        </text>
-                    </a>
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_voltage_183)}>
                         <text id="battery_voltage_183" x="193" y="346"
                               display="${config.entities.battery_voltage_183 === 'none'
@@ -299,6 +280,8 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                             ${data.stateBatterySOH.toNum(0)}%
                         </text>
                     </a>
+                    
+                    
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.radiator_temp_91)}>
                         <text id="ac_temp" x="173" y="168.2" class="st3 left-align" fill="${data.inverterColour}"
                               display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">

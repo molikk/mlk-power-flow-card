@@ -2,7 +2,7 @@ import { svg, TemplateResult } from 'lit';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { Utils } from '../../helpers/utils';
 import { localize } from '../../localize/localize';
-import { UnitOfFrequency } from '../../const';
+import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfFrequency, UnitOfPower } from '../../const';
 
 export class LoadUtils {
 
@@ -55,24 +55,25 @@ export class LoadUtils {
 				${name ? `${name}` : ''}
 			</text>
 			${!power.isValid() && toggle.isValidSwitch()?
-			svg`
-			<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle.entity_id)}>
-				<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
-						class="st3"
-						fill="${color}">
-					${localize('common.' + (toggle?.toOnOff() || 'off'))}
-				</text>
-			</a>
-			`
-			:svg`
-			<a href = "#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
-				<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
-						display="${power.isValid() ? '' : 'none'}"
-						class="st3"
-						fill="${color}">
-					${power?.toPowerString(loadAutoScale, decimalPlaces)}
-				</text>
-			</a>`
+				svg`
+				<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle.entity_id)}>
+					<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
+							class="st3"
+							fill="${color}">
+						${localize('common.' + (toggle?.toOnOff() || 'off'))}
+					</text>
+				</a>
+				`
+			:
+				svg`
+				<a href = "#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
+					<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
+							display="${power.isValid() ? '' : 'none'}"
+							class="st3"
+							fill="${color}">
+						${power?.toPowerString(loadAutoScale, decimalPlaces)}
+					</text>
+				</a>`
 			}
 			<a href="#" @click=${(e) => Utils.handlePopup(e, energy.entity_id)}>
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
@@ -94,5 +95,62 @@ export class LoadUtils {
                 </text>
             </a>`
 			:``;
+	}
+
+
+	static generatePhaseAmperage(
+		id: string,
+		entity: CustomEntity,
+		x: number,
+		y: number,
+		color
+	) {
+		return svg`
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+				<text id="grid-current-${id}" x="${x}" y="${y}"
+					  display="${entity.isValid() ? '' : 'none'}"
+					  class="st3 left-align"
+					  fill="${color}">
+					${entity.toStr(1) || 0} ${UnitOfElectricalCurrent.AMPERE}
+				</text>
+			</a>`;
+	}
+
+	static generatePhaseVoltage(
+		id: string,
+		entity: CustomEntity,
+		x: number,
+		y: number,
+		color
+	) {
+		return svg`
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+				<text id="grid-potencial-${id}" x="${x}" y="${y}"
+					  display="${entity.isValid() ? '' : 'none'}"
+					  class="st3 right-align"
+					  fill="${color}">
+					${entity.toStr(1) || 0} ${UnitOfElectricPotential.VOLT}
+				</text>
+			</a>`;
+	}
+
+	 static generatePhasePower(
+		id: string,
+		entity: CustomEntity,
+		x: number,
+		y: number,
+		autoScale: boolean,
+		color,
+		decimalPlaces: number
+	) {
+		return svg`
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+				<text id="grid-power-${id}" x="${x}" y="${y}"
+					  display="${entity.isValid() ? '' : 'none'}"
+					  class="st3 right-align"
+					  fill="${color}">
+					${autoScale ? `${Utils.convertValue(entity, decimalPlaces) || 0}` : `${entity || 0} ${UnitOfPower.WATT}`}
+				</text>
+			</a>`;
 	}
 }
