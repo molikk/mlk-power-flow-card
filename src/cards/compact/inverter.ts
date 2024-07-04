@@ -3,6 +3,7 @@ import { svg } from 'lit';
 import { icons } from '../../helpers/icons';
 import { Utils } from '../../helpers/utils';
 import { localize } from '../../localize/localize';
+import { LoadUtils } from './loadUtils';
 
 export class Inverter {
 
@@ -43,6 +44,22 @@ export class Inverter {
 					  fill="${data.inverterColour}">${localize('common.timer_on')}
 				</text>
 			</a>
+		`;
+	}
+
+	static generateFrequency(data: DataDto) {
+		return svg`${LoadUtils.generateFrequency(data.stateLoadFrequency, data.inverterColour, 'load_frequency_192', 301.7, 208, 'right-align')}`;
+	}
+
+	static generatePhases(data: DataDto) {
+		return svg`
+			${LoadUtils.generatePhaseVoltage('L1', data.stateGridVoltageL1, 301.7, 195, data.inverterColour)}
+			${LoadUtils.generatePhaseVoltage('L2', data.stateGridVoltageL2, 301.7, 182, data.inverterColour)}
+			${LoadUtils.generatePhaseVoltage('L3', data.stateGridVoltageL3, 301.7, 169, data.inverterColour)}
+			
+			${LoadUtils.generatePhaseAmperage('L1', data.stateGridCurrentL1, 305.7, 195, data.inverterColour)}
+			${LoadUtils.generatePhaseAmperage('L2', data.stateGridCurrentL2, 305.7, 182, data.inverterColour)}
+			${LoadUtils.generatePhaseAmperage('L3', data.stateGridCurrentL3, 305.7, 169, data.inverterColour)}
 		`;
 	}
 }
