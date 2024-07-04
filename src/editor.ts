@@ -1,7 +1,7 @@
 import { html, LitElement, TemplateResult } from 'lit';
 import { fireEvent, HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 
-import { AutarkyType, InverterModel, sunsynkPowerFlowCardConfig } from './types';
+import { AutarkyType, InverterModel, PowerFlowCardConfig } from './types';
 import { customElement, property } from 'lit/decorators.js';
 import { localize } from './localize/localize';
 import { capitalize } from 'lodash';
@@ -9,12 +9,12 @@ import { EDITOR_NAME, SensorDeviceClass } from './const';
 import { LovelaceConfig } from 'custom-card-helpers/src/types';
 
 @customElement(EDITOR_NAME)
-export class SunSynkCardEditor extends LitElement implements LovelaceCardEditor {
+export class ConfigurationCardEditor extends LitElement implements LovelaceCardEditor {
 	@property() public hass!: HomeAssistant;
-	@property() private _config!: sunsynkPowerFlowCardConfig;
+	@property() private _config!: PowerFlowCardConfig;
 	@property() lovelace?: LovelaceConfig;
 
-	public setConfig(config: sunsynkPowerFlowCardConfig): void {
+	public setConfig(config: PowerFlowCardConfig): void {
 		this._config = { ...this._config, ...config };
 	}
 
@@ -453,6 +453,7 @@ export class SunSynkCardEditor extends LitElement implements LovelaceCardEditor 
 										schema: [
 											{ name: 'day_grid_import_76', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 											{ name: 'day_grid_export_77', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+											{ name: 'grid_frequency', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
 											{ name: 'grid_ct_power_172', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 											{ name: 'grid_ct_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 											{ name: 'grid_ct_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },

@@ -38,7 +38,7 @@ export enum AutarkyType {
     No = 'no'
 }
 
-export interface sunsynkPowerFlowCardConfig extends LovelaceCardConfig {
+export interface PowerFlowCardConfig extends LovelaceCardConfig {
     type: string;
     panel_mode?: boolean;
     large_font?: boolean;
@@ -182,13 +182,14 @@ export interface sunsynkPowerFlowCardConfig extends LovelaceCardConfig {
         disconnected_icon: string;
         prepaid_unit_name: string;
     }
-    entities: CardConfigEntities
+    entities: ConfigCardEntities
 }
 
-export interface CardConfigEntities {
+export interface ConfigCardEntities {
     use_timer_248: any,
     priority_load_243: any,
     inverter_voltage_154: string,
+    grid_frequency: string,
     load_frequency_192: string,
     inverter_current_164: string,
     inverter_power_175: string,
@@ -321,7 +322,7 @@ export interface InverterSettings {
 }
 
 export interface DataDto {
-    config: sunsynkPowerFlowCardConfig,
+    config: PowerFlowCardConfig,
     panelMode,
     compactMode,
     cardHeight,
@@ -361,8 +362,7 @@ export interface DataDto {
     stateGridCurrentL2,
     stateGridCurrentL3,
     decimalPlaces,
-    decimalPlacesEnergy, 
-    loadFrequency,
+    decimalPlacesEnergy,
     gridShowDailyBuy,
     gridShowDailySell,
     batteryShowDaily,
@@ -550,5 +550,7 @@ export interface DataDto {
     dynamicColourNonEssentialLoad3,
     stateBatterySOH: CustomEntity,
     customGridIcon,
-    customGridIconColour
+    customGridIconColour,
+    stateLoadFrequency: CustomEntity,
+    stateGridFrequency: CustomEntity;
 }

@@ -1,7 +1,7 @@
 import {html, svg} from 'lit';
 import {localize} from '../localize/localize';
 import {Utils} from '../helpers/utils';
-import {DataDto, sunsynkPowerFlowCardConfig} from '../types';
+import {DataDto, PowerFlowCardConfig} from '../types';
 import {UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower} from '../const';
 import {icons} from '../helpers/icons';
 import {EssentialLoad} from './compact/essentialLoad';
@@ -13,9 +13,10 @@ import {Battery} from './compact/battery';
 import {Grid} from './compact/grid';
 import {Inverter} from './compact/inverter';
 import { GridLoad } from './compact/gridLoad';
+import { LoadUtils } from './compact/loadUtils';
 
 
-export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: string, data: DataDto) => {
+export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
     Solar.solarColour = data.solarColour;
     Solar.decimalPlacesEnergy = data.decimalPlacesEnergy;
     Solar.decimalPlaces = data.decimalPlaces;
@@ -57,6 +58,7 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${Grid.generatePrepaidUnits(data, config)}
                             ${Grid.generateLimit(data, config)}
                             ${Grid.generateTotalGridPower(data, config)}
+                            ${Grid.generateFrequency(data)}
                         `:``
                     }
                     ${config.show_grid && config.grid.show_nonessential?
@@ -183,12 +185,8 @@ export const compactCard = (config: sunsynkPowerFlowCardConfig, inverterImg: str
                             ${UnitOfElectricPotential.VOLT}
                         </text>
                     </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.load_frequency_192)}>
-                        <text id="load_frequency_192" x="270.2" y="192.6"
-                              display="${config.entities.load_frequency_192 === 'none' || !config.entities.load_frequency_192 ? 'none' : ''}"
-                              class="st3 left-align" fill="${data.inverterColour}">${data.loadFrequency} Hz
-                        </text>
-                    </a>
+                    ${LoadUtils.generateFrequency(data.stateLoadFrequency, data.inverterColour, 'load_frequency_192', 270.2, 192.6, 'left-align')}
+                    
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_current_164)}>
                         <text id="inverter_current_164" x="270.2" y="180.4"
                               display="${config.entities.inverter_current_164 === 'none' || !config.entities.inverter_current_164 ? 'none' : ''}"

@@ -1,4 +1,4 @@
-import { DataDto, sunsynkPowerFlowCardConfig } from '../../types';
+import { DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { LoadUtils } from './loadUtils';
 import { Utils } from '../../helpers/utils';
@@ -34,7 +34,7 @@ export class GridLoad {
 	}
 
 
-	static generateLoad1(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad1(data: DataDto, config: PowerFlowCardConfig) {
 		const X = this.getPositions(1, config.grid.additional_loads)
 
 
@@ -55,7 +55,7 @@ export class GridLoad {
 		}`;
 	}
 
-	static generateLoad2(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad2(data: DataDto, config: PowerFlowCardConfig) {
 		const X = this.getPositions(2, config.grid.additional_loads)
 
 
@@ -77,7 +77,7 @@ export class GridLoad {
 	}
 
 
-	static generateLoad3(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLoad3(data: DataDto, config: PowerFlowCardConfig) {
 		const X = this.getPositions(3, config.grid.additional_loads)
 
 
@@ -132,7 +132,7 @@ export class GridLoad {
 
 	}
 
-	static generateLines(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateLines(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<path id="nes-load1" d="${this.getLines(1, config.grid.additional_loads)}"
 				class="${config.grid.additional_loads >= 1 ? '' : 'st12'}" fill="none"
@@ -149,7 +149,7 @@ export class GridLoad {
 		`;
 	}
 
-	static generateFlowLine(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateFlowLine(data: DataDto, config: PowerFlowCardConfig) {
 		const startX = (() => {
 			switch (config.grid.additional_loads) {
 				case 1:
@@ -200,7 +200,7 @@ export class GridLoad {
 		`;
 	}
 
-	static generateTotalPower(data: DataDto, config: sunsynkPowerFlowCardConfig) {
+	static generateTotalPower(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<text id="nonessential_load_power" x="140" y="306"
 				  display="${data.nonessentialLoads === 0 ? 'none' : ''}"

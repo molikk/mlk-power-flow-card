@@ -2,6 +2,7 @@ import { svg, TemplateResult } from 'lit';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { Utils } from '../../helpers/utils';
 import { localize } from '../../localize/localize';
+import { UnitOfFrequency } from '../../const';
 
 export class LoadUtils {
 
@@ -81,5 +82,17 @@ export class LoadUtils {
 					${energy.getUOM()}
 				</text>
 			</a>`;
+	}
+
+	static generateFrequency(entity: CustomEntity, color, id: string, x: number, y: number, align: string) {
+		return entity?.isValid()?
+			svg`
+            <a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
+                <text id="${id}" x="${x}" y="${y}"
+                      display="${entity?.isValid()? '': 'none'}"
+                      class="st3 ${align}" fill="${color}">${entity.toStr(1, false)} ${UnitOfFrequency.HERTZ}
+                </text>
+            </a>`
+			:``;
 	}
 }
