@@ -495,4 +495,22 @@ export class Solar {
 			</a>`;
     }
 
+    static generateSolarSellIcon(data: DataDto, config: PowerFlowCardConfig){
+        return svg`
+            <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.solar_sell_247)}>
+                <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_on" x="245" y="150" width="18"
+                     height="18" viewBox="0 0 30 30">
+                    <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'off' || data.stateSolarSell.state === '0' || !['1', 'on'].includes(data.stateSolarSell.state) ? 'none' : ''}"
+                          fill="${data.solarColour}"
+                          d="${icons.solarSellOn}"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_off" x="245" y="150" width="18"
+                     height="18" viewBox="0 0 30 30">
+                    <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'on' || data.stateSolarSell.state === '1' || !['0', 'off'].includes(data.stateSolarSell.state) ? 'none' : ''}"
+                          fill="${data.solarColour}"
+                          d="${icons.solarSellOff}"/>
+                </svg>
+            </a>`;
+    }
+
 }

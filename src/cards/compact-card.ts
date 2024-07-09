@@ -1,17 +1,15 @@
-import {html, svg} from 'lit';
-import {localize} from '../localize/localize';
-import {Utils} from '../helpers/utils';
-import {DataDto, PowerFlowCardConfig} from '../types';
-import {UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower} from '../const';
-import {icons} from '../helpers/icons';
-import {EssentialLoad} from './compact/essentialLoad';
-import {Autarky} from './compact/autarky';
-import {Style} from './compact/style';
-import {Load} from './compact/load';
-import {Solar} from './compact/solar';
-import {Battery} from './compact/battery';
-import {Grid} from './compact/grid';
-import {Inverter} from './compact/inverter';
+import { html, svg } from 'lit';
+import { Utils } from '../helpers/utils';
+import { DataDto, PowerFlowCardConfig } from '../types';
+import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower } from '../const';
+import { EssentialLoad } from './compact/essentialLoad';
+import { Autarky } from './compact/autarky';
+import { Style } from './compact/style';
+import { Load } from './compact/load';
+import { Solar } from './compact/solar';
+import { Battery } from './compact/battery';
+import { Grid } from './compact/grid';
+import { Inverter } from './compact/inverter';
 import { GridLoad } from './compact/gridLoad';
 
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
@@ -97,85 +95,28 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                             ${Solar.generateMppt4(data, config)}
                             ${Solar.generateMppt5(data, config)}
                             ${Solar.generateSolarPower(data, config)}
+                            ${Solar.generateSolarSellIcon(data, config)}
                         `
                             : ``
                     }
                     ${Autarky.getTexts(data)}
                     ${Inverter.generateIcon(data)}
                     ${Inverter.generateTimerInfo(data, config)}
+                    ${Inverter.generatePriorityLoad(data, config)}
+                    ${Inverter.generateInverterImage(data, inverterImg)}
+                    
                     <circle id="standby" cx="220" cy="260" r="3.5" fill="${data.inverterStateColour}"/>
-                    <circle id="bat" cx="${data.compactMode ? '238.5' : '162'}"
-                            cy="${data.compactMode
-                                    ? '326'
-                                    : !config.battery.show_remaining_energy
-                                            ? '319'
-                                            : '310'
-                            }"
-                            r="3.5"
+                    <circle id="bat" cx="238.5"
+                            cy="326" r="3.5"
                             display="${config.entities?.battery_status === 'none' || !config.entities?.battery_status || !config.show_battery ? 'none' : ''}"
                             fill="${data.batteryStateColour}"/>
-
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" id="pbat" x="267.7" y="262.5" width="18"
-                             height="18" viewBox="0 0 24 24">
-                            <path display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                                  fill="${data.inverterColour}"
-                                  d="${icons.priorityLoadOff}"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" id="pload" x="267.7" y="262.5" width="18"
-                             height="18" viewBox="0 0 24 24">
-                            <path display="${data.priorityLoad === 'on' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                                  fill="${data.inverterColour}"
-                                  d="${icons.priorityLoadOn}"/>
-                        </svg>
-                        <text id="priority_text_batt" x="287" y="273" class="st3 left-align"
-                              display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                              fill="${data.inverterColour}">X${localize('common.priority_batt')}
-                        </text>
-                        <text id="priority_text_load" x="287" y="273" class="st3 left-align"
-                              display="${data.priorityLoad === 'on' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                              fill="${data.inverterColour}">Y${localize('common.priority_load')}
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.solar_sell_247)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_on" x="245" y="150" width="18"
-                             height="18" viewBox="0 0 30 30">
-                            <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'off' || data.stateSolarSell.state === '0' || !config.show_solar || !['1', 'on'].includes(data.stateSolarSell.state) ? 'none' : ''}"
-                                  fill="${data.solarColour}"
-                                  d="${icons.solarSellOn}"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_off" x="245" y="150" width="18"
-                             height="18" viewBox="0 0 30 30">
-                            <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'on' || data.stateSolarSell.state === '1' || !config.show_solar || !['0', 'off'].includes(data.stateSolarSell.state) ? 'none' : ''}"
-                                  fill="${data.solarColour}"
-                                  d="${icons.solarSellOff}"/>
-                        </svg>
-                    </a>
-                    <image x="212" y="180" width="54" height="72"
-                           class="${!data.genericInverterImage ? '' : 'st12'}"
-                           href="${inverterImg}"
-                           preserveAspectRatio="none"/>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, data.inverterProg.entityID)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_on" x="323" y="243" width="20"
-                             height="18" viewBox="0 0 24 24">
-                            <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
-                                  class="${data.inverterProg.charge === 'none' || (data.stateUseTimer.state != 'off' && data.stateUseTimer.state != 'on') ? 'st12' : ''}"
-                                  fill="${data.inverterColour}"
-                                  d="${icons.progGridOn}"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_off" x="323" y="243" width="20"
-                             height="18" viewBox="0 0 24 24">
-                            <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
-                                  class="${data.inverterProg.charge === 'none' && (data.stateUseTimer.state === 'off' || data.stateUseTimer.state === 'on') ? '' : 'st12'}"
-                                  fill="${data.inverterColour}"
-                                  d="${icons.progGridOff}"/>
-                        </svg>
-                    </a>
-
-
+                    
+                    
+                    
+                    ${Inverter.generateInverterProgram(data)}
                     ${Inverter.generatePhases(data)}
                     ${Inverter.generateFrequency(data)}
-                    
+                    ${Inverter.generateTemps(data, config)}
                     
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_voltage_183)}>
                         <text id="battery_voltage_183" x="193" y="346"
@@ -282,20 +223,6 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                     </a>
                     
                     
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.radiator_temp_91)}>
-                        <text id="ac_temp" x="173" y="168.2" class="st3 left-align" fill="${data.inverterColour}"
-                              display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
-                            AC:
-                            ${data.stateRadiatorTemp.toNum(1)}°
-                        </text>
-                    </a>
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90)}>
-                        <text id="dc_temp" x="173" y="180.4" class="st3 left-align" fill="${data.inverterColour}"
-                              display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
-                            DC:
-                            ${data.stateDCTransformerTemp.toNum(1)}°
-                        </text>
-                    </a>
 
 
                 </svg>
