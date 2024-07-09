@@ -59,6 +59,8 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
         model: InverterModel;
         auto_scale: boolean;
         three_phase: boolean;
+        ac_icon: string;
+        dc_icon: string;
     }
     battery: {
         energy: any;

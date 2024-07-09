@@ -80,6 +80,11 @@ export class Style {
 					color: ${data.customGridIconColour} !important;
 					--mdc-icon-size: 64px;
 				}
+
+				.small_ac_dc_icon {
+					color: ${data.inverterColour} !important;
+					--mdc-icon-size: 14px;
+				}
 			</style>`;
 	}
 }
