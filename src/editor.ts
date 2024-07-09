@@ -95,6 +95,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										},
 										{ name: 'colour', selector: { color_rgb: {} } },
+									    { name: 'ac_icon', selector: { icon: {} } },
+										{ name: 'dc_icon', selector: { icon: {} } },
 									],
 								}],
 							},

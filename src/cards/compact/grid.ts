@@ -10,6 +10,7 @@ export class Grid {
 
 	private static readonly _col1X = 103;
 	private static readonly _col2X = 107;
+	private static readonly _col3X = 137;
 
 	private static _gridColour: 'gray';
 	private static _decimalPlaces: 2;
@@ -63,14 +64,14 @@ export class Grid {
 	static generateEnergyCost(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
-				<text id="energy_cost" x="${this._col2X}" y="241" class="st3 left-align" 
+				<text id="energy_cost" x="${this._col3X}" y="182" class="st3 left-align" 
 					  fill="${data.gridImportColour}" 
 					  display="${config.entities?.energy_cost_buy && data.stateEnergyCostBuy.isValid() ? '' : 'none'}" >
 					${data.stateEnergyCostBuy.toStr(config.grid?.energy_cost_decimals || 2)} ${data.stateEnergyCostBuy.getUOM()}
 				</text>
 			</a>
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_sell)}>
-				<text id="energy_cost" x="${this._col2X}" y="254"  class="st3 left-align" 
+				<text id="energy_cost" x="${this._col3X}" y="195"  class="st3 left-align" 
 					  fill="${data.gridExportColour}" 
 					  display="${config.entities?.energy_cost_sell && data.stateEnergyCostSell.isValid() ? '' : 'none'}" >
 					${data.stateEnergyCostSell.toStr(config.grid?.energy_cost_decimals || 2)} ${data.stateEnergyCostSell.getUOM()}
