@@ -75,7 +75,7 @@ export class Solar {
 					</animateMotion>
 				</circle>
 			</svg>
-			<text x="215" y="156" class="${config.solar.show_mppt_efficiency ? 'st3 st8' : 'st12'}"
+			<text x="233" y="156" class="${config.solar.show_mppt_efficiency ? 'st3 st8 right-align' : 'st12'}"
 				  display="${config.solar.mppts === 1 ? 'none' : ''}"
 				  fill="${data.solarColour}">${data.totalPVEfficiency}%
 			</text>
