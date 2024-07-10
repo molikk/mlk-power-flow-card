@@ -122,30 +122,30 @@ export class Inverter {
 
 	static generateTemps(data: DataDto, config: PowerFlowCardConfig){
 		let ac=config.inverter?.ac_icon
-			?LoadUtils.getIcon(203, 156, config.load.load4_icon, 'small_ac_dc_icon', 14)
+			?LoadUtils.getIcon(180, 219, config.inverter.ac_icon, 'small_ac_dc_icon', 14)
 			:svg`
-				<text id="ac_temp" x="216" y="166" class="st3 right-align" fill="${data.inverterColour}"
+				<text id="ac_temp" x="193" y="229" class="st3 right-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     AC:
                 </text>`;
 		let dc= config.inverter?.dc_icon
-			?LoadUtils.getIcon(203, 169, config.load.load2_icon, 'small_ac_dc_icon', 14)
+			?LoadUtils.getIcon(180, 231, config.inverter.dc_icon, 'small_ac_dc_icon', 14)
 			:svg`
-			<text id="dc_temp" x="216" y="180" class="st3 right-align" fill="${data.inverterColour}"
+			<text id="dc_temp" x="193" y="241" class="st3 right-align" fill="${data.inverterColour}"
                   display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
                 DC:
             </text>`;
 		return svg`
             <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.radiator_temp_91)}>
                 ${ac}
-                <text id="ac_temp" x="218" y="166" class="st3 left-align" fill="${data.inverterColour}"
+                <text id="ac_temp" x="195" y="229" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     ${data.stateRadiatorTemp.toNum(1)}°
                 </text>
             </a>
             <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90)}>
                 ${dc}
-                <text id="dc_temp" x="218" y="180" class="st3 left-align" fill="${data.inverterColour}"
+                <text id="dc_temp" x="195" y="241" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
                     ${data.stateDCTransformerTemp.toNum(1)}°
                 </text>
