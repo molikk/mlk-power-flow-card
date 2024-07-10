@@ -130,18 +130,17 @@ export class PowerFlowCard extends LitElement {
 		const stateDayAuxEnergy = this.getEntity('entities.day_aux_energy');
 
 		//Inverter
-		const stateInverterVoltage = this.getEntity('entities.inverter_voltage_154');
 		const stateLoadFrequency = this.getEntity('entities.load_frequency_192');
-		const stateGridFrequency = this.getEntity('entities.grid_frequency');
-		const stateInverterCurrent = this.getEntity('entities.inverter_current_164');
 		const stateInverterStatus = this.getEntity('entities.inverter_status_59', { state: '' });
 		const stateInverterPower = this.getEntity('entities.inverter_power_175');
 		const statePriorityLoad = this.getEntity('entities.priority_load_243', { state: config.entities.priority_load_243?.toString() ?? 'false' });
 		const stateUseTimer = this.getEntity('entities.use_timer_248', { state: config.entities.use_timer_248?.toString() ?? 'false' });
 		const stateDCTransformerTemp = this.getEntity('entities.dc_transformer_temp_90', { state: '' });
 		const stateRadiatorTemp = this.getEntity('entities.radiator_temp_91', { state: '' });
+		const stateInverterVoltageL1 = this.getEntity('entities.inverter_voltage_154');
 		const stateInverterVoltageL2 = this.getEntity('entities.inverter_voltage_L2', { state: '' });
 		const stateInverterVoltageL3 = this.getEntity('entities.inverter_voltage_L3', { state: '' });
+		const stateInverterCurrentL1 = this.getEntity('entities.inverter_current_164');
 		const stateInverterCurrentL2 = this.getEntity('entities.inverter_current_L2', { state: '' });
 		const stateInverterCurrentL3 = this.getEntity('entities.inverter_current_L3', { state: '' });
 		const stateEnvironmentTemp = this.getEntity('entities.environment_temp', { state: '' });
@@ -206,6 +205,7 @@ export class PowerFlowCard extends LitElement {
 		const stateAuxLoad2Extra = this.getEntity('entities.aux_load2_extra');
 
 		//Grid
+		const stateGridFrequency = this.getEntity('entities.grid_frequency');
 		const stateGridPowerL1 = this.getEntity('entities.grid_ct_power_172');
 		const stateGridPowerL2 = this.getEntity('entities.grid_ct_power_L2');
 		const stateGridPowerL3 = this.getEntity('entities.grid_ct_power_L3');
@@ -304,30 +304,7 @@ export class PowerFlowCard extends LitElement {
 		}
 
 		const auxStatus = config.entities?.aux_connected_status ? stateAuxConnectedStatus.state : 'on';
-		const inverterVoltage = config.entities?.inverter_voltage_154
-			? config.inverter.three_phase
-				? stateInverterVoltage.toNum(0)
-				: stateInverterVoltage.toNum(1)
-			: 0;
-		const inverterVoltageL2 = config.entities?.inverter_voltage_L2
-			? config.inverter.three_phase
-				? stateInverterVoltageL2.toNum(0)
-				: stateInverterVoltageL2.toNum(1)
-			: '';
-		const inverterVoltageL3 = config.entities?.inverter_voltage_L3
-			? config.inverter.three_phase
-				? stateInverterVoltageL3.toNum(0)
-				: stateInverterVoltageL3.toNum(1)
-			: '';
-		const inverterCurrent = config.entities?.inverter_current_164
-			? stateInverterCurrent.toNum(1)
-			: 0;
-		const inverterCurrentL2 = config.entities?.inverter_current_L2
-			? stateInverterCurrentL2.toNum(1)
-			: '';
-		const inverterCurrentL3 = config.entities?.inverter_current_L3
-			? stateInverterCurrentL3.toNum(1)
-			: '';
+
 		const batteryVoltage = config.entities?.battery_voltage_183 ? stateBatteryVoltage.toNum(1) : 0;
 		const autoScaledInverterPower = config.entities?.inverter_power_175
 			? stateInverterPower.toPower()
@@ -1195,13 +1172,13 @@ export class PowerFlowCard extends LitElement {
 			statePV4Current,
 			statePV5Current,
 			energyCost,
-			inverterCurrent,
-			inverterCurrentL2,
-			inverterCurrentL3,
+			stateInverterCurrentL1,
+			stateInverterCurrentL2,
+			stateInverterCurrentL3,
 			stateRadiatorTemp,
-			inverterVoltage,
-			inverterVoltageL2,
-			inverterVoltageL3,
+			stateInverterVoltageL1,
+			stateInverterVoltageL2,
+			stateInverterVoltageL3,
 			batteryVoltage,
 			stateBatteryCurrent,
 			batLineWidth,
