@@ -23,8 +23,8 @@ export class Load {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
 				<text id="daily_load_value"
-					  x="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? this.ESSENTIAL_LOAD_X - 35 : this.ESSENTIAL_LOAD_X + 12}"
-					  y="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '175' : '267.9'}"
+					  x="${data.additionalLoad >= 2 ? this.ESSENTIAL_LOAD_X - 35 : this.ESSENTIAL_LOAD_X + 12}"
+					  y="${data.additionalLoad >= 2 ? '175' : '267.9'}"
 					  class="st10 left-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.loadColour}">
 					${data.stateDayLoadEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
@@ -123,12 +123,13 @@ export class Load {
 		}
 		`;
 	}
-	static generateIcon(data: DataDto, config: PowerFlowCardConfig){
+
+	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
 
 		return svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.ESSENTIAL_LOAD_X +5: this.ESSENTIAL_LOAD_X +2}"
-				 y="${data.essIconSize === 1 ? "186" : "177.5"}" width="${data.essIconSize === 1 ? "75" : "79"}"
-				 height="${data.essIconSize === 1 ? "75" : "79"}"
+			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.ESSENTIAL_LOAD_X + 5 : this.ESSENTIAL_LOAD_X + 2}"
+				 y="${data.essIconSize === 1 ? '186' : '177.5'}" width="${data.essIconSize === 1 ? '75' : '79'}"
+				 height="${data.essIconSize === 1 ? '75' : '79'}"
 				 viewBox="0 0 24 24">
 				<defs>
 					<linearGradient id="Lg" x1="0%" x2="0%" y1="100%" y2="0%">
