@@ -919,7 +919,7 @@ export class PowerFlowCard extends LitElement {
 		let pvPercentage;
 		let batteryPercentage;
 		let gridPercentage = 0;
-		if (totalPercentage > 100) {
+		if (totalPercentage >= 100 || totalGridPower == 0) {
 			pvPercentage = Utils.toNum(normalizedPvPercentage, 0);
 			batteryPercentage = Utils.toNum(normalizedBatteryPercentage, 0);
 		} else {
@@ -954,7 +954,7 @@ export class PowerFlowCard extends LitElement {
 
 		let pvPercentageBat;
 		let gridPercentageBat;
-		if (totalPercentageBat > 100) {
+		if (totalPercentageBat >= 100 || totalGridPower == 0) {
 			pvPercentageBat = Utils.toNum(normalizedPvPercentage_bat, 0);
 			gridPercentageBat = Utils.toNum(normalizedGridPercentage, 0);
 		} else {
