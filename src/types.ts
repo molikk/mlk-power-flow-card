@@ -29,6 +29,7 @@ export enum InverterModel {
     Solis = 'solis',
     Sunsynk = 'sunsynk',
     Victron = 'victron',
+    EasunSMW8_SA = 'Easun SMW8kW SA',
 }
 
 export enum AutarkyType {
