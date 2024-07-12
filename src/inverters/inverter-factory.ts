@@ -20,6 +20,7 @@ import {Azzurro} from './brands/azzurro';
 import {MPPSolar} from './brands/mpp-solar';
 import {SMASolar} from './brands/sma-solar';
 import {E3dc} from './brands/e3dc';
+import { EasunSMW8_SA } from './brands/EasunSMW8_SA';
 
 
 
@@ -73,6 +74,8 @@ export class InverterFactory {
                 return new MPPSolar();
             case InverterModel.SMASolar:
                 return new SMASolar();
+            case InverterModel.EasunSMW8_SA:
+                return new EasunSMW8_SA();
             case InverterModel.Sunsynk:
             default:
                 return new Sunsynk()

@@ -1,4 +1,4 @@
-import { DataDto, PowerFlowCardConfig } from '../../types';
+import { DataDto, InverterModel, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { icons } from '../../helpers/icons';
 import { Utils } from '../../helpers/utils';
@@ -7,17 +7,19 @@ import { LoadUtils } from './loadUtils';
 
 export class Inverter {
 
-	static generateIcon(data: DataDto) {
+	static generateInverterImage(data: DataDto, inverterImg: string) {
 		return svg`
-			<svg xmlns="http://www.w3.org/2000/svg" x="213.5" y="179.5" width="54"
-				 height="79" viewBox="0 0 74 91" preserveAspectRatio="xMidYMid meet"
-				 opacity="${!data.genericInverterImage ? 0 : 1}">
-				<g transform="translate(0.000000,91.000000) scale(0.100000,-0.100000)"
-				   fill="${data.inverterColour}" stroke="none">
-					<path d="${icons.inverter}"/>
-				</g>
-			</svg>
-		`;
+			${data.genericInverterImage ?
+			svg`<svg xmlns="http://www.w3.org/2000/svg" x="213.5" y="179.5" width="54"
+					 height="79" viewBox="0 0 74 91" preserveAspectRatio="xMidYMid meet"
+					 opacity="$1">
+					<g transform="translate(0.000000,91.000000) scale(0.100000,-0.100000)"
+					   fill="${data.inverterColour}" stroke="none">
+						<path d="${icons.inverter}"/>
+					</g>
+				</svg>`
+			: svg`<image x="214" y="180" width="50" height="72" preserveAspectRatio="none" href="${inverterImg}" />`
+		}`;
 	}
 
 	static generateTimerInfo(data: DataDto, config: PowerFlowCardConfig) {
@@ -63,7 +65,7 @@ export class Inverter {
 		`;
 	}
 
-	static generatePriorityLoad(data: DataDto, config: PowerFlowCardConfig){
+	static generatePriorityLoad(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="pbat" x="267.7" y="262.5" width="18"
@@ -90,16 +92,7 @@ export class Inverter {
 		`;
 	}
 
-	static generateInverterImage(data: DataDto, inverterImg: string){
-		return svg`
-			<image x="212" y="180" width="54" height="72"
-                   class="${!data.genericInverterImage ? '' : 'st12'}"
-                   href="${inverterImg}"
-                   preserveAspectRatio="none"/>
-		`;
-	}
-
-	static generateInverterProgram(data: DataDto){
+	static generateInverterProgram(data: DataDto) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, data.inverterProg.entityID)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_on" x="323" y="243" width="20"
@@ -120,37 +113,110 @@ export class Inverter {
 		`;
 	}
 
-	static generateTemps(data: DataDto, config: PowerFlowCardConfig){
-		let ac=config.inverter?.ac_icon
-			?LoadUtils.getIcon(180, 219, config.inverter.ac_icon, 'small_ac_dc_icon', 14)
-			:svg`
-				<text id="ac_temp" x="193" y="229" class="st3 right-align" fill="${data.inverterColour}"
+	static generateTemps(data: DataDto, config: PowerFlowCardConfig) {
+		let ac = config.inverter?.ac_icon
+			? LoadUtils.getIcon(177, 219, config.inverter.ac_icon, 'small_ac_dc_icon', 14)
+			: svg`
+				<text id="ac_temp" x="190" y="229" class="st3 right-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     AC:
                 </text>`;
-		let dc= config.inverter?.dc_icon
-			?LoadUtils.getIcon(180, 231, config.inverter.dc_icon, 'small_ac_dc_icon', 14)
-			:svg`
-			<text id="dc_temp" x="193" y="241" class="st3 right-align" fill="${data.inverterColour}"
+		let dc = config.inverter?.dc_icon
+			? LoadUtils.getIcon(177, 231, config.inverter.dc_icon, 'small_ac_dc_icon', 14)
+			: svg`
+			<text id="dc_temp" x="190" y="241" class="st3 right-align" fill="${data.inverterColour}"
                   display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
                 DC:
             </text>`;
 		return svg`
             <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.radiator_temp_91)}>
                 ${ac}
-                <text id="ac_temp" x="195" y="229" class="st3 left-align" fill="${data.inverterColour}"
+                <text id="ac_temp" x="192" y="229" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
-                    ${data.stateRadiatorTemp.toNum(1)}°
+                    ${data.stateRadiatorTemp.toStr(1, false)}°
                 </text>
             </a>
             <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90)}>
                 ${dc}
-                <text id="dc_temp" x="195" y="241" class="st3 left-align" fill="${data.inverterColour}"
+                <text id="dc_temp" x="192" y="241" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
-                    ${data.stateDCTransformerTemp.toNum(1)}°
+                    ${data.stateDCTransformerTemp.toStr(1, false)}°
                 </text>
             </a>
 		`;
 	}
 
+	static generateInverterState(data: DataDto, config: PowerFlowCardConfig) {
+		let inverterModel = InverterModel.Sunsynk;
+
+		if (Object.values(InverterModel).includes(config.inverter.model)) {
+			inverterModel = config.inverter.model as InverterModel;
+		}
+		let X: number[];
+		if (config.inverter.modern) {
+			return svg`
+				<rect x="221.5" y="193" width="37.5" height="12" rx="1" ry="1" fill="${data.inverterStateColour}" stroke="${data.inverterStateColour}" pointer-events="all"
+				  display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}" />
+				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_status_59)}>
+	                <text id="standby" x=240 y="200" class="st15" fill="white"
+	                      display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}">
+	                    ${data.inverterStateMsg}
+	                </text>
+	            </a>
+			`;
+		}
+			switch (inverterModel) {
+				case InverterModel.Azzurro:
+					X = [235, 222, 7, 6, 239, 240];
+					break;
+				case InverterModel.Deye:
+				case InverterModel.Sunsynk:
+					X = [234, 206, 22, 5, 2, 239, 225];
+					break;
+				case InverterModel.Fronius:
+					X = [222, 230, 11, 9, 239, 246];
+					break;
+				case InverterModel.Goodwe:
+				case InverterModel.GoodweGridMode:
+					X = [222, 230, 11, 9, 239, 246];
+					break;
+				case InverterModel.Lux:
+					X = [249, 219, 10, 14, 239, 247];
+					break;
+				case InverterModel.MPPSolar:
+					X = [233, 242, 11, 5, 239, 234];
+					break;
+				case InverterModel.EasunSMW8_SA:
+				case InverterModel.PowMr:
+					X = [233, 190, 12, 5, 239, 230];
+					break;
+				case InverterModel.SolarEdge:
+					X = [234, 206, 22, 5, 2, 239, 225];
+					break;
+				case InverterModel.Sofar:
+					X = [233, 230, 12, 4, 239, 245];
+					break;
+				case InverterModel.Solis:
+					X = [249, 198, 8, 17, 239, 232];
+					break;
+				case InverterModel.Victron:
+					X = [218, 217, 18, 7.5, 239, 231];
+					break;
+				default:
+					return svg`
+					<circle id="standby" cx="252" cy="260" r="3.5" fill="${data.inverterStateColour}"/>
+				`;
+			}
+
+		return svg`
+			<rect x="${X[0]}" y="${X[1]}" width="${X[2]}" height="${X[3]}" rx="1" ry="1" fill="${data.inverterStateColour}" stroke="${data.inverterStateColour}" pointer-events="all" 
+			 display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}" />
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_status_59)}>
+                <text id="standby" x="${X[4]}" y="${X[5]}" class="st15" fill="${data.inverterStateColour}"
+                      display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}">
+                    ${data.inverterStateMsg}
+                </text>
+            </a>
+		`;
+	}
 }
