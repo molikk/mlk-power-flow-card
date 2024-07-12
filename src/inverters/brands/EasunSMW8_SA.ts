@@ -6,10 +6,10 @@ import {localize} from '../../localize/localize';
 export class EasunSMW8_SA extends InverterSettingsDto {
     brand = InverterModel.EasunSMW8_SA;
     statusGroups = {
-        standby: {states: ['0', 'standby'], color: 'blue', message: localize('common.standby')},
-        solar_battery: {states: ['1', 'solar/battery'], color: 'green', message: 'Solar/Battery'},
+        standby: {states: ['0', 'standby'], color: 'blue', message: 'Standby'},
+        solar_battery: {states: ['1', 'solar/battery'], color: 'green', message: 'Sol/Bat'},
         grid: {states: ['2', 'grid'], color: 'orange', message: 'Grid'},
-        power_saving: {states: ['3', 'power saving'], color: 'rgb(0,150,200)', message: 'Power saving'},
+        power_saving: {states: ['3', 'power saving'], color: 'rgb(0,150,200)', message: 'Eco mode'},
         power_on: {states: ['4', 'power on'], color: '#5fb6ad', message: 'Power on'},
         fault: {states: ['5', 'fault'], color: 'red', message: localize('common.fault')},
     };
