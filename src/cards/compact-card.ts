@@ -20,17 +20,15 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
     Grid.decimalPlaces = data.decimalPlaces;
 
     return html`
-        <ha-card>
-            ${Style.getStyle(data)}
+    	<ha-card>
+        	${Style.getStyle(data)}
             <div class="container card">
-                ${config.title ? html`<h1
-                        style="text-align: center; color: ${config.title_colour || 'inherit'}; data.largeFont-size: ${config.title_size || '32px'};">
-                    ${config.title}</h1>` : ''}
+            	${config.title ? html`<h1 style="text-align: center; color: ${config.title_colour || 'inherit'}; data.largeFont-size: ${config.title_size || '32px'};"> ${config.title}</h1>` : ''}
                 <svg viewBox="0 ${config.show_solar || data.additionalLoad > 6 ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146)} 500 ${config.show_solar ? (config.show_battery ? 408 : ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271)}"
-                     preserveAspectRatio="xMidYMid meet"
-                     height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
-                     width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">
+                	preserveAspectRatio="xMidYMid meet"
+                    height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
+                    width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}"
+                    xmlns:xlink="http://www.w3.org/1999/xlink">
 
                     ${Battery.generateShapes(data, config)}
                     ${Battery.generateDuration(data, config)}
@@ -41,6 +39,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                     ${Battery.generateShutdownSOC(data, config)}
                     ${Battery.generateFlowLines(data, config)}
                     ${Battery.generateBatteryGradient(data, config)}
+                  
                     ${config.show_grid ?
                         svg`
                             ${Grid.generateShapes(data, config)}
@@ -77,17 +76,23 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                     ${Load.generatePowers(data, config)}
                     ${Load.generateTotalLoad(data, config)}
                     ${Load.generateDailyLoadValue(data, config)}
-                    ${EssentialLoad.generateLines(data)}
-                    ${EssentialLoad.generateLoad1(data, config)}
-                    ${EssentialLoad.generateLoad2(data, config)}
-                    ${EssentialLoad.generateLoad3(data, config)}
-                    ${EssentialLoad.generateLoad4(data, config)}
-                    ${EssentialLoad.generateLoad5(data, config)}
-                    ${EssentialLoad.generateLoad6(data, config)}
-                    ${EssentialLoad.generateLoad7(data, config)}
-                    ${EssentialLoad.generateLoad8(data, config)}
+	    
+                    ${(data.additionalLoad > 0) ?
+                        svg`
+							${EssentialLoad.generateLines(data)}
+							${EssentialLoad.generateLoad1(data, config)}
+							${EssentialLoad.generateLoad2(data, config)}
+							${EssentialLoad.generateLoad3(data, config)}
+							${EssentialLoad.generateLoad4(data, config)}
+							${EssentialLoad.generateLoad5(data, config)}
+							${EssentialLoad.generateLoad6(data, config)}
+							${EssentialLoad.generateLoad7(data, config)}
+							${EssentialLoad.generateLoad8(data, config)}
+                        `
+                        : ``
+                    }
                     ${config.show_solar ?
-                            svg`
+	                    svg`
                             ${Solar.generateSolarHeader(data, config)}
                             ${Solar.generateMppt1(data, config)}
                             ${Solar.generateMppt2(data, config)}
@@ -97,27 +102,23 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                             ${Solar.generateSolarPower(data, config)}
                             ${Solar.generateSolarSellIcon(data, config)}
                         `
-                            : ``
-                    }
+					    : ``
+				    }
                     ${Autarky.getTexts(data)}
-                    ${Inverter.generateIcon(data)}
                     ${Inverter.generateTimerInfo(data, config)}
                     ${Inverter.generatePriorityLoad(data, config)}
                     ${Inverter.generateInverterImage(data, inverterImg)}
-                    
-                    <circle id="standby" cx="220" cy="260" r="3.5" fill="${data.inverterStateColour}"/>
+                    ${Inverter.generateInverterState(data, config)}
+					${Inverter.generateInverterProgram(data)}
+					${Inverter.generatePhases(data)}
+					${Inverter.generateFrequency(data)}
+					${Inverter.generateTemps(data, config)}
+                  
                     <circle id="bat" cx="238.5"
                             cy="326" r="3.5"
                             display="${config.entities?.battery_status === 'none' || !config.entities?.battery_status || !config.show_battery ? 'none' : ''}"
                             fill="${data.batteryStateColour}"/>
-                    
-                    
-                    
-                    ${Inverter.generateInverterProgram(data)}
-                    ${Inverter.generatePhases(data)}
-                    ${Inverter.generateFrequency(data)}
-                    ${Inverter.generateTemps(data, config)}
-                    
+                  
                     <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_voltage_183)}>
                         <text id="battery_voltage_183" x="193" y="346"
                               display="${config.entities.battery_voltage_183 === 'none'
