@@ -83,7 +83,7 @@ export class Style {
 
 				.small_ac_dc_icon {
 					color: ${data.inverterColour} !important;
-					--mdc-icon-size: 14px;
+					--mdc-icon-size: 10px;
 				}
 			</style>`;
 	}
