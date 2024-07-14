@@ -115,14 +115,14 @@ export class Inverter {
 
 	static generateTemps(data: DataDto, config: PowerFlowCardConfig) {
 		let ac = config.inverter?.ac_icon
-			? LoadUtils.getIcon(177, 219, config.inverter.ac_icon, 'small_ac_dc_icon', 14)
+			? LoadUtils.getIcon(178, 218, config.inverter.ac_icon, 'small_ac_dc_icon', 16)
 			: svg`
 				<text id="ac_temp" x="190" y="229" class="st3 right-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     AC:
                 </text>`;
 		let dc = config.inverter?.dc_icon
-			? LoadUtils.getIcon(177, 231, config.inverter.dc_icon, 'small_ac_dc_icon', 14)
+			? LoadUtils.getIcon(178, 230, config.inverter.dc_icon, 'small_ac_dc_icon', 16)
 			: svg`
 			<text id="dc_temp" x="190" y="241" class="st3 right-align" fill="${data.inverterColour}"
                   display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
@@ -165,48 +165,50 @@ export class Inverter {
 	            </a>
 			`;
 		}
-			switch (inverterModel) {
-				case InverterModel.Azzurro:
-					X = [235, 222, 7, 6, 239, 240];
-					break;
-				case InverterModel.Deye:
-				case InverterModel.Sunsynk:
-					X = [234, 206, 22, 5, 2, 239, 225];
-					break;
-				case InverterModel.Fronius:
-					X = [222, 230, 11, 9, 239, 246];
-					break;
-				case InverterModel.Goodwe:
-				case InverterModel.GoodweGridMode:
-					X = [222, 230, 11, 9, 239, 246];
-					break;
-				case InverterModel.Lux:
-					X = [249, 219, 10, 14, 239, 247];
-					break;
-				case InverterModel.MPPSolar:
-					X = [233, 242, 11, 5, 239, 234];
-					break;
-				case InverterModel.EasunSMW8_SA:
-				case InverterModel.PowMr:
-					X = [233, 190, 12, 5, 239, 230];
-					break;
-				case InverterModel.SolarEdge:
-					X = [234, 206, 22, 5, 2, 239, 225];
-					break;
-				case InverterModel.Sofar:
-					X = [233, 230, 12, 4, 239, 245];
-					break;
-				case InverterModel.Solis:
-					X = [249, 198, 8, 17, 239, 232];
-					break;
-				case InverterModel.Victron:
-					X = [218, 217, 18, 7.5, 239, 231];
-					break;
-				default:
-					return svg`
+		switch (inverterModel) {
+			case InverterModel.Azzurro:
+				X = [235, 222, 7, 6, 239, 240];
+				break;
+			case InverterModel.Deye:
+				X = [233.5, 205.5, 12, 6, 239, 225];
+				break;
+			case InverterModel.Fronius:
+				X = [222, 230, 11, 9, 239, 246];
+				break;
+			case InverterModel.Goodwe:
+			case InverterModel.GoodweGridMode:
+				X = [222, 236, 31, 3, 239, 225];
+				break;
+			case InverterModel.Growatt:
+				X = [250, 224, 11, 6, 239, 247];
+				break;
+			case InverterModel.EasunSMW8_SA:
+			case InverterModel.MPPSolar:
+				X = [233, 242, 11, 5, 239, 234];
+				break;
+			case InverterModel.PowMr:
+				X = [233, 190, 12, 5, 239, 230];
+				break;
+			case InverterModel.Sunsynk:
+				X = [234, 208, 10, 6, 239, 225];
+				break;
+			case InverterModel.SolarEdge:
+				X = [234, 206, 22, 5, 2, 239, 225];
+				break;
+			case InverterModel.Sofar:
+				X = [233, 230, 12, 4, 239, 245];
+				break;
+			case InverterModel.Solis:
+				X = [249, 198, 8, 17, 239, 232];
+				break;
+			case InverterModel.Victron:
+				X = [218, 217, 18, 7.5, 239, 231];
+				break;
+			default:
+				return svg`
 					<circle id="standby" cx="252" cy="260" r="3.5" fill="${data.inverterStateColour}"/>
 				`;
-			}
+		}
 
 		return svg`
 			<rect x="${X[0]}" y="${X[1]}" width="${X[2]}" height="${X[3]}" rx="1" ry="1" fill="${data.inverterStateColour}" stroke="${data.inverterStateColour}" pointer-events="all" 
