@@ -107,7 +107,7 @@ export class Solar {
 
     static generateSolarHeader(data: DataDto, config: PowerFlowCardConfig) {
         let startPosition;
-        let daily = svg``, monthly = svg``, yearly = svg``, total = svg``, remaining = svg``;
+        let daily = svg``, monthly = svg``, yearly = svg``, total = svg``, remaining = svg``, tomorrow = svg``;
 
         let no: number = this.countGenerationElements(data);
         if (no == 0) {
@@ -115,9 +115,14 @@ export class Solar {
         }
         startPosition = this.setStartPosition(no);
 
+        if (data.stateTomorrowSolar.isValid()) {
+            tomorrow = this.getProduction('tomorrow_solar', data.stateTomorrowSolar, startPosition)
+        }
+
         if (data.stateRemainingSolar.isValid()) {
             remaining = this.getProduction('remaining_solar', data.stateRemainingSolar, startPosition)
         }
+
         if (data.stateTotalSolarGeneration.isValid()) {
             total = this.getProduction('total_solar_generation', data.stateTotalSolarGeneration, startPosition)
         }
@@ -157,6 +162,7 @@ export class Solar {
                 ${yearly}
                 ${total}
                 ${remaining}
+                ${tomorrow}
 		`;
     }
 
@@ -174,6 +180,9 @@ export class Solar {
     private static countGenerationElements(data: DataDto) {
         let i = 0;
 
+        if (data.stateTomorrowSolar.isValid()) {
+            i++;
+        }
         if (data.stateRemainingSolar.isValid()) {
             i++;
         }

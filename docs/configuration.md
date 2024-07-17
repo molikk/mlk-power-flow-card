@@ -237,6 +237,7 @@ mappings if using other integration methods.
 | yearly_pv_generation:  | Optional    |                                | Yearly solar generation (kWh)                                                                                                  |
 | total_pv_generation:   | Optional    |                                | Total Solar generation                                                                                                         |
 | remaining_solar:       | Optional    |                                | The remaining solar forecast for the day (kWh).                                                                                |
+| tomorrow_solar:        | Optional    |                                | Solar forecast for tomorrow (kWh).                                                                                             |
 | pv1_power_186:         | Optional    | `sensor.sunsynk_pv1_power`     | PV string 1 power (W)                                                                                                          |
 | pv1_production:        | Optional    |                                | PV string 1 daily energy (kWh)                                                                                                 |
 | pv1_voltage_109:       | Optional    | `sensor.sunsynk_pv1_voltage`   | PV string 1 voltage (V)                                                                                                        |

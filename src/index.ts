@@ -258,6 +258,7 @@ export class PowerFlowCard extends LitElement {
 		const stateYearlyPVEnergy = this.getEntity('entities.yearly_pv_generation');
 		const stateTotalSolarGeneration = this.getEntity('entities.total_pv_generation');
 		const stateRemainingSolar = this.getEntity('entities.remaining_solar');
+		const stateTomorrowSolar = this.getEntity('entities.tomorrow_solar');
 
 		//Set defaults
 		const { invert_aux } = config.load;
@@ -1225,6 +1226,7 @@ export class PowerFlowCard extends LitElement {
 			stateYearlyPVEnergy,
 			stateTotalSolarGeneration,
 			stateRemainingSolar,
+			stateTomorrowSolar,
 			statePV2Power,
 			statePV3Power,
 			statePV4Power,
