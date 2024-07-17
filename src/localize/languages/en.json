@@ -15,6 +15,7 @@
     "yearly_solar": "YEARLY SOLAR",
     "total_solar_generation": "TOTAL SOLAR",
     "remaining_solar": "LEFT SOLAR",
+    "tomorrow_solar": "TOMORROW",
     "daily_charge": "DAILY CHARGE",
     "daily_discharge": "DAILY DISCHARGE",
     "ratio": "Ratio",
