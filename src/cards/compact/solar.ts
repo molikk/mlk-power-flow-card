@@ -116,27 +116,27 @@ export class Solar {
         startPosition = this.setStartPosition(no);
 
         if (data.stateTomorrowSolar.isValid()) {
-            tomorrow = this.getProduction('tomorrow_solar', data.stateTomorrowSolar, startPosition)
+            tomorrow = this.getProduction('tomorrow_solar_name', data.stateTomorrowSolar, startPosition, config)
         }
 
         if (data.stateRemainingSolar.isValid()) {
-            remaining = this.getProduction('remaining_solar', data.stateRemainingSolar, startPosition)
+            remaining = this.getProduction('remaining_solar_name', data.stateRemainingSolar, startPosition, config)
         }
 
         if (data.stateTotalSolarGeneration.isValid()) {
-            total = this.getProduction('total_solar_generation', data.stateTotalSolarGeneration, startPosition)
+            total = this.getProduction('total_solar_generation_name', data.stateTotalSolarGeneration, startPosition, config)
         }
 
         if (data.stateYearlyPVEnergy.isValid()) {
-            yearly = this.getProduction('yearly_solar', data.stateYearlyPVEnergy, startPosition)
+            yearly = this.getProduction('yearly_solar_name', data.stateYearlyPVEnergy, startPosition, config)
         }
 
         if (data.stateMonthlyPVEnergy.isValid()) {
-            monthly = this.getProduction('monthly_solar', data.stateMonthlyPVEnergy, startPosition)
+            monthly = this.getProduction('monthly_solar_name', data.stateMonthlyPVEnergy, startPosition, config)
         }
 
         if (data.stateDailyPVEnergy.isValid()) {
-            daily = this.getProduction('daily_solar', data.stateDailyPVEnergy, startPosition)
+            daily = this.getProduction('daily_solar_name', data.stateDailyPVEnergy, startPosition, config)
         }
 
         startPosition.x -= 2 + startPosition.gap / 2;
@@ -207,11 +207,11 @@ export class Solar {
     private static getProduction(
         fieldId: string,
         entity: CustomEntity,
-        startPosition: { x: number, gap: number }
-    ) {
+        startPosition: { x: number; gap: number }
+        , config: PowerFlowCardConfig) {
         const startX = startPosition.x;
         const power = entity?.toPowerString(true, this.decimalPlacesEnergy) || '0';
-        const name = localize("common." + fieldId);
+        const name = config.solar[fieldId] ? config.solar[fieldId]: localize("common." + fieldId);
 
         const powerWidth = this.getTextWidth(power, "16px Roboto");
         const nameWidth = this.getTextWidth(name, "9px Roboto");

@@ -1,6 +1,6 @@
 {
   "name": "mlk-power-flow-card",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A customizable Home Assistant card to emulate the Sunsynk System flow that's displayed on the Inverter screen.",
   "main": "mlk-power-flow-card.js",
   "scripts": {
@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.24.6",
     "@eslint/js": "^9.3.0",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-eslint": "^9.0.5",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
