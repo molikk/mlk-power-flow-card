@@ -123,21 +123,36 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 										{ name: 'show_mppt_production', selector: { boolean: {} } },
 									],
 								}, {
-									type: 'expandable',
-									title: this._title('max_power'),
-									schema: [{
-										name: 'solar',
-										type: 'grid',
-										schema: [
-											{ name: 'max_power', selector: { number: {} } },
-											{ name: 'pv1_max_power', selector: { number: {} } },
-											{ name: 'pv2_max_power', selector: { number: {} } },
-											{ name: 'pv3_max_power', selector: { number: {} } },
-											{ name: 'pv4_max_power', selector: { number: {} } },
-											{ name: 'pv5_max_power', selector: { number: {} } },
-										],
-									}],
-								}],
+                                    type: 'expandable',
+                                    title: this._title('solar_production'),
+                                    schema: [{
+                                        name: 'solar',
+                                        type: 'grid',
+                                        schema: [
+                                            { name: 'daily_solar_name', selector: { text: {} } },
+                                            { name: 'monthly_solar_name', selector: { text: {} } },
+                                            { name: 'yearly_solar_name', selector: { text: {} } },
+                                            { name: 'total_solar_generation_name', selector: { text: {} } },
+                                            { name: 'remaining_solar_name', selector: { text: {} } },
+                                            { name: 'tomorrow_solar_name', selector: { text: {} } },
+                                        ],
+                                    }],
+                                }, {
+                                    type: 'expandable',
+                                    title: this._title('max_power'),
+                                    schema: [{
+                                        name: 'solar',
+                                        type: 'grid',
+                                        schema: [
+                                            { name: 'max_power', selector: { number: {} } },
+                                            { name: 'pv1_max_power', selector: { number: {} } },
+                                            { name: 'pv2_max_power', selector: { number: {} } },
+                                            { name: 'pv3_max_power', selector: { number: {} } },
+                                            { name: 'pv4_max_power', selector: { number: {} } },
+                                            { name: 'pv5_max_power', selector: { number: {} } },
+                                        ],
+                                    }],
+                                }],
 							}, {
 								type: 'expandable',
 								title: this._title('battery'),

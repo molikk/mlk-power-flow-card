@@ -10,12 +10,12 @@
     "daily_aux": "DAILY AUX",
     "daily_grid_buy": "DAILY GRID BUY",
     "daily_grid_sell": "DAILY GRID SELL",
-    "daily_solar": "DAILY SOLAR",
-    "monthly_solar": "MONTHLY SOLAR",
-    "yearly_solar": "YEARLY SOLAR",
-    "total_solar_generation": "TOTAL SOLAR",
-    "remaining_solar": "LEFT SOLAR",
-    "tomorrow_solar": "TOMORROW",
+    "daily_solar_name": "DAILY SOLAR",
+    "monthly_solar_name": "MONTHLY SOLAR",
+    "yearly_solar_name": "YEARLY SOLAR",
+    "total_solar_generation_name": "TOTAL SOLAR",
+    "remaining_solar_name": "LEFT SOLAR",
+    "tomorrow_solar_name": "TOMORROW",
     "daily_charge": "DAILY CHARGE",
     "daily_discharge": "DAILY DISCHARGE",
     "ratio": "Ratio",
@@ -217,7 +217,8 @@
       "ld": "Load Entities",
       "gri": "Grid Entities",
       "sensor": "Optional Sensors",
-      "max_power": "PV Max Power"
+      "max_power": "PV Max Power",
+      "solar_production": "Solar Production"
     }
   }
 }
