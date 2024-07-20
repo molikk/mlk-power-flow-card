@@ -1,7 +1,7 @@
 import {unitOfEnergyConversionRules, UnitOfEnergyOrPower, UnitOfPower} from '../const';
 
 export class Utils {
-    static toNum(val: string | number, decimals: number = -1, invert: boolean = false): number {
+    static toNum(val: string | number, decimals: number = -1, invert: boolean = false, abs: boolean = false): number {
         let numberValue = Number(val);
         if (Number.isNaN(numberValue)) {
             return 0;
@@ -11,6 +11,9 @@ export class Utils {
         }
         if (invert) {
             numberValue *= -1;
+        }
+        if(abs) {
+          numberValue = Math.abs(numberValue);
         }
         return numberValue;
     }
@@ -69,7 +72,7 @@ export class Utils {
         if (!event || !entityId) {
           return;
         }
-    
+
         event.stopPropagation();
 
         // Handle different actions based on actionConfig
@@ -94,25 +97,25 @@ export class Utils {
           composed: true,
           detail: { entityId },
         });
-    
+
         history.pushState({ popupOpen: true }, '', window.location.href);
 
         event.target.dispatchEvent(moreInfoEvent);
-    
+
         const closePopup = () => {
- 
+
             if (Utils.isPopupOpen) {
                 //console.log(`Closing popup for entityId: ${entityId}`);
                 Utils.isPopupOpen = false;
-        
+
                 // Remove the event listener to avoid multiple bindings
                 window.removeEventListener('popstate', closePopup);
-        
+
                 // Optionally, if your popup close logic doesn't trigger history.back(), call it manually
                 history.back();
                 }
         };
-    
+
         window.addEventListener('popstate', closePopup, { once: true });
       }
 }

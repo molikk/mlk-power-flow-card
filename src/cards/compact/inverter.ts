@@ -25,23 +25,23 @@ export class Inverter {
 	static generateTimerInfo(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.use_timer_248)}>
-				<svg xmlns="http://www.w3.org/2000/svg" id="timer" x="267.7" y="243.3" width="18"
+				<svg xmlns="http://www.w3.org/2000/svg" id="timer" x="267.7" y="233.3" width="18"
 					 height="18" viewBox="0 0 24 24">
 					<path display="${data.stateUseTimer.state == 'on' && data.enableTimer !== 'no' ? '' : 'none'}"
 						  fill="${data.inverterColour}"
 						  d="${icons.timerOn}"/>
 				</svg>
-				<svg xmlns="http://www.w3.org/2000/svg" id="timer_off" x="267.7" y="243.3" width="18"
+				<svg xmlns="http://www.w3.org/2000/svg" id="timer_off" x="267.7" y="233.3" width="18"
 					 height="18" viewBox="0 0 24 24">
 					<path display="${data.stateUseTimer.state == 'off' && data.enableTimer !== 'no' ? '' : 'none'}"
 						  fill="${data.inverterColour}"
 						  d="${icons.timerOff}"/>
 				</svg>
-				<text id="timer_text_off" x="287" y="254.7" class="st3 left-align"
+				<text id="timer_text_off" x="287" y="244.7" class="st3 left-align"
 					  display="${data.stateUseTimer.state == 'off' && data.enableTimer !== 'no' ? '' : 'none'}"
 					  fill="${data.inverterColour}">${localize('common.timer_off')}
 				</text>
-				<text id="timer_text_on" x="287" y="254.7" class="st3 left-align"
+				<text id="timer_text_on" x="287" y="244.7" class="st3 left-align"
 					  display="${data.stateUseTimer.state == 'on' && data.enableTimer !== 'no' ? '' : 'none'}"
 					  fill="${data.inverterColour}">${localize('common.timer_on')}
 				</text>
@@ -66,43 +66,47 @@ export class Inverter {
 	}
 
 	static generatePriorityLoad(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
-                <svg xmlns="http://www.w3.org/2000/svg" id="pbat" x="267.7" y="262.5" width="18"
-                     height="18" viewBox="0 0 24 24">
-                    <path display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                          fill="${data.inverterColour}"
-                          d="${icons.priorityLoadOff}"/>
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" id="pload" x="267.7" y="262.5" width="18"
+		return svg`${data.priorityLoad === 'on' ?
+			svg`
+						<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
+                <svg xmlns="http://www.w3.org/2000/svg" id="pload" x="267.7" y="252.5" width="18"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.priorityLoad === 'on' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
                           fill="${data.inverterColour}"
                           d="${icons.priorityLoadOn}"/>
                 </svg>
-                <text id="priority_text_batt" x="287" y="273" class="st3 left-align"
-                      display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                      fill="${data.inverterColour}">${localize('common.priority_batt')}
-                </text>
-                <text id="priority_text_load" x="287" y="273" class="st3 left-align"
+                <text id="priority_text_load" x="287" y="263" class="st3 left-align"
                       display="${data.priorityLoad === 'on' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
                       fill="${data.inverterColour}">${localize('common.priority_load')}
                 </text>
-            </a>
-		`;
+            </a>`
+			: svg`
+						<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
+                <svg xmlns="http://www.w3.org/2000/svg" id="pbat" x="267.7" y="252.5" width="18"
+                     height="18" viewBox="0 0 24 24">
+                    <path display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
+                          fill="${data.inverterColour}"
+                          d="${icons.priorityLoadOff}"/>
+                </svg>
+                <text id="priority_text_batt" x="287" y="263" class="st3 left-align"
+                      display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
+                      fill="${data.inverterColour}">${localize('common.priority_batt')}
+                </text>
+            </a>`
+		}`;
 	}
 
 	static generateInverterProgram(data: DataDto) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, data.inverterProg.entityID)}>
-                <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_on" x="323" y="243" width="20"
+                <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_on" x="323" y="233" width="20"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
                           class="${data.inverterProg.charge === 'none' || (data.stateUseTimer.state != 'off' && data.stateUseTimer.state != 'on') ? 'st12' : ''}"
                           fill="${data.inverterColour}"
                           d="${icons.progGridOn}"/>
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_off" x="323" y="243" width="20"
+                <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_off" x="323" y="233" width="20"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
                           class="${data.inverterProg.charge === 'none' && (data.stateUseTimer.state === 'off' || data.stateUseTimer.state === 'on') ? '' : 'st12'}"

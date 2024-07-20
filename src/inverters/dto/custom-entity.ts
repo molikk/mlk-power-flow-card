@@ -20,8 +20,9 @@ export interface CustomEntity extends HassEntity {
 	 * Extension of Utils.toNum, returns the state in a string
 	 * @param decimals
 	 * @param invert
+	 * @param abs
 	 */
-	toStr(decimals?: number, invert?: boolean): string;
+	toStr(decimals?: number, invert?: boolean, abs?: boolean): string;
 
 	toString(): string;
 
@@ -69,7 +70,7 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 	return {
 		...entity,
 		toNum: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert),
-		toStr: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert).toFixed(decimals),
+		toStr: (decimals?: number, invert?: boolean, abs?: boolean) => Utils.toNum(entity?.state, decimals, invert, abs).toFixed(decimals),
 		isValid: () => isValid || false,
 		isValidSwitch: () => isValid && ['on', 'off', 'On', 'Off', 'ON', 'OFF', 0, 1, true, false].includes(entity?.state) || false,
 		notEmpty: () => notEmpty || false,
