@@ -85,21 +85,21 @@ export class Battery {
 			<text id="duration" x="270" y="377.5"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} left-align"
 				  display="${!config.show_battery ? 'none' : ''}"
-				  fill="${data.batteryEnergy === 0 || data.isFloating || data.stateBatteryPower.toNum(0) === 0 ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryEnergy === 0 || data.isFloating || data.batteryPower === 0 ? 'transparent' : `${data.batteryColour}`}">
 				${data.batteryDuration}
 			</text>
 			<text id="duration_text" x="270" y="393.7" class="st3 left-align"
 				  display="${!config.show_battery ? 'none' : ''}"
-				  fill="${data.batteryEnergy === 0 || data.stateBatteryPower.toNum(0) <= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryEnergy === 0 || data.batteryPower <= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.runtime_to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
 			<text id="duration_text_charging" x="270" y="393.7"
 				  class="st3 left-align"
 				  display="${!config.show_battery ? 'none' : ''}"
-				  fill="${data.batteryEnergy === 0 || data.stateBatteryPower.toNum(0) >= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryEnergy === 0 || data.batteryPower >= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
-			<text id="floating" x="$270" y="393.7" class="st3 left-align"
+			<text id="floating" x="270" y="393.7" class="st3 left-align"
 				  display="${!config.show_battery ? 'none' : ''}"
 				  fill="${data.batteryEnergy === 0 || !data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.battery_floating')}
@@ -154,7 +154,7 @@ export class Battery {
 				<circle id="power-dot-discharge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						class="${!config.show_battery ? 'st12' : ''}"
-						fill="${data.stateBatteryPower.toNum(0) <= 0 ? 'transparent' : `${data.batteryColour}`}">
+						fill="${data.batteryPower <= 0 ? 'transparent' : `${data.batteryColour}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="1;0" keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#bat-line"/>
@@ -163,7 +163,7 @@ export class Battery {
 				<circle id="power-dot-charge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						class="${!config.show_battery ? 'st12' : ''}"
-						fill="${data.stateBatteryPower.toNum(0) >= 0 ? 'transparent' : `${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}`}">
+						fill="${data.batteryPower >= 0 ? 'transparent' : `${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="0;1" keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#bat-line"/>

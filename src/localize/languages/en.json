@@ -220,6 +220,7 @@
       "bat": "Battery Entities",
       "sol": "Solar Entities",
       "inv": "Inverter Entities",
+      "inv_prog": "Programs Entities",
       "ld": "Load Entities",
       "gri": "Grid Entities",
       "sensor": "Optional Sensors",
