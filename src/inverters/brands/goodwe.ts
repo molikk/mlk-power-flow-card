@@ -13,14 +13,8 @@ export class Goodwe extends InverterSettingsDto {
     }
     statusGroups: InverterStatus = {
         standby: {states: ['0', 'wait mode'], color: 'blue', message: localize('common.standby')},
-        ongrid: {
-            states: ['1', 'normal (on-grid)'], color: 'green', message: localize('common.ongrid')
-        },
-        offgrid: {
-            states: ['2', 'normal (off-grid)'],
-            color: 'green',
-            message: localize('common.offgrid')
-        },
+        ongrid: {states: ['1', 'normal (on-grid)'], color: 'green', message: localize('common.ongrid')},
+        offgrid: {states: ['2', 'normal (off-grid)'], color: 'green', message: localize('common.offgrid')},
         fault: {states: ['3', 'fault mode'], color: 'red', message: localize('common.fault')},
         flash: {states: ['4', 'flash mode'], color: 'yellow', message: localize('common.flash')},
         check: {states: ['5', 'check mode'], color: 'orange', message: localize('common.check')},

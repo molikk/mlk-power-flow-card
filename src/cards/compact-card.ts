@@ -90,7 +90,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${Battery.generateBatteryGradient(data, config)}  
 	                            ${Battery.generateVoltage(data)} 
 	                            ${Battery.generateCurrent(data, config)}   
-	                            ${Battery.generateTemp(data)}  
+	                            ${Battery.generateTemp(data)}
 	                        ` : ``
 						}
 
@@ -119,6 +119,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						${Inverter.generatePriorityLoad(data, config)}
 						${Inverter.generateInverterImage(data, inverterImg)}
 						${Inverter.generateInverterState(data, config)}
+					    ${Inverter.generateInverterLoad(data, config)}
 						${Inverter.generateInverterProgram(data)}
 						${Inverter.generatePhases(data)}
 						${Inverter.generateFrequency(data)}

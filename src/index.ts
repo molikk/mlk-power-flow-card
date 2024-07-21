@@ -144,6 +144,7 @@ export class PowerFlowCard extends LitElement {
 		const stateInverterCurrentL2 = this.getEntity('entities.inverter_current_L2', { state: '' });
 		const stateInverterCurrentL3 = this.getEntity('entities.inverter_current_L3', { state: '' });
 		const stateEnvironmentTemp = this.getEntity('entities.environment_temp', { state: '' });
+		const stateInverterLoadPercentage = this.getEntity('entities.inverter_load_percentage');
 
 		//Battery
 		const stateBatteryVoltage = this.getEntity('entities.battery_voltage_183');
@@ -1094,6 +1095,7 @@ export class PowerFlowCard extends LitElement {
 			auxOffColour,
 			batteryEnergy,
 			largeFont,
+			batteryPower,
 			stateBatteryPower,
 			batteryDuration,
 			batteryCapacity,
@@ -1209,6 +1211,7 @@ export class PowerFlowCard extends LitElement {
 			stateBatteryTemp,
 			statePrepaidUnits,
 			stateDCTransformerTemp,
+			stateInverterLoadPercentage,
 			iconEssentialLoad1,
 			iconEssentialLoad2,
 			iconEssentialLoad3,

@@ -150,6 +150,92 @@ export class Inverter {
 		`;
 	}
 
+	static buildGradientStops(lvl: number) {
+		let result = svg`<stop offset="0%" stop-color="green" />`;
+		if (lvl < 2) {
+			result = svg`${result}<stop offset="2%" stop-color="green" /><stop offset="2%" stop-opacity="0" />`;
+			return result;
+		}
+		if (lvl <= 30) {
+			result = svg`${result}<stop offset="${lvl}%" stop-color="#9ACD32" />`;
+		} else {
+			result = svg`${result}<stop offset="30%" stop-color="#9ACD32" />`;
+		}
+		if (lvl <= 40) {
+			result = svg`${result}<stop offset="${lvl}%" stop-color="gold" />`;
+		} else {
+			result = svg`${result}<stop offset="40%" stop-color="gold" />`;
+		}
+		if (lvl <= 60) {
+			result = svg`${result}<stop offset="${lvl}%" stop-color="orange" />`;
+		} else {
+			result = svg`${result}<stop offset="60%" stop-color="orange" />`;
+		}
+		if (lvl <= 90) {
+			result = svg`${result}<stop offset="${lvl}%" stop-color="red" />`;
+		} else {
+			result = svg`${result}<stop offset="90%" stop-color="red" />`;
+		}
+		if (lvl <= 100) {
+			result = svg`${result}<stop offset="${lvl}%" stop-color="red" />`;
+		} else {
+			result = svg`${result}<stop offset="100%" stop-color="red" />`;
+			return result;
+		}
+
+		return svg`${result}<stop offset="${lvl}%" stop-opacity="0" />`;
+	}
+
+	static generateInverterLoad(data: DataDto, config: PowerFlowCardConfig){
+		let inverterModel = InverterModel.Sunsynk;
+
+		if(!data.stateInverterLoadPercentage.isValid()){
+			return ``;
+		}
+
+		if (Object.values(InverterModel).includes(config.inverter.model)) {
+			inverterModel = config.inverter.model as InverterModel;
+		}
+		let X: number[];
+		if (config.inverter.modern) {
+			return svg`<svg xmlns="http://www.w3.org/2000/svg" id="inverter" x="214" y="185" width="52" height="67" 
+					preserveAspectRatio="none" >
+						<defs>
+							<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
+						      ${this.buildGradientStops(data.stateInverterLoadPercentage.toNum(0))}
+							</linearGradient>
+						</defs>
+						<rect x="1" y="1" width="50" height="65" rx="5" ry="5" stroke="url(#invG)" fill="none" stroke-width="3" 
+							pointer-events="stroke" />
+					</svg>`;
+		}
+		switch (inverterModel) {
+			case InverterModel.Azzurro:
+				X = [213.5, 179.5, 51, 67, 3];
+				break;
+			case InverterModel.Fronius:
+				X = [213.5, 179.5, 51, 73, 10];
+				break;
+			case InverterModel.Huawei:
+			case InverterModel.SolarEdge:
+				X = [213.5, 179.5, 51, 73, 5];
+				break;
+			default:
+				X = [213.5, 179.5, 51, 73, 2];
+		}
+		return svg`
+			<svg xmlns="http://www.w3.org/2000/svg" id="inverter" x="${X[0]}" y="${X[1]}" width="${X[2]}" height="${X[3]}"
+				preserveAspectRatio="none" >
+				<defs>
+					<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
+				      ${this.buildGradientStops(100)}
+					</linearGradient>
+				</defs>
+				<rect x="1" y="1" width="${X[2]-2}" height="${X[3]-2}" rx="${X[4]}" ry="${X[4]}" stroke="url(#invG)" fill="none" stroke-width="3" 
+					pointer-events="stroke" />
+			</svg>`;
+	}
+
 	static generateInverterState(data: DataDto, config: PowerFlowCardConfig) {
 		let inverterModel = InverterModel.Sunsynk;
 
