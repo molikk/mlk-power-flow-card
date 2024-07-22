@@ -82,7 +82,7 @@ export class Solar {
 			${data.statePVTotal.isValid()
             ? svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.pv_total)}>
-					<text id="pvtotal_power" x="238.8" y="133.9" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
+					<text id="pvtotal_power" x="238.8" y="132.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 						  display="${!config.show_solar || config.solar.mppts === 1 ? 'none' : ''}" 
 						  fill="${data.solarColour}">
 						${config.solar.auto_scale
@@ -92,7 +92,7 @@ export class Solar {
 				</text>
 			</a>`
             : svg`
-				<text id="pvtotal_power" x="238.8" y="133.9" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
+				<text id="pvtotal_power" x="238.8" y="132.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 					  display="${!config.show_solar || config.solar.mppts === 1 ? 'none' : ''}" 
 					  fill="${data.solarColour}">
 					${config.solar.auto_scale

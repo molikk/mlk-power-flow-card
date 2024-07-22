@@ -192,17 +192,20 @@ export class GridLoad {
 	`;
 	}
 
-	static generateShapes(data: DataDto) {
+	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<rect x="105" y="290" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				stroke="${data.dynamicColourNonEssentialLoad}" pointer-events="all"
 				display="${data.nonessentialLoads === 0 ? 'none' : ''}"/>
+			<text id="ess_load_name" class="st16 left-align" x="108" y="295" fill="${data.dynamicColourNonEssentialLoad}">
+				${config.grid.nonessential_name}
+			</text>
 		`;
 	}
 
 	static generateTotalPower(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<text id="nonessential_load_power" x="140" y="306"
+			<text id="nonessential_load_power" x="140" y="307"
 				  display="${data.nonessentialLoads === 0 ? 'none' : ''}"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 				  fill="${data.dynamicColourNonEssentialLoad}">

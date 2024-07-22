@@ -43,5 +43,6 @@ export const styles: CSSResultGroup = css`
     .st13{font-size:22px;}
     .st14{font-size:12px;}
     .st15{font-size:8px;}
+    .st16{font-size:7px;}
 
     `;

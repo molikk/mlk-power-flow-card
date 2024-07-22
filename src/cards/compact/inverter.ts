@@ -50,19 +50,25 @@ export class Inverter {
 	}
 
 	static generateFrequency(data: DataDto) {
-		return svg`${LoadUtils.generateFrequency(data.stateLoadFrequency, data.inverterColour, 'load_frequency_192', 301.7, 208, 'right-align')}`;
+		return svg`${LoadUtils.generateFrequency(data.stateLoadFrequency, data.inverterColour, 'load_frequency_192', 301, 208, 'right-align')}`;
 	}
 
-	static generatePhases(data: DataDto) {
+	static generatePhases(data: DataDto, config: PowerFlowCardConfig) {
+		let Y = [195, 182, 169];
+
+		if (config.load.show_aux || (!data.stateInverterVoltageL3.isValid() && !data.stateInverterCurrentL3.isValid())) {
+			Y = [198, 188, 178];
+		}
+
 		return svg`
-			${LoadUtils.generatePhaseVoltage('L1', data.stateInverterVoltageL1, 301.7, 195, data.inverterColour)}
-			${LoadUtils.generatePhaseVoltage('L2', data.stateInverterVoltageL2, 301.7, 182, data.inverterColour)}
-			${LoadUtils.generatePhaseVoltage('L3', data.stateInverterVoltageL3, 301.7, 169, data.inverterColour)}
-			
-			${LoadUtils.generatePhaseAmperage('L1', data.stateInverterCurrentL1, 305.7, 195, data.inverterColour)}
-			${LoadUtils.generatePhaseAmperage('L2', data.stateInverterCurrentL2, 305.7, 182, data.inverterColour)}
-			${LoadUtils.generatePhaseAmperage('L3', data.stateInverterCurrentL3, 305.7, 169, data.inverterColour)}
-		`;
+				${LoadUtils.generatePhaseVoltage('L1', data.stateInverterVoltageL1, 301.7, Y[0], data.inverterColour)}
+				${LoadUtils.generatePhaseVoltage('L2', data.stateInverterVoltageL2, 301.7, Y[1], data.inverterColour)}
+				${LoadUtils.generatePhaseVoltage('L3', data.stateInverterVoltageL3, 301.7, Y[2], data.inverterColour)}
+				
+				${LoadUtils.generatePhaseAmperage('L1', data.stateInverterCurrentL1, 305.7, Y[0], data.inverterColour)}
+				${LoadUtils.generatePhaseAmperage('L2', data.stateInverterCurrentL2, 305.7, Y[1], data.inverterColour)}
+				${LoadUtils.generatePhaseAmperage('L3', data.stateInverterCurrentL3, 305.7, Y[2], data.inverterColour)}
+			`;
 	}
 
 	static generatePriorityLoad(data: DataDto, config: PowerFlowCardConfig) {
@@ -117,7 +123,7 @@ export class Inverter {
 		`;
 	}
 
-	static generateTemps(data: DataDto, config: PowerFlowCardConfig) {
+	static generateTemperatures(data: DataDto, config: PowerFlowCardConfig) {
 		let ac = config.inverter?.ac_icon
 			? LoadUtils.getIcon(178, 218, config.inverter.ac_icon, 'small_ac_dc_icon', 16)
 			: svg`
@@ -186,10 +192,10 @@ export class Inverter {
 		return svg`${result}<stop offset="${lvl}%" stop-opacity="0" />`;
 	}
 
-	static generateInverterLoad(data: DataDto, config: PowerFlowCardConfig){
+	static generateInverterLoad(data: DataDto, config: PowerFlowCardConfig) {
 		let inverterModel = InverterModel.Sunsynk;
 
-		if(!data.stateInverterLoadPercentage.isValid()){
+		if (!data.stateInverterLoadPercentage.isValid()) {
 			return ``;
 		}
 
@@ -231,7 +237,7 @@ export class Inverter {
 				      ${this.buildGradientStops(100)}
 					</linearGradient>
 				</defs>
-				<rect x="1" y="1" width="${X[2]-2}" height="${X[3]-2}" rx="${X[4]}" ry="${X[4]}" stroke="url(#invG)" fill="none" stroke-width="3" 
+				<rect x="1" y="1" width="${X[2] - 2}" height="${X[3] - 2}" rx="${X[4]}" ry="${X[4]}" stroke="url(#invG)" fill="none" stroke-width="3" 
 					pointer-events="stroke" />
 			</svg>`;
 	}

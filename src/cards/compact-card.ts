@@ -33,10 +33,9 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 
 						${config.show_grid ?
 							svg`
-	                            ${Grid.generateShapes(data, config)}
+	                            ${Grid.generateShapeAndName(data, config)}
 	                            ${Grid.generateDailyImport(data, config)}
 	                            ${Grid.generateDailyExport(data, config)}
-	                            ${Grid.generateGridName(data, config)}
 	                            ${Grid.generateFlowLines(data)}
 	                            ${Grid.generateIcon(data, config)}
 	                            ${Grid.generateEnergyCost(data, config)}
@@ -49,12 +48,12 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						}
 						${config.show_grid && config.grid.show_nonessential ?
 							svg`
+	                            ${GridLoad.generateShapeAndName(data, config)}
 	                            ${GridLoad.generateLoad1(data, config)}
 	                            ${GridLoad.generateLoad2(data, config)}
 	                            ${GridLoad.generateLoad3(data, config)}
 	                            ${GridLoad.generateLines(data, config)}
 	                            ${GridLoad.generateFlowLine(data, config)}
-	                            ${GridLoad.generateShapes(data)}
 	                            ${GridLoad.generateTotalPower(data, config)}
 	                            ${GridLoad.generateIcon(data)}
 	                        ` : ``
@@ -94,36 +93,36 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                        ` : ``
 						}
 
-						${Load.generateShapes(data)}
-						${Load.generateDailyLoadName(data)}
+						${Load.generateShapeAndName(data, config)}
 						${Load.generateFlowLines(data, config)}
 						${Load.generateIcon(data, config)}
 						${Load.generatePowers(data, config)}
 						${Load.generateTotalLoad(data, config)}
-						${Load.generateDailyLoadValue(data, config)}
+						${Load.generateDailyLoad(data, config)}
 
 						${(data.additionalLoad > 0) ?
 							svg`
-	                            ${EssentialLoad.generateLines(data)}
-	                            ${EssentialLoad.generateLoad1(data, config)}
-	                            ${EssentialLoad.generateLoad2(data, config)}
-	                            ${EssentialLoad.generateLoad3(data, config)}
-	                            ${EssentialLoad.generateLoad4(data, config)}
-	                            ${EssentialLoad.generateLoad5(data, config)}
-	                            ${EssentialLoad.generateLoad6(data, config)}
-	                            ${EssentialLoad.generateLoad7(data, config)}
-	                            ${EssentialLoad.generateLoad8(data, config)}
-	                        ` : ``
+			                    ${EssentialLoad.generateLines(data)}
+			                    ${EssentialLoad.generateLoad1(data, config)}
+			                    ${EssentialLoad.generateLoad2(data, config)}
+			                    ${EssentialLoad.generateLoad3(data, config)}
+			                    ${EssentialLoad.generateLoad4(data, config)}
+			                    ${EssentialLoad.generateLoad5(data, config)}
+			                    ${EssentialLoad.generateLoad6(data, config)}
+			                    ${EssentialLoad.generateLoad7(data, config)}
+			                    ${EssentialLoad.generateLoad8(data, config)}
+			                ` : ``
 						}
+
 						${Inverter.generateTimerInfo(data, config)}
 						${Inverter.generatePriorityLoad(data, config)}
 						${Inverter.generateInverterImage(data, inverterImg)}
 						${Inverter.generateInverterState(data, config)}
-					    ${Inverter.generateInverterLoad(data, config)}
+						${Inverter.generateInverterLoad(data, config)}
 						${Inverter.generateInverterProgram(data)}
-						${Inverter.generatePhases(data)}
+						${Inverter.generatePhases(data, config)}
 						${Inverter.generateFrequency(data)}
-						${Inverter.generateTemps(data, config)}
+						${Inverter.generateTemperatures(data, config)}
 
 					</svg>
 				</div>
