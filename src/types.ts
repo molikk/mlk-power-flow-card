@@ -53,6 +53,12 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
     dynamic_line_width?: boolean;
     max_line_width: number;
     min_line_width: number;
+	viewbox: {
+		viewbox_min_x: number,
+		viewbox_min_y: number,
+		viewbox_width: number,
+		viewbox_height: number,
+	},
     inverter: {
         modern: boolean;
         colour: string;
