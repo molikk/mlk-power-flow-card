@@ -32,12 +32,13 @@ export class Grid {
 		this._decimalPlaces = value;
 	}
 
-	static generateShapes(data: DataDto, config: PowerFlowCardConfig) {
+	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<rect x="105" y="203.5" width="70" height="30" rx="4.5" ry="4.5" fill="none"
-				stroke="${data.gridColour}" pointer-events="all"
-				display="${!config.show_grid ? 'none' : ''}"/>
-		`;
+				stroke="${data.gridColour}" pointer-events="all"/>
+			<text x="108" y="208.5" class="st16 st8 left-align" fill="${data.gridColour}">
+				${config.grid.grid_name}
+			</text>`;
 	}
 
 	static generatePhases(data: DataDto, config: PowerFlowCardConfig) {
@@ -80,13 +81,6 @@ export class Grid {
 		`;
 	}
 
-	static generateGridName(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-			<text x="5" y="${config.grid.show_daily_buy ? '296' : '267'}" class="st3 st8 left-align" fill="${data.gridColour}"
-				  display="${!config.show_grid ? 'none' : ''}">${config.grid.grid_name}
-			</text>`;
-	}
-
 	static generateFlowLines(data: DataDto) {
 		return svg`
 			<svg id="grid-flow">
@@ -125,25 +119,25 @@ export class Grid {
 					 width="64.5" height="64.5" viewBox="0 0 24 24">
 					<path class="${validGridDisconnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
 						  fill="${data.gridColour}"
-						  display="${!config.show_grid || data.totalGridPower < 0 || config.grid.import_icon ? 'none' : ''}"
+						  display="${data.totalGridPower < 0 || config.grid.import_icon ? 'none' : ''}"
 						  d="${icons.gridOn}"/>
 				</svg>
 				<svg xmlns="http://www.w3.org/2000/svg" id="transmission_off" x="-0.5" y="187.5"
 					 width="64.5" height="64.5" viewBox="0 0 24 24">
 					<path class="${validGridConnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
-						  fill="${data.gridOffColour}" display="${!config.show_grid || config.grid.disconnected_icon ? 'none' : ''}"
+						  fill="${data.gridOffColour}" display="${config.grid.disconnected_icon ? 'none' : ''}"
 						  d="${icons.gridOff}"/>
 				</svg>
 				<svg xmlns="http://www.w3.org/2000/svg" id="grid_export" x="-0.5" y="187.5"
 					 width="64.5" height="64.5" viewBox="0 0 24 24">
 					<path class="${validGridDisconnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
 						  fill="${data.gridColour}"
-						  display="${!config.show_grid || data.totalGridPower >= 0 || config.grid.export_icon ? 'none' : ''}"
+						  display="${data.totalGridPower >= 0 || config.grid.export_icon ? 'none' : ''}"
 						  d="${icons.gridExportCompact}"/>
 				</svg>
 			</a>
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
-				<g display="${config.show_grid || config.grid.import_icon || config.grid.disconnected_icon || config.grid.export_icon ? '' : 'none'}">
+				<g display="${config.grid.import_icon || config.grid.disconnected_icon || config.grid.export_icon ? '' : 'none'}">
 					<foreignObject x="-0.5" y="187.5" width="70" height="70" style="position: fixed; ">
 						<body xmlns="http://www.w3.org/1999/xhtml">
 						<div style="position: fixed; ">
@@ -161,7 +155,7 @@ export class Grid {
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.prepaid_units)}>
 				<text id="prepaid" x="31.5" y="257"
 					  class="${config.entities?.prepaid_units ? 'st3' : 'st12'}"
-					  fill="${data.gridColour}" display="${!config.show_grid || !data.statePrepaidUnits.isValid() ? 'none' : ''}">
+					  fill="${data.gridColour}" display="${!data.statePrepaidUnits.isValid() ? 'none' : ''}">
 					${data.statePrepaidUnits.toStr(1)} ${config.grid.prepaid_unit_name}
 				</text>
 			</a>
@@ -178,8 +172,7 @@ export class Grid {
 				</text>
 			</a>
 			<text id="daily_grid_buy" x="5" y="284" class="st3 left-align"
-				  fill="${data.gridShowDailyBuy !== true ? 'transparent' : `${data.gridColour}`}"
-				  display="${!config.show_grid ? 'none' : ''}">
+				  fill="${data.gridShowDailyBuy !== true ? 'transparent' : `${data.gridColour}`}">
 				${config.grid.label_daily_grid_buy}
 			</text>
 		`;
@@ -195,8 +188,7 @@ export class Grid {
 				</text>
 			</a>
 			<text id="daily_grid_sell" x="5" y="164" class="st3 left-align"
-				  fill="${data.gridShowDailySell !== true ? 'transparent' : `${data.gridColour}`}"
-				  display="${!config.show_grid ? 'none' : ''}">
+				  fill="${data.gridShowDailySell !== true ? 'transparent' : `${data.gridColour}`}">
 				${config.grid.label_daily_grid_sell}
 			</text>
 		`;
@@ -219,8 +211,8 @@ export class Grid {
 			? config.entities?.grid_ct_power_total
 				? svg`
 					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
-						<text id="grid_total_power" x="140" y="219.2"
-							  display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
+						<text id="grid_total_power" x="140" y="220"
+							  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 							  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 							${config.grid.auto_scale
 								? `${config.grid.show_absolute
@@ -234,8 +226,8 @@ export class Grid {
 						</text>
 					</a>`
 				: svg`
-					<text id="grid_total_power" x="140" y="219.2"
-						  display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
+					<text id="grid_total_power" x="140" y="220"
+						  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 						${config.grid.auto_scale
 							? `${config.grid.show_absolute
@@ -249,8 +241,8 @@ export class Grid {
 					</text>`
 			: svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
-					<text id="grid_total_power" x="140" y="219.2"
-						  display="${!config.show_grid || config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
+					<text id="grid_total_power" x="140" y="220"
+						  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 						${config.grid.auto_scale
 							? `${config.grid.show_absolute
