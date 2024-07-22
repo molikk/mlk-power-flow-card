@@ -17,6 +17,11 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	Grid.gridColour = data.gridColour;
 	Grid.decimalPlaces = data.decimalPlaces;
 
+	let minx = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : 0;
+	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || data.additionalLoad > 6) ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146));
+	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : 500;
+	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : (config.show_solar ? (config.show_battery ? 408 : (data.additionalLoad >= 2 ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271));
+
 	return html`
 			<ha-card>
 				${Style.getStyle(data)}
@@ -25,9 +30,9 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						style="text-align: center; color: ${config.title_colour || 'inherit'}; data.largeFont-size: ${config.title_size || '32px'};">
 						${config.title}</h1>` : ''}
 					<svg
-						viewBox="0 ${config.show_solar || data.additionalLoad > 6 ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146)} 500 ${config.show_solar ? (config.show_battery ? 408 : ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271)}"
+						viewBox="${minx} ${miny} ${width} ${height}"
 						preserveAspectRatio="xMidYMid meet"
-						height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? ([2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
+						height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? (data.additionalLoad >= 2 ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
 						width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}"
 						xmlns:xlink="http://www.w3.org/1999/xlink">
 

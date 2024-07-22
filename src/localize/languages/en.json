@@ -104,6 +104,10 @@
     "card_width": "Card Width (px)",
     "decimal_places": "Decimal Places",
     "decimal_places_energy": "Decimal Places (Daily Energy)",
+    "viewbox_min_x":  "min-x",
+    "viewbox_min_y": "min-y",
+    "viewbox_width":  "width",
+    "viewbox_height": "height",
     "model": "Model",
     "autarky": "Autarky",
     "large_font": "Large Font",
@@ -208,6 +212,7 @@
     "cat_title": {
       "title": "Title Options",
       "general": "General Options",
+      "adv_viewbox": "Adv. ViewBox Options",
       "inverter": "Inverter Options",
       "solar": "Solar Options",
       "battery": "Battery Options",
@@ -225,6 +230,7 @@
       "gri": "Grid Entities",
       "sensor": "Optional Sensors",
       "max_power": "PV Max Power",
+      "mppt_options": "MPPTs options",
       "solar_production": "Solar Production"
     }
   }
