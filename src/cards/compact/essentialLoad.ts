@@ -8,101 +8,104 @@ export class EssentialLoad {
 
 	private static readonly mainX = Load.ESSENTIAL_LOAD_X;
 
-	static generateLines(data: DataDto) {
+	static generateLines(data: DataDto, config: PowerFlowCardConfig) {
+		const isAux = config.load.show_aux || false;
 		const lineX = this.mainX + 42;
-		const line0 = `M ${lineX} 190 L ${lineX} 147`;
-		const line1 = `M ${lineX} 190 L ${lineX} 147`;
+		const line0 = `M ${lineX} 190 L ${lineX} ${isAux?'171.5':'147'}`;
+		const line1 = `M ${lineX} 190 L ${lineX} ${isAux?'167':'127'}`;
 		const line2 = `M ${lineX} 280 L ${lineX} 247`;
-		const line3 = `M ${lineX} 360 L ${lineX} 323`;
-		const line4 = `M ${lineX} 110 L ${lineX}  73`;
+		const line3 = `M ${lineX} 362 L ${lineX} 300`;
+		const line4 = `M ${lineX} 110 L ${lineX}  51`;
 
 		return svg`
-			<path id="es-load1" d="${line0}" class="${data.additionalLoad === 1 ? '' : 'st12'}"
-						fill="none" stroke="${data.loadColour}" stroke-width="1" stroke-miterlimit="10"
+			<path id="es-load1" d="${line0}"
+						class="${data.additionalLoad < 4 ? '' : 'st12'}" fill="none"
+						stroke="${data.loadColour}" stroke-width="1" stroke-miterlimit="10"
 						pointer-events="stroke" />
 			<path id="es-load1" d="${line1}"
-						class="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '' : 'st12'}" fill="none"
+						class="${data.additionalLoad >= 4 ? '' : 'st12'}" fill="none"
 						stroke="${data.loadColour}" stroke-width="1" stroke-miterlimit="10"
 						pointer-events="stroke" />
 			<path id="es-load2" d="${line2}"
-						class="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '' : 'st12'}" fill="none"
+						class="${data.additionalLoad >= 2 ? '' : 'st12'}" fill="none"
 						stroke="${data.loadColour}" stroke-width="1" stroke-miterlimit="10"
 						pointer-events="stroke" />
 			<path id="es-load3" d="${line3}"
-						class="${[5, 6, 7, 8].includes(data.additionalLoad) ? '' : 'st12'}" fill="none"
+						class="${data.additionalLoad >= 5 ? '' : 'st12'}" fill="none"
 						stroke="${data.loadColour}" stroke-width="1" stroke-miterlimit="10"
 						pointer-events="stroke" />
 			<path id="es-load4" d="${line4}"
-						class="${[7, 8].includes(data.additionalLoad) ? '' : 'st12'}" fill="none"
+						class="${data.additionalLoad >= 7 && !config.load.show_aux ? '' : 'st12'}" fill="none"
 						stroke="${data.loadColour}" stroke-width="1" stroke-miterlimit="10"
 						pointer-events="stroke" />
 		`;
 	}
 
 	static generateLoad1(data: DataDto, config: PowerFlowCardConfig) {
+		const isAux = config.load.show_aux || false;
 		const iconLeft = this.mainX + 11;
-		const iconBig = this.mainX - 29;
+		const iconBig = this.mainX + 5;
 		const shapeColumn1 = this.mainX;
 		const nameColumn1 = shapeColumn1 + 20.5;
 		const powerColumn0 = this.mainX + 42;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon1_big = LoadUtils.getIconWithCondition([1, 2, 3].includes(data.additionalLoad), iconBig, 114, data.iconEssentialLoad1, 'essload1-icon', 36);
+		const icon1_big = LoadUtils.getIconWithCondition(data.additionalLoad <= 3, iconBig, isAux ? 115 : 85, data.iconEssentialLoad1, 'essload1-icon', 36);
 		const icon1_big_link = LoadUtils.getIconLink(config.entities.essential_load1_toggle, icon1_big);
 
-		const icon1 = LoadUtils.getIconWithCondition(data.additionalLoad >= 4, iconLeft, 81, data.iconEssentialLoad1, 'essload1_small-icon');
+		const icon1 = LoadUtils.getIconWithCondition(data.additionalLoad >= 4, iconLeft, isAux ? 121 : 81, data.iconEssentialLoad1, 'essload1_small-icon');
 		const icon1_link = LoadUtils.getIconLink(config.entities.essential_load1_toggle, icon1);
 
 
-		return svg`${data.additionalLoad >= 4?
+		return svg`${data.additionalLoad >= 4 ?
 			svg`
 				${LoadUtils.generateLoad(
-					'es', 2, icon1_link,
-					data.dynamicColourEssentialLoad1, shapeColumn1, 107,
-					config.load?.load1_name, nameColumn1, 136,
-					data.stateEssentialLoad1, nameColumn1, 118,
-					data.stateEssentialLoad1Extra, nameColumn1, 147,
-					data.stateEssentialLoad1Toggle, config.load.auto_scale, data.decimalPlaces,
-				)}`
+				'es', 2, icon1_link,
+				data.dynamicColourEssentialLoad1, shapeColumn1, isAux ? 147 : 107,
+				config.load?.load1_name, nameColumn1, isAux ? 176 : 136,
+				data.stateEssentialLoad1, nameColumn1, isAux ? 158 : 118,
+				data.stateEssentialLoad1Extra, nameColumn1, isAux ? 187 : 147,
+				data.stateEssentialLoad1Toggle, config.load.auto_scale, data.decimalPlaces,
+			)}`
 			:
-				svg`${data.additionalLoad >= 1 ?
-					svg`
+			svg`${data.additionalLoad >= 1 ?
+				svg`
 					${icon1_big_link}
 					
-					<rect id="es-load1" x="${shapeColumn1}" y="116.5" width="82" height="30" rx="4.5" ry="4.5" fill="none"
+					<rect id="es-load1" x="${shapeColumn1}" y="${isAux ? '141' : '116'}.5" width="82" height="30" rx="4.5" ry="4.5" fill="none"
 								stroke="${data.dynamicColourEssentialLoad1}" pointer-events="all"
-								display="${[1, 2, 3].includes(data.additionalLoad) ? '' : 'none'}" />	
-					<text id="es-load1" x="${powerColumn0}" y="108" class="st3"
-							display="${[1, 2, 3].includes(data.additionalLoad) ? '' : 'none'}"
+								display="${data.additionalLoad <= 3 ? '' : 'none'}" />	
+					<text id="es-load1" x="${isAux ? extraColumn2 : powerColumn0}" y="${isAux ? '133' : '108'}" class="st3  left-align"
+							display="${data.additionalLoad <= 3 ? '' : 'none'}"
 							fill="${data.dynamicColourEssentialLoad1}">
 						${config.load?.load1_name ? `${config.load.load1_name}` : ''}
 					</text>
 					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1)}>
-						<text id="ess_load1" x="${powerColumn0}" y="133"
-								display="${[1, 2, 3].includes(data.additionalLoad) && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
+						<text id="ess_load1" x="${powerColumn0}" y="${isAux ? '158' : '133'}"
+								display="${data.additionalLoad <= 3 && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
 								class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
 								fill="${data.dynamicColourEssentialLoad1}">
 							${data.stateEssentialLoad1?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
 						</text>
 					</a>				
 					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1_extra)}>
-						<text id="ess_load1_extra" x="${extraColumn2}" y="157"
-									display="${(config.entities?.essential_load1_extra && [1, 2, 3].includes(data.additionalLoad)) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
+						<text id="ess_load1_extra" x="${extraColumn2}" y="${isAux ? '182' : '157'}"
+									display="${(config.entities?.essential_load1_extra && data.additionalLoad <= 3) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
 									class="st3 left-align" fill="${data.dynamicColourEssentialLoad1}">
 							${data.stateEssentialLoad1Extra.toNum(1)}
 							${data.stateEssentialLoad1Extra.getUOM()}
 						</text>
-					</a>`			
-				:``
+					</a>`
+				: ``
 			}
 			`
-			}`;
+		}`;
 	}
 
 	static generateLoad2(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const iconRight = this.mainX + 53;
-		const iconBig = this.mainX - 29;
+		const iconBig = this.mainX + 5;
 		const shapeColumn1 = this.mainX;
 		const shapeColumn2 = this.mainX + 43;
 		const nameColumn1 = shapeColumn1 + 20.5;
@@ -110,13 +113,15 @@ export class EssentialLoad {
 		const powerColumn0 = this.mainX + 42;
 		const extraColumn2 = this.mainX + 45;
 
-		const icon2_big = LoadUtils.getIcon(iconBig, 278, data.iconEssentialLoad2, 'essload2-icon', 36);
+		const isAux = config.load.show_aux || false;
+
+		const icon2_big = LoadUtils.getIcon(iconBig, 245, data.iconEssentialLoad2, 'essload2-icon', 36);
 		const icon2_big_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2_big);
 
-		const icon2_if3 = LoadUtils.getIcon( iconLeft, 254, data.iconEssentialLoad2, 'essload2_small-icon');
+		const icon2_if3 = LoadUtils.getIcon(iconLeft, 254, data.iconEssentialLoad2, 'essload2_small-icon');
 		const icon2_if3_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2_if3);
 
-		const icon2 = LoadUtils.getIcon(iconRight, 81, data.iconEssentialLoad2, 'essload2_small-icon');
+		const icon2 = LoadUtils.getIcon(iconRight, isAux ? 121 : 81, data.iconEssentialLoad2, 'essload2_small-icon');
 		const icon2_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2);
 
 
@@ -124,10 +129,10 @@ export class EssentialLoad {
 			svg`
 			${LoadUtils.generateLoad(
 				'es', 2, icon2_link,
-				data.dynamicColourEssentialLoad2, shapeColumn2, 107,
-				config.load?.load2_name, nameColumn2, 136,
-				data.stateEssentialLoad2, nameColumn2, 118,
-				data.stateEssentialLoad2Extra, nameColumn2, 147,
+				data.dynamicColourEssentialLoad2, shapeColumn2, isAux ? 147 : 107,
+				config.load?.load2_name, nameColumn2, isAux ? 176 : 136,
+				data.stateEssentialLoad2, nameColumn2, isAux ? 158 : 118,
+				data.stateEssentialLoad2Extra, nameColumn2, isAux ? 187 : 147,
 				data.stateEssentialLoad2Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg`${data.additionalLoad === 3 ?
@@ -214,7 +219,7 @@ export class EssentialLoad {
 	static generateLoad4(data: DataDto, config: PowerFlowCardConfig) {
 		const iconRight = this.mainX + 53;
 		const shapeColumn2 = this.mainX + 43;
-		const nameColumn2  = shapeColumn2 + 20.5;
+		const nameColumn2 = shapeColumn2 + 20.5;
 
 		const icon4 = LoadUtils.getIcon(iconRight, 254, data.iconEssentialLoad4, 'essload4_small-icon');
 		const icon4_link = LoadUtils.getIconLink(config.entities.essential_load4_toggle, icon4);
@@ -271,7 +276,7 @@ export class EssentialLoad {
 				config.load?.load6_name, nameColumn2, 390,
 				data.stateEssentialLoad6, nameColumn2, 372,
 				data.stateEssentialLoad6Extra, nameColumn2, 402,
-				data.stateEssentialLoad6Toggle,  config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad6Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -280,12 +285,12 @@ export class EssentialLoad {
 	static generateLoad7(data: DataDto, config: PowerFlowCardConfig) {
 		const iconLeft = this.mainX + 11;
 		const shapeColumn1 = this.mainX;
-		const nameColumn1  = shapeColumn1 + 20.5;
+		const nameColumn1 = shapeColumn1 + 20.5;
 
 		const icon7 = LoadUtils.getIcon(iconLeft, 7, data.iconEssentialLoad7, 'essload7_small-icon');
 		const icon7_link = LoadUtils.getIconLink(config.entities.essential_load7_toggle, icon7);
 
-		return svg`${data.additionalLoad >= 7 ?
+		return svg`${data.additionalLoad >= 7 && !config.load.show_aux ?
 			svg`
 			${LoadUtils.generateLoad(
 				'es', 7, icon7_link,
@@ -293,7 +298,7 @@ export class EssentialLoad {
 				config.load?.load7_name, nameColumn1, 60,
 				data.stateEssentialLoad7, nameColumn1, 42,
 				data.stateEssentialLoad7Extra, nameColumn1, 72,
-				data.stateEssentialLoad7Toggle,  config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad7Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
@@ -307,7 +312,7 @@ export class EssentialLoad {
 		const icon8 = LoadUtils.getIcon(iconRight, 7, data.iconEssentialLoad8, 'essload8_small-icon');
 		const icon8_link = LoadUtils.getIconLink(config.entities.essential_load8_toggle, icon8);
 
-		return svg`${data.additionalLoad >= 8 ?
+		return svg`${data.additionalLoad >= 8 && !config.load.show_aux ?
 			svg`
 			${LoadUtils.generateLoad(
 				'es', 8, icon8_link,
@@ -315,12 +320,11 @@ export class EssentialLoad {
 				config.load?.load8_name, nameColumn2, 60,
 				data.stateEssentialLoad8, nameColumn2, 42,
 				data.stateEssentialLoad8Extra, nameColumn2, 72,
-				data.stateEssentialLoad8Toggle,  config.load.auto_scale, data.decimalPlaces,
+				data.stateEssentialLoad8Toggle, config.load.auto_scale, data.decimalPlaces,
 			)}`
 			: svg``
 		}`;
 	}
-
 
 
 }
