@@ -5,41 +5,34 @@ import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
 
 export class Load {
-	public static readonly ESSENTIAL_LOAD_X = 410;
+	public static readonly LOAD_X = 420;
+	public static readonly GAP = Load.LOAD_X - 410;
+	public static readonly rowAux: number = 3;
+	public static readonly row1: number = 35;
+	public static readonly row2: number = 110;
+	public static readonly row3: number = 185;
+	public static readonly row4: number = 260;
+	public static readonly row5: number = 335;
+	public static readonly column1: number = Load.LOAD_X - 43 - Load.GAP / 2;
+	public static readonly column2: number = Load.LOAD_X;
+	public static readonly column3: number = Load.column2 + 43 + Load.GAP / 2;
+	public static readonly column4: number = Load.column3 + 43 + Load.GAP / 2;
+	public static readonly yGaps = [26, 55, 37, 67]; //shape, name, power, energy
+	public static readonly xGaps = [53, 43, 63.5]; //icon, shape, names
 
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 
-		if(config.load.show_aux){
-			return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
-					<text id="daily_load_value" x="${this.ESSENTIAL_LOAD_X - 5}" y="182"
-						  class="st10 right-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
-						  fill="${data.loadColour}">
-						${data.stateDayLoadEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
-					</text>
-				</a>
-				<text id="daily_load" x="${this.ESSENTIAL_LOAD_X - 5}" y="195"
-					    class="st3 right-align"
-					    fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
-					${localize('common.daily_load')}
-				</text>
-			`;
-		}
-
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
-				<text id="daily_load_value"
-					  x="${this.ESSENTIAL_LOAD_X - 35}"
-					  y="175"
-					  class="st10 left-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
+				<text id="daily_load_value" x="${this.LOAD_X - 5}" y="182"
+					  class="st10 right-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.loadColour}">
 					${data.stateDayLoadEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
 			</a>
-			<text id="daily_load" x="${this.ESSENTIAL_LOAD_X - 35}"
-				  y="189"
-				  class="st3 left-align"
-				  fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
+			<text id="daily_load" x="${this.LOAD_X - 5}" y="195"
+				    class="st3 right-align"
+				    fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
 				${localize('common.daily_load')}
 			</text>
 		`;
@@ -48,7 +41,7 @@ export class Load {
 	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
 		const startX = 264.7;
 		const gap = 70;
-		const width = this.ESSENTIAL_LOAD_X + 3 - startX - gap;
+		const width = this.LOAD_X + 3 - startX - gap;
 		const start1 = startX;
 		const stop1 = start1 + width / 2;
 		const start2 = stop1 + gap;
@@ -87,7 +80,7 @@ export class Load {
 	}
 
 	static generatePowers(data: DataDto, config: PowerFlowCardConfig) {
-		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 30;
+		const x = 400 + (this.LOAD_X - 400) / 2 - 30;
 		return svg`
 			<text id="load-power-L1" x="${x}" y="241"
 				  display="${config.inverter.three_phase && config.entities?.load_power_L1 ? '' : 'none'}"
@@ -108,19 +101,19 @@ export class Load {
 	}
 
 	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {
-		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 101.3;
+		const x = 400 + (this.LOAD_X - 400) / 2 - 101.3;
 
 		return svg`
 			<rect x="${x}" y="203.5" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				stroke="${data.loadColour}" pointer-events="all"/>
-			<text id="ess_load_name" class="st16 left-align" x="${x+3}" y="208.5" fill="${data.loadColour}">
+			<text id="ess_load_name" class="st16 left-align" x="${x + 3}" y="208.5" fill="${data.loadColour}">
 				${config.load.essential_name}
 			</text>
 		`;
 	}
 
 	static generateTotalLoad(data: DataDto, config: PowerFlowCardConfig) {
-		const x = 400 + (this.ESSENTIAL_LOAD_X - 400) / 2 - 65.3;
+		const x = 400 + (this.LOAD_X - 400) / 2 - 65.3;
 		return svg`
 			${config.entities?.essential_power && config.entities.essential_power !== 'none'
 			? svg`
@@ -142,7 +135,7 @@ export class Load {
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
 
 		return svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.ESSENTIAL_LOAD_X + 5 : this.ESSENTIAL_LOAD_X + 2}"
+			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.LOAD_X + 5 : this.LOAD_X + 2}"
 				 y="${data.essIconSize === 1 ? '186' : '177.5'}" width="${data.essIconSize === 1 ? '75' : '79'}"
 				 height="${data.essIconSize === 1 ? '75' : '79'}"
 				 viewBox="0 0 24 24">

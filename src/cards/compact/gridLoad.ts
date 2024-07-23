@@ -3,74 +3,70 @@ import { svg } from 'lit';
 import { LoadUtils } from './loadUtils';
 import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
+import { Load } from './load';
 
 export class GridLoad {
 
-	private static getPositions(no: number, max: number) {
+	private static getPositions(no: number, max: number): number {
 		switch (no) {
 			case 1:
 				switch (max) {
 					case 1:
-						return [86, 97, 106.5];
+						return 86;
 					case 2:
-						return [43, 54, 63.5];
+						return 43;
 					case 3:
-						return [0, 11, 20.5];
+						return 0;
 				}
 				break;
 			case 2:
 				switch (max) {
 					case 2:
-						return [86, 97, 106.5];
+						return 86;
 					case 3:
-						return [43, 54, 63.5];
+						return 43;
 				}
 				break;
 			case 3:
-				return [86, 97, 106.5];
+				return 86;
 
 		}
-		return[];
+		return 0;
 	}
 
 
 	static generateLoad1(data: DataDto, config: PowerFlowCardConfig) {
-		const X = this.getPositions(1, config.grid.additional_loads)
-
-
-		const icon = LoadUtils.getIcon(X[1], 335, data.iconNonessentialLoad1, 'nes-load1_small-icon');
-		const icon_link = LoadUtils.getIconLink(config.entities.non_essential_load1_toggle, icon);
+		const X = this.getPositions(1, config.grid.additional_loads);
 
 		return svg`${data.nonessentialLoads >= 1 ?
 			svg`
-			${LoadUtils.generateLoad(
-				'nes', 1, icon_link,
-				data.dynamicColourNonEssentialLoad1, X[0], 362,
-				config.grid?.load1_name, X[2], 390,
-				data.stateNonessentialLoad1, X[2], 372,
-				data.stateNonEssentialLoad1Extra, X[2], 402,
-				data.stateNonEssentialLoad1Toggle, config.grid.auto_scale, data.decimalPlaces,
+				${LoadUtils.generateGridLoad(1, data.iconNonessentialLoad1,
+				data.dynamicColourNonEssentialLoad1,
+				config.grid?.load1_name,
+				data.stateNonessentialLoad1,
+				data.stateNonEssentialLoad1Extra,
+				data.stateNonEssentialLoad1Toggle,
+				config.grid.auto_scale, data.decimalPlaces,
+				X, Load.row5, [11, 0, 20.5],
 			)}`
 			: svg``
 		}`;
+
 	}
 
 	static generateLoad2(data: DataDto, config: PowerFlowCardConfig) {
-		const X = this.getPositions(2, config.grid.additional_loads)
-
-
-		const icon = LoadUtils.getIcon(X[1], 335, data.iconNonessentialLoad2, 'nes-load2_small-icon');
-		const icon_link = LoadUtils.getIconLink(config.entities.non_essential_load2_toggle, icon);
+		const X = this.getPositions(2, config.grid.additional_loads);
 
 		return svg`${data.nonessentialLoads >= 2 ?
 			svg`
-			${LoadUtils.generateLoad(
-				'nes', 2, icon_link,
-				data.dynamicColourNonEssentialLoad2, X[0], 362,
-				config.grid?.load2_name, X[2], 390,
-				data.stateNonessentialLoad2, X[2], 372,
-				data.stateNonEssentialLoad2Extra, X[2], 402,
-				data.stateNonEssentialLoad2Toggle, config.grid.auto_scale, data.decimalPlaces,
+				${LoadUtils.generateGridLoad(2, data.iconNonessentialLoad2,
+				data.dynamicColourNonEssentialLoad2,
+				config.grid?.load2_name,
+				data.stateNonessentialLoad2,
+				data.stateNonEssentialLoad2Extra,
+				data.stateNonEssentialLoad2Toggle,
+				config.grid.auto_scale, data.decimalPlaces,
+				X, Load.row5, [11, 0, 20.5],
 			)}`
 			: svg``
 		}`;
@@ -78,21 +74,18 @@ export class GridLoad {
 
 
 	static generateLoad3(data: DataDto, config: PowerFlowCardConfig) {
-		const X = this.getPositions(3, config.grid.additional_loads)
-
-
-		const icon = LoadUtils.getIcon(X[1], 335, data.iconNonessentialLoad3, 'nes-load3_small-icon');
-		const icon_link = LoadUtils.getIconLink(config.entities.non_essential_load3_toggle, icon);
+		const X = this.getPositions(3, config.grid.additional_loads);
 
 		return svg`${data.nonessentialLoads >= 3 ?
 			svg`
-			${LoadUtils.generateLoad(
-				'nes', 3, icon_link,
-				data.dynamicColourNonEssentialLoad3, X[0], 362,
-				config.grid?.load3_name, X[2], 390,
-				data.stateNonessentialLoad3, X[2], 372,
-				data.stateNonEssentialLoad3Extra, X[2], 402,
-				data.stateNonEssentialLoad3Toggle, config.grid.auto_scale, data.decimalPlaces,
+				${LoadUtils.generateGridLoad(3, data.iconNonessentialLoad3,
+				data.dynamicColourNonEssentialLoad3,
+				config.grid?.load3_name,
+				data.stateNonessentialLoad3,
+				data.stateNonEssentialLoad3Extra,
+				data.stateNonEssentialLoad3Toggle,
+				config.grid.auto_scale, data.decimalPlaces,
+				X, Load.row5, [11, 0, 20.5],
 			)}`
 			: svg``
 		}`;
@@ -125,7 +118,7 @@ export class GridLoad {
 		return ``;
 	}
 
-	static generateIcon(data: DataDto){
+	static generateIcon(data: DataDto) {
 		const icon = LoadUtils.getIconWithCondition(data.nonessentialLoads >= 1, 68, 290, data.nonessentialIcon, 'nes-load-icon', 32);
 
 		return svg`${icon}`;
@@ -210,9 +203,9 @@ export class GridLoad {
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 				  fill="${data.dynamicColourNonEssentialLoad}">
 				${config.grid.auto_scale
-				? Utils.convertValue(data.nonessentialPower, data.decimalPlaces) || 0
-				: `${data.nonessentialPower || 0} ${UnitOfPower.WATT}`
-				}
+			? Utils.convertValue(data.nonessentialPower, data.decimalPlaces) || 0
+			: `${data.nonessentialPower || 0} ${UnitOfPower.WATT}`
+		}
 			</text>`;
 	}
 }
