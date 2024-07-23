@@ -9,6 +9,7 @@ import { Battery } from './compact/battery';
 import { Grid } from './compact/grid';
 import { Inverter } from './compact/inverter';
 import { GridLoad } from './compact/gridLoad';
+import { AuxLoad } from './compact/auxLoad';
 
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
 	Solar.solarColour = data.solarColour;
@@ -33,8 +34,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						viewBox="${minx} ${miny} ${width} ${height}"
 						preserveAspectRatio="xMidYMid meet"
 						height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? (data.additionalLoad >= 2 ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
-						width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}"
-						xmlns:xlink="http://www.w3.org/1999/xlink">
+						width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}">
 
 						${config.show_grid ?
 							svg`
@@ -98,16 +98,10 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                        ` : ``
 						}
 
-						${Load.generateShapeAndName(data, config)}
-						${Load.generateFlowLines(data, config)}
-						${Load.generateIcon(data, config)}
-						${Load.generatePowers(data, config)}
-						${Load.generateTotalLoad(data, config)}
-						${Load.generateDailyLoad(data, config)}
 
 						${(data.additionalLoad > 0) ?
 							svg`
-			                    ${EssentialLoad.generateLines(data)}
+			                    ${EssentialLoad.generateLines(data, config)}
 			                    ${EssentialLoad.generateLoad1(data, config)}
 			                    ${EssentialLoad.generateLoad2(data, config)}
 			                    ${EssentialLoad.generateLoad3(data, config)}
@@ -118,6 +112,24 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoad8(data, config)}
 			                ` : ``
 						}
+
+						${data.showAux ?
+							svg`
+								${AuxLoad.generateShapes(data, config)}
+								${AuxLoad.generateLines(data)}
+								${AuxLoad.generateLoad1(data, config)}
+								${AuxLoad.generateLoad2(data, config)}
+								${AuxLoad.generateTotalLoad(data, config)}
+								${AuxLoad.generateDailyLoad(data, config)}
+							` : ``
+						}
+					  
+						${Load.generateShapeAndName(data, config)}
+						${Load.generateFlowLines(data, config)}
+						${Load.generateIcon(data, config)}
+						${Load.generatePowers(data, config)}
+						${Load.generateTotalLoad(data, config)}
+						${Load.generateDailyLoad(data, config)}
 
 						${Inverter.generateTimerInfo(data, config)}
 						${Inverter.generatePriorityLoad(data, config)}

@@ -55,7 +55,16 @@ export class Style {
 					color: ${data.dynamicColourEssentialLoad8} !important;
 					--mdc-icon-size: 20px;
 				}
-
+				
+				.aux-load1_small-icon {
+					color: ${data.auxDynamicColourLoad1} !important;
+					--mdc-icon-size: 20px;
+				}
+				.aux-load2_small-icon {
+					color: ${data.auxDynamicColourLoad2} !important;
+					--mdc-icon-size: 20px;
+				}
+				
 				.nes-load-icon {
 					color: ${data.dynamicColourNonEssentialLoad} !important;
 					--mdc-icon-size: 32px;
