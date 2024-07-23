@@ -8,10 +8,10 @@ import { localize } from '../../localize/localize';
 
 export class AuxLoad {
 
-	private static readonly mainX = Load.ESSENTIAL_LOAD_X;
+	private static readonly mainX = Load.LOAD_X;
 
 	static generateShapes(data: DataDto, config: PowerFlowCardConfig) {
-		const x = 400 + (Load.ESSENTIAL_LOAD_X - 400) / 2 - 101.3;
+		const x = 400 + (Load.LOAD_X - 400) / 2 - 101.3;
 
 		return svg`
 			<rect x="${x}" y="139" width="70" height="30" rx="4.5" ry="4.5" fill="none"
@@ -24,10 +24,10 @@ export class AuxLoad {
 
 	static generateLines(data: DataDto) {
 		let lineWidth = data.auxLineWidth;
-
+		const x = 400 + (Load.LOAD_X - 400) / 2 - 101.3;
 		return svg`
 			<svg id="aux-flow">
-				<path id="aux-line1" d="M 260 190 L 260 180 Q 260 153 287 153 L 304 153"
+				<path id="aux-line1" d="M 260 190 L 260 180 Q 260 153 287 153 L ${x} 153"
 					  fill="none" stroke="${data.auxDynamicColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
@@ -41,7 +41,7 @@ export class AuxLoad {
 						<mpath href='#aux-line1'/>
 					</animateMotion>
 				</circle>
-				<path id="aux-line2" d="M 373 153 L 378 153 Q 405 153 405 126 L 405 46 Q 405 41 410 41 L 410 41 "
+				<path id="aux-line2" d="M ${x + 70} 153 L ${x + 70 } 153 Q ${x + 70 + 27} 153 ${x + 70 + 27} 126 L ${x + 70 +  27} 46 Q ${x + 70 + 27} 39 ${x + 70 + 27 + 5} 39 L ${Load.column1 + Load.xGaps[1]} 39 "
 					  fill="none" stroke="${data.auxDynamicColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
@@ -60,44 +60,33 @@ export class AuxLoad {
 
 
 	static generateLoad1(data: DataDto, config: PowerFlowCardConfig) {
-		const iconLeft = this.mainX + 11;
-		const shapeColumn1 = this.mainX;
-		const nameColumn1 = shapeColumn1 + 20.5;
-
-		const icon = LoadUtils.getIcon(iconLeft, 7, data.iconAuxLoad1, 'aux-load1_small-icon');
-		const icon_link = LoadUtils.getIconLink(config.entities.aux_load1_toggle, icon);
 
 		return svg`${config.load.aux_loads >= 1 ?
 			svg`
-			${LoadUtils.generateLoad(
-				'aux', 1, icon_link,
-				data.auxDynamicColourLoad1, shapeColumn1, 31,
-				config.load?.aux_load1_name, nameColumn1, 60,
-				data.stateAuxLoad1, nameColumn1, 42,
-				data.stateAuxLoad1Extra, nameColumn1, 72,
-				data.stateAuxLoad1Toggle, config.load.auto_scale, data.decimalPlaces,
+				${LoadUtils.generateAuxLoad(1, data.iconAuxLoad1,
+				data.auxDynamicColourLoad1,
+				config.load?.aux_load1_name,
+				data.stateAuxLoad1,
+				data.stateAuxLoad1Extra,
+				data.stateAuxLoad1Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column1, Load.rowAux,
 			)}`
 			: svg``
 		}`;
 	}
 
 	static generateLoad2(data: DataDto, config: PowerFlowCardConfig) {
-		const iconRight = this.mainX + 53;
-		const shapeColumn2 = this.mainX + 43;
-		const nameColumn2 = shapeColumn2 + 20.5;
-
-		const icon = LoadUtils.getIcon(iconRight, 7, data.iconAuxLoad2, 'aux-load2_small-icon');
-		const icon_link = LoadUtils.getIconLink(config.entities.aux_load2_toggle, icon);
-
 		return svg`${config.load.aux_loads >= 2 ?
 			svg`
-			${LoadUtils.generateLoad(
-				'aux', 2, icon_link,
-				data.auxDynamicColourLoad2, shapeColumn2, 31,
-				config.load?.aux_load2_name, nameColumn2, 60,
-				data.stateAuxLoad2, nameColumn2, 42,
-				data.stateAuxLoad2Extra, nameColumn2, 72,
-				data.stateAuxLoad2Toggle, config.load.auto_scale, data.decimalPlaces,
+				${LoadUtils.generateAuxLoad(2, data.iconAuxLoad2,
+				data.auxDynamicColourLoad2,
+				config.load?.aux_load2_name,
+				data.stateAuxLoad2,
+				data.stateAuxLoad2Extra,
+				data.stateAuxLoad2Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column2, Load.rowAux,
 			)}`
 			: svg``
 		}`;
@@ -130,15 +119,15 @@ export class AuxLoad {
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
-				<text id="daily_load_value" x="${this.mainX+10}" y="92"
+				<text id="daily_load_value" x="${this.mainX + 10}" y="87"
 					  class="st10 left-align" display="${!data.showDailyAux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.auxDynamicColour}">
 					${data.stateDayAuxEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
 			</a>
 			<text id="daily_load" 
-					x="${this.mainX+10}"
-				    y="105"
+					x="${this.mainX + 10}"
+				    y="100"
 				    class="st3 left-align"
 				    fill="${!data.showDailyAux ? 'transparent' : `${data.auxDynamicColour}`}">
 				${config.load?.aux_daily_name ? config.load?.aux_daily_name : localize('common.daily_aux')}

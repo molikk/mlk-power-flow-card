@@ -227,6 +227,7 @@
       "inv": "Inverter Entities",
       "inv_prog": "Programs Entities",
       "ld": "Load Entities",
+      "ess_ld": "Essential Load Entities",
       "gri": "Grid Entities",
       "sensor": "Optional Sensors",
       "max_power": "PV Max Power",

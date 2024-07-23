@@ -20,7 +20,11 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 
 	let minx = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : 0;
 	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || data.additionalLoad > 6) ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146));
-	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : 500;
+	let width = config.viewbox?.viewbox_width
+		? config.viewbox.viewbox_width
+		:(config.load.aux_loads > 3 || data.additionalLoad > 13) ? 610
+			: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 560 : 510;
+
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : (config.show_solar ? (config.show_battery ? 408 : (data.additionalLoad >= 2 ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271));
 
 	return html`
@@ -110,6 +114,16 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoad6(data, config)}
 			                    ${EssentialLoad.generateLoad7(data, config)}
 			                    ${EssentialLoad.generateLoad8(data, config)}
+			                    ${EssentialLoad.generateLoad9(data, config)}
+			                    ${EssentialLoad.generateLoad10(data, config)}
+			                    ${EssentialLoad.generateLoad11(data, config)}
+			                    ${EssentialLoad.generateLoad12(data, config)}
+			                    ${EssentialLoad.generateLoad13(data, config)}
+			                    ${EssentialLoad.generateLoad14(data, config)}
+			                    ${EssentialLoad.generateLoad15(data, config)}
+			                    ${EssentialLoad.generateLoad16(data, config)}
+			                    ${EssentialLoad.generateLoad17(data, config)}
+			                    ${EssentialLoad.generateLoad18(data, config)}
 			                ` : ``
 						}
 
@@ -123,7 +137,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 								${AuxLoad.generateDailyLoad(data, config)}
 							` : ``
 						}
-					  
+
 						${Load.generateShapeAndName(data, config)}
 						${Load.generateFlowLines(data, config)}
 						${Load.generateIcon(data, config)}

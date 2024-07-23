@@ -3,6 +3,7 @@ import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { Utils } from '../../helpers/utils';
 import { localize } from '../../localize/localize';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfFrequency, UnitOfPower } from '../../const';
+import { Load } from './load';
 
 export class LoadUtils {
 
@@ -39,7 +40,7 @@ export class LoadUtils {
 		`;
 	}
 
-	static generateLoad(
+	static generateLoadItem(
 		type: string, id: number, icon: TemplateResult,
 		color: string, shapeX: number, shapeY: number,
 		name: string, nameX: number, nameY: number,
@@ -54,8 +55,8 @@ export class LoadUtils {
 			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8" fill="${color}">
 				${name ? `${name}` : ''}
 			</text>
-			${!power.isValid() && toggle.isValidSwitch()?
-				svg`
+			${!power.isValid() && toggle.isValidSwitch() ?
+			svg`
 				<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle.entity_id)}>
 					<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
 							class="st3"
@@ -65,7 +66,7 @@ export class LoadUtils {
 				</a>
 				`
 			:
-				svg`
+			svg`
 				<a href = "#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
 					<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
 							display="${power.isValid() ? '' : 'none'}"
@@ -74,7 +75,7 @@ export class LoadUtils {
 						${power?.toPowerString(loadAutoScale, decimalPlaces)}
 					</text>
 				</a>`
-			}
+		}
 			<a href="#" @click=${(e) => Utils.handlePopup(e, energy.entity_id)}>
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
 							display="${energy.entity_id && energy.isValid() ? '' : 'none'}"
@@ -85,16 +86,89 @@ export class LoadUtils {
 			</a>`;
 	}
 
+
+	static generateEssentialLoad(
+		id: number, icon: string,
+		color: string, name: string,
+		power: CustomEntity, energy: CustomEntity, toggle: CustomEntity,
+		loadAutoScale: boolean, decimalPlaces: number,
+		mainX: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
+	) {
+		const icon_link = LoadUtils.getIconLink(
+			toggle.entity_id,
+			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `essload${id}_small-icon`),
+		);
+
+		return svg`
+				${LoadUtils.generateLoadItem(
+					'es', id, icon_link,
+					color, mainX + xGaps[1], mainY + yGaps[0],
+					name, mainX + xGaps[2], mainY + yGaps[1],
+					power, mainX + xGaps[2], mainY + yGaps[2],
+					energy, mainX + xGaps[2], mainY + yGaps[3],
+					toggle, loadAutoScale, decimalPlaces,
+				)}`;
+	}
+
+
+	static generateGridLoad(
+		id: number, icon: string,
+		color: string, name: string,
+		power: CustomEntity, energy: CustomEntity, toggle: CustomEntity,
+		loadAutoScale: boolean, decimalPlaces: number,
+		mainX: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
+	) {
+		const icon_link = LoadUtils.getIconLink(
+			toggle.entity_id,
+			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `nes-load${id}_small-icon`),
+		);
+
+		return svg`
+				${LoadUtils.generateLoadItem(
+			'nes', id, icon_link,
+			color, mainX + xGaps[1], mainY + yGaps[0],
+			name, mainX + xGaps[2], mainY + yGaps[1],
+			power, mainX + xGaps[2], mainY + yGaps[2],
+			energy, mainX + xGaps[2], mainY + yGaps[3],
+			toggle, loadAutoScale, decimalPlaces,
+		)}`;
+	}
+
+
+	static generateAuxLoad(
+		id: number, icon: string,
+		color: string, name: string,
+		power: CustomEntity, energy: CustomEntity, toggle: CustomEntity,
+		loadAutoScale: boolean, decimalPlaces: number,
+		mainX: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
+	) {
+		const icon_link = LoadUtils.getIconLink(
+			toggle.entity_id,
+			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `aux-load${id}_small-icon`),
+		);
+
+		return svg`
+				${LoadUtils.generateLoadItem(
+			'aux', id, icon_link,
+			color, mainX + xGaps[1], mainY + yGaps[0],
+			name, mainX + xGaps[2], mainY + yGaps[1],
+			power, mainX + xGaps[2], mainY + yGaps[2],
+			energy, mainX + xGaps[2], mainY + yGaps[3],
+			toggle, loadAutoScale, decimalPlaces,
+		)}`;
+	}
+
+
 	static generateFrequency(entity: CustomEntity, color, id: string, x: number, y: number, align: string) {
-		return entity?.isValid()?
+		return entity?.isValid() ?
 			svg`
             <a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
                 <text id="${id}" x="${x}" y="${y}"
-                      display="${entity?.isValid()? '': 'none'}"
+                      display="${entity?.isValid() ? '' : 'none'}"
                       class="st3 ${align}" fill="${color}">${entity.toStr(1, false)} ${UnitOfFrequency.HERTZ}
                 </text>
             </a>`
-			:``;
+			: ``;
 	}
 
 
@@ -103,7 +177,7 @@ export class LoadUtils {
 		entity: CustomEntity,
 		x: number,
 		y: number,
-		color
+		color,
 	) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
@@ -121,7 +195,7 @@ export class LoadUtils {
 		entity: CustomEntity,
 		x: number,
 		y: number,
-		color
+		color,
 	) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
@@ -134,14 +208,14 @@ export class LoadUtils {
 			</a>`;
 	}
 
-	 static generatePhasePower(
+	static generatePhasePower(
 		id: string,
 		entity: CustomEntity,
 		x: number,
 		y: number,
 		autoScale: boolean,
 		color,
-		decimalPlaces: number
+		decimalPlaces: number,
 	) {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>

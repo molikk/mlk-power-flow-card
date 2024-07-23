@@ -56,6 +56,56 @@ export class Style {
 					--mdc-icon-size: 20px;
 				}
 				
+				.essload9_small-icon {
+					color: ${data.dynamicColourEssentialLoad9} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload10_small-icon {
+					color: ${data.dynamicColourEssentialLoad10} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload11_small-icon {
+					color: ${data.dynamicColourEssentialLoad11} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload12_small-icon {
+					color: ${data.dynamicColourEssentialLoad12} !important;
+					--mdc-icon-size: 20px;
+				}
+								
+				.essload13_small-icon {
+					color: ${data.dynamicColourEssentialLoad13} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload14_small-icon {
+					color: ${data.dynamicColourEssentialLoad14} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload15_small-icon {
+					color: ${data.dynamicColourEssentialLoad15} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload16_small-icon {
+					color: ${data.dynamicColourEssentialLoad16} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload17_small-icon {
+					color: ${data.dynamicColourEssentialLoad17} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload18_small-icon {
+					color: ${data.dynamicColourEssentialLoad18} !important;
+					--mdc-icon-size: 20px;
+				}
+				
 				.aux-load1_small-icon {
 					color: ${data.auxDynamicColourLoad1} !important;
 					--mdc-icon-size: 20px;
