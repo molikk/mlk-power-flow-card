@@ -12,14 +12,14 @@ export class Grid {
 	private static readonly _col2X = 107;
 	private static readonly _col3X = 137;
 
-	private static _gridColour: 'gray';
+	private static _gridColour: string = 'gray';
 	private static _decimalPlaces: 2;
 
-	static get gridColour(): 'gray' {
+	static get gridColour(): string {
 		return this._gridColour;
 	}
 
-	static set gridColour(value: 'gray') {
+	static set gridColour(value: string) {
 		this._gridColour = value;
 	}
 

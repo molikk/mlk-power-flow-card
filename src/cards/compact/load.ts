@@ -12,18 +12,14 @@ export class Load {
 		if(config.load.show_aux){
 			return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
-					<text id="daily_load_value"
-						  x="${data.additionalLoad >= 2 ? this.ESSENTIAL_LOAD_X - 40 : this.ESSENTIAL_LOAD_X + 12}"
-						  y="${data.additionalLoad >= 2 ? '182' : '267.9'}"
-						  class="st10 left-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
+					<text id="daily_load_value" x="${this.ESSENTIAL_LOAD_X - 5}" y="182"
+						  class="st10 right-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 						  fill="${data.loadColour}">
 						${data.stateDayLoadEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 					</text>
 				</a>
-				<text id="daily_load" 
-						x="${data.additionalLoad >= 2 ? this.ESSENTIAL_LOAD_X - 40 : this.ESSENTIAL_LOAD_X + 12}"
-					    y="${data.additionalLoad >= 2 ? '195' : '282.1'}"
-					    class="st3 left-align"
+				<text id="daily_load" x="${this.ESSENTIAL_LOAD_X - 5}" y="195"
+					    class="st3 right-align"
 					    fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
 					${localize('common.daily_load')}
 				</text>
@@ -33,15 +29,15 @@ export class Load {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
 				<text id="daily_load_value"
-					  x="${data.additionalLoad >= 2 ? this.ESSENTIAL_LOAD_X - 35 : this.ESSENTIAL_LOAD_X + 12}"
-					  y="${data.additionalLoad >= 2 ? '175' : '267.9'}"
+					  x="${this.ESSENTIAL_LOAD_X - 35}"
+					  y="175"
 					  class="st10 left-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.loadColour}">
 					${data.stateDayLoadEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
 			</a>
-			<text id="daily_load" x="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? this.ESSENTIAL_LOAD_X - 35 : this.ESSENTIAL_LOAD_X + 12}"
-				  y="${[2, 3, 4, 5, 6, 7, 8].includes(data.additionalLoad) ? '189' : '282.1'}"
+			<text id="daily_load" x="${this.ESSENTIAL_LOAD_X - 35}"
+				  y="189"
 				  class="st3 left-align"
 				  fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
 				${localize('common.daily_load')}

@@ -8,31 +8,31 @@ import {CustomEntity} from "../../inverters/dto/custom-entity";
 
 export class Solar {
 
-    private static _solarColour: 'orange';
-    private static _decimalPlacesEnergy: 2;
-    private static _decimalPlaces: 2;
+    private static _solarColour: string = 'orange';
+    private static _decimalPlacesEnergy: number = 2;
+    private static _decimalPlaces: number = 2;
 
-    static set decimalPlacesEnergy(value: 2) {
+    static set decimalPlacesEnergy(value: number) {
         this._decimalPlacesEnergy = value;
     }
 
-    static set solarColour(value: 'orange') {
+    static set solarColour(value: string) {
         this._solarColour = value;
     }
 
-    static get solarColour(): "orange" {
+    static get solarColour(): string {
         return this._solarColour;
     }
 
-    static get decimalPlacesEnergy(): 2 {
+    static get decimalPlacesEnergy(): number {
         return this._decimalPlacesEnergy;
     }
 
-    static get decimalPlaces(): 2 {
+    static get decimalPlaces(): number {
         return this._decimalPlaces;
     }
 
-    static set decimalPlaces(value: 2) {
+    static set decimalPlaces(value: number) {
         this._decimalPlaces = value;
     }
 
