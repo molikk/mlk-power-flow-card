@@ -154,7 +154,6 @@ Integration via https://github.com/sfstar/hass-victron
     grid_ct_power_total: sensor.power_meter_active_power
     grid_connected_status_194: sensor.inverters_off_grid_status
     aux_power_166: sensor.sunsynk_card_aux_active_power
-    aux_connected_status: binary_sensor.sunsynk_card_aux_connected_status
     energy_cost_buy: sensor.electricity_price
     energy_cost_sell: sensor.electricity_fit
     solar_sell_247: switch.null

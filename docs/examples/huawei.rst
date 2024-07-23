@@ -243,7 +243,6 @@ Example 1 - 1 x L1 1phase inverter with a 15kWh LUNA ESS battery - 2 PV strings 
     grid_ct_power_total: sensor.power_meter_active_power
     grid_connected_status_194: sensor.inverters_off_grid_status
     aux_power_166: sensor.sunsynk_card_aux_active_power
-    aux_connected_status: binary_sensor.sunsynk_card_aux_connected_status
     energy_cost_buy: sensor.electricity_price
     energy_cost_sell: sensor.electricity_fit
     solar_sell_247: switch.null
@@ -416,7 +415,6 @@ Example 2 - 2 x L1 1phase inverter with a 15kWh LUNA ESS battery - 4 PV strings 
     grid_ct_power_total: sensor.power_meter_active_power
     grid_connected_status_194: sensor.inverters_off_grid_status
     aux_power_166: sensor.sunsynk_card_aux_active_power
-    aux_connected_status: binary_sensor.sunsynk_card_aux_connected_status
     energy_cost_buy: sensor.electricity_price
     energy_cost_sell: sensor.electricity_fit
     solar_sell_247: switch.null
@@ -589,7 +587,6 @@ Example 3 - 1 x M1 3phase inverter with a 15kWh LUNA ESS battery - 2 PV strings 
     grid_ct_power_total: sensor.power_meter_active_power
     grid_connected_status_194: sensor.inverters_off_grid_status
     aux_power_166: sensor.sunsynk_card_aux_active_power
-    aux_connected_status: binary_sensor.sunsynk_card_aux_connected_status
     energy_cost_buy: sensor.electricity_price
     energy_cost_sell: sensor.electricity_fit
     solar_sell_247: switch.null
@@ -764,7 +761,6 @@ Example 4 - 1 x M1 3phase inverters with 2 x 15kWh LUNA ESS batteries - 2 PV str
     grid_ct_power_total: sensor.power_meter_active_power
     grid_connected_status_194: sensor.inverters_off_grid_status
     aux_power_166: sensor.sunsynk_card_aux_active_power
-    aux_connected_status: binary_sensor.sunsynk_card_aux_connected_status
     energy_cost_buy: sensor.electricity_price
     energy_cost_sell: sensor.electricity_fit
     solar_sell_247: switch.null
@@ -948,7 +944,6 @@ Example 5 - 2 x M1 3phase inverters with a 15kWh LUNA ESS battery - 4 PV strings
     grid_ct_power_total: sensor.power_meter_active_power
     grid_connected_status_194: sensor.inverters_off_grid_status
     aux_power_166: sensor.sunsynk_card_aux_active_power
-    aux_connected_status: binary_sensor.sunsynk_card_aux_connected_status
     energy_cost_buy: sensor.electricity_price
     energy_cost_sell: sensor.electricity_fit
     solar_sell_247: switch.null

@@ -329,7 +329,6 @@ Full Configuration (All Options)
     grid_connected_status_194: binary_sensor.sunsynk_grid_connected_status
     inverter_status_59: sensor.sunsynk_overall_state
     aux_power_166: sensor.sunsynk_aux_power
-    aux_connected_status: binary_sensor.sunsynk_aux_connected_status
     remaining_solar: sensor.solcast_forecast_remaining_today
     battery_temp_182: sensor.sunsynk_battery_temperature
     radiator_temp_91: sensor.sunsynk_radiator_temperature
