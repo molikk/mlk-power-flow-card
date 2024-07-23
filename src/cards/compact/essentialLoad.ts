@@ -17,6 +17,9 @@ export class EssentialLoad {
 		const line3 = `M ${lineX} 362 L ${lineX} 306`;
 		const line4 = `M ${lineX} 136 L ${lineX}  81`;
 
+		if(data.additionalLoad > 8){
+			return svg``;
+		}
 		return svg`
 			<path id="es-load1" d="${line0}"
 						class="${data.additionalLoad < 4 ? '' : 'st12'}" fill="none"
