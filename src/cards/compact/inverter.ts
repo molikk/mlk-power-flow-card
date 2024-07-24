@@ -234,7 +234,7 @@ export class Inverter {
 				preserveAspectRatio="none" >
 				<defs>
 					<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
-				      ${this.buildGradientStops(100)}
+				      ${this.buildGradientStops(data.stateInverterLoadPercentage.toNum(0))}
 					</linearGradient>
 				</defs>
 				<rect x="1" y="1" width="${X[2] - 2}" height="${X[3] - 2}" rx="${X[4]}" ry="${X[4]}" stroke="url(#invG)" fill="none" stroke-width="3" 
