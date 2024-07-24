@@ -29,13 +29,15 @@ export class Utils {
         }
     }
 
-    static convertValueNew(value: string | number, unit: UnitOfEnergyOrPower | string = '', decimal: number = 2) {
+    static convertValueNew(value: string | number, unit: UnitOfEnergyOrPower | string = '', decimal: number = 2):string {
         decimal = isNaN(decimal) ? 2 : decimal;
         const numberValue = Number(value);
         if (isNaN(numberValue)) return Number(0).toFixed(decimal);
 
         const rules = unitOfEnergyConversionRules[unit];
-        if (!rules) return `${Math.round(numberValue).toFixed(decimal)} ${unit}`;
+        if (!rules) {
+			return `${this.toNum(numberValue, decimal)} ${unit}`;
+        }
 
         if (unit === UnitOfPower.WATT && Math.abs(numberValue) < 1000) {
             return `${Math.round(numberValue)} ${unit}`;

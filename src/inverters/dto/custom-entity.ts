@@ -87,8 +87,8 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 		},
 		toPowerString: (scale?: boolean, decimals?: number, invert?: boolean) =>
 			scale ?
-				Utils.convertValueNew(entity?.state, entity?.attributes?.unit_of_measurement, decimals || 0) :
-				`${Utils.toNum(entity?.state, 0, invert).toFixed(decimals)} ${entity?.attributes?.unit_of_measurement || ''}`,
+				Utils.convertValueNew(entity?.state, entity?.attributes?.unit_of_measurement, decimals) :
+				`${Utils.toNum(entity?.state, decimals, invert).toFixed(decimals)} ${entity?.attributes?.unit_of_measurement || ''}`,
 		toString: () => entity?.state?.toString() || '',
 		toOnOff: () => ['on', 'On', 'ON', 1, true].includes(entity?.state) ? 'on' : 'off' || 'off',
 		getUOM: () => entity?.attributes?.unit_of_measurement || '',
