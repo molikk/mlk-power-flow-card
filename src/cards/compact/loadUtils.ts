@@ -52,7 +52,7 @@ export class LoadUtils {
 			${icon}
 			<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" 
 				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" 
-				display="${power.isValid() ? '' : 'none'}" />
+				display="${power.isValid() || toggle.isValidSwitch() ? '' : 'none'}" />
 			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8" fill="${color}">
 				${name ? `${name}` : ''}
 			</text>
