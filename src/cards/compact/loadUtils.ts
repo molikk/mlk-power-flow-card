@@ -51,7 +51,8 @@ export class LoadUtils {
 		return svg`
 			${icon}
 			<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" 
-				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" />
+				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" 
+				display="${power.isValid() ? '' : 'none'}" />
 			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8" fill="${color}">
 				${name ? `${name}` : ''}
 			</text>
@@ -78,7 +79,7 @@ export class LoadUtils {
 		}
 			<a href="#" @click=${(e) => Utils.handlePopup(e, energy.entity_id)}>
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
-							display="${energy.entity_id && energy.isValid() ? '' : 'none'}"
+							display="${energy.isValid() ? '' : 'none'}"
 							class="st3" fill="${color}">
 					${energy.toNum(1)}
 					${energy.getUOM()}
