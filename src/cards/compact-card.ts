@@ -22,8 +22,8 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || data.additionalLoad > 6) ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146));
 	let width = config.viewbox?.viewbox_width
 		? config.viewbox.viewbox_width
-		:(config.load.aux_loads > 3 || data.additionalLoad > 13) ? 610
-			: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 560 : 510;
+		:(config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
+			: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 552 : 505;
 
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : (config.show_solar ? (config.show_battery ? 408 : (data.additionalLoad >= 2 ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271));
 
