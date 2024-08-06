@@ -162,6 +162,7 @@ export class PowerFlowCard extends LitElement {
 		const stateShutdownSOC = this.getEntity('battery.shutdown_soc', { state: config.battery.shutdown_soc?.toString() ?? '' });
 		const stateShutdownSOCOffGrid = this.getEntity('battery.shutdown_soc_offgrid', { state: config.battery.shutdown_soc_offgrid?.toString() ?? '' });
 		const stateBatterySOH = this.getEntity('entities.battery_soh', { state: '' });
+		const stateBatteryRemainingStorage = this.getEntity('entities.battery_remaining_storage', { state: '' });
 
 		//Load
 		const stateEssentialPower = this.getEntity('entities.essential_power');
@@ -1466,6 +1467,7 @@ export class PowerFlowCard extends LitElement {
 			dynamicColourNonEssentialLoad1,
 			dynamicColourNonEssentialLoad2,
 			dynamicColourNonEssentialLoad3,
+			stateBatteryRemainingStorage,
 			stateBatterySOH,
 			customGridIcon,
 			customGridIconColour,

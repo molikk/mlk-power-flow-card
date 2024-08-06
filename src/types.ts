@@ -645,6 +645,7 @@ export interface DataDto {
 	dynamicColourNonEssentialLoad1: string,
 	dynamicColourNonEssentialLoad2: string,
 	dynamicColourNonEssentialLoad3: string,
+	stateBatteryRemainingStorage: CustomEntity,
 	stateBatterySOH: CustomEntity,
 	customGridIcon: string,
 	customGridIconColour: string,
