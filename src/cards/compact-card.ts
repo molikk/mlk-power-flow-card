@@ -86,9 +86,9 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 
 						${config.show_battery ?
 							svg`
-	                            ${Battery.generateShapes(data, config)}
+	                            ${Battery.generateShapes(data)}
 	                            ${Battery.generatePower(data, config)}
-	                            ${Battery.generateDuration(data, config)}
+	                            ${Battery.generateDuration(data)}
 	                            ${Battery.generateDailyCharge(data, config)}
 	                            ${Battery.generateDailyDischarge(data, config)}
 	                            ${Battery.generateSOC(data, config)}
