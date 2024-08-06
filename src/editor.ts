@@ -256,7 +256,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'dynamic_icon', selector: { boolean: {} } },
 											{ name: 'invert_load', selector: { boolean: {} } },
 											{ name: 'essential_name', selector: { text: {} } },
-											{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 18 } } },
+											{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 23 } } },
 											{ name: 'animation_speed', selector: { number: {} } },
 											{ name: 'max_power', selector: { number: {} } },
 											{ name: 'off_threshold', selector: { number: {} } },

@@ -22,8 +22,9 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || data.additionalLoad > 6) ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146));
 	let width = config.viewbox?.viewbox_width
 		? config.viewbox.viewbox_width
-		:(config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
-			: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 552 : 505;
+		:(config.load.aux_loads > 4 || data.additionalLoad > 18) ? 648
+			:(config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
+				: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 552 : 505;
 
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : (config.show_solar ? (config.show_battery ? 408 : (data.additionalLoad >= 2 ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271));
 
@@ -124,6 +125,11 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoad16(data, config)}
 			                    ${EssentialLoad.generateLoad17(data, config)}
 			                    ${EssentialLoad.generateLoad18(data, config)}
+			                    ${EssentialLoad.generateLoad19(data, config)}
+			                    ${EssentialLoad.generateLoad20(data, config)}
+			                    ${EssentialLoad.generateLoad21(data, config)}
+			                    ${EssentialLoad.generateLoad22(data, config)}
+			                    ${EssentialLoad.generateLoad23(data, config)}
 			                ` : ``
 						}
 

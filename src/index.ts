@@ -194,6 +194,11 @@ export class PowerFlowCard extends LitElement {
 		const stateEssentialLoad16 = this.getEntity('entities.essential_load16');
 		const stateEssentialLoad17 = this.getEntity('entities.essential_load17');
 		const stateEssentialLoad18 = this.getEntity('entities.essential_load18');
+		const stateEssentialLoad19 = this.getEntity('entities.essential_load19');
+		const stateEssentialLoad20 = this.getEntity('entities.essential_load20');
+		const stateEssentialLoad21 = this.getEntity('entities.essential_load21');
+		const stateEssentialLoad22 = this.getEntity('entities.essential_load22');
+		const stateEssentialLoad23 = this.getEntity('entities.essential_load23');
 		const stateEssentialLoad1Extra = this.getEntity('entities.essential_load1_extra');
 		const stateEssentialLoad2Extra = this.getEntity('entities.essential_load2_extra');
 		const stateEssentialLoad3Extra = this.getEntity('entities.essential_load3_extra');
@@ -212,6 +217,11 @@ export class PowerFlowCard extends LitElement {
 		const stateEssentialLoad16Extra = this.getEntity('entities.essential_load16_extra');
 		const stateEssentialLoad17Extra = this.getEntity('entities.essential_load17_extra');
 		const stateEssentialLoad18Extra = this.getEntity('entities.essential_load18_extra');
+		const stateEssentialLoad19Extra = this.getEntity('entities.essential_load19_extra');
+		const stateEssentialLoad20Extra = this.getEntity('entities.essential_load20_extra');
+		const stateEssentialLoad21Extra = this.getEntity('entities.essential_load21_extra');
+		const stateEssentialLoad22Extra = this.getEntity('entities.essential_load22_extra');
+		const stateEssentialLoad23Extra = this.getEntity('entities.essential_load23_extra');
 		const stateEssentialLoad1Toggle = this.getEntity('entities.essential_load1_toggle');
 		const stateEssentialLoad2Toggle = this.getEntity('entities.essential_load2_toggle');
 		const stateEssentialLoad3Toggle = this.getEntity('entities.essential_load3_toggle');
@@ -230,6 +240,11 @@ export class PowerFlowCard extends LitElement {
 		const stateEssentialLoad16Toggle = this.getEntity('entities.essential_load16_toggle');
 		const stateEssentialLoad17Toggle = this.getEntity('entities.essential_load17_toggle');
 		const stateEssentialLoad18Toggle = this.getEntity('entities.essential_load18_toggle');
+		const stateEssentialLoad19Toggle = this.getEntity('entities.essential_load19_toggle');
+		const stateEssentialLoad20Toggle = this.getEntity('entities.essential_load20_toggle');
+		const stateEssentialLoad21Toggle = this.getEntity('entities.essential_load21_toggle');
+		const stateEssentialLoad22Toggle = this.getEntity('entities.essential_load22_toggle');
+		const stateEssentialLoad23Toggle = this.getEntity('entities.essential_load23_toggle');
 		const stateLoadPowerL1 = this.getEntity('entities.load_power_L1');
 		const stateLoadPowerL2 = this.getEntity('entities.load_power_L2');
 		const stateLoadPowerL3 = this.getEntity('entities.load_power_L3');
@@ -337,6 +352,11 @@ export class PowerFlowCard extends LitElement {
 		const dynamicColourEssentialLoad16 = this.calculateEssentialLoadColour(stateEssentialLoad16, stateEssentialLoad16Toggle, config.load?.off_threshold) || loadColour;
 		const dynamicColourEssentialLoad17 = this.calculateEssentialLoadColour(stateEssentialLoad17, stateEssentialLoad17Toggle, config.load?.off_threshold) || loadColour;
 		const dynamicColourEssentialLoad18 = this.calculateEssentialLoadColour(stateEssentialLoad18, stateEssentialLoad18Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad19 = this.calculateEssentialLoadColour(stateEssentialLoad19, stateEssentialLoad19Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad20 = this.calculateEssentialLoadColour(stateEssentialLoad20, stateEssentialLoad20Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad21 = this.calculateEssentialLoadColour(stateEssentialLoad21, stateEssentialLoad21Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad22 = this.calculateEssentialLoadColour(stateEssentialLoad22, stateEssentialLoad22Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad23 = this.calculateEssentialLoadColour(stateEssentialLoad23, stateEssentialLoad23Toggle, config.load?.off_threshold) || loadColour;
 
 		config.title_colour = this.colourConvert(config.title_colour);
 
@@ -453,6 +473,11 @@ export class PowerFlowCard extends LitElement {
 		const iconEssentialLoad16 = this.getEntity('load.load16_icon', { state: config.load?.load16_icon?.toString() ?? '' }).state;
 		const iconEssentialLoad17 = this.getEntity('load.load17_icon', { state: config.load?.load17_icon?.toString() ?? '' }).state;
 		const iconEssentialLoad18 = this.getEntity('load.load18_icon', { state: config.load?.load18_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad19 = this.getEntity('load.load19_icon', { state: config.load?.load19_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad20 = this.getEntity('load.load20_icon', { state: config.load?.load20_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad21 = this.getEntity('load.load21_icon', { state: config.load?.load21_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad22 = this.getEntity('load.load22_icon', { state: config.load?.load22_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad23 = this.getEntity('load.load23_icon', { state: config.load?.load23_icon?.toString() ?? '' }).state;
 		const iconAuxLoad1 = this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state;
 		const iconAuxLoad2 = this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state;
 		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
@@ -1171,6 +1196,17 @@ export class PowerFlowCard extends LitElement {
 			loadPowerL2,
 			loadPowerL3,
 			durationCur: this.durationCur,
+			stateGridPowerL1,
+			stateGridPowerL2,
+			stateGridPowerL3,
+			stateGridVoltageL1,
+			stateGridVoltageL2,
+			stateGridVoltageL3,
+			stateGridCurrentL1,
+			stateGridCurrentL2,
+			stateGridCurrentL3,
+			decimalPlaces,
+			decimalPlacesEnergy,
 			stateEssentialLoad1,
 			stateEssentialLoad2,
 			stateEssentialLoad3,
@@ -1189,17 +1225,11 @@ export class PowerFlowCard extends LitElement {
 			stateEssentialLoad16,
 			stateEssentialLoad17,
 			stateEssentialLoad18,
-			stateGridPowerL1,
-			stateGridPowerL2,
-			stateGridPowerL3,
-			stateGridVoltageL1,
-			stateGridVoltageL2,
-			stateGridVoltageL3,
-			stateGridCurrentL1,
-			stateGridCurrentL2,
-			stateGridCurrentL3,
-			decimalPlaces,
-			decimalPlacesEnergy,
+			stateEssentialLoad19,
+			stateEssentialLoad20,
+			stateEssentialLoad21,
+			stateEssentialLoad22,
+			stateEssentialLoad23,
 			stateEssentialLoad1Extra,
 			stateEssentialLoad2Extra,
 			stateEssentialLoad3Extra,
@@ -1218,6 +1248,11 @@ export class PowerFlowCard extends LitElement {
 			stateEssentialLoad16Extra,
 			stateEssentialLoad17Extra,
 			stateEssentialLoad18Extra,
+			stateEssentialLoad19Extra,
+			stateEssentialLoad20Extra,
+			stateEssentialLoad21Extra,
+			stateEssentialLoad22Extra,
+			stateEssentialLoad23Extra,
 			stateEssentialLoad1Toggle,
 			stateEssentialLoad2Toggle,
 			stateEssentialLoad3Toggle,
@@ -1236,6 +1271,14 @@ export class PowerFlowCard extends LitElement {
 			stateEssentialLoad16Toggle,
 			stateEssentialLoad17Toggle,
 			stateEssentialLoad18Toggle,
+			stateEssentialLoad19Toggle,
+			stateEssentialLoad20Toggle,
+			stateEssentialLoad21Toggle,
+			stateEssentialLoad22Toggle,
+			stateEssentialLoad23Toggle,
+			stateNonessentialLoad1,
+			stateNonessentialLoad2,
+			stateNonessentialLoad3,
 			stateNonEssentialLoad1Extra,
 			stateNonEssentialLoad2Extra,
 			stateNonEssentialLoad3Extra,
@@ -1316,6 +1359,11 @@ export class PowerFlowCard extends LitElement {
 			iconEssentialLoad16,
 			iconEssentialLoad17,
 			iconEssentialLoad18,
+			iconEssentialLoad19,
+			iconEssentialLoad20,
+			iconEssentialLoad21,
+			iconEssentialLoad22,
+			iconEssentialLoad23,
 			enableTimer,
 			stateSolarSell,
 			priorityLoad,
@@ -1375,9 +1423,6 @@ export class PowerFlowCard extends LitElement {
 			stateAuxLoad2Extra,
 			stateAuxLoad1Toggle,
 			stateAuxLoad2Toggle,
-			stateNonessentialLoad1,
-			stateNonessentialLoad2,
-			stateNonessentialLoad3,
 			autoScaledInverterPower,
 			autoScaledGridPower,
 			auxDynamicColour,
@@ -1412,6 +1457,11 @@ export class PowerFlowCard extends LitElement {
 			dynamicColourEssentialLoad16,
 			dynamicColourEssentialLoad17,
 			dynamicColourEssentialLoad18,
+			dynamicColourEssentialLoad19,
+			dynamicColourEssentialLoad20,
+			dynamicColourEssentialLoad21,
+			dynamicColourEssentialLoad22,
+			dynamicColourEssentialLoad23,
 			dynamicColourNonEssentialLoad,
 			dynamicColourNonEssentialLoad1,
 			dynamicColourNonEssentialLoad2,
