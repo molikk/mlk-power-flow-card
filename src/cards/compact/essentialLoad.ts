@@ -52,7 +52,7 @@ export class EssentialLoad {
 		const extraColumn2 = this.mainX + 45;
 
 		const icon1_big = LoadUtils.getIconWithCondition(data.additionalLoad <= 3, iconBig, isAux ? 113 : 95, data.iconEssentialLoad1, 'essload1-icon', 36);
-		const icon1_big_link = LoadUtils.getIconLink(config.entities.essential_load1_toggle, icon1_big);
+		const icon1_big_link = LoadUtils.getIconLink(data.stateEssentialLoad1Toggle.entity_id, icon1_big);
 
 
 		return svg`${data.additionalLoad >= 4 ?
@@ -79,7 +79,7 @@ export class EssentialLoad {
 							fill="${data.dynamicColourEssentialLoad1}">
 						${config.load?.load1_name ? `${config.load.load1_name}` : ''}
 					</text>
-					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1)}>
+					<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateEssentialLoad1.entity_id)}>
 						<text id="ess_load1" x="${powerColumn0}" y="${isAux ? '158' : '143'}"
 								display="${data.additionalLoad <= 3 && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
 								class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
@@ -87,9 +87,9 @@ export class EssentialLoad {
 							${data.stateEssentialLoad1?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
 						</text>
 					</a>				
-					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load1_extra)}>
+					<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateEssentialLoad1Extra.entity_id)}>
 						<text id="ess_load1_extra" x="${extraColumn2}" y="${isAux ? '182' : '167'}"
-									display="${(config.entities?.essential_load1_extra && data.additionalLoad <= 3) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
+									display="${(data.stateEssentialLoad1Extra.entity_id && data.additionalLoad <= 3) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
 									class="st3 left-align" fill="${data.dynamicColourEssentialLoad1}">
 							${data.stateEssentialLoad1Extra.toNum(1)}
 							${data.stateEssentialLoad1Extra.getUOM()}
@@ -108,7 +108,7 @@ export class EssentialLoad {
 		const extraColumn2 = this.mainX + 45;
 
 		const icon2_big = LoadUtils.getIcon(iconBig, 250, data.iconEssentialLoad2, 'essload2-icon', 36);
-		const icon2_big_link = LoadUtils.getIconLink(config.entities.essential_load2_toggle, icon2_big);
+		const icon2_big_link = LoadUtils.getIconLink(data.stateEssentialLoad2Toggle.entity_id, icon2_big);
 
 		return svg`${data.additionalLoad >= 4 ?
 			svg`
@@ -142,7 +142,7 @@ export class EssentialLoad {
 								fill="${data.dynamicColourEssentialLoad2}">
 							${config.load?.load2_name ? `${config.load.load2_name}` : ''}
 						</text>
-						<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load2)}>
+						<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateEssentialLoad2.entity_id)}>
 							<text id="ess_load2" x="${powerColumn0}" y="302.5"
 										display="${data.stateEssentialLoad2.isValid() ? '' : 'none'}"
 										class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
@@ -150,7 +150,7 @@ export class EssentialLoad {
 								${data.stateEssentialLoad2?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
 							</text>
 						</a>
-						<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_load2_extra)}>
+						<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateEssentialLoad2Extra.entity_id)}>
 							<text id="ess_load2_extra" x="${extraColumn2}" y="278"
 										display="${data.stateEssentialLoad2Extra.isValid() ? '' : 'none'}"
 										class="st3 left-align" fill="${data.dynamicColourEssentialLoad2}">
@@ -281,10 +281,9 @@ export class EssentialLoad {
 		}`;
 	}
 
-
 	static generateLoad9(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 9 ?
+		return svg`${data.additionalLoad >= 9 && !config.load.show_aux ?
 			svg`
 				${LoadUtils.generateEssentialLoad(9, data.iconEssentialLoad9,
 				data.dynamicColourEssentialLoad9,
@@ -293,7 +292,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad9Extra,
 				data.stateEssentialLoad9Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column3, Load.row3,
+				Load.column3, Load.row1,
 			)}`
 			: svg``
 		}`;
@@ -327,7 +326,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad11Extra,
 				data.stateEssentialLoad11Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column3, Load.row4,
+				Load.column3, Load.row3,
 			)}`
 			: svg``
 		}`;
@@ -344,7 +343,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad12Extra,
 				data.stateEssentialLoad12Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column3, Load.row5,
+				Load.column3, Load.row4,
 			)}`
 			: svg``
 		}`;
@@ -352,7 +351,7 @@ export class EssentialLoad {
 
 	static generateLoad13(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 13 && !config.load.show_aux ?
+		return svg`${data.additionalLoad >= 13 ?
 			svg`
 			${LoadUtils.generateEssentialLoad(13, data.iconEssentialLoad13,
 				data.dynamicColourEssentialLoad13,
@@ -361,7 +360,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad13Extra,
 				data.stateEssentialLoad13Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column3, Load.row1,
+				Load.column3, Load.row5,
 			)}`
 			: svg``
 		}`;
@@ -369,7 +368,7 @@ export class EssentialLoad {
 
 	static generateLoad14(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 14 ?
+		return svg`${data.additionalLoad >= 14 && !config.load.show_aux  ?
 			svg`
 				${LoadUtils.generateEssentialLoad(14, data.iconEssentialLoad14,
 				data.dynamicColourEssentialLoad14,
@@ -378,7 +377,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad14Extra,
 				data.stateEssentialLoad14Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column4, Load.row3,
+				Load.column4, Load.row1,
 			)}`
 			: svg``
 		}`;
@@ -412,7 +411,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad16Extra,
 				data.stateEssentialLoad16Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column4, Load.row4,
+				Load.column4, Load.row3,
 			)}`
 			: svg``
 		}`;
@@ -429,7 +428,7 @@ export class EssentialLoad {
 				data.stateEssentialLoad17Extra,
 				data.stateEssentialLoad17Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column4, Load.row5,
+				Load.column4, Load.row4,
 			)}`
 			: svg``
 		}`;
@@ -446,7 +445,93 @@ export class EssentialLoad {
 				data.stateEssentialLoad18Extra,
 				data.stateEssentialLoad18Toggle,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column4, Load.row1,
+				Load.column4, Load.row5,
+			)}`
+			: svg``
+		}`;
+	}
+
+
+	static generateLoad19(data: DataDto, config: PowerFlowCardConfig) {
+
+		return svg`${data.additionalLoad >= 19 && !config.load.show_aux ?
+			svg`
+				${LoadUtils.generateEssentialLoad(19, data.iconEssentialLoad19,
+				data.dynamicColourEssentialLoad19,
+				config.load?.load19_name,
+				data.stateEssentialLoad19,
+				data.stateEssentialLoad19Extra,
+				data.stateEssentialLoad19Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column5, Load.row1,
+			)}`
+			: svg``
+		}`;
+	}
+
+	static generateLoad20(data: DataDto, config: PowerFlowCardConfig) {
+
+		return svg`${data.additionalLoad >= 20 ?
+			svg`
+				${LoadUtils.generateEssentialLoad(20, data.iconEssentialLoad20,
+				data.dynamicColourEssentialLoad20,
+				config.load?.load20_name,
+				data.stateEssentialLoad20,
+				data.stateEssentialLoad20Extra,
+				data.stateEssentialLoad20Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column5, Load.row2,
+			)}`
+			: svg``
+		}`;
+	}
+
+	static generateLoad21(data: DataDto, config: PowerFlowCardConfig) {
+
+		return svg`${data.additionalLoad >= 21 ?
+			svg`
+			${LoadUtils.generateEssentialLoad(21, data.iconEssentialLoad21,
+				data.dynamicColourEssentialLoad21,
+				config.load?.load21_name,
+				data.stateEssentialLoad21,
+				data.stateEssentialLoad21Extra,
+				data.stateEssentialLoad21Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column5, Load.row3,
+			)}`
+			: svg``
+		}`;
+	}
+
+	static generateLoad22(data: DataDto, config: PowerFlowCardConfig) {
+
+		return svg`${data.additionalLoad >= 22 ?
+			svg`
+			${LoadUtils.generateEssentialLoad(22, data.iconEssentialLoad22,
+				data.dynamicColourEssentialLoad22,
+				config.load?.load22_name,
+				data.stateEssentialLoad22,
+				data.stateEssentialLoad22Extra,
+				data.stateEssentialLoad22Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column5, Load.row4,
+			)}`
+			: svg``
+		}`;
+	}
+
+	static generateLoad23(data: DataDto, config: PowerFlowCardConfig) {
+
+		return svg`${data.additionalLoad >= 23 ?
+			svg`
+			${LoadUtils.generateEssentialLoad(23, data.iconEssentialLoad23,
+				data.dynamicColourEssentialLoad23,
+				config.load?.load23_name,
+				data.stateEssentialLoad23,
+				data.stateEssentialLoad23Extra,
+				data.stateEssentialLoad23Toggle,
+				config.load.auto_scale, data.decimalPlaces,
+				Load.column5, Load.row5,
 			)}`
 			: svg``
 		}`;
