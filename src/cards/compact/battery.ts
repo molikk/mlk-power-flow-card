@@ -6,11 +6,10 @@ import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfEnergy, UnitOfP
 
 export class Battery {
 
-	static generateShapes(data: DataDto, config: PowerFlowCardConfig) {
+	static generateShapes(data: DataDto) {
 		return svg`
 			<rect x="205" y="290" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				  stroke="${data.batteryColour}" pointer-events="all"
-				  display="${config.show_battery ? '' : 'none'}"
 				  class=""/>
 		`;
 	}
@@ -80,27 +79,23 @@ export class Battery {
 		`;
 	}
 
-	static generateDuration(data: DataDto, config: PowerFlowCardConfig) {
+	static generateDuration(data: DataDto) {
 		return svg`
 			<text id="duration" x="270" y="377.5"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} left-align"
-				  display="${!config.show_battery ? 'none' : ''}"
 				  fill="${data.batteryEnergy === 0 || data.isFloating || data.batteryPower === 0 ? 'transparent' : `${data.batteryColour}`}">
 				${data.batteryDuration}
 			</text>
 			<text id="duration_text" x="270" y="393.7" class="st3 left-align"
-				  display="${!config.show_battery ? 'none' : ''}"
 				  fill="${data.batteryEnergy === 0 || data.batteryPower <= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.runtime_to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
 			<text id="duration_text_charging" x="270" y="393.7"
 				  class="st3 left-align"
-				  display="${!config.show_battery ? 'none' : ''}"
 				  fill="${data.batteryEnergy === 0 || data.batteryPower >= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
 			<text id="floating" x="270" y="393.7" class="st3 left-align"
-				  display="${!config.show_battery ? 'none' : ''}"
 				  fill="${data.batteryEnergy === 0 || !data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.battery_floating')}
 			</text>		
@@ -111,13 +106,13 @@ export class Battery {
 		return svg`
 			<text id="daily_bat_charge" x="132" y="357.2"
 				  class="st3 left-align"
-				  fill="${data.batteryShowDaily !== true || !config.show_battery ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryShowDaily !== true? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_charge')}
 			</text>
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_charge_70)}>
 				<text id="daily_bat_charge_value" x="132" y="343"
 					  class="st10 left-align"
-					  display="${data.batteryShowDaily !== true || !config.show_battery || !data.stateDayBatteryCharge.isValid() ? 'none' : ''}"
+					  display="${data.batteryShowDaily !== true || !data.stateDayBatteryCharge.isValid() ? 'none' : ''}"
 					  fill="${data.batteryColour}">
 					${data.stateDayBatteryCharge?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
@@ -129,13 +124,13 @@ export class Battery {
 		return svg`
 			<text id="daily_bat_dischcharge" x="132" y="393.7"
 				  class="st3 left-align"
-				  fill="${data.batteryShowDaily !== true || !config.show_battery ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryShowDaily !== true? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_discharge')}
 			</text>
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_discharge_71)}>
 				<text id="daily_bat_discharge_value" x="132" y="380.1"
 					  class="st10 left-align"
-					  display="${data.batteryShowDaily !== true || !config.show_battery || !data.stateDayBatteryDischarge.isValid() ? 'none' : ''}"
+					  display="${data.batteryShowDaily !== true || !data.stateDayBatteryDischarge.isValid() ? 'none' : ''}"
 					  fill="${data.batteryColour}">
 					${data.stateDayBatteryDischarge?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
@@ -147,13 +142,11 @@ export class Battery {
 		return svg`
  			<svg id="battery-flow">
 				<path id="bat-line"
-					  d="M 239 250 L 239 290"
-					  class="${!config.show_battery ? 'st12' : ''}" fill="none"
+					  d="M 239 250 L 239 290" fill="none"
 					  stroke="${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
 					  pointer-events="stroke"/>
 				<circle id="power-dot-discharge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						class="${!config.show_battery ? 'st12' : ''}"
 						fill="${data.batteryPower <= 0 ? 'transparent' : `${data.batteryColour}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="1;0" keyTimes="0;1" calcMode="linear">
@@ -162,7 +155,6 @@ export class Battery {
 				</circle>
 				<circle id="power-dot-charge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						class="${!config.show_battery ? 'st12' : ''}"
 						fill="${data.batteryPower >= 0 ? 'transparent' : `${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="0;1" keyTimes="0;1" calcMode="linear">
@@ -206,9 +198,19 @@ export class Battery {
 
 
 	static generateCapacity(data: DataDto, config: PowerFlowCardConfig) {
+		if(data.stateBatteryRemainingStorage?.isValid()){
+			return svg`
+				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
+					<text x="270" y="338" class="st3 left-align"
+						  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
+						  fill="${data.batteryColour}">
+						${data.stateBatteryRemainingStorage.toStr(2, false, true)} ${data.stateBatteryRemainingStorage.getUOM()}
+					</text>
+				</a>`;
+		}
 		return svg`
 			<text x="270" y="338" class="st3 left-align"
-				  display="${!config.show_battery || !config.battery.show_remaining_energy ? 'none' : ''}"
+				  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
 				  fill="${data.batteryColour}">
 				${Utils.toNum((data.batteryEnergy * (data.stateBatterySoc.toNum(2) / 100) / 1000), 2)}
 				${UnitOfEnergy.KILO_WATT_HOUR}
@@ -219,13 +221,13 @@ export class Battery {
 		return svg`
 			<text id="battery_soc_184" x="343" y="351"
 				  fill=${data.batteryColour}
-				  class="${config.battery.hide_soc || !config.show_battery ? 'st12' : 'st14 left-align'}"
+				  class="${config.battery.hide_soc ? 'st12' : 'st14 left-align'}"
 				  display="${!data.inverterProg.show && config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.batteryShutdown}%
 			</text>
 			<text id="battery_soc_184" x="343" y="364"
 				  fill=${data.batteryColour}
-				  class="${config.battery.hide_soc || !config.show_battery ? 'st12' : 'st14 left-align'}"
+				  class="${config.battery.hide_soc? 'st12' : 'st14 left-align'}"
 				  display="${!data.inverterProg.show && config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.shutdownOffGrid}%
 			</text>
@@ -269,8 +271,7 @@ export class Battery {
 							  stop-color="${data.batteryColour}"/>
 					</linearGradient>
 				</defs>
-				<path class="${!config.show_battery ? 'st12' : ''}"
-					  fill="${config.battery.dynamic_colour ? 'url(#bLg)' : data.batteryColour}"
+				<path fill="${config.battery.dynamic_colour ? 'url(#bLg)' : data.batteryColour}"
 					  d="${config.battery.linear_gradient ? data.battery0 : data.batteryIcon}"/>
 			</svg>
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="212.5"
@@ -286,8 +287,7 @@ export class Battery {
 						<animate attributeName="${config.battery.animate ? 'y2' : 'none'}" dur="6s" values="100%; 0%" repeatCount="indefinite" />
 					</linearGradient>
 				</defs>
-				<path class="${!config.show_battery ? 'st12' : ''}"
-					  fill="${config.battery.linear_gradient ? 'url(#sLg)' : data.batteryColour}"
+				<path fill="${config.battery.linear_gradient ? 'url(#sLg)' : data.batteryColour}"
 					  display="${!config.battery.linear_gradient ? 'none' : ''}"
 					  d="${data.batteryCharge}"/>
 			</svg>		
