@@ -206,6 +206,16 @@ export class Battery {
 
 
 	static generateCapacity(data: DataDto, config: PowerFlowCardConfig) {
+		if(data.stateBatteryRemainingStorage?.isValid()){
+			return svg`
+				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
+					<text x="270" y="338" class="st3 left-align"
+						  display="${!config.show_battery || !config.battery.show_remaining_energy ? 'none' : ''}"
+						  fill="${data.batteryColour}">
+						${data.stateBatteryRemainingStorage.toStr(2, false, true)} ${data.stateBatteryRemainingStorage.getUOM()}
+					</text>
+				</a>`;
+		}
 		return svg`
 			<text x="270" y="338" class="st3 left-align"
 				  display="${!config.show_battery || !config.battery.show_remaining_energy ? 'none' : ''}"
