@@ -5,8 +5,8 @@ import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
 
 export class Load {
-	public static readonly LOAD_X = 420;
-	public static readonly GAP = Load.LOAD_X - 410;
+	public static readonly LOAD_X = 418;
+	public static readonly GAP = 8;
 	public static readonly rowAux: number = 3;
 	public static readonly row1: number = 35;
 	public static readonly row2: number = 110;
