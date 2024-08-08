@@ -171,7 +171,7 @@ export class Battery {
 	                display="${data.stateBatterySoc.isValid() ? '' : 'none'}"
 	                fill=${data.batteryColour} 
 	                class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}" >
-	              ${data.stateBatterySoc.toStr(data.stateBatterySoc.toNum(0) === 100 ? 0 : 1)}%
+	              ${data.stateBatterySoc.toStr(data.stateBatterySoc.toNum(1) === 100.0 ? 0 : 1)}%
 	          </text>
 	      </a>
 		    <text id="battery_soc_184" x="331" y="358"
