@@ -67,12 +67,11 @@ export class Battery {
 	static generateTemp(data: DataDto) {
 		return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
-                <text id="battery_temp_182" x="205"
-                      y="332"
-                      class="st3 left-align"
+                <text id="battery_temp_182" x="227" y="334"
+                      class="st3 right-align"
                       fill="${data.batteryColour}"
                       display="${data.stateBatteryTemp.isValid() ? '' : 'none'}">
-                    ${data.stateBatteryTemp.toNum(1)}°
+                    ${data.stateBatteryTemp.toNum(1)}${data.stateBatteryTemp.getUOM()}
                 </text>
             </a>
                     
