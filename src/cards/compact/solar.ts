@@ -150,7 +150,7 @@ export class Solar {
 						  class="${config.entities?.environment_temp ? 'st3 left-align' : 'st12'}"
 						  fill="${data.solarColour}"
 						  display="${data.stateEnvironmentTemp.isValid() ? '' : 'none'}">
-						${data.stateEnvironmentTemp.toNum(1)}°
+						${data.stateEnvironmentTemp.toNum(1)}${data.stateEnvironmentTemp.getUOM()}
 					</text>
 				</a>`;
 
@@ -207,8 +207,8 @@ export class Solar {
 	private static getProduction(
 		fieldId: string,
 		entity: CustomEntity,
-		startPosition: { x: number; gap: number }
-		, config: PowerFlowCardConfig) {
+		startPosition: { x: number; gap: number },
+		config: PowerFlowCardConfig) {
 		const startX = startPosition.x;
 		const power = entity?.toPowerString(true, this.decimalPlacesEnergy) || '0';
 		const name = config.solar[fieldId] ? config.solar[fieldId] : localize('common.' + fieldId);
