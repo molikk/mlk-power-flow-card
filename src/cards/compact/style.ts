@@ -105,6 +105,30 @@ export class Style {
 					color: ${data.dynamicColourEssentialLoad18} !important;
 					--mdc-icon-size: 20px;
 				}
+				.essload19_small-icon {
+					color: ${data.dynamicColourEssentialLoad19} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload20_small-icon {
+					color: ${data.dynamicColourEssentialLoad20} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload21_small-icon {
+					color: ${data.dynamicColourEssentialLoad21} !important;
+					--mdc-icon-size: 20px;
+				}
+
+				.essload22_small-icon {
+					color: ${data.dynamicColourEssentialLoad22} !important;
+					--mdc-icon-size: 20px;
+				}
+								
+				.essload23_small-icon {
+					color: ${data.dynamicColourEssentialLoad23} !important;
+					--mdc-icon-size: 20px;
+				}
 				
 				.aux-load1_small-icon {
 					color: ${data.auxDynamicColourLoad1} !important;
