@@ -436,7 +436,7 @@ export class EssentialLoad {
 
 	static generateLoad18(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 18 && !config.load.show_aux ?
+		return svg`${data.additionalLoad >= 18 ?
 			svg`
 			${LoadUtils.generateEssentialLoad(18, data.iconEssentialLoad18,
 				data.dynamicColourEssentialLoad18,
