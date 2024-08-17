@@ -17,7 +17,7 @@ export class EssentialLoad {
 		const line3 = `M ${lineX} 362 L ${lineX} 306`;
 		const line4 = `M ${lineX} 136 L ${lineX}  81`;
 
-		if(data.additionalLoad > 8){
+		if (data.additionalLoad > 8) {
 			return svg``;
 		}
 		return svg`
@@ -283,7 +283,7 @@ export class EssentialLoad {
 
 	static generateLoad9(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 9 && !config.load.show_aux ?
+		return svg`${data.additionalLoad >= 9 && (!config.load.show_aux || config.load.aux_loads < 3) ?
 			svg`
 				${LoadUtils.generateEssentialLoad(9, data.iconEssentialLoad9,
 				data.dynamicColourEssentialLoad9,
@@ -368,7 +368,7 @@ export class EssentialLoad {
 
 	static generateLoad14(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 14 && !config.load.show_aux  ?
+		return svg`${data.additionalLoad >= 14 && (!config.load.show_aux || config.load.aux_loads < 4) ?
 			svg`
 				${LoadUtils.generateEssentialLoad(14, data.iconEssentialLoad14,
 				data.dynamicColourEssentialLoad14,
@@ -454,7 +454,7 @@ export class EssentialLoad {
 
 	static generateLoad19(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`${data.additionalLoad >= 19 && !config.load.show_aux ?
+		return svg`${data.additionalLoad >= 19 && (!config.load.show_aux || config.load.aux_loads < 5) ?
 			svg`
 				${LoadUtils.generateEssentialLoad(19, data.iconEssentialLoad19,
 				data.dynamicColourEssentialLoad19,
