@@ -55,7 +55,7 @@ export default {
     output: {
         file: 'dist/mlk-power-flow-card.js',
         format: 'esm',
-        name: 'ExtendedPowerFlowCard',
+        name: 'MlkPowerFlowCard',
         inlineDynamicImports: true,
     },
     watch: {
