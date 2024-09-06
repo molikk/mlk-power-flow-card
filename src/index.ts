@@ -2,7 +2,7 @@ import { CSSResultGroup, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import { styles } from './style';
-import { DataDto, InverterModel, InverterSettings, PowerFlowCardConfig } from './types';
+import { DataDto, InverterModel, InverterSettings, PowerFlowCardConfig, RefreshCardConfig } from './types';
 import defaultConfig from './defaults';
 import {
 	CARD_VERSION,
@@ -124,6 +124,9 @@ export class PowerFlowCard extends LitElement {
 		globalData.hass = this.hass;
 		const config = this._config;
 
+		const refreshTime = this.getNowTime();
+
+
 		//Energy
 		const stateDayBatteryDischarge = this.getEntity('entities.day_battery_discharge_71');
 		const stateDayBatteryCharge = this.getEntity('entities.day_battery_charge_70');
@@ -163,6 +166,32 @@ export class PowerFlowCard extends LitElement {
 		const stateShutdownSOCOffGrid = this.getEntity('battery.shutdown_soc_offgrid', { state: config.battery.shutdown_soc_offgrid?.toString() ?? '' });
 		const stateBatterySOH = this.getEntity('entities.battery_soh', { state: '' });
 		const stateBatteryRemainingStorage = this.getEntity('entities.battery_remaining_storage', { state: '' });
+
+		//BatteryBanks
+		const stateBatteryBank1Power = this.getEntity('entities.battery_bank_1_power');
+		const stateBatteryBank2Power = this.getEntity('entities.battery_bank_2_power');
+		const stateBatteryBank3Power = this.getEntity('entities.battery_bank_3_power');
+		const stateBatteryBank4Power = this.getEntity('entities.battery_bank_4_power');
+		const stateBatteryBank1Voltage = this.getEntity('entities.battery_bank_1_voltage');
+		const stateBatteryBank2Voltage = this.getEntity('entities.battery_bank_2_voltage');
+		const stateBatteryBank3Voltage = this.getEntity('entities.battery_bank_3_voltage');
+		const stateBatteryBank4Voltage = this.getEntity('entities.battery_bank_4_voltage');
+		const stateBatteryBank1Current = this.getEntity('entities.battery_bank_1_current');
+		const stateBatteryBank2Current = this.getEntity('entities.battery_bank_2_current');
+		const stateBatteryBank3Current = this.getEntity('entities.battery_bank_3_current');
+		const stateBatteryBank4Current = this.getEntity('entities.battery_bank_4_current');
+		const stateBatteryBank1Delta = this.getEntity('entities.battery_bank_1_delta');
+		const stateBatteryBank2Delta = this.getEntity('entities.battery_bank_2_delta');
+		const stateBatteryBank3Delta = this.getEntity('entities.battery_bank_3_delta');
+		const stateBatteryBank4Delta = this.getEntity('entities.battery_bank_4_delta');
+		const stateBatteryBank1RemainingStorage = this.getEntity('entities.battery_bank_1_remaining_storage');
+		const stateBatteryBank2RemainingStorage = this.getEntity('entities.battery_bank_2_remaining_storage');
+		const stateBatteryBank3RemainingStorage = this.getEntity('entities.battery_bank_3_remaining_storage');
+		const stateBatteryBank4RemainingStorage = this.getEntity('entities.battery_bank_4_remaining_storage');
+		const stateBatteryBank1Soc = this.getEntity('entities.battery_bank_1_soc');
+		const stateBatteryBank2Soc = this.getEntity('entities.battery_bank_2_soc');
+		const stateBatteryBank3Soc = this.getEntity('entities.battery_bank_3_soc');
+		const stateBatteryBank4Soc = this.getEntity('entities.battery_bank_4_soc');
 
 		//Load
 		const stateEssentialPower = this.getEntity('entities.essential_power');
@@ -760,16 +789,14 @@ export class PowerFlowCard extends LitElement {
 			batteryDuration += `${minutes}${localize('common.min')}`;
 		}
 
-		const isFloating =
-			-2 <= stateBatteryCurrent.toNum(0) && stateBatteryCurrent.toNum(0) <= 2 && stateBatterySoc.toNum(0) >= 99;
+		const isFloating = this.isFloating(stateBatteryCurrent, stateBatterySoc);
 
 		// Determine battery colours
-		let batteryColour: string;
-		if (batteryPower < 0 && !isFloating) {
-			batteryColour = batteryChargeColour;
-		} else {
-			batteryColour = batteryColourConfig;
-		}
+		const batteryColour = this.batteryColour(batteryPower, isFloating, batteryChargeColour, batteryColourConfig);
+		const dynamicBatteryBatteryBank1Colour = this.batteryColour(stateBatteryBank1Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank1Current, stateBatteryBank1Soc), batteryChargeColour, batteryColourConfig);
+		const dynamicBatteryBatteryBank2Colour = this.batteryColour(stateBatteryBank2Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank2Current, stateBatteryBank2Soc), batteryChargeColour, batteryColourConfig);
+		const dynamicBatteryBatteryBank3Colour = this.batteryColour(stateBatteryBank3Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank3Current, stateBatteryBank3Soc), batteryChargeColour, batteryColourConfig);
+		const dynamicBatteryBatteryBank4Colour = this.batteryColour(stateBatteryBank4Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank4Current, stateBatteryBank4Soc), batteryChargeColour, batteryColourConfig);
 
 		//Set Inverter Status Message and dot
 		let inverterStateColour = '';
@@ -812,7 +839,7 @@ export class PowerFlowCard extends LitElement {
 		let batteryStateColour = 'transparent';
 		let batteryStateMsg = '';
 		if ([InverterModel.GoodweGridMode, InverterModel.Goodwe, InverterModel.Huawei]
-			.includes(inverterModel)) {
+		.includes(inverterModel)) {
 			const batStatusGroups = inverterSettings.batteryStatusGroups;
 
 			if (batStatusGroups)
@@ -1162,6 +1189,7 @@ export class PowerFlowCard extends LitElement {
 
 		const data: DataDto = {
 			config,
+			refreshTime,
 			panelMode,
 			compactMode,
 			cardHeight,
@@ -1189,6 +1217,34 @@ export class PowerFlowCard extends LitElement {
 			stateBatterySoc,
 			inverterProg,
 			batteryPercentage,
+			stateBatteryBank1Power,
+			stateBatteryBank2Power,
+			stateBatteryBank3Power,
+			stateBatteryBank4Power,
+			stateBatteryBank1Voltage,
+			stateBatteryBank2Voltage,
+			stateBatteryBank3Voltage,
+			stateBatteryBank4Voltage,
+			stateBatteryBank1Current,
+			stateBatteryBank2Current,
+			stateBatteryBank3Current,
+			stateBatteryBank4Current,
+			stateBatteryBank1Delta,
+			stateBatteryBank2Delta,
+			stateBatteryBank3Delta,
+			stateBatteryBank4Delta,
+			stateBatteryBank1RemainingStorage,
+			stateBatteryBank2RemainingStorage,
+			stateBatteryBank3RemainingStorage,
+			stateBatteryBank4RemainingStorage,
+			stateBatteryBank1Soc,
+			stateBatteryBank2Soc,
+			stateBatteryBank3Soc,
+			stateBatteryBank4Soc,
+			dynamicBatteryBatteryBank1Colour,
+			dynamicBatteryBatteryBank2Colour,
+			dynamicBatteryBatteryBank3Colour,
+			dynamicBatteryBatteryBank4Colour,
 			pvPercentage,
 			loadShowDaily,
 			stateEnergyCostSell,
@@ -1479,6 +1535,26 @@ export class PowerFlowCard extends LitElement {
 	}
 
 
+	private getNowTime(): string {
+		const currentTime = new Date();
+		const formattedHours = currentTime.getHours().toString().padStart(2, '0');
+		const formattedMinutes = currentTime.getMinutes().toString().padStart(2, '0');
+		const formattedSeconds = currentTime.getSeconds().toString().padStart(2, '0');
+		return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+	}
+
+	private batteryColour(batteryPower: number, isFloating: boolean, batteryChargeColour: string, batteryColourConfig: string) {
+		if (batteryPower < 0 && !isFloating) {
+			return batteryChargeColour;
+		} else {
+			return batteryColourConfig;
+		}
+	}
+
+	private isFloating(stateBatteryCurrent: CustomEntity, stateBatterySoc: CustomEntity) {
+		return -2 <= stateBatteryCurrent.toNum(0) && stateBatteryCurrent.toNum(0) <= 2 && stateBatterySoc.toNum(0) >= 99;
+	}
+
 	/**
 	 * Fetches the entity object, returned the defaultValue when the entity is not found. Pass null for no default.
 	 * @param entity
@@ -1566,7 +1642,7 @@ export class PowerFlowCard extends LitElement {
 			);
 	}
 
-	setConfig(config) {
+	setConfig(config: PowerFlowCardConfig) {
 		if (config.show_battery && !config.battery) {
 			throw Error(localize('errors.battery.bat'));
 		} else {
@@ -1627,9 +1703,13 @@ export class PowerFlowCard extends LitElement {
 			}
 		}
 
-		const customConfig: PowerFlowCardConfig = config;
+		const refresh_time: string = this.getNowTime();
+		const conf2: RefreshCardConfig = {
+			type: config.type,
+			refresh_time,
+		};
 
-		this._config = merge({}, defaultConfig, customConfig);
+		this._config = merge({}, defaultConfig, config, conf2);
 	}
 }
 

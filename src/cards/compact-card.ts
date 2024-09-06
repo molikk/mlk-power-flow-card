@@ -10,6 +10,8 @@ import { Grid } from './compact/grid';
 import { Inverter } from './compact/inverter';
 import { GridLoad } from './compact/gridLoad';
 import { AuxLoad } from './compact/auxLoad';
+import { BatteryBank } from './compact/batteryBank';
+import { DevMode } from './compact/devMode';
 
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
 	Solar.solarColour = data.solarColour;
@@ -22,8 +24,8 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || data.additionalLoad > 6) ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146));
 	let width = config.viewbox?.viewbox_width
 		? config.viewbox.viewbox_width
-		:(config.load.aux_loads > 4 || data.additionalLoad > 18) ? 648
-			:(config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
+		: (config.load.aux_loads > 4 || data.additionalLoad > 18) ? 648
+			: (config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
 				: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 552 : 505;
 
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : (config.show_solar ? (config.show_battery ? 408 : (data.additionalLoad >= 2 ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271));
@@ -40,6 +42,12 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						preserveAspectRatio="xMidYMid meet"
 						height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? (data.additionalLoad >= 2 ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
 						width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}">
+
+						${config.dev_mode ?
+							svg`
+								${DevMode.generateLoadTimes(data, config)}
+							` : ``
+						}
 
 						${config.show_grid ?
 							svg`
@@ -65,7 +73,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${GridLoad.generateLines(data, config)}
 	                            ${GridLoad.generateFlowLine(data, config)}
 	                            ${GridLoad.generateTotalPower(data, config)}
-	                            ${GridLoad.generateIcon(data)}
+	                            ${GridLoad.generateIcon(data, config)}
 	                        ` : ``
 						}
 
@@ -97,12 +105,16 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${Battery.generateShutdownSOC(data, config)}
 	                            ${Battery.generateFlowLines(data, config)}
 	                            ${Battery.generateBatteryGradient(data, config)}  
-	                            ${Battery.generateVoltage(data)} 
+	                            ${Battery.generateVoltage(data, config)} 
 	                            ${Battery.generateCurrent(data, config)}   
 	                            ${Battery.generateTemp(data)}
 	                        ` : ``
 						}
-
+						${config.show_battery && config.battery.show_battery_banks ?
+							svg`
+								${BatteryBank.getBatteryBanksDetails(data, config)}
+             ` : ``
+						}
 
 						${(data.additionalLoad > 0) ?
 							svg`

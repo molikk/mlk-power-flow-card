@@ -39,8 +39,21 @@ export enum AutarkyType {
 	No = 'no'
 }
 
+export enum BatteryBanksViewMode {
+	none = 'none',
+	inner = 'Minimal inner view',
+	//outer = 'Outside view'
+}
+
+
+export interface RefreshCardConfig extends LovelaceCardConfig {
+	refresh_time?: string;
+}
+
 export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	type: string;
+	dev_mode: boolean;
+	refresh_time?: string;
 	panel_mode?: boolean;
 	large_font?: boolean;
 	show_solar: boolean;
@@ -88,7 +101,14 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		dynamic_colour: boolean;
 		linear_gradient: boolean;
 		animate: boolean;
-		path_threshold: number,
+		path_threshold: number;
+		show_battery_banks: boolean;
+		battery_banks_view_mode: BatteryBanksViewMode;
+		battery_banks: number;
+		battery_bank_1_energy: number;
+		battery_bank_2_energy: number;
+		battery_bank_3_energy: number;
+		battery_bank_4_energy: number;
 	}
 	solar: {
 		colour: string;
@@ -340,7 +360,8 @@ export interface InverterSettings {
 
 export interface DataDto {
 	config: PowerFlowCardConfig,
-	panelMode,
+	refreshTime: string,
+	panelMode?: boolean,
 	compactMode,
 	cardHeight,
 	cardWidth,
@@ -359,6 +380,34 @@ export interface DataDto {
 	stateBatteryPower: CustomEntity,
 	batteryDuration,
 	batteryCapacity,
+	stateBatteryBank1Power: CustomEntity,
+	stateBatteryBank2Power: CustomEntity,
+	stateBatteryBank3Power: CustomEntity,
+	stateBatteryBank4Power: CustomEntity,
+	stateBatteryBank1Voltage: CustomEntity,
+	stateBatteryBank2Voltage: CustomEntity,
+	stateBatteryBank3Voltage: CustomEntity,
+	stateBatteryBank4Voltage: CustomEntity,
+	stateBatteryBank1Current: CustomEntity,
+	stateBatteryBank2Current: CustomEntity,
+	stateBatteryBank3Current: CustomEntity,
+	stateBatteryBank4Current: CustomEntity,
+	stateBatteryBank1Delta: CustomEntity,
+	stateBatteryBank2Delta: CustomEntity,
+	stateBatteryBank3Delta: CustomEntity,
+	stateBatteryBank4Delta: CustomEntity,
+	stateBatteryBank1RemainingStorage: CustomEntity,
+	stateBatteryBank2RemainingStorage: CustomEntity,
+	stateBatteryBank3RemainingStorage: CustomEntity,
+	stateBatteryBank4RemainingStorage: CustomEntity,
+	stateBatteryBank1Soc: CustomEntity,
+	stateBatteryBank2Soc: CustomEntity,
+	stateBatteryBank3Soc: CustomEntity,
+	stateBatteryBank4Soc: CustomEntity,
+	dynamicBatteryBatteryBank1Colour: string,
+	dynamicBatteryBatteryBank2Colour: string,
+	dynamicBatteryBatteryBank3Colour: string,
+	dynamicBatteryBatteryBank4Colour: string,
 	additionalLoad,
 	essIconSize,
 	essIcon: string,

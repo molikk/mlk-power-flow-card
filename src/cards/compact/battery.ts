@@ -32,20 +32,12 @@ export class Battery {
 		`;
 	}
 
-	static generateCircle(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-				<circle id="bat" cx="238.5"
-                cy="326" r="3.5"
-                display="${config.entities?.battery_status === 'none' || !config.entities?.battery_status ? 'none' : ''}"
-                fill="${data.batteryStateColour}"/>`;
-	}
-
-	static generateVoltage(data: DataDto) {
+	static generateVoltage(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryVoltage.entity_id)}>
-            <text id="battery_voltage_183" x="281" y="299"
+            <text id="battery_voltage_183" x="${config.battery.show_battery_banks?'202':'281'}" y="299"
                   display="${data.stateBatteryVoltage.isValid() ? '' : 'none'}"
-                  fill=${data.batteryColour} class="st3 left-align">
+                  fill=${data.batteryColour} class="st3 ${config.battery.show_battery_banks?'right-align':'left-align'}">
                 ${data.stateBatteryVoltage.toStr(data.decimalPlaces)} ${UnitOfElectricPotential.VOLT}
             </text>
         </a>
@@ -55,9 +47,9 @@ export class Battery {
 	static generateCurrent(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
-            <text id="battery_current_191" x="281" y="312"
+            <text id="battery_current_191" x="${config.battery.show_battery_banks?'202':'281'}" y="312"
                   display="${data.stateBatteryCurrent.isValid() ? '' : 'none'}"
-                  fill=${data.batteryColour} class="st3 left-align">
+                  fill=${data.batteryColour} class="st3 ${config.battery.show_battery_banks?'right-align':'left-align'}">
                 ${data.stateBatteryCurrent.toStr(data.decimalPlaces, false, config.battery.show_absolute)} ${UnitOfElectricalCurrent.AMPERE}
             </text>
         </a>       
@@ -200,7 +192,7 @@ export class Battery {
 		if(data.stateBatteryRemainingStorage?.isValid()){
 			return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
-					<text x="270" y="338" class="st3 left-align"
+					<text x="${config.battery.show_battery_banks?'202':'270'}" y="${config.battery.show_battery_banks?'325':'338'}" class="st3 ${config.battery.show_battery_banks?'right-align':'left-align'}"
 						  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
 						  fill="${data.batteryColour}">
 						${data.stateBatteryRemainingStorage.toStr(2, false, true)} ${data.stateBatteryRemainingStorage.getUOM()}

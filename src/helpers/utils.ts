@@ -29,36 +29,59 @@ export class Utils {
         }
     }
 
-    static convertValueNew(value: string | number, unit: UnitOfEnergyOrPower | string = '', decimal: number = 2):string {
+    static convertValueNew(
+			value: string | number,
+			unit: UnitOfEnergyOrPower | string = '',
+			decimal: number = 2,
+			withUnit: boolean = true,
+    ):string {
         decimal = isNaN(decimal) ? 2 : decimal;
         const numberValue = Number(value);
         if (isNaN(numberValue)) return Number(0).toFixed(decimal);
 
         const rules = unitOfEnergyConversionRules[unit];
         if (!rules) {
-			return `${this.toNum(numberValue, decimal)} ${unit}`;
+					if(withUnit) {
+						return `${this.toNum(numberValue, decimal)} ${unit}`
+					}
+						return `${this.toNum(numberValue, decimal)}`;
         }
 
         if (unit === UnitOfPower.WATT && Math.abs(numberValue) < 1000) {
-            return `${Math.round(numberValue)} ${unit}`;
+	        if(withUnit) {
+						return `${Math.round(numberValue)} ${unit}`;
+					}
+	        return `${Math.round(numberValue)}`;
         }
 
         if (unit === UnitOfPower.KILO_WATT && Math.abs(numberValue) < 1) {
-            return `${Math.round(numberValue * 1000)} W`;
+	        if(withUnit) {
+						return `${Math.round(numberValue * 1000)} W`;
+					}
+	        return `${Math.round(numberValue * 1000)}`;
         }
 
         if (unit === UnitOfPower.MEGA_WATT && Math.abs(numberValue) < 1) {
-            return `${(numberValue * 1000).toFixed(decimal)} kW`;
+	        if(withUnit) {
+						return `${(numberValue * 1000).toFixed(decimal)} kW`;
+					}
+	        return `${(numberValue * 1000).toFixed(decimal)}`;
         }
 
         for (const rule of rules) {
             if (Math.abs(numberValue) >= rule.threshold) {
                 const convertedValue = (numberValue / rule.divisor).toFixed(rule.decimal || decimal);
-                return `${convertedValue} ${rule.targetUnit}`;
+		            if(withUnit) {
+									return `${convertedValue} ${rule.targetUnit}`;
+								}
+		            return `${convertedValue}`;
             }
         }
 
-        return `${numberValue.toFixed(decimal)} ${unit}`;
+		    if(withUnit) {
+					return `${numberValue.toFixed(decimal)} ${unit}`;
+				}
+		    return `${numberValue.toFixed(decimal)}`;
     }
 
     private static isPopupOpen = false;
