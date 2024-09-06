@@ -143,14 +143,14 @@ export class Inverter {
                 ${ac}
                 <text id="ac_temp" x="192" y="229" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
-                    ${data.stateRadiatorTemp.toStr(1, false)}°
+                    ${data.stateRadiatorTemp.toStr(1, false)}
                 </text>
             </a>
             <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90)}>
                 ${dc}
                 <text id="dc_temp" x="192" y="241" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
-                    ${data.stateDCTransformerTemp.toStr(1, false)}°
+                    ${data.stateDCTransformerTemp.toStr(1, false)}
                 </text>
             </a>
 		`;

@@ -118,8 +118,8 @@ export class GridLoad {
 		return ``;
 	}
 
-	static generateIcon(data: DataDto) {
-		const icon = LoadUtils.getIconWithCondition(data.nonessentialLoads >= 1, 68, 290, data.nonessentialIcon, 'nes-load-icon', 32);
+	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
+		const icon = LoadUtils.getIconWithCondition(data.nonessentialLoads >= 1, config.battery.show_battery_banks?53:68, 290, data.nonessentialIcon, 'nes-load-icon', 32);
 
 		return svg`${icon}`;
 
@@ -151,6 +151,8 @@ export class GridLoad {
 					return 66;
 				case 3:
 					return 23;
+				default:
+					return 135
 			}
 		})();
 
@@ -187,10 +189,10 @@ export class GridLoad {
 
 	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<rect x="105" y="290" width="70" height="30" rx="4.5" ry="4.5" fill="none"
+			<rect x="${config.battery.show_battery_banks?'90':'105'}" y="290" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				stroke="${data.dynamicColourNonEssentialLoad}" pointer-events="all"
 				display="${data.nonessentialLoads === 0 ? 'none' : ''}"/>
-			<text id="ess_load_name" class="st16 left-align" x="108" y="295" fill="${data.dynamicColourNonEssentialLoad}">
+			<text id="ess_load_name" class="st16 left-align" x="${config.battery.show_battery_banks?'93':'108'}" y="295" fill="${data.dynamicColourNonEssentialLoad}">
 				${config.grid.nonessential_name}
 			</text>
 		`;
@@ -198,7 +200,7 @@ export class GridLoad {
 
 	static generateTotalPower(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<text id="nonessential_load_power" x="140" y="307"
+			<text id="nonessential_load_power" x="${config.battery.show_battery_banks?'125':'140'}" y="307"
 				  display="${data.nonessentialLoads === 0 ? 'none' : ''}"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 				  fill="${data.dynamicColourNonEssentialLoad}">

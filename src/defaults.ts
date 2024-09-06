@@ -1,9 +1,10 @@
 import { localize } from "./localize/localize";
-import {InverterModel} from './types';
+import { BatteryBanksViewMode, InverterModel } from './types';
 
 
 export default {
     panel_mode: false,
+	dev_mode: false,
     large_font: false,
     show_solar: true,
     show_battery: true,
@@ -39,6 +40,7 @@ export default {
         linear_gradient: true,
         animate: true,
         path_threshold: 100,
+	    battery_banks_view_mode: BatteryBanksViewMode.none,
     },
     solar: {
         colour: 'orange',
