@@ -228,8 +228,8 @@
       "inv_prog": "Programs Entities",
 
       "solar": "Solar Options",
-      "solar_production": "Solar Production",
-      "solar_production_ent": "Solar Production Entites",
+      "solar_production": "Production Names",
+      "solar_production_ent": "Production Entities",
       "max_power": "PV Max Power",
       "mppt_options": "PVs options",
       "pv_1_ent": "PV1 Entities",
@@ -248,7 +248,6 @@
 
       "load": "Load Options",
       "load_ent": "Load Entities",
-      "additional_load": "Additional Load Options",
       "additional_loads_1": "Additional Load 1-8 Options",
       "additional_loads_2": "Additional Load 9-13 Options",
       "additional_loads_3": "Additional Load 14-18 Options",
