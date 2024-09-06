@@ -883,6 +883,37 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
+										title: this._title('gri_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'day_grid_import_76', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'day_grid_export_77', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'grid_frequency', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
+													{ name: 'grid_ct_power_172', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'grid_ct_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'grid_ct_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'grid_voltage_L1', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'grid_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'grid_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'grid_current_L1', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'grid_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'grid_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'grid_ct_power_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'grid_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'grid_connected_status_194', selector: { entity: {} } },
+													{ name: 'energy_cost_buy', selector: { entity: {} } },
+													{ name: 'energy_cost_sell', selector: { entity: {} } },
+													{ name: 'prepaid_units', selector: { entity: {} } },
+													{ name: 'max_sell_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
 										title: this._title('ness_load'),
 										schema: [
 											{
@@ -925,37 +956,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										],
 									},
-									{
-										type: 'expandable',
-										title: this._title('gri_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'day_grid_import_76', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'day_grid_export_77', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'grid_frequency', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
-													{ name: 'grid_ct_power_172', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_ct_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_ct_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_voltage_L1', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_current_L1', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'grid_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'grid_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'grid_ct_power_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_connected_status_194', selector: { entity: {} } },
-													{ name: 'energy_cost_buy', selector: { entity: {} } },
-													{ name: 'energy_cost_sell', selector: { entity: {} } },
-													{ name: 'prepaid_units', selector: { entity: {} } },
-													{ name: 'max_sell_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-												],
-											},
-										],
-									},
+
 								],
 							},
 						]}
