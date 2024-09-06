@@ -96,7 +96,7 @@ export class Inverter {
                 </svg>
                 <text id="priority_text_batt" x="287" y="263" class="st3 left-align"
                       display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
-                      fill="${data.inverterColour}">${localize('common.priority_batt')}
+                      fill="${data.inverterColour}">${localize('common.priority_bat')}
                 </text>
             </a>`
 		}`;

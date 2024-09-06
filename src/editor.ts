@@ -1,12 +1,12 @@
 import { html, LitElement, TemplateResult } from 'lit';
 import { fireEvent, HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 
-import { AutarkyType, InverterModel, PowerFlowCardConfig } from './types';
+import { AutarkyType, BatteryBanksViewMode, InverterModel, PowerFlowCardConfig } from './types';
 import { customElement, property } from 'lit/decorators.js';
-import { localize } from './localize/localize';
 import { capitalize } from 'lodash';
 import { EDITOR_NAME, SensorDeviceClass } from './const';
 import { LovelaceConfig } from 'custom-card-helpers/src/types';
+import { localize } from './localize/localize';
 
 @customElement(EDITOR_NAME)
 export class ConfigurationCardEditor extends LitElement implements LovelaceCardEditor {
@@ -120,6 +120,63 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'dc_icon', selector: { icon: {} } },
 										],
 									},
+									{
+										type: 'expandable',
+										title: this._title('inv'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'inverter_status_59', selector: { entity: {} } },
+													{ name: 'inverter_voltage_154', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'inverter_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'inverter_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'load_frequency_192', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
+													{ name: 'inverter_current_164', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'inverter_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'inverter_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'inverter_power_175', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'grid_power_169', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'dc_transformer_temp_90', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+													{ name: 'radiator_temp_91', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+													{ name: 'inverter_load_percentage', selector: { entity: { domain: 'sensor', unit_of_measurement: '%' } } },
+													{ name: 'use_timer_248', selector: { entity: {} } },
+													{ name: 'priority_load_243', selector: { entity: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('inv_prog'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'prog1_time', selector: { entity: {} } },
+													{ name: 'prog1_capacity', selector: { entity: {} } },
+													{ name: 'prog1_charge', selector: { entity: {} } },
+													{ name: 'prog2_time', selector: { entity: {} } },
+													{ name: 'prog2_capacity', selector: { entity: {} } },
+													{ name: 'prog2_charge', selector: { entity: {} } },
+													{ name: 'prog3_time', selector: { entity: {} } },
+													{ name: 'prog3_capacity', selector: { entity: {} } },
+													{ name: 'prog3_charge', selector: { entity: {} } },
+													{ name: 'prog4_time', selector: { entity: {} } },
+													{ name: 'prog4_capacity', selector: { entity: {} } },
+													{ name: 'prog4_charge', selector: { entity: {} } },
+													{ name: 'prog5_time', selector: { entity: {} } },
+													{ name: 'prog5_capacity', selector: { entity: {} } },
+													{ name: 'prog5_charge', selector: { entity: {} } },
+													{ name: 'prog6_time', selector: { entity: {} } },
+													{ name: 'prog6_capacity', selector: { entity: {} } },
+													{ name: 'prog6_charge', selector: { entity: {} } },
+												],
+											},
+										],
+									},
 								],
 							},
 							{
@@ -152,6 +209,25 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'total_solar_generation_name', selector: { text: {} } },
 													{ name: 'remaining_solar_name', selector: { text: {} } },
 													{ name: 'tomorrow_solar_name', selector: { text: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('solar_production_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'pv_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'day_pv_energy_108', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'monthly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'yearly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'total_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'remaining_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'tomorrow_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 												],
 											},
 										],
@@ -194,6 +270,100 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										],
 									},
+									{
+										type: 'expandable',
+										title: this._title('pv_1_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'pv1_power_186', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'pv1_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'pv1_voltage_109', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'pv1_current_110', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('pv_2_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'pv2_power_187', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'pv2_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'pv2_voltage_111', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'pv2_current_112', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('pv_3_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'pv3_power_188', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'pv3_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'pv3_voltage_113', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'pv3_current_114', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('pv_4_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'pv4_power_189', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'pv4_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'pv4_voltage_115', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'pv4_current_116', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('pv_5_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'pv5_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'pv5_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'pv5_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'pv5_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('optional_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'solar_sell_247', selector: { entity: {} } },
+													{ name: 'environment_temp', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+												],
+											},
+										],
+									},
 								],
 							},
 							{
@@ -225,7 +395,31 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('sensor'),
+										title: this._title('battery_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'battery_power_190', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'battery_soc_184', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
+													{ name: 'battery_current_191', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'battery_voltage_183', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_temp_182', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+													{ name: 'day_battery_charge_70', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'day_battery_discharge_71', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'battery_remaining_storage', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'battery_rated_capacity', selector: { entity: {} } },
+													{ name: 'battery_soh', selector: { entity: {} } },
+													{ name: 'battery_current_direction', selector: { entity: {} } },
+													{ name: 'battery_status', selector: { entity: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('optional_ent'),
 										schema: [
 											{
 												name: 'battery',
@@ -235,6 +429,120 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'shutdown_soc', selector: { entity: {} } },
 													{ name: 'shutdown_soc_offgrid', selector: { entity: {} } },
 													{ name: 'max_power', selector: { entity: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('battery_bank'),
+										schema: [
+											{
+												name: 'battery',
+												type: 'grid',
+												schema: [
+													{ name: 'show_battery_banks', selector: { boolean: {} } },
+													{
+														name: 'battery_banks_view_mode',
+														selector: {
+															select: {
+																options: Object.values(BatteryBanksViewMode).map(x => ({
+																	label: capitalize(x),
+																	value: x,
+																})),
+															},
+														},
+													},
+													{ name: 'battery_banks', selector: { number: { mode: 'box', min: 0, max: 4 } } },
+													{ name: 'battery_bank_1_energy', selector: { number: { min: 0 } } },
+													{ name: 'battery_bank_2_energy', selector: { number: { min: 0 } } },
+													{ name: 'battery_bank_3_energy', selector: { number: { min: 0 } } },
+													{ name: 'battery_bank_4_energy', selector: { number: { min: 0 } } },
+
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('battery_bank_1_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'battery_bank_1_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'battery_bank_1_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_1_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'battery_bank_1_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{
+														name: 'battery_bank_1_remaining_storage',
+														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
+													},
+													{ name: 'battery_bank_1_soc', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('battery_bank_2_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'battery_bank_2_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'battery_bank_2_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_2_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'battery_bank_2_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{
+														name: 'battery_bank_2_remaining_storage',
+														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
+													},
+													{ name: 'battery_bank_2_soc', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('battery_bank_3_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'battery_bank_3_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'battery_bank_3_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_3_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'battery_bank_3_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{
+														name: 'battery_bank_3_remaining_storage',
+														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
+													},
+													{ name: 'battery_bank_3_soc', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('battery_bank_4_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'battery_bank_4_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'battery_bank_4_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_4_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+													{ name: 'battery_bank_4_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{
+														name: 'battery_bank_4_remaining_storage',
+														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
+													},
+													{ name: 'battery_bank_4_soc', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
 												],
 											},
 										],
@@ -265,7 +573,24 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('additional_load1'),
+										title: this._title('load_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'day_load_energy_84', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'load_power_L1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'load_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'load_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_1'),
 										schema: [
 											{
 												name: 'load',
@@ -286,13 +611,50 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load7_name', selector: { text: {} } },
 													{ name: 'load7_icon', selector: { icon: {} } },
 													{ name: 'load8_name', selector: { text: {} } },
-													{ name: 'load8_icon', selector: { icon: {} } }
+													{ name: 'load8_icon', selector: { icon: {} } },
 												],
 											},
 										],
-									},{
+									},
+									{
 										type: 'expandable',
-										title: this._title('additional_load2'),
+										title: this._title('ess_ld_1'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load7', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load7_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load7_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load8', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load8_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load8_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_2'),
 										schema: [
 											{
 												name: 'load',
@@ -308,6 +670,42 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load12_icon', selector: { icon: {} } },
 													{ name: 'load13_name', selector: { text: {} } },
 													{ name: 'load13_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('ess_ld_2'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load9', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load9_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load9_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load10', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load10_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load10_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load11', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load11_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load11_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load12', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load12_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load12_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_3'),
+										schema: [
+											{
+												name: 'load',
+												type: 'grid',
+												schema: [
 													{ name: 'load14_name', selector: { text: {} } },
 													{ name: 'load14_icon', selector: { icon: {} } },
 													{ name: 'load15_name', selector: { text: {} } },
@@ -318,6 +716,48 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load17_icon', selector: { icon: {} } },
 													{ name: 'load18_name', selector: { text: {} } },
 													{ name: 'load18_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('ess_ld_3'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load13', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load13_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load13_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load14', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load14_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load14_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load15', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load15_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load15_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load16', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load16_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load16_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load17', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load17_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load17_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load18', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load18_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load18_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_4'),
+										schema: [
+											{
+												name: 'load',
+												type: 'grid',
+												schema: [
 													{ name: 'load19_name', selector: { text: {} } },
 													{ name: 'load19_icon', selector: { icon: {} } },
 													{ name: 'load20_name', selector: { text: {} } },
@@ -328,6 +768,33 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load22_icon', selector: { icon: {} } },
 													{ name: 'load23_name', selector: { text: {} } },
 													{ name: 'load23_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('ess_ld_4'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load19', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load19_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load19_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load20', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load20_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load20_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load21', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load21_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load21_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load22', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load22_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load22_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load23', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load23_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load23_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -355,6 +822,29 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_load2_name', selector: { text: {} } },
 													{ name: 'aux_load2_icon', selector: { icon: {} } },
 													{ name: 'show_daily_aux', selector: { boolean: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('aux_load_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'day_aux_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_power_166', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'aux_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'aux_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'aux_load2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'aux_load2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_load2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'aux_load3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'aux_load3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_load3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -389,20 +879,20 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'export_icon', selector: { icon: {} } },
 											{ name: 'disconnected_icon', selector: { icon: {} } },
 											{ name: 'prepaid_unit_name', selector: { text: {} } },
-											{ name: 'show_nonessential', selector: { boolean: {} } },
-											{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 3 } } },
-											{ name: 'nonessential_name', selector: { text: {} } },
-											{ name: 'nonessential_icon', selector: { icon: {} } },
 										],
 									},
 									{
 										type: 'expandable',
-										title: this._title('additional_load'),
+										title: this._title('ness_load'),
 										schema: [
 											{
 												name: 'grid',
 												type: 'grid',
 												schema: [
+													{ name: 'show_nonessential', selector: { boolean: {} } },
+													{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 3 } } },
+													{ name: 'nonessential_name', selector: { text: {} } },
+													{ name: 'nonessential_icon', selector: { icon: {} } },
 													{ name: 'load1_name', selector: { text: {} } },
 													{ name: 'load1_icon', selector: { icon: {} } },
 													{ name: 'load2_name', selector: { text: {} } },
@@ -413,258 +903,31 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										],
 									},
-								],
-							},
-							{
-								type: 'expandable',
-								title: this._title('entities'),
-								schema: [
 									{
 										type: 'expandable',
-										title: this._title('sol'),
+										title: this._title('ness_load_ent'),
 										schema: [
 											{
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													{ name: 'pv_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'day_pv_energy_108', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'monthly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'yearly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'total_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'remaining_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'tomorrow_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'pv1_power_186', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'pv1_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'pv1_voltage_109', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'pv1_current_110', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'pv2_power_187', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'pv2_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'pv2_voltage_111', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'pv2_current_112', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'pv3_power_188', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'pv3_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'pv3_voltage_113', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'pv3_current_114', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'pv4_power_189', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'pv4_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'pv4_voltage_115', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'pv4_current_116', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'pv5_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'pv5_production', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'pv5_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'pv5_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'solar_sell_247', selector: { entity: {} } },
-													{ name: 'environment_temp', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+													{ name: 'nonessential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'non_essential_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'non_essential_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'non_essential_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'non_essential_load2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'non_essential_load2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'non_essential_load2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'non_essential_load3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'non_essential_load3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'non_essential_load3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
 									},
 									{
 										type: 'expandable',
-										title: this._title('bat'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'battery_power_190', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'battery_soc_184', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
-													{ name: 'battery_current_191', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'battery_voltage_183', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'battery_temp_182', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-													{ name: 'day_battery_charge_70', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'day_battery_discharge_71', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'battery_remaining_storage', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'battery_rated_capacity', selector: { entity: {} } },
-													{ name: 'battery_soh', selector: { entity: {} } },
-													{ name: 'battery_current_direction', selector: { entity: {} } },
-													{ name: 'battery_status', selector: { entity: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('inv'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'inverter_status_59', selector: { entity: {} } },
-													{ name: 'inverter_voltage_154', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'inverter_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'inverter_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'load_frequency_192', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
-													{ name: 'inverter_current_164', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'inverter_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'inverter_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'inverter_power_175', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_power_169', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'dc_transformer_temp_90', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-													{ name: 'radiator_temp_91', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-													{ name: 'inverter_load_percentage', selector: { entity: { domain: 'sensor', unit_of_measurement: '%' } } },
-													{ name: 'use_timer_248', selector: { entity: {} } },
-													{ name: 'priority_load_243', selector: { entity: {} } },
-												],
-											},
-											{
-												type: 'expandable',
-												title: this._title('inv_prog'),
-												schema: [
-													{
-														name: 'entities',
-														type: 'grid',
-														schema: [
-															{ name: 'prog1_time', selector: { entity: {} } },
-															{ name: 'prog1_capacity', selector: { entity: {} } },
-															{ name: 'prog1_charge', selector: { entity: {} } },
-															{ name: 'prog2_time', selector: { entity: {} } },
-															{ name: 'prog2_capacity', selector: { entity: {} } },
-															{ name: 'prog2_charge', selector: { entity: {} } },
-															{ name: 'prog3_time', selector: { entity: {} } },
-															{ name: 'prog3_capacity', selector: { entity: {} } },
-															{ name: 'prog3_charge', selector: { entity: {} } },
-															{ name: 'prog4_time', selector: { entity: {} } },
-															{ name: 'prog4_capacity', selector: { entity: {} } },
-															{ name: 'prog4_charge', selector: { entity: {} } },
-															{ name: 'prog5_time', selector: { entity: {} } },
-															{ name: 'prog5_capacity', selector: { entity: {} } },
-															{ name: 'prog5_charge', selector: { entity: {} } },
-															{ name: 'prog6_time', selector: { entity: {} } },
-															{ name: 'prog6_capacity', selector: { entity: {} } },
-															{ name: 'prog6_charge', selector: { entity: {} } },
-														],
-													},
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ld'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'day_load_energy_84', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'day_aux_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'load_power_L1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'load_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'load_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'aux_power_166', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'aux_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'aux_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'aux_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'aux_load2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'aux_load2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'aux_load2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'aux_load3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'aux_load3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'aux_load3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-												],
-											},
-											{
-												type: 'expandable',
-												title: this._title('ess_ld1'),
-												schema: [
-													{
-														name: 'entities',
-														type: 'grid',
-														schema: [
-															{ name: 'essential_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load7', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load7_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load7_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load8', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load8_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load8_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-														],
-													},
-												],
-											},
-											{
-												type: 'expandable',
-												title: this._title('ess_ld2'),
-												schema: [
-													{
-														name: 'entities',
-														type: 'grid',
-														schema: [
-															{ name: 'essential_load9', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load9_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load9_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load10', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load10_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load10_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load11', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load11_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load11_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load12', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load12_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load12_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load13', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load13_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load13_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load14', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load14_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load14_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load15', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load15_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load15_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load16', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load16_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load16_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load17', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load17_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load17_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load18', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load18_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load18_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load19', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load19_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load19_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load20', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load20_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load20_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load21', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load21_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load21_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load22', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load22_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load22_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'essential_load23', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'essential_load23_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'essential_load23_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-														],
-													},
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('gri'),
+										title: this._title('gri_ent'),
 										schema: [
 											{
 												name: 'entities',
@@ -689,28 +952,6 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'energy_cost_sell', selector: { entity: {} } },
 													{ name: 'prepaid_units', selector: { entity: {} } },
 													{ name: 'max_sell_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-												],
-											},
-											{
-												type: 'expandable',
-												title: this._title('ness_ld'),
-												schema: [
-													{
-														name: 'entities',
-														type: 'grid',
-														schema: [
-															{ name: 'nonessential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'non_essential_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'non_essential_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'non_essential_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'non_essential_load2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'non_essential_load2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'non_essential_load2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-															{ name: 'non_essential_load3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-															{ name: 'non_essential_load3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-															{ name: 'non_essential_load3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-														],
-													},
 												],
 											},
 										],
