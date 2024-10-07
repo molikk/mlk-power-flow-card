@@ -34,9 +34,16 @@ export interface CustomEntity extends HassEntity {
 	/**
 	 * Checks that the state is valid and entity is switch, toggle or boolean_input
 	 */
-
 	isValidSwitch(): boolean;
 
+	/**
+	 * Checks that the state is valid and entity is energy or Power
+	 */
+	isValidElectric(): boolean;
+
+	/**
+	 * Returns normalized on/off value
+	 */
 	toOnOff(): string;
 
 	/**
@@ -73,6 +80,7 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 		toStr: (decimals?: number, invert?: boolean, abs?: boolean) => Utils.toNum(entity?.state, decimals, invert, abs).toFixed(decimals),
 		isValid: () => isValid || false,
 		isValidSwitch: () => isValid && ['on', 'off', 'On', 'Off', 'ON', 'OFF', 0, 1, true, false].includes(entity?.state) || false,
+		isValidElectric: () => isValid && ['W', 'Wh', 'kW', 'kWh', 'MW', 'MWh', 'J', 'kJ', 'MJ', 'GJ', 'A', 'mA', 'V', 'mV', 'Hz', 'BTU/h'].includes(entity?.attributes?.unit_of_measurement) || false,
 		notEmpty: () => notEmpty || false,
 		isNaN: () => entity?.state === null || Number.isNaN(entity?.state),
 		toPower: (invert?: boolean) => {
