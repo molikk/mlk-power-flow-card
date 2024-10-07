@@ -212,7 +212,7 @@ export class Grid {
 				? svg`
 					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
 						<text id="grid_total_power" x="140" y="220"
-							  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
+							  display="${config.entities.grid_ct_power_total === 'none' ? 'none' : ''}"
 							  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 							${config.grid.auto_scale
 								? `${config.grid.show_absolute
