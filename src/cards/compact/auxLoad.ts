@@ -59,37 +59,29 @@ export class AuxLoad {
 	}
 
 
-	static generateLoad1(data: DataDto, config: PowerFlowCardConfig) {
-
-		return svg`${config.load.aux_loads >= 1 ?
+	static generateLoad(data: DataDto, config: PowerFlowCardConfig, id: number) {
+		return svg`${config.load.aux_loads >= id ?
 			svg`
-				${LoadUtils.generateAuxLoad(1, data.iconAuxLoad1,
-				data.auxDynamicColourLoad1,
-				config.load?.aux_load1_name,
-				data.stateAuxLoad1,
-				data.stateAuxLoad1Extra,
-				data.stateAuxLoad1Toggle,
+				${LoadUtils.generateAuxLoad(id, data.auxLoadIcon,
+				data.auxLoadDynamicColour,
+				AuxLoad.auxLoadName(config),
+				data.auxLoadState,
+				data.auxLoadExtraState,
+				data.auxLoadToggleState,
 				config.load.auto_scale, data.decimalPlaces,
-				Load.column1, Load.rowAux,
+				Load.columns, Load.rowAux,
 			)}`
 			: svg``
 		}`;
 	}
 
-	static generateLoad2(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`${config.load.aux_loads >= 2 ?
-			svg`
-				${LoadUtils.generateAuxLoad(2, data.iconAuxLoad2,
-				data.auxDynamicColourLoad2,
-				config.load?.aux_load2_name,
-				data.stateAuxLoad2,
-				data.stateAuxLoad2Extra,
-				data.stateAuxLoad2Toggle,
-				config.load.auto_scale, data.decimalPlaces,
-				Load.column2, Load.rowAux,
-			)}`
-			: svg``
-		}`;
+	static auxLoadName(config: PowerFlowCardConfig){
+		return [
+			config.load?.aux_load1_name,
+			config.load?.aux_load2_name,
+			config.load?.aux_load3_name,
+			config.load?.aux_load4_name
+		];
 	}
 
 	static generateTotalLoad(data: DataDto, config: PowerFlowCardConfig) {
@@ -118,7 +110,7 @@ export class AuxLoad {
 
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
 				<text id="daily_load_value" x="${this.mainX + 10}" y="87"
 					  class="st10 left-align" display="${!data.showDailyAux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.auxDynamicColour}">

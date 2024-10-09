@@ -18,6 +18,7 @@ export class Load {
 	public static readonly column3: number = Load.column2 + 43 + Load.GAP / 2;
 	public static readonly column4: number = Load.column3 + 43 + Load.GAP / 2;
 	public static readonly column5: number = Load.column4 + 43 + Load.GAP / 2;
+	public static readonly columns: number[] = [ Load.column1,  Load.column2,  Load.column3,  Load.column4, Load.column5]
 	public static readonly yGaps = [26, 55, 37, 67]; //shape, name, power, energy
 	public static readonly xGaps = [53, 43, 63.5]; //icon, shape, names
 
