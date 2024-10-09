@@ -42,7 +42,7 @@ export enum AutarkyType {
 export enum BatteryBanksViewMode {
 	none = 'none',
 	inner = 'Minimal inner view',
-	//outer = 'Outside view'
+	outer = 'Outside view'
 }
 
 
@@ -109,6 +109,8 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		battery_bank_2_energy: number;
 		battery_bank_3_energy: number;
 		battery_bank_4_energy: number;
+		battery_bank_5_energy: number;
+		battery_bank_6_energy: number;
 	}
 	solar: {
 		colour: string;
@@ -154,8 +156,12 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		aux_loads: number;
 		aux_load1_name: string;
 		aux_load2_name: string;
+		aux_load3_name: string;
+		aux_load4_name: string;
 		aux_load1_icon: string;
 		aux_load2_icon: string;
+		aux_load3_icon: string;
+		aux_load4_icon: string;
 		load1_name: string;
 		load2_name: string;
 		load3_name: string;
@@ -296,25 +302,10 @@ export interface ConfigCardEntities {
 	environment_temp: string,
 	radiator_temp_91: string,
 	inverter_load_percentage: string,
-	non_essential_load1: string,
-	non_essential_load2: string,
-	non_essential_load3: string,
-	non_essential_load1_extra: string,
-	non_essential_load2_extra: string,
-	non_essential_load3_extra: string,
-	non_essential_load1_toggle: string,
-	non_essential_load2_toggle: string,
-	non_essential_load3_toggle: string,
 	energy_cost_buy: string,
 	solar_sell_247: string,
 	battery_status: string,
 	pv_total: string,
-	aux_load1: string,
-	aux_load2: string,
-	aux_load1_extra: string,
-	aux_load2_extra: string,
-	aux_load1_toggle: string,
-	aux_load2_toggle: string,
 	day_aux_energy: string,
 	energy_cost_sell: string,
 	inverter_voltage_L2: string,
@@ -380,34 +371,15 @@ export interface DataDto {
 	stateBatteryPower: CustomEntity,
 	batteryDuration,
 	batteryCapacity,
-	stateBatteryBank1Power: CustomEntity,
-	stateBatteryBank2Power: CustomEntity,
-	stateBatteryBank3Power: CustomEntity,
-	stateBatteryBank4Power: CustomEntity,
-	stateBatteryBank1Voltage: CustomEntity,
-	stateBatteryBank2Voltage: CustomEntity,
-	stateBatteryBank3Voltage: CustomEntity,
-	stateBatteryBank4Voltage: CustomEntity,
-	stateBatteryBank1Current: CustomEntity,
-	stateBatteryBank2Current: CustomEntity,
-	stateBatteryBank3Current: CustomEntity,
-	stateBatteryBank4Current: CustomEntity,
-	stateBatteryBank1Delta: CustomEntity,
-	stateBatteryBank2Delta: CustomEntity,
-	stateBatteryBank3Delta: CustomEntity,
-	stateBatteryBank4Delta: CustomEntity,
-	stateBatteryBank1RemainingStorage: CustomEntity,
-	stateBatteryBank2RemainingStorage: CustomEntity,
-	stateBatteryBank3RemainingStorage: CustomEntity,
-	stateBatteryBank4RemainingStorage: CustomEntity,
-	stateBatteryBank1Soc: CustomEntity,
-	stateBatteryBank2Soc: CustomEntity,
-	stateBatteryBank3Soc: CustomEntity,
-	stateBatteryBank4Soc: CustomEntity,
-	dynamicBatteryBatteryBank1Colour: string,
-	dynamicBatteryBatteryBank2Colour: string,
-	dynamicBatteryBatteryBank3Colour: string,
-	dynamicBatteryBatteryBank4Colour: string,
+	batteryBankPowerState: CustomEntity[],
+	batteryBankVoltageState: CustomEntity[],
+	batteryBankCurrentState: CustomEntity[],
+	batteryBankDeltaState: CustomEntity[],
+	batteryBankRemainingStorageState: CustomEntity[],
+	batteryBankSocState: CustomEntity[],
+	batteryBankTempState: CustomEntity[],
+	batteryBankEnergy: number[],
+	batteryBatteryBankColour: string[],
 	additionalLoad,
 	essIconSize,
 	essIcon: string,
@@ -506,26 +478,15 @@ export interface DataDto {
 	nonessentialIcon: string,
 	showNonessential,
 	nonessentialLoads,
-	additionalAuxLoad,
 	iconNonessentialLoad1: string,
 	iconNonessentialLoad2: string,
 	iconNonessentialLoad3: string,
 	inverterStateMsg,
-	auxType,
-	showDailyAux,
-	auxPower,
-	stateAuxPower: CustomEntity,
 	nonessentialPower,
 	nonessLineWidth,
 	grid169LineWidth,
-	auxLineWidth,
-	iconAuxLoad1: string,
-	iconAuxLoad2: string,
 	autoScaledInverterPower,
 	autoScaledGridPower,
-	auxDynamicColour: string,
-	auxDynamicColourLoad1: string,
-	auxDynamicColourLoad2: string,
 	stateDayLoadEnergy: CustomEntity,
 	stateDayBatteryDischarge: CustomEntity,
 	stateDayGridImport: CustomEntity,
@@ -537,7 +498,6 @@ export interface DataDto {
 	stateTotalSolarGeneration: CustomEntity,
 	stateRemainingSolar: CustomEntity,
 	stateTomorrowSolar: CustomEntity,
-	stateDayAuxEnergy: CustomEntity,
 	inverterProg,
 	stateUseTimer: CustomEntity,
 	stateBatterySoc: CustomEntity,
@@ -650,12 +610,6 @@ export interface DataDto {
 	statePV3Energy: CustomEntity,
 	statePV4Energy: CustomEntity,
 	statePV5Energy: CustomEntity,
-	stateAuxLoad1Extra: CustomEntity,
-	stateAuxLoad2Extra: CustomEntity,
-	stateAuxLoad1Toggle: CustomEntity,
-	stateAuxLoad2Toggle: CustomEntity,
-	stateAuxLoad1: CustomEntity,
-	stateAuxLoad2: CustomEntity,
 	stateMaxSellPower: CustomEntity,
 	totalPVEfficiency,
 	PV1Efficiency,
@@ -664,6 +618,21 @@ export interface DataDto {
 	PV4Efficiency,
 	PV5Efficiency,
 	gridPercentage,
+
+	auxType,
+	showDailyAux,
+	auxPower,
+	additionalAuxLoad,
+	stateAuxPower: CustomEntity,
+	stateDayAuxEnergy: CustomEntity,
+	auxLineWidth: number,
+	auxDynamicColour: string,
+	auxLoadIcon: string[],
+	auxLoadDynamicColour: string[],
+	auxLoadState: CustomEntity[],
+	auxLoadExtraState: CustomEntity[],
+	auxLoadToggleState: CustomEntity[],
+
 	flowColour: string,
 	flowBatColour: string,
 	flowInvColour: string,
