@@ -134,7 +134,6 @@ export class PowerFlowCard extends LitElement {
 		const stateDayGridImport = this.getEntity('entities.day_grid_import_76');
 
 		const stateDayGridExport = this.getEntity('entities.day_grid_export_77');
-		const stateDayAuxEnergy = this.getEntity('entities.day_aux_energy');
 
 		//Inverter
 		const stateLoadFrequency = this.getEntity('entities.load_frequency_192');
@@ -168,34 +167,72 @@ export class PowerFlowCard extends LitElement {
 		const stateBatteryRemainingStorage = this.getEntity('entities.battery_remaining_storage', { state: '' });
 
 		//BatteryBanks
-		const stateBatteryBank1Power = this.getEntity('entities.battery_bank_1_power');
-		const stateBatteryBank2Power = this.getEntity('entities.battery_bank_2_power');
-		const stateBatteryBank3Power = this.getEntity('entities.battery_bank_3_power');
-		const stateBatteryBank4Power = this.getEntity('entities.battery_bank_4_power');
-		const stateBatteryBank1Voltage = this.getEntity('entities.battery_bank_1_voltage');
-		const stateBatteryBank2Voltage = this.getEntity('entities.battery_bank_2_voltage');
-		const stateBatteryBank3Voltage = this.getEntity('entities.battery_bank_3_voltage');
-		const stateBatteryBank4Voltage = this.getEntity('entities.battery_bank_4_voltage');
-		const stateBatteryBank1Current = this.getEntity('entities.battery_bank_1_current');
-		const stateBatteryBank2Current = this.getEntity('entities.battery_bank_2_current');
-		const stateBatteryBank3Current = this.getEntity('entities.battery_bank_3_current');
-		const stateBatteryBank4Current = this.getEntity('entities.battery_bank_4_current');
-		const stateBatteryBank1Delta = this.getEntity('entities.battery_bank_1_delta');
-		const stateBatteryBank2Delta = this.getEntity('entities.battery_bank_2_delta');
-		const stateBatteryBank3Delta = this.getEntity('entities.battery_bank_3_delta');
-		const stateBatteryBank4Delta = this.getEntity('entities.battery_bank_4_delta');
-		const stateBatteryBank1RemainingStorage = this.getEntity('entities.battery_bank_1_remaining_storage');
-		const stateBatteryBank2RemainingStorage = this.getEntity('entities.battery_bank_2_remaining_storage');
-		const stateBatteryBank3RemainingStorage = this.getEntity('entities.battery_bank_3_remaining_storage');
-		const stateBatteryBank4RemainingStorage = this.getEntity('entities.battery_bank_4_remaining_storage');
-		const stateBatteryBank1Soc = this.getEntity('entities.battery_bank_1_soc');
-		const stateBatteryBank2Soc = this.getEntity('entities.battery_bank_2_soc');
-		const stateBatteryBank3Soc = this.getEntity('entities.battery_bank_3_soc');
-		const stateBatteryBank4Soc = this.getEntity('entities.battery_bank_4_soc');
+		const batteryBankPowerState = [
+			this.getEntity('entities.battery_bank_1_power'),
+			this.getEntity('entities.battery_bank_2_power'),
+			this.getEntity('entities.battery_bank_3_power'),
+			this.getEntity('entities.battery_bank_4_power'),
+			this.getEntity('entities.battery_bank_5_power'),
+			this.getEntity('entities.battery_bank_6_power'),
+		];
+		const batteryBankVoltageState = [
+			this.getEntity('entities.battery_bank_1_voltage'),
+			this.getEntity('entities.battery_bank_2_voltage'),
+			this.getEntity('entities.battery_bank_3_voltage'),
+			this.getEntity('entities.battery_bank_4_voltage'),
+			this.getEntity('entities.battery_bank_5_voltage'),
+			this.getEntity('entities.battery_bank_6_voltage'),
+		];
+		const batteryBankCurrentState = [
+			this.getEntity('entities.battery_bank_1_current'),
+			this.getEntity('entities.battery_bank_2_current'),
+			this.getEntity('entities.battery_bank_3_current'),
+			this.getEntity('entities.battery_bank_4_current'),
+			this.getEntity('entities.battery_bank_5_current'),
+			this.getEntity('entities.battery_bank_6_current'),
+		];
+		const batteryBankDeltaState = [
+			this.getEntity('entities.battery_bank_1_delta'),
+			this.getEntity('entities.battery_bank_2_delta'),
+			this.getEntity('entities.battery_bank_3_delta'),
+			this.getEntity('entities.battery_bank_4_delta'),
+			this.getEntity('entities.battery_bank_5_delta'),
+			this.getEntity('entities.battery_bank_6_delta'),
+		];
+		const batteryBankRemainingStorageState = [
+			this.getEntity('entities.battery_bank_1_remaining_storage'),
+			this.getEntity('entities.battery_bank_2_remaining_storage'),
+			this.getEntity('entities.battery_bank_3_remaining_storage'),
+			this.getEntity('entities.battery_bank_4_remaining_storage'),
+			this.getEntity('entities.battery_bank_5_remaining_storage'),
+			this.getEntity('entities.battery_bank_6_remaining_storage'),
+		];
+		const batteryBankSocState = [
+			this.getEntity('entities.battery_bank_1_soc'),
+			this.getEntity('entities.battery_bank_2_soc'),
+			this.getEntity('entities.battery_bank_3_soc'),
+			this.getEntity('entities.battery_bank_4_soc'),
+			this.getEntity('entities.battery_bank_5_soc'),
+			this.getEntity('entities.battery_bank_6_soc'),
+		];
+		const batteryBankTempState = [
+			this.getEntity('entities.battery_bank_1_temp'),
+			this.getEntity('entities.battery_bank_2_temp'),
+			this.getEntity('entities.battery_bank_3_temp'),
+			this.getEntity('entities.battery_bank_4_temp'),
+			this.getEntity('entities.battery_bank_5_temp'),
+			this.getEntity('entities.battery_bank_6_temp'),
+		];
+
+		const batteryBankEnergy = [
+			config.battery.battery_bank_1_energy,
+			config.battery.battery_bank_2_energy,
+			config.battery.battery_bank_3_energy,
+			config.battery.battery_bank_4_energy,
+		];
 
 		//Load
 		const stateEssentialPower = this.getEntity('entities.essential_power');
-		const stateAuxPower = this.getEntity('entities.aux_power_166');
 		const stateNonessentialPower = this.getEntity('entities.nonessential_power');
 		const stateNonessentialLoad1 = this.getEntity('entities.non_essential_load1');
 		const stateNonessentialLoad2 = this.getEntity('entities.non_essential_load2');
@@ -278,12 +315,28 @@ export class PowerFlowCard extends LitElement {
 		const stateLoadPowerL1 = this.getEntity('entities.load_power_L1');
 		const stateLoadPowerL2 = this.getEntity('entities.load_power_L2');
 		const stateLoadPowerL3 = this.getEntity('entities.load_power_L3');
-		const stateAuxLoad1 = this.getEntity('entities.aux_load1');
-		const stateAuxLoad2 = this.getEntity('entities.aux_load2');
-		const stateAuxLoad1Extra = this.getEntity('entities.aux_load1_extra');
-		const stateAuxLoad2Extra = this.getEntity('entities.aux_load2_extra');
-		const stateAuxLoad1Toggle = this.getEntity('entities.aux_load1_toggle');
-		const stateAuxLoad2Toggle = this.getEntity('entities.aux_load2_toggle');
+
+		//Load aux
+		const stateAuxPower = this.getEntity('entities.aux_power_166');
+		const stateDayAuxEnergy = this.getEntity('entities.day_aux_energy');
+		const auxLoadState = [
+			this.getEntity('entities.aux_load1'),
+			this.getEntity('entities.aux_load2'),
+			this.getEntity('entities.aux_load3'),
+			this.getEntity('entities.aux_load4'),
+		];
+		const auxLoadExtraState = [
+			this.getEntity('entities.aux_load1_extra'),
+			this.getEntity('entities.aux_load2_extra'),
+			this.getEntity('entities.aux_load3_extra'),
+			this.getEntity('entities.aux_load4_extra'),
+		];
+		const auxLoadToggleState = [
+			this.getEntity('entities.aux_load1_toggle'),
+			this.getEntity('entities.aux_load2_toggle'),
+			this.getEntity('entities.aux_load3_toggle'),
+			this.getEntity('entities.aux_load4_toggle'),
+		];
 
 		//Grid
 		const stateGridFrequency = this.getEntity('entities.grid_frequency');
@@ -344,7 +397,8 @@ export class PowerFlowCard extends LitElement {
 		//Set defaults
 		const { invert_aux } = config.load;
 
-		const auxPower = stateAuxPower?.isValid() ? stateAuxPower.toPower(invert_aux) : (stateAuxLoad1?.toPower(invert_aux) || 0) + (stateAuxLoad2?.toPower(invert_aux) || 0);
+		const auxPower = stateAuxPower?.isValid() ? stateAuxPower.toPower(invert_aux) :
+			(auxLoadState[0]?.toPower(invert_aux) || 0) + (auxLoadState[1]?.toPower(invert_aux) || 0) + (auxLoadState[2]?.toPower(invert_aux) || 0) + (auxLoadState[3]?.toPower(invert_aux) || 0);
 
 		const { invert_grid } = config.grid;
 		const gridPowerL1 = stateGridPowerL1.toPower(invert_grid);
@@ -445,12 +499,18 @@ export class PowerFlowCard extends LitElement {
 
 		const auxColour = this.colourConvert(config.load?.aux_colour);
 		const auxOffColour = this.colourConvert(config.load?.aux_off_colour || this.GREY_COLOUR);
-		const auxDynamicColourLoad1 = this.calculateAuxLoadColour(stateAuxLoad1, stateAuxLoad1Toggle, config.load?.off_threshold) || auxColour;
-		const auxDynamicColourLoad2 = this.calculateAuxLoadColour(stateAuxLoad2, stateAuxLoad2Toggle, config.load?.off_threshold) || auxColour;
+		const auxLoadDynamicColour = [
+			this.calculateAuxLoadColour(auxLoadState[0], auxLoadToggleState[0], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[1], auxLoadToggleState[1], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[2], auxLoadToggleState[2], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[3], auxLoadToggleState[3], config.load?.off_threshold) || auxColour,
+		];
 
 		let auxDynamicColour = auxOffColour;
-		auxDynamicColour = auxDynamicColourLoad1 != auxOffColour ? auxDynamicColourLoad1 : auxDynamicColour;
-		auxDynamicColour = auxDynamicColourLoad2 != auxOffColour ? auxDynamicColourLoad2 : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[0] != auxOffColour ? auxLoadDynamicColour[0] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[1] != auxOffColour ? auxLoadDynamicColour[1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[2] != auxOffColour ? auxLoadDynamicColour[2] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[3] != auxOffColour ? auxLoadDynamicColour[3] : auxDynamicColour;
 		auxDynamicColour = stateAuxPower.isValid() && Math.abs(stateAuxPower.toPower()) > Utils.toNum(config.load?.off_threshold, 0) ? auxColour : auxDynamicColour;
 
 		let nonessentialLoads = config.grid?.additional_loads;
@@ -508,8 +568,12 @@ export class PowerFlowCard extends LitElement {
 		const iconEssentialLoad21 = this.getEntity('load.load21_icon', { state: config.load?.load21_icon?.toString() ?? '' }).state;
 		const iconEssentialLoad22 = this.getEntity('load.load22_icon', { state: config.load?.load22_icon?.toString() ?? '' }).state;
 		const iconEssentialLoad23 = this.getEntity('load.load23_icon', { state: config.load?.load23_icon?.toString() ?? '' }).state;
-		const iconAuxLoad1 = this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state;
-		const iconAuxLoad2 = this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state;
+		const auxLoadIcon = [
+			this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load3_icon', { state: config.load?.aux_load3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load4_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+		];
 		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
 		const iconNonessentialLoad1 = this.getEntity('grid.load1_icon', { state: config.grid?.load1_icon?.toString() ?? '' }).state;
 		const iconNonessentialLoad2 = this.getEntity('grid.load2_icon', { state: config.grid?.load2_icon?.toString() ?? '' }).state;
@@ -793,11 +857,14 @@ export class PowerFlowCard extends LitElement {
 
 		// Determine battery colours
 		const batteryColour = this.batteryColour(batteryPower, isFloating, batteryChargeColour, batteryColourConfig);
-		const dynamicBatteryBatteryBank1Colour = this.batteryColour(stateBatteryBank1Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank1Current, stateBatteryBank1Soc), batteryChargeColour, batteryColourConfig);
-		const dynamicBatteryBatteryBank2Colour = this.batteryColour(stateBatteryBank2Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank2Current, stateBatteryBank2Soc), batteryChargeColour, batteryColourConfig);
-		const dynamicBatteryBatteryBank3Colour = this.batteryColour(stateBatteryBank3Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank3Current, stateBatteryBank3Soc), batteryChargeColour, batteryColourConfig);
-		const dynamicBatteryBatteryBank4Colour = this.batteryColour(stateBatteryBank4Power.toPower(config.battery?.invert_power), this.isFloating(stateBatteryBank4Current, stateBatteryBank4Soc), batteryChargeColour, batteryColourConfig);
-
+		const batteryBatteryBankColour = [
+			this.batteryColour(batteryBankPowerState[1 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[1 - 1], batteryBankSocState[1 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(batteryBankPowerState[2 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[2 - 1], batteryBankSocState[2 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(batteryBankPowerState[3 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[3 - 1], batteryBankSocState[3 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(batteryBankPowerState[4 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[4 - 1], batteryBankSocState[4 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(batteryBankPowerState[5 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[5 - 1], batteryBankSocState[5 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(batteryBankPowerState[6 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[6 - 1], batteryBankSocState[6 - 1]), batteryChargeColour, batteryColourConfig),
+		];
 		//Set Inverter Status Message and dot
 		let inverterStateColour = '';
 		let inverterStateMsg = '';
@@ -1217,34 +1284,16 @@ export class PowerFlowCard extends LitElement {
 			stateBatterySoc,
 			inverterProg,
 			batteryPercentage,
-			stateBatteryBank1Power,
-			stateBatteryBank2Power,
-			stateBatteryBank3Power,
-			stateBatteryBank4Power,
-			stateBatteryBank1Voltage,
-			stateBatteryBank2Voltage,
-			stateBatteryBank3Voltage,
-			stateBatteryBank4Voltage,
-			stateBatteryBank1Current,
-			stateBatteryBank2Current,
-			stateBatteryBank3Current,
-			stateBatteryBank4Current,
-			stateBatteryBank1Delta,
-			stateBatteryBank2Delta,
-			stateBatteryBank3Delta,
-			stateBatteryBank4Delta,
-			stateBatteryBank1RemainingStorage,
-			stateBatteryBank2RemainingStorage,
-			stateBatteryBank3RemainingStorage,
-			stateBatteryBank4RemainingStorage,
-			stateBatteryBank1Soc,
-			stateBatteryBank2Soc,
-			stateBatteryBank3Soc,
-			stateBatteryBank4Soc,
-			dynamicBatteryBatteryBank1Colour,
-			dynamicBatteryBatteryBank2Colour,
-			dynamicBatteryBatteryBank3Colour,
-			dynamicBatteryBatteryBank4Colour,
+			batteryBankPowerState,
+			batteryBankVoltageState,
+			batteryBankCurrentState,
+			batteryBankTempState,
+			batteryBankDeltaState,
+			batteryBankSocState,
+			batteryBankRemainingStorageState,
+			batteryBankEnergy,
+			batteryBatteryBankColour,
+
 			pvPercentage,
 			loadShowDaily,
 			stateEnergyCostSell,
@@ -1462,29 +1511,26 @@ export class PowerFlowCard extends LitElement {
 			iconNonessentialLoad2,
 			iconNonessentialLoad3,
 			inverterStateMsg,
-			auxType,
-			showDailyAux,
 			nonessentialPower,
 			nonessLineWidth,
 			grid169LineWidth,
-			auxLineWidth,
-			iconAuxLoad1,
-			iconAuxLoad2,
-			stateDayAuxEnergy,
-			additionalAuxLoad,
+
+			auxType,
+			showDailyAux,
 			auxPower,
+			additionalAuxLoad,
 			stateAuxPower,
-			stateAuxLoad1,
-			stateAuxLoad2,
-			stateAuxLoad1Extra,
-			stateAuxLoad2Extra,
-			stateAuxLoad1Toggle,
-			stateAuxLoad2Toggle,
+			stateDayAuxEnergy,
+			auxLineWidth,
+			auxDynamicColour,
+			auxLoadIcon,
+			auxLoadDynamicColour,
+			auxLoadState,
+			auxLoadExtraState,
+			auxLoadToggleState,
+
 			autoScaledInverterPower,
 			autoScaledGridPower,
-			auxDynamicColour,
-			auxDynamicColourLoad1,
-			auxDynamicColourLoad2,
 			stateMaxSellPower,
 			totalPVEfficiency,
 			PV1Efficiency,

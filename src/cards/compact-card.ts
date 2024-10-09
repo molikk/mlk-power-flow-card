@@ -1,5 +1,5 @@
 import { html, svg } from 'lit';
-import { DataDto, PowerFlowCardConfig } from '../types';
+import { BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../types';
 import { EssentialLoad } from './compact/essentialLoad';
 import { Autarky } from './compact/autarky';
 import { Style } from './compact/style';
@@ -27,8 +27,9 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 		: (config.load.aux_loads > 4 || data.additionalLoad > 18) ? 648
 			: (config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
 				: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 552 : 505;
-
-	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : (config.show_solar ? (config.show_battery ? 408 : (data.additionalLoad >= 2 ? 400 : 300)) : (config.show_battery ? (data.additionalLoad > 0 ? 350 : 271) : 271));
+	let batteryBanksHeight = config.battery.show_battery_banks && config.battery.battery_banks_view_mode == BatteryBanksViewMode.outer ? 80 : 0;
+	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height :
+		(config.show_battery ? 408 + batteryBanksHeight : (data.additionalLoad >= 2 ? 400 : 300));
 
 	return html`
 			<ha-card>
@@ -112,7 +113,8 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						}
 						${config.show_battery && config.battery.show_battery_banks ?
 							svg`
-								${BatteryBank.getBatteryBanksDetails(data, config)}
+								${BatteryBank.getBatteryBanksDetailsInnerMode(data, config)}
+								${BatteryBank.getBatteryBanksDetailsOuterMode(data, config)}
              ` : ``
 						}
 
@@ -149,8 +151,10 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 							svg`
 								${AuxLoad.generateShapes(data, config)}
 								${AuxLoad.generateLines(data)}
-								${AuxLoad.generateLoad1(data, config)}
-								${AuxLoad.generateLoad2(data, config)}
+								${AuxLoad.generateLoad(data, config, 1)}
+								${AuxLoad.generateLoad(data, config, 2)}
+								${AuxLoad.generateLoad(data, config, 3)}
+								${AuxLoad.generateLoad(data, config, 4)}
 								${AuxLoad.generateTotalLoad(data, config)}
 								${AuxLoad.generateDailyLoad(data, config)}
 							` : ``

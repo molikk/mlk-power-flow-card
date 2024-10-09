@@ -131,14 +131,23 @@ export class Style {
 				}
 				
 				.aux-load1_small-icon {
-					color: ${data.auxDynamicColourLoad1} !important;
+					color: ${data.auxLoadDynamicColour[0]} !important;
 					--mdc-icon-size: 20px;
 				}
 				.aux-load2_small-icon {
-					color: ${data.auxDynamicColourLoad2} !important;
+					color: ${data.auxLoadDynamicColour[1]} !important;
 					--mdc-icon-size: 20px;
 				}
-				
+				.aux-load3_small-icon {
+					color: ${data.auxLoadDynamicColour[2]} !important;
+					--mdc-icon-size: 20px;
+				}
+				.aux-load4_small-icon {
+					color: ${data.auxLoadDynamicColour[3]} !important;
+					--mdc-icon-size: 20px;
+				}
+
+								
 				.nes-load-icon {
 					color: ${data.dynamicColourNonEssentialLoad} !important;
 					--mdc-icon-size: 32px;

@@ -81,7 +81,7 @@ export class LoadUtils {
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
 							display="${energy.isValid() ? '' : 'none'}"
 							class="st3" fill="${color}">
-					${energy.toNum(1)}
+					${energy.isValidElectric()?energy.toStr(1):energy.toString()}
 					${energy.getUOM()}
 				</text>
 			</a>`;
@@ -135,13 +135,28 @@ export class LoadUtils {
 		)}`;
 	}
 
-
 	static generateAuxLoad(
+		ID: number, icon: string[],
+		color: string[], name: string[],
+		power: CustomEntity[], energy: CustomEntity[], toggle: CustomEntity[],
+		loadAutoScale: boolean, decimalPlaces: number,
+		columns: number[], mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
+	) {
+		const id = ID-1;
+		return LoadUtils.generateAuxLoadInternal(
+			ID, icon[id], color[id], name[id],
+			power[id], energy[id], toggle[id],
+			loadAutoScale, decimalPlaces,
+			columns[id], mainY, xGaps, yGaps
+		);
+	}
+
+	static generateAuxLoadInternal(
 		id: number, icon: string,
 		color: string, name: string,
 		power: CustomEntity, energy: CustomEntity, toggle: CustomEntity,
 		loadAutoScale: boolean, decimalPlaces: number,
-		mainX: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
+		mainX: number, mainY: number, xGaps: number[], yGaps: number[],
 	) {
 		const icon_link = LoadUtils.getIconLink(
 			toggle.entity_id,
@@ -150,13 +165,13 @@ export class LoadUtils {
 
 		return svg`
 				${LoadUtils.generateLoadItem(
-			'aux', id, icon_link,
-			color, mainX + xGaps[1], mainY + yGaps[0],
-			name, mainX + xGaps[2], mainY + yGaps[1],
-			power, mainX + xGaps[2], mainY + yGaps[2],
-			energy, mainX + xGaps[2], mainY + yGaps[3],
-			toggle, loadAutoScale, decimalPlaces,
-		)}`;
+					'aux', id, icon_link,
+					color, mainX + xGaps[1], mainY + yGaps[0],
+					name, mainX + xGaps[2], mainY + yGaps[1],
+					power, mainX + xGaps[2], mainY + yGaps[2],
+					energy, mainX + xGaps[2], mainY + yGaps[3],
+					toggle, loadAutoScale, decimalPlaces,
+				)}`;
 	}
 
 
