@@ -1,4 +1,4 @@
-import { DataDto, PowerFlowCardConfig } from '../../types';
+import { BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { localize } from '../../localize/localize';
 import { Utils } from '../../helpers/utils';
@@ -22,22 +22,26 @@ export class Battery {
                   display="${config.entities.battery_power_190 === 'none' ? 'none' : ''}"
                   fill=${data.batteryColour} class="${data.largeFont !== true ? 'st14' : 'st4'} st8">
                 ${config.battery.auto_scale
-			? `${config.battery.show_absolute
-				? Utils.convertValueNew(Math.abs(data.stateBatteryPower.toNum(data.decimalPlaces)), data.stateBatteryPower.getUOM(), data.decimalPlaces)
-				: Utils.convertValueNew(data.stateBatteryPower.toNum(data.decimalPlaces), data.stateBatteryPower.getUOM(), data.decimalPlaces) || '0'}`
-			: `${data.stateBatteryPower.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute)} ${UnitOfPower.WATT}`
-		}
+								? `${config.battery.show_absolute
+									? Utils.convertValueNew(Math.abs(data.stateBatteryPower.toNum(data.decimalPlaces)), data.stateBatteryPower.getUOM(), data.decimalPlaces)
+									: Utils.convertValueNew(data.stateBatteryPower.toNum(data.decimalPlaces), data.stateBatteryPower.getUOM(), data.decimalPlaces) || '0'}`
+								: `${data.stateBatteryPower.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute)} ${UnitOfPower.WATT}`
+							}
             </text>
         </a>
 		`;
 	}
 
+	static showInnerBatteryBanks(config: PowerFlowCardConfig){
+		return config.battery.show_battery_banks && config.battery.battery_banks_view_mode == BatteryBanksViewMode.inner;
+	}
+
 	static generateVoltage(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryVoltage.entity_id)}>
-            <text id="battery_voltage_183" x="${config.battery.show_battery_banks?'202':'281'}" y="299"
+            <text id="battery_voltage_183" x="${Battery.showInnerBatteryBanks(config)?'202':'281'}" y="299"
                   display="${data.stateBatteryVoltage.isValid() ? '' : 'none'}"
-                  fill=${data.batteryColour} class="st3 ${config.battery.show_battery_banks?'right-align':'left-align'}">
+                  fill=${data.batteryColour} class="st3 ${Battery.showInnerBatteryBanks(config)?'right-align':'left-align'}">
                 ${data.stateBatteryVoltage.toStr(data.decimalPlaces)} ${UnitOfElectricPotential.VOLT}
             </text>
         </a>
@@ -47,9 +51,9 @@ export class Battery {
 	static generateCurrent(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
-            <text id="battery_current_191" x="${config.battery.show_battery_banks?'202':'281'}" y="312"
+            <text id="battery_current_191" x="${Battery.showInnerBatteryBanks(config)?'202':'281'}" y="312"
                   display="${data.stateBatteryCurrent.isValid() ? '' : 'none'}"
-                  fill=${data.batteryColour} class="st3 ${config.battery.show_battery_banks?'right-align':'left-align'}">
+                  fill=${data.batteryColour} class="st3 ${Battery.showInnerBatteryBanks(config)?'right-align':'left-align'}">
                 ${data.stateBatteryCurrent.toStr(data.decimalPlaces, false, config.battery.show_absolute)} ${UnitOfElectricalCurrent.AMPERE}
             </text>
         </a>       
@@ -192,7 +196,8 @@ export class Battery {
 		if(data.stateBatteryRemainingStorage?.isValid()){
 			return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
-					<text x="${config.battery.show_battery_banks?'202':'270'}" y="${config.battery.show_battery_banks?'325':'338'}" class="st3 ${config.battery.show_battery_banks?'right-align':'left-align'}"
+					<text x="${Battery.showInnerBatteryBanks(config)?'202':'270'}" y="${Battery.showInnerBatteryBanks(config)?'325':'338'}" 
+						class="st3 ${Battery.showInnerBatteryBanks(config)?'right-align':'left-align'}"
 						  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
 						  fill="${data.batteryColour}">
 						${data.stateBatteryRemainingStorage.toStr(2, false, true)} ${data.stateBatteryRemainingStorage.getUOM()}
