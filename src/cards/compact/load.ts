@@ -13,6 +13,7 @@ export class Load {
 	public static readonly row3: number = 185;
 	public static readonly row4: number = 260;
 	public static readonly row5: number = 335;
+	public static readonly row6: number = 410;
 	public static readonly column1: number = Load.LOAD_X - 43 - Load.GAP / 2;
 	public static readonly column2: number = Load.LOAD_X;
 	public static readonly column3: number = Load.column2 + 43 + Load.GAP / 2;
