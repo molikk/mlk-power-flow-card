@@ -262,7 +262,11 @@
       "grid": "Grid Options",
       "gri_ent": "Grid Entities",
       "ness_load": "Non-Essential Load Options",
-      "ness_load_ent": "Non-Essential Load Entities"
+      "ness_load_ent": "Non-Essential Load Entities",
+      "ness_load_row_1": "Non-Essential Load Row 1 Options",
+      "ness_load_row_1_ent": "Non-Essential Load Row 1 Entities",
+      "ness_load_row_2": "Non-Essential Load Row 2 Options",
+      "ness_load_row_2_ent": "Non-Essential Load Row 2 Entities"
     }
   }
 }
