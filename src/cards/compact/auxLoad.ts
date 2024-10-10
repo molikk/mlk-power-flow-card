@@ -15,8 +15,8 @@ export class AuxLoad {
 
 		return svg`
 			<rect x="${x}" y="139" width="70" height="30" rx="4.5" ry="4.5" fill="none"
-					  stroke="${data.auxDynamicColour}" pointer-events="all"/>
-			<text id="ess_load_name" class="st16 left-align" x="${x + 3}" y="144" fill="${data.auxDynamicColour}">
+					  stroke="${data.auxLoadMainDynamicColour}" pointer-events="all"/>
+			<text id="ess_load_name" class="st16 left-align" x="${x + 3}" y="144" fill="${data.auxLoadMainDynamicColour}">
 				${config.load.aux_name}
 			</text>
 		`;
@@ -28,12 +28,12 @@ export class AuxLoad {
 		return svg`
 			<svg id="aux-flow">
 				<path id="aux-line1" d="M 260 190 L 260 180 Q 260 153 287 153 L ${x} 153"
-					  fill="none" stroke="${data.auxDynamicColour}" stroke-width="${lineWidth}"
+					  fill="none" stroke="${data.auxLoadMainDynamicColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
 				<circle id="aux-dot1" cx="0" cy="0"
 						r="${Math.min(2 + lineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxDynamicColour}`}">
+						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['aux']}s" repeatCount="indefinite"
 								   keyPoints=${data.auxPower > 0 ? '0;1' : '1;0'}
 								   keyTimes="0;1" 
@@ -42,12 +42,12 @@ export class AuxLoad {
 					</animateMotion>
 				</circle>
 				<path id="aux-line2" d="M ${x + 70} 153 L ${x + 70 } 153 Q ${x + 70 + 27} 153 ${x + 70 + 27} 126 L ${x + 70 +  27} 46 Q ${x + 70 + 27} 39 ${x + 70 + 27 + 5} 39 L ${Load.column1 + Load.xGaps[1]} 39 "
-					  fill="none" stroke="${data.auxDynamicColour}" stroke-width="${lineWidth}"
+					  fill="none" stroke="${data.auxLoadMainDynamicColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
 				<circle id="aux-dot2" cx="0" cy="0"
 						r="${Math.min(2 + lineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxDynamicColour}`}">
+						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['aux'] * 2}s" repeatCount="indefinite"
 								   keyPoints=${data.auxPower > 0 ? '0;1' : '1;0'}
 								   keyTimes="0;1" 
@@ -95,13 +95,13 @@ export class AuxLoad {
 			svg`
 					<a href="#" @click=${(e) => Utils.handlePopup(e, config.stateAuxPower.entity_id)}>
 						<text id="aux_power" x="${x}" y="155.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
-							  fill="${data.auxDynamicColour}">
+							  fill="${data.auxLoadMainDynamicColour}">
 							  ${value}
 						</text>
 					</a>`
 			: svg`
 					<text id="aux_power" x="${x}" y="155.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
-						  fill="${data.auxDynamicColour}">
+						  fill="${data.auxLoadMainDynamicColour}">
 						  ${value}
 					</text>`
 		}
@@ -113,7 +113,7 @@ export class AuxLoad {
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
 				<text id="daily_load_value" x="${this.mainX + 10}" y="87"
 					  class="st10 left-align" display="${!data.showDailyAux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
-					  fill="${data.auxDynamicColour}">
+					  fill="${data.auxLoadMainDynamicColour}">
 					${data.stateDayAuxEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
 			</a>
@@ -121,7 +121,7 @@ export class AuxLoad {
 					x="${this.mainX + 10}"
 				    y="100"
 				    class="st3 left-align"
-				    fill="${!data.showDailyAux ? 'transparent' : `${data.auxDynamicColour}`}">
+				    fill="${!data.showDailyAux ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
 				${config.load?.aux_daily_name ? config.load?.aux_daily_name : localize('common.daily_aux')}
 			</text>
 		`;
