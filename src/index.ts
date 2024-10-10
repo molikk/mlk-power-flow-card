@@ -233,16 +233,7 @@ export class PowerFlowCard extends LitElement {
 
 		//Load
 		const stateEssentialPower = this.getEntity('entities.essential_power');
-		const stateNonessentialPower = this.getEntity('entities.nonessential_power');
-		const stateNonessentialLoad1 = this.getEntity('entities.non_essential_load1');
-		const stateNonessentialLoad2 = this.getEntity('entities.non_essential_load2');
-		const stateNonessentialLoad3 = this.getEntity('entities.non_essential_load3');
-		const stateNonEssentialLoad1Extra = this.getEntity('entities.non_essential_load1_extra');
-		const stateNonEssentialLoad2Extra = this.getEntity('entities.non_essential_load2_extra');
-		const stateNonEssentialLoad3Extra = this.getEntity('entities.non_essential_load3_extra');
-		const stateNonEssentialLoad1Toggle = this.getEntity('entities.non_essential_load1_toggle');
-		const stateNonEssentialLoad2Toggle = this.getEntity('entities.non_essential_load2_toggle');
-		const stateNonEssentialLoad3Toggle = this.getEntity('entities.non_essential_load3_toggle');
+
 		const stateEssentialLoad1 = this.getEntity('entities.essential_load1');
 		const stateEssentialLoad2 = this.getEntity('entities.essential_load2');
 		const stateEssentialLoad3 = this.getEntity('entities.essential_load3');
@@ -315,6 +306,34 @@ export class PowerFlowCard extends LitElement {
 		const stateLoadPowerL1 = this.getEntity('entities.load_power_L1');
 		const stateLoadPowerL2 = this.getEntity('entities.load_power_L2');
 		const stateLoadPowerL3 = this.getEntity('entities.load_power_L3');
+
+		//Grid Load non-essential
+
+		const stateNonessentialPower = this.getEntity('entities.nonessential_power');
+		const nonessentialLoadState = [
+			this.getEntity('entities.non_essential_load1'),
+			this.getEntity('entities.non_essential_load2'),
+			this.getEntity('entities.non_essential_load3'),
+			this.getEntity('entities.non_essential_load4'),
+			this.getEntity('entities.non_essential_load5'),
+			this.getEntity('entities.non_essential_load6'),
+		];
+		const nonEssentialLoadExtraState = [
+			this.getEntity('entities.non_essential_load1_extra'),
+			this.getEntity('entities.non_essential_load2_extra'),
+			this.getEntity('entities.non_essential_load3_extra'),
+			this.getEntity('entities.non_essential_load4_extra'),
+			this.getEntity('entities.non_essential_load5_extra'),
+			this.getEntity('entities.non_essential_load6_extra'),
+		];
+		const nonEssentialLoadToggleState = [
+			this.getEntity('entities.non_essential_load1_toggle'),
+			this.getEntity('entities.non_essential_load2_toggle'),
+			this.getEntity('entities.non_essential_load3_toggle'),
+			this.getEntity('entities.non_essential_load4_toggle'),
+			this.getEntity('entities.non_essential_load5_toggle'),
+			this.getEntity('entities.non_essential_load6_toggle'),
+		];
 
 		//Load aux
 		const stateAuxPower = this.getEntity('entities.aux_power_166');
@@ -487,14 +506,19 @@ export class PowerFlowCard extends LitElement {
 				``;
 				break;
 		}
-		const dynamicColourNonEssentialLoad = Math.abs(stateNonessentialLoad1.toPower(false) + stateNonessentialLoad2.toPower(false) + stateNonessentialLoad3.toPower(false)) > Utils.toNum(config.grid?.off_threshold, 0)
-			? stateNonessentialLoad1.toPower(false) + stateNonessentialLoad2.toPower(false) + stateNonessentialLoad3.toPower(false) > 0 ? gridImportColour : gridExportColour
+
+		const nonEssentialLoadMainDynamicColour = this.sumPowers(nonessentialLoadState, true) > Utils.toNum(config.grid?.off_threshold, 0)
+			? this.sumPowers(nonessentialLoadState, false) > 0 ? gridImportColour : gridExportColour
 			: this.GREY_COLOUR;
 
-		const dynamicColourNonEssentialLoad1 = this.getDynamicColorWithToggle(stateNonessentialLoad1, stateNonEssentialLoad1Toggle, config.grid?.off_threshold, gridImportColour, gridExportColour);
-		const dynamicColourNonEssentialLoad2 = this.getDynamicColorWithToggle(stateNonessentialLoad2, stateNonEssentialLoad2Toggle, config.grid?.off_threshold, gridImportColour, gridExportColour);
-		const dynamicColourNonEssentialLoad3 = this.getDynamicColorWithToggle(stateNonessentialLoad3, stateNonEssentialLoad3Toggle, config.grid?.off_threshold, gridImportColour, gridExportColour);
-
+		const nonEssentialLoadDynamicColour = [
+			this.getDynamicColorWithToggle(nonessentialLoadState[1 - 1], nonEssentialLoadToggleState[1 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[2 - 1], nonEssentialLoadToggleState[2 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[3 - 1], nonEssentialLoadToggleState[3 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[4 - 1], nonEssentialLoadToggleState[4 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[5 - 1], nonEssentialLoadToggleState[5 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[6 - 1], nonEssentialLoadToggleState[6 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+		];
 		const gridOffColour = this.colourConvert(config.grid?.grid_off_colour || gridColour);
 
 		const auxColour = this.colourConvert(config.load?.aux_colour);
@@ -575,9 +599,15 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.aux_load4_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
 		];
 		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
-		const iconNonessentialLoad1 = this.getEntity('grid.load1_icon', { state: config.grid?.load1_icon?.toString() ?? '' }).state;
-		const iconNonessentialLoad2 = this.getEntity('grid.load2_icon', { state: config.grid?.load2_icon?.toString() ?? '' }).state;
-		const iconNonessentialLoad3 = this.getEntity('grid.load3_icon', { state: config.grid?.load3_icon?.toString() ?? '' }).state;
+
+		const nonessentialLoadIcon = [
+			this.getEntity('grid.load1_icon', { state: config.grid?.load1_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load2_icon', { state: config.grid?.load2_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load3_icon', { state: config.grid?.load3_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load4_icon', { state: config.grid?.load4_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load5_icon', { state: config.grid?.load5_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load6_icon', { state: config.grid?.load6_icon?.toString() ?? '' }).state,
+		];
 		const iconGridImport = this.getEntity('grid.import_icon', { state: config.grid?.import_icon?.toString() ?? '' }).state;
 		const iconGridDisconnected = this.getEntity('grid.disconnected_icon', { state: config.grid?.disconnected_icon?.toString() ?? '' }).state;
 		const iconGridExport = this.getEntity('grid.export_icon', { state: config.grid?.export_icon?.toString() ?? '' }).state;
@@ -661,7 +691,7 @@ export class PowerFlowCard extends LitElement {
 						: stateNonessentialPower.toPower();
 			}
 		} else {
-			nonessentialPower = stateNonessentialLoad1.toPower() + stateNonessentialLoad2.toPower() + stateNonessentialLoad3.toPower();
+			nonessentialPower = this.sumPowers(nonessentialLoadState);
 		}
 
 		//console.log('ESS POWER', essential_power, threePhase, config.entities.load_power_L1, config.entities.inverter_power_175, "with_inv_power",  autoScaledInverterPower, autoScaledGridPower, auxPower, autoScaledInverterPower + autoScaledGridPower - auxPower, "without_inv_power", totalPV, batteryPower, autoScaledGridPower, auxPower, totalPV + batteryPower + autoScaledGridPower - auxPower);
@@ -1283,6 +1313,7 @@ export class PowerFlowCard extends LitElement {
 			batteryStateMsg,
 			stateBatterySoc,
 			inverterProg,
+
 			batteryPercentage,
 			batteryBankPowerState,
 			batteryBankVoltageState,
@@ -1382,15 +1413,6 @@ export class PowerFlowCard extends LitElement {
 			stateEssentialLoad21Toggle,
 			stateEssentialLoad22Toggle,
 			stateEssentialLoad23Toggle,
-			stateNonessentialLoad1,
-			stateNonessentialLoad2,
-			stateNonessentialLoad3,
-			stateNonEssentialLoad1Extra,
-			stateNonEssentialLoad2Extra,
-			stateNonEssentialLoad3Extra,
-			stateNonEssentialLoad1Toggle,
-			stateNonEssentialLoad2Toggle,
-			stateNonEssentialLoad3Toggle,
 			gridShowDailyBuy,
 			gridShowDailySell,
 			batteryShowDaily,
@@ -1504,12 +1526,17 @@ export class PowerFlowCard extends LitElement {
 			batteryIcon,
 			formattedResultTime,
 			showAux,
-			nonessentialIcon,
+
 			showNonessential,
 			nonessentialLoads,
-			iconNonessentialLoad1,
-			iconNonessentialLoad2,
-			iconNonessentialLoad3,
+			nonessentialIcon,
+			nonessentialLoadIcon,
+			nonessentialLoadState,
+			nonEssentialLoadExtraState,
+			nonEssentialLoadToggleState,
+			nonEssentialLoadMainDynamicColour,
+			nonEssentialLoadDynamicColour,
+
 			inverterStateMsg,
 			nonessentialPower,
 			nonessLineWidth,
@@ -1522,7 +1549,7 @@ export class PowerFlowCard extends LitElement {
 			stateAuxPower,
 			stateDayAuxEnergy,
 			auxLineWidth,
-			auxDynamicColour,
+			auxLoadMainDynamicColour: auxDynamicColour,
 			auxLoadIcon,
 			auxLoadDynamicColour,
 			auxLoadState,
@@ -1565,10 +1592,6 @@ export class PowerFlowCard extends LitElement {
 			dynamicColourEssentialLoad21,
 			dynamicColourEssentialLoad22,
 			dynamicColourEssentialLoad23,
-			dynamicColourNonEssentialLoad,
-			dynamicColourNonEssentialLoad1,
-			dynamicColourNonEssentialLoad2,
-			dynamicColourNonEssentialLoad3,
 			stateBatteryRemainingStorage,
 			stateBatterySOH,
 			customGridIcon,
@@ -1578,6 +1601,15 @@ export class PowerFlowCard extends LitElement {
 		};
 
 		return compactCard(config, inverterImg, data);
+	}
+
+	private sumPowers(entities: CustomEntity[], abs: boolean = false) {
+		let result = 0;
+		for (let i = 0; i < entities.length; i++) {
+			let value = entities[i].toPower(false);
+			result += abs ? Math.abs(value) : value;
+		}
+		return result;
 	}
 
 

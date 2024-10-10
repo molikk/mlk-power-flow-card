@@ -229,11 +229,17 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		nonessential_name: string;
 		additional_loads: number;
 		load1_name: string;
-		load2_name: string;
-		load3_name: string;
 		load1_icon: string;
+		load2_name: string;
 		load2_icon: string;
+		load3_name: string;
 		load3_icon: string;
+		load4_name: string;
+		load4_icon: string;
+		load5_name: string;
+		load5_icon: string;
+		load6_name: string;
+		load6_icon: string;
 		invert_grid: boolean;
 		animation_speed: number;
 		max_power: number;
@@ -277,24 +283,6 @@ export interface ConfigCardEntities {
 	essential_power: string,
 	nonessential_power: string,
 	aux_power_166: string,
-	day_pv_energy_108: string,
-	monthly_pv_energy: string,
-	yearly_pv_energy: string,
-	pv1_power_186: string,
-	pv2_power_187: string,
-	pv1_voltage_109: string,
-	pv1_current_110: string,
-	pv2_voltage_111: string,
-	pv2_current_112: string,
-	pv3_voltage_113: string,
-	pv3_current_114: string,
-	pv3_power_188: string,
-	pv4_voltage_115: string,
-	pv4_current_116: string,
-	pv4_power_189: string,
-	pv5_voltage: string,
-	pv5_current: string,
-	pv5_power: string,
 	remaining_solar: string,
 	tomorrow_solar: string,
 	battery_temp_182: string,
@@ -475,12 +463,16 @@ export interface DataDto {
 	batteryIcon: string,
 	formattedResultTime,
 	showAux,
-	nonessentialIcon: string,
 	showNonessential,
 	nonessentialLoads,
-	iconNonessentialLoad1: string,
-	iconNonessentialLoad2: string,
-	iconNonessentialLoad3: string,
+	nonessentialIcon: string,
+	nonessentialLoadIcon: string[],
+	nonessentialLoadState: CustomEntity[],
+	nonEssentialLoadExtraState: CustomEntity[],
+	nonEssentialLoadToggleState: CustomEntity[],
+	nonEssentialLoadMainDynamicColour: string,
+	nonEssentialLoadDynamicColour: string[],
+
 	inverterStateMsg,
 	nonessentialPower,
 	nonessLineWidth,
@@ -572,15 +564,6 @@ export interface DataDto {
 	stateEssentialLoad21Toggle: CustomEntity,
 	stateEssentialLoad22Toggle: CustomEntity,
 	stateEssentialLoad23Toggle: CustomEntity,
-	stateNonessentialLoad1: CustomEntity,
-	stateNonessentialLoad2: CustomEntity,
-	stateNonessentialLoad3: CustomEntity,
-	stateNonEssentialLoad1Extra: CustomEntity,
-	stateNonEssentialLoad2Extra: CustomEntity,
-	stateNonEssentialLoad3Extra: CustomEntity,
-	stateNonEssentialLoad1Toggle: CustomEntity,
-	stateNonEssentialLoad2Toggle: CustomEntity,
-	stateNonEssentialLoad3Toggle: CustomEntity,
 	stateRadiatorTemp: CustomEntity,
 	stateBatteryCurrent: CustomEntity,
 	stateEnvironmentTemp: CustomEntity,
@@ -626,7 +609,7 @@ export interface DataDto {
 	stateAuxPower: CustomEntity,
 	stateDayAuxEnergy: CustomEntity,
 	auxLineWidth: number,
-	auxDynamicColour: string,
+	auxLoadMainDynamicColour: string,
 	auxLoadIcon: string[],
 	auxLoadDynamicColour: string[],
 	auxLoadState: CustomEntity[],
@@ -659,10 +642,6 @@ export interface DataDto {
 	dynamicColourEssentialLoad21: string,
 	dynamicColourEssentialLoad22: string,
 	dynamicColourEssentialLoad23: string,
-	dynamicColourNonEssentialLoad: string,
-	dynamicColourNonEssentialLoad1: string,
-	dynamicColourNonEssentialLoad2: string,
-	dynamicColourNonEssentialLoad3: string,
 	stateBatteryRemainingStorage: CustomEntity,
 	stateBatterySOH: CustomEntity,
 	customGridIcon: string,

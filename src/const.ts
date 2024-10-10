@@ -3,10 +3,10 @@ import { version } from '../package.json';
 export const CARD_VERSION = version;
 
 export const validLoadValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-export const validNonLoadValues = [0, 1, 2, 3];
+export const validNonLoadValues = [0, 1, 2, 3, 4, 5, 6];
 export const valid3phase = [true, false];
 export const validAux = [true, false];
-export const validAuxLoads = [0, 1, 2];
+export const validAuxLoads = [0, 1, 2, 3, 4];
 export const validGridDisconnected = ['off', '0', 'off-grid', 'off grid', 'offgrid'];
 export const validGridConnected = ['on', '1', 'on-grid', 'on grid', 'ongrid'];
 

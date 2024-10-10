@@ -65,12 +65,16 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${Grid.generateFrequency(data)}
 	                        ` : ``
 						}
+					  
 						${config.show_grid && config.grid.show_nonessential ?
 							svg`
 	                            ${GridLoad.generateShapeAndName(data, config)}
-	                            ${GridLoad.generateLoad1(data, config)}
-	                            ${GridLoad.generateLoad2(data, config)}
-	                            ${GridLoad.generateLoad3(data, config)}
+	                            ${GridLoad.generateLoad(data, config, 1)}
+	                            ${GridLoad.generateLoad(data, config, 2)}
+	                            ${GridLoad.generateLoad(data, config, 3)}
+	                            ${GridLoad.generateLoad(data, config, 4)}
+	                            ${GridLoad.generateLoad(data, config, 5)}
+								${GridLoad.generateLoad(data, config, 6)}
 	                            ${GridLoad.generateLines(data, config)}
 	                            ${GridLoad.generateFlowLine(data, config)}
 	                            ${GridLoad.generateTotalPower(data, config)}
