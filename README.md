@@ -40,6 +40,8 @@ See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/i
 
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/256c43de-4062-48f9-b0b4-f9cb0153d71f)
 
+![image](https://github.com/user-attachments/assets/902fce6f-666a-4027-97e3-2b58703efa76)
+
 ## Installation
 
 The card can be installed via HACS (recommended) or manually.
