@@ -135,15 +135,15 @@ export class GridLoad {
 		return svg`
 			<path id="nes-load1" d="${this.getLines(1, config.grid.additional_loads)}"
 				class="${config.grid.additional_loads >= 1 ? '' : 'st12'}" fill="none"
-				stroke="${data.nonEssentialLoadDynamicColour[0]}" stroke-width="1" stroke-miterlimit="10"
+				stroke="${data.nonEssentialLoadMainDynamicColour}" stroke-width="1" stroke-miterlimit="10"
 				pointer-events="stroke" />
 			<path id="nes-load2" d="${this.getLines(2, config.grid.additional_loads)}"
 				class="${config.grid.additional_loads >= 2 ? '' : 'st12'}" fill="none"
-				stroke="${data.nonEssentialLoadDynamicColour[1]}" stroke-width="1" stroke-miterlimit="10"
+				stroke="${data.nonEssentialLoadMainDynamicColour}" stroke-width="1" stroke-miterlimit="10"
 				pointer-events="stroke" />
 			<path id="nes-load3" d="${this.getLines(3, config.grid.additional_loads)}"
 				class="${config.grid.additional_loads >= 3 ? '' : 'st12'}" fill="none"
-				stroke="${data.nonEssentialLoadDynamicColour[2]}" stroke-width="1" stroke-miterlimit="10"
+				stroke="${data.nonEssentialLoadMainDynamicColour}" stroke-width="1" stroke-miterlimit="10"
 				pointer-events="stroke" />
 		`;
 	}
@@ -174,7 +174,7 @@ export class GridLoad {
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints="0;1"
+								   keyPoints="1;0"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#nes-line1"/>
 					</animateMotion>
@@ -187,7 +187,7 @@ export class GridLoad {
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints="0;1"
+								   keyPoints="1;0"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#nes-line2"/>
 					</animateMotion>
