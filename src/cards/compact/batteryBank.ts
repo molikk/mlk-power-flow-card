@@ -9,7 +9,8 @@ export class BatteryBank {
 		if (config.battery.battery_banks_view_mode != BatteryBanksViewMode.inner) {
 			return svg``;
 		}
-		const banks = config.battery.battery_banks;
+		let banks = config.battery.battery_banks;
+		banks = banks > 4?4:banks;
 		let columns = [281, 312, 343, 374];
 		let gap = 10, width = 28;
 		if (banks <= 2) {
@@ -23,8 +24,8 @@ export class BatteryBank {
 			columns = [281, 314, 347, 0];
 		}
 
-		let result = svg`${this.generateInnerTitle(config.battery.battery_banks, 280, data.batteryColour)}`;
-		for (let i = 0; i < config.battery.battery_banks; i++)
+		let result = svg`${this.generateInnerTitle(banks, 280, data.batteryColour)}`;
+		for (let i = 0; i < banks; i++)
 			result = svg`
 			${result}
 			${this.getInnerBatteryBankDetails(
@@ -37,7 +38,7 @@ export class BatteryBank {
 				data.batteryBankSocState[i],
 				data.batteryBankEnergy[i],
 				data.batteryBatteryBankColour[i],
-				data.decimalPlaces, columns[i], gap, width
+				data.decimalPlaces, columns[i], gap, width,
 			)}
 			`;
 		return result;
@@ -56,7 +57,7 @@ export class BatteryBank {
 			result = svg`
 			${result}
 			${this.getOuterBatteryBankDetails(
-				i + 1, banks, config,
+				i + 1, banks, data, config,
 				data.batteryBankPowerState[i],
 				data.batteryBankVoltageState[i],
 				data.batteryBankCurrentState[i],
@@ -67,7 +68,7 @@ export class BatteryBank {
 				data.batteryBankEnergy[i],
 				data.batteryBatteryBankColour[i],
 				data.decimalPlaces,
-				startX + (width + 3) * (i + 1), width
+				startX + (width + 3) * (i + 1), width,
 			)}
 			`;
 		return result;
@@ -137,7 +138,7 @@ export class BatteryBank {
 
 	private static generateOuterTitle(banks: number, x: number, batteryColour: string) {
 		if (banks == 6) {
-			x = x+24;
+			x = x + 24;
 			return svg`
 				<rect x="${x - 2}" y="405" width="10" height="76" rx="4.5" ry="4.5" fill="none" pointer-events="all" stroke="${batteryColour}"></rect>
 				<text id="battery_banks_power" x="${x}" y="413" class="st15 left-align" fill="${batteryColour}">P:</text>
@@ -151,7 +152,7 @@ export class BatteryBank {
 		}
 
 		return svg`
-			<rect x="${x - 2 + 25}" y="405" width="35" height="76" rx="4.5" ry="4.5" fill="none" pointer-events="all" stroke="${batteryColour}"></rect>
+			<rect x="${x - 2}" y="405" width="35" height="76" rx="4.5" ry="4.5" fill="none" pointer-events="all" stroke="${batteryColour}"></rect>
 			<text id="battery_banks_power" x="${x}" y="413" class="st15 left-align" fill="${batteryColour}">Power:</text>
 			<text id="battery_banks_voltage" x="${x}" y="423" class="st15 left-align" fill="${batteryColour}">Voltage:</text>
 			<text id="battery_banks_current" x="${x}" y="433" class="st15 left-align" fill="${batteryColour}">Current:</text>
@@ -165,6 +166,7 @@ export class BatteryBank {
 	private static getOuterBatteryBankDetails(
 		id: number,
 		banks: number,
+		data: DataDto,
 		config: PowerFlowCardConfig,
 		powerEntity: CustomEntity,
 		voltageEntity: CustomEntity,
@@ -185,12 +187,20 @@ export class BatteryBank {
 					: Utils.convertValueNew(powerEntity.toNum(decimalPlaces), powerEntity.getUOM(), decimalPlaces, false) || '0'
 				: powerEntity.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute);
 
+			const x = column - 3 + width / 2;
+
 			const storage = storageEntity?.isValid()
 				? storageEntity.toStr(2)
 				: Utils.toNum((batteryEnergy * (socEntity.toNum(2) / 100) / 1000), 2).toFixed(2);
 			return svg`
-					<rect x="${column - 8 + width/2}" y="400" width="10" height="5" rx="1.5" ry="1.5" fill="${colour}" pointer-events="all" stroke="${colour}" stroke-width="2.0"></rect>
-					<rect x="${column - 2}" y="405" width="${width-2}" height="76" rx="4.5" ry="4.5" fill="none" pointer-events="all" stroke="${colour}" stroke-width="3.0"></rect>
+ 					<svg id="battery-pack-flow-${id}">
+						<path id="bat-line"
+					  		d="M 239 385 L 239 392 L ${x} 392 L ${x} 399" fill="none"
+					  		stroke="${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
+					  		pointer-events="stroke"/>
+				  	</svg>
+					<rect x="${column - 8 + width / 2}" y="400" width="10" height="5" rx="1.5" ry="1.5" fill="${colour}" pointer-events="all" stroke="${colour}" stroke-width="2.0"></rect>
+					<rect x="${column - 2}" y="405" width="${width - 2}" height="76" rx="4.5" ry="4.5" fill="none" pointer-events="all" stroke="${colour}" stroke-width="3.0"></rect>
 					<text x="${textX}" y="413" class="st15" fill="${colour}" id="battery_bank_${id}_power">${power}</text>
 					<text x="${textX}" y="423" class="st15" fill="${colour}" id="battery_bank_${id}_voltage">${voltageEntity.toStr(2)}</text>
 					<text x="${textX}" y="433" class="st15" fill="${colour}" id="battery_bank_${id}_current">${currentEntity.toStr(2, false, config.battery.show_absolute)}</text>
@@ -202,6 +212,5 @@ export class BatteryBank {
 		}
 		return svg``;
 	}
-
 
 }

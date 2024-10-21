@@ -96,30 +96,28 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						}
 						${Autarky.getTexts(data)}
 
-
 						${config.show_battery ?
 							svg`
-	                            ${Battery.generateShapes(data)}
+	                            ${Battery.generateShapes(data, config)}
 	                            ${Battery.generatePower(data, config)}
-	                            ${Battery.generateDuration(data)}
+	                            ${Battery.generateDuration(data, config)}
 	                            ${Battery.generateDailyCharge(data, config)}
 	                            ${Battery.generateDailyDischarge(data, config)}
 	                            ${Battery.generateSOC(data, config)}
 	                            ${Battery.generateSOH(data)}
 	                            ${Battery.generateCapacity(data, config)}
-	                            ${Battery.generateShutdownSOC(data, config)}
 	                            ${Battery.generateFlowLines(data, config)}
 	                            ${Battery.generateBatteryGradient(data, config)}  
 	                            ${Battery.generateVoltage(data, config)} 
 	                            ${Battery.generateCurrent(data, config)}   
-	                            ${Battery.generateTemp(data)}
+	                            ${Battery.generateTemp(data, config)}
 	                        ` : ``
 						}
 						${config.show_battery && config.battery.show_battery_banks ?
 							svg`
 								${BatteryBank.getBatteryBanksDetailsInnerMode(data, config)}
 								${BatteryBank.getBatteryBanksDetailsOuterMode(data, config)}
-             ` : ``
+                            ` : ``
 						}
 
 						${(data.additionalLoad > 0) ?
