@@ -90,7 +90,7 @@ export class Grid {
 						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
 					<animateMotion dur="${data.durationCur['grid']}s" repeatCount="indefinite"
-								   keyPoints="${data.totalGridPower > 0?'0;1':'1;0'}"
+								   keyPoints="${data.totalGridPower > 0 ? '0;1' : '1;0'}"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#grid-line"/>
 					</animateMotion>
@@ -103,7 +103,7 @@ export class Grid {
 						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
 					<animateMotion dur="${data.durationCur['grid']}s" repeatCount="indefinite"
-								   keyPoints="${data.totalGridPower > 0?'0;1':'1;0'}"
+								   keyPoints="${data.totalGridPower > 0 ? '0;1' : '1;0'}"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#grid-line1"/>
 					</animateMotion>
@@ -113,8 +113,7 @@ export class Grid {
 	}
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+		const grid = svg`
 				<svg xmlns="http://www.w3.org/2000/svg" id="transmission_on" x="-0.5" y="187.5"
 					 width="64.5" height="64.5" viewBox="0 0 24 24">
 					<path class="${validGridDisconnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
@@ -135,8 +134,8 @@ export class Grid {
 						  display="${data.totalGridPower >= 0 || config.grid.export_icon ? 'none' : ''}"
 						  d="${icons.gridExportCompact}"/>
 				</svg>
-			</a>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+			`;
+		const custom_grid = svg`
 				<g display="${config.grid.import_icon || config.grid.disconnected_icon || config.grid.export_icon ? '' : 'none'}">
 					<foreignObject x="-0.5" y="187.5" width="70" height="70" style="position: fixed; ">
 						<body xmlns="http://www.w3.org/1999/xhtml">
@@ -146,7 +145,22 @@ export class Grid {
 						</body>
 					</foreignObject>
 				</g>
-			</a>
+			`;
+		return config.grid?.navigate ?
+			svg`
+				 <a href="#" @click=${(e) => Utils.handleNavigation(e, config.grid.navigate)}>
+				    ${grid}
+				</a>
+				 <a href="#" @click=${(e) => Utils.handleNavigation(e, config.grid.navigate)}>
+				    ${custom_grid}
+				</a> `
+			: svg`
+				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+					${grid}
+				</a>
+				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+					${custom_grid}
+				</a>
 			`;
 	}
 
@@ -215,14 +229,14 @@ export class Grid {
 							  display="${config.entities.grid_ct_power_total === 'none' ? 'none' : ''}"
 							  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 							${config.grid.auto_scale
-								? `${config.grid.show_absolute
-									? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-									: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-								: `${config.grid.show_absolute
-									? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-									: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-								}`
-							}
+					? `${config.grid.show_absolute
+						? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
+						: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
+					: `${config.grid.show_absolute
+						? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
+						: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
+					}`
+				}
 						</text>
 					</a>`
 				: svg`
@@ -230,14 +244,14 @@ export class Grid {
 						  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 						${config.grid.auto_scale
-							? `${config.grid.show_absolute
-								? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-								: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-							: `${config.grid.show_absolute
-								? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-								: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-							}`
-						}
+					? `${config.grid.show_absolute
+						? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
+						: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
+					: `${config.grid.show_absolute
+						? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
+						: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
+					}`
+				}
 					</text>`
 			: svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
@@ -245,17 +259,17 @@ export class Grid {
 						  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
 						${config.grid.auto_scale
-							? `${config.grid.show_absolute
-								? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-								: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-							: `${config.grid.show_absolute
-								? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-								: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-							}`
-						}
+				? `${config.grid.show_absolute
+					? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
+					: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
+				: `${config.grid.show_absolute
+					? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
+					: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
+				}`
+			}
 					</text>
 				</a>`
-			}		
+		}		
 		`;
 	}
 }

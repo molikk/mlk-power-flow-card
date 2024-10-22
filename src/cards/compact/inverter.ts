@@ -7,8 +7,8 @@ import { LoadUtils } from './loadUtils';
 
 export class Inverter {
 
-	static generateInverterImage(data: DataDto, inverterImg: string) {
-		return svg`
+	static generateInverterImage(data: DataDto, config: PowerFlowCardConfig, inverterImg: string) {
+		let inverter = svg`
 			${data.genericInverterImage ?
 			svg`<svg xmlns="http://www.w3.org/2000/svg" x="213.5" y="179.5" width="54"
 					 height="79" viewBox="0 0 74 91" preserveAspectRatio="xMidYMid meet"
@@ -20,6 +20,11 @@ export class Inverter {
 				</svg>`
 			: svg`<image x="214" y="180" width="50" height="72" preserveAspectRatio="none" href="${inverterImg}" />`
 		}`;
+		return config.inverter?.navigate?
+			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.inverter.navigate)}>
+					${inverter}
+				</a>`
+			: inverter;
 	}
 
 	static generateTimerInfo(data: DataDto, config: PowerFlowCardConfig) {
