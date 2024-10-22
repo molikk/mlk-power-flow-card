@@ -1,146 +1,168 @@
-import {unitOfEnergyConversionRules, UnitOfEnergyOrPower, UnitOfPower} from '../const';
+import { unitOfEnergyConversionRules, UnitOfEnergyOrPower, UnitOfPower } from '../const';
+import { navigate } from 'custom-card-helpers';
 
 export class Utils {
-    static toNum(val: string | number, decimals: number = -1, invert: boolean = false, abs: boolean = false): number {
-        let numberValue = Number(val);
-        if (Number.isNaN(numberValue)) {
-            return 0;
-        }
-        if (decimals >= 0) {
-            numberValue = parseFloat(numberValue.toFixed(decimals));
-        }
-        if (invert) {
-            numberValue *= -1;
-        }
-        if(abs) {
-          numberValue = Math.abs(numberValue);
-        }
-        return numberValue;
-    }
+	static toNum(val: string | number, decimals: number = -1, invert: boolean = false, abs: boolean = false): number {
+		let numberValue = Number(val);
+		if (Number.isNaN(numberValue)) {
+			return 0;
+		}
+		if (decimals >= 0) {
+			numberValue = parseFloat(numberValue.toFixed(decimals));
+		}
+		if (invert) {
+			numberValue *= -1;
+		}
+		if (abs) {
+			numberValue = Math.abs(numberValue);
+		}
+		return numberValue;
+	}
 
-    static convertValue(value, decimal = 2) {
-        decimal = Number.isNaN(decimal) ? 2 : decimal;
-        if (Math.abs(value) >= 1000000) {
-            return `${(value / 1000000).toFixed(decimal)} MW`;
-        } else if (Math.abs(value) >= 1000) {
-            return `${(value / 1000).toFixed(decimal)} kW`;
-        } else {
-            return `${Math.round(value)} W`;
-        }
-    }
+	static convertValue(value, decimal = 2) {
+		decimal = Number.isNaN(decimal) ? 2 : decimal;
+		if (Math.abs(value) >= 1000000) {
+			return `${(value / 1000000).toFixed(decimal)} MW`;
+		} else if (Math.abs(value) >= 1000) {
+			return `${(value / 1000).toFixed(decimal)} kW`;
+		} else {
+			return `${Math.round(value)} W`;
+		}
+	}
 
-    static convertValueNew(
-			value: string | number,
-			unit: UnitOfEnergyOrPower | string = '',
-			decimal: number = 2,
-			withUnit: boolean = true,
-    ):string {
-        decimal = isNaN(decimal) ? 2 : decimal;
-        const numberValue = Number(value);
-        if (isNaN(numberValue)) return Number(0).toFixed(decimal);
+	static convertValueNew(
+		value: string | number,
+		unit: UnitOfEnergyOrPower | string = '',
+		decimal: number = 2,
+		withUnit: boolean = true,
+	): string {
+		decimal = isNaN(decimal) ? 2 : decimal;
+		const numberValue = Number(value);
+		if (isNaN(numberValue)) return Number(0).toFixed(decimal);
 
-        const rules = unitOfEnergyConversionRules[unit];
-        if (!rules) {
-					if(withUnit) {
-						return `${this.toNum(numberValue, decimal)} ${unit}`
-					}
-						return `${this.toNum(numberValue, decimal)}`;
-        }
+		const rules = unitOfEnergyConversionRules[unit];
+		if (!rules) {
+			if (withUnit) {
+				return `${this.toNum(numberValue, decimal)} ${unit}`;
+			}
+			return `${this.toNum(numberValue, decimal)}`;
+		}
 
-        if (unit === UnitOfPower.WATT && Math.abs(numberValue) < 1000) {
-	        if(withUnit) {
-						return `${Math.round(numberValue)} ${unit}`;
-					}
-	        return `${Math.round(numberValue)}`;
-        }
+		if (unit === UnitOfPower.WATT && Math.abs(numberValue) < 1000) {
+			if (withUnit) {
+				return `${Math.round(numberValue)} ${unit}`;
+			}
+			return `${Math.round(numberValue)}`;
+		}
 
-        if (unit === UnitOfPower.KILO_WATT && Math.abs(numberValue) < 1) {
-	        if(withUnit) {
-						return `${Math.round(numberValue * 1000)} W`;
-					}
-	        return `${Math.round(numberValue * 1000)}`;
-        }
+		if (unit === UnitOfPower.KILO_WATT && Math.abs(numberValue) < 1) {
+			if (withUnit) {
+				return `${Math.round(numberValue * 1000)} W`;
+			}
+			return `${Math.round(numberValue * 1000)}`;
+		}
 
-        if (unit === UnitOfPower.MEGA_WATT && Math.abs(numberValue) < 1) {
-	        if(withUnit) {
-						return `${(numberValue * 1000).toFixed(decimal)} kW`;
-					}
-	        return `${(numberValue * 1000).toFixed(decimal)}`;
-        }
+		if (unit === UnitOfPower.MEGA_WATT && Math.abs(numberValue) < 1) {
+			if (withUnit) {
+				return `${(numberValue * 1000).toFixed(decimal)} kW`;
+			}
+			return `${(numberValue * 1000).toFixed(decimal)}`;
+		}
 
-        for (const rule of rules) {
-            if (Math.abs(numberValue) >= rule.threshold) {
-                const convertedValue = (numberValue / rule.divisor).toFixed(rule.decimal || decimal);
-		            if(withUnit) {
-									return `${convertedValue} ${rule.targetUnit}`;
-								}
-		            return `${convertedValue}`;
-            }
-        }
-
-		    if(withUnit) {
-					return `${numberValue.toFixed(decimal)} ${unit}`;
+		for (const rule of rules) {
+			if (Math.abs(numberValue) >= rule.threshold) {
+				const convertedValue = (numberValue / rule.divisor).toFixed(rule.decimal || decimal);
+				if (withUnit) {
+					return `${convertedValue} ${rule.targetUnit}`;
 				}
-		    return `${numberValue.toFixed(decimal)}`;
-    }
+				return `${convertedValue}`;
+			}
+		}
 
-    private static isPopupOpen = false;
-    static handlePopup(event, entityId) {
-        if (!entityId) {
-          return;
-        }
-        event.preventDefault();
-        this._handleClick(event, { action: 'more-info' }, entityId);
-      }
+		if (withUnit) {
+			return `${numberValue.toFixed(decimal)} ${unit}`;
+		}
+		return `${numberValue.toFixed(decimal)}`;
+	}
 
-      private static _handleClick(event, actionConfig, entityId) {
-        if (!event || !entityId) {
-          return;
-        }
+	private static isPopupOpen = false;
 
-        event.stopPropagation();
+	static handlePopup(event, entityId) {
+		if (!entityId) {
+			return;
+		}
+		event.preventDefault();
+		this._handleClick(event, { action: 'more-info' }, entityId);
+	}
 
-        // Handle different actions based on actionConfig
-        switch (actionConfig.action) {
-          case 'more-info':
-            this._dispatchMoreInfoEvent(event, entityId);
-            break;
-          default:
-            console.warn(`Action '${actionConfig.action}' is not supported.`);
-        }
-      }
+	static handleNavigation(event, navigationPath) {
+		if (!navigationPath) {
+			return;
+		}
+		event.preventDefault();
+		this._handleClick(event, { action: 'navigate', navigation_path: navigationPath }, null);
+	}
 
-      private static _dispatchMoreInfoEvent(event, entityId) {
+	private static _handleClick(event, actionConfig, entityId) {
+		if (!event || (!entityId && !actionConfig.navigation_path)) {
+			return;
+		}
 
-        if (Utils.isPopupOpen) {
-            return;
-          }
+		event.stopPropagation();
 
-        Utils.isPopupOpen = true;
+		// Handle different actions based on actionConfig
+		switch (actionConfig.action) {
+			case 'more-info':
+				this._dispatchMoreInfoEvent(event, entityId);
+				break;
+			case 'navigate':
+				this._handleNavigationEvent(event, actionConfig.navigation_path);
+				break;
+			default:
+				console.warn(`Action '${actionConfig.action}' is not supported.`);
+		}
+	}
 
-        const moreInfoEvent = new CustomEvent('hass-more-info', {
-          composed: true,
-          detail: { entityId },
-        });
+	private static _dispatchMoreInfoEvent(event, entityId) {
 
-        history.pushState({ popupOpen: true }, '', window.location.href);
+		if (Utils.isPopupOpen) {
+			return;
+		}
 
-        event.target.dispatchEvent(moreInfoEvent);
+		Utils.isPopupOpen = true;
 
-        const closePopup = () => {
+		const moreInfoEvent = new CustomEvent('hass-more-info', {
+			composed: true,
+			detail: { entityId },
+		});
 
-            if (Utils.isPopupOpen) {
-                //console.log(`Closing popup for entityId: ${entityId}`);
-                Utils.isPopupOpen = false;
+		history.pushState({ popupOpen: true }, '', window.location.href);
 
-                // Remove the event listener to avoid multiple bindings
-                window.removeEventListener('popstate', closePopup);
+		event.target.dispatchEvent(moreInfoEvent);
 
-                // Optionally, if your popup close logic doesn't trigger history.back(), call it manually
-                history.back();
-                }
-        };
+		const closePopup = () => {
 
-        window.addEventListener('popstate', closePopup, { once: true });
-      }
+			if (Utils.isPopupOpen) {
+				//console.log(`Closing popup for entityId: ${entityId}`);
+				Utils.isPopupOpen = false;
+
+				// Remove the event listener to avoid multiple bindings
+				window.removeEventListener('popstate', closePopup);
+
+				// Optionally, if your popup close logic doesn't trigger history.back(), call it manually
+				history.back();
+			}
+		};
+
+		window.addEventListener('popstate', closePopup, { once: true });
+	}
+
+	private static _handleNavigationEvent(event, navigationPath) {
+		// Perform the navigation action
+		if (navigationPath) {
+			navigate(event.target, navigationPath); // Assuming 'navigate' is a function available in your environment
+		} else {
+			console.warn('Navigation path is not provided.');
+		}
+	}
 }

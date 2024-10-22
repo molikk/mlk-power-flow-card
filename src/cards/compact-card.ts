@@ -171,7 +171,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 
 						${Inverter.generateTimerInfo(data, config)}
 						${Inverter.generatePriorityLoad(data, config)}
-						${Inverter.generateInverterImage(data, inverterImg)}
+						${Inverter.generateInverterImage(data, config, inverterImg)}
 						${Inverter.generateInverterState(data, config)}
 						${Inverter.generateInverterLoad(data, config)}
 						${Inverter.generateInverterProgram(data)}
