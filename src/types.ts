@@ -75,6 +75,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	inverter: {
 		modern: boolean;
 		colour: string;
+		navigate: string;
 		autarky: AutarkyType;
 		model: InverterModel;
 		auto_scale: boolean;
@@ -86,9 +87,11 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		energy: any;
 		shutdown_soc: any;
 		shutdown_soc_offgrid: any;
+		soc_end_of_charge: any;
 		hide_soc: boolean;
 		invert_power: boolean;
 		colour: string;
+		navigate: string;
 		charge_colour: string;
 		show_daily: boolean;
 		animation_speed: number;
@@ -114,6 +117,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	}
 	solar: {
 		colour: string;
+		navigate: string;
 		mppts: number;
 		animation_speed: number;
 		max_power: number;
@@ -137,6 +141,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	}
 	load: {
 		colour: string;
+		navigate: string;
 		dynamic_colour: boolean;
 		aux_dynamic_colour: boolean;
 		dynamic_icon: boolean;
@@ -216,6 +221,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	}
 	grid: {
 		colour: string;
+		navigate: string;
 		grid_name: string;
 		label_daily_grid_buy: string;
 		label_daily_grid_sell: string;
@@ -368,6 +374,7 @@ export interface DataDto {
 	batteryBankTempState: CustomEntity[],
 	batteryBankEnergy: number[],
 	batteryBatteryBankColour: string[],
+	maximumSOC,
 	additionalLoad,
 	essIconSize,
 	essIcon: string,

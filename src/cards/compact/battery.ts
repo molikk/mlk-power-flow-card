@@ -164,11 +164,11 @@ export class Battery {
  			<svg id="battery-flow">
 				<path id="bat-line"
 					  d="M 239 250 L 239 ${y}" fill="none"
-					  stroke="${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
+					  stroke="${Battery.batteryColour(data, config)}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
 					  pointer-events="stroke"/>
 				<circle id="power-dot-discharge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.batteryPower <= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}}`}">
+						fill="${data.batteryPower <= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="1;0" keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#bat-line"/>
@@ -265,7 +265,7 @@ export class Battery {
 
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
 		const y =  Battery.showOuterBatteryBanks(config)?312.5 : 325.5;
-		return svg`
+		let bat = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="212.5"
 				 y="${y}" width="78.75"
 				 height="78.75" preserveAspectRatio="none"
@@ -307,5 +307,10 @@ export class Battery {
 					  d="${data.batteryCharge}"/>
 			</svg>		
 		`;
+		return config.battery.navigate?
+			svg` <a href="#" @click=${(e) => Utils.handleNavigation(e, config.battery.navigate)}>
+				${bat}
+			</a>`
+			: bat;
 	}
 }
