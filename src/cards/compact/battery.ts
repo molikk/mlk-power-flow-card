@@ -6,11 +6,15 @@ import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfEnergy, UnitOfP
 
 export class Battery {
 
+	private static batteryColour(data: DataDto, config: PowerFlowCardConfig) {
+		return config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour;
+	}
+
 	static generateShapes(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 285 : 290;
 		return svg`
 			<rect x="205" y="${y}" width="70" height="30" rx="4.5" ry="4.5" fill="none"
-				  stroke="${data.batteryColour}" pointer-events="all"
+				  stroke="${Battery.batteryColour(data, config)}" pointer-events="all"
 				  class=""/>
 		`;
 	}
@@ -29,7 +33,7 @@ export class Battery {
             <text id="data.batteryPower_190" x="239"
                   y="${y}"
                   display="${config.entities.battery_power_190 === 'none' ? 'none' : ''}"
-                  fill=${data.batteryColour} class="${data.largeFont !== true ? 'st14' : 'st4'} st8">
+                  fill=${Battery.batteryColour(data, config)} class="${data.largeFont !== true ? 'st14' : 'st4'} st8">
                 ${value}
             </text>
         </a>
@@ -164,7 +168,7 @@ export class Battery {
 					  pointer-events="stroke"/>
 				<circle id="power-dot-discharge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.batteryPower <= 0 ? 'transparent' : `${data.batteryColour}`}">
+						fill="${data.batteryPower <= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="1;0" keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#bat-line"/>
@@ -172,7 +176,7 @@ export class Battery {
 				</circle>
 				<circle id="power-dot-charge" cx="0" cy="0"
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.batteryPower >= 0 ? 'transparent' : `${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}`}">
+						fill="${data.batteryPower >= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
 								   keyPoints="0;1" keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#bat-line"/>
