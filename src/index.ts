@@ -164,6 +164,7 @@ export class PowerFlowCard extends LitElement {
 		const stateShutdownSOC = this.getEntity('battery.shutdown_soc', { state: config.battery.shutdown_soc?.toString() ?? '' });
 		const stateShutdownSOCOffGrid = this.getEntity('battery.shutdown_soc_offgrid', { state: config.battery.shutdown_soc_offgrid?.toString() ?? '' });
 		const stateBatterySOH = this.getEntity('entities.battery_soh', { state: '' });
+		const stateSOCEndOfCharge = this.getEntity('battery.soc_end_of_charge', {state: config.battery.soc_end_of_charge?.toString() ?? ''});
 		const stateBatteryRemainingStorage = this.getEntity('entities.battery_remaining_storage', { state: '' });
 
 		//BatteryBanks
@@ -869,6 +870,9 @@ export class PowerFlowCard extends LitElement {
 			}
 		}
 
+		let maximumSOC = stateSOCEndOfCharge.toNum();
+		maximumSOC = Math.max(50, Math.min(maximumSOC, 100));
+
 		//calculate battery capacity
 		let batteryCapacity: number = 0;
 		if (config.show_battery) {
@@ -895,7 +899,7 @@ export class PowerFlowCard extends LitElement {
 					break;
 
 				default:
-					batteryCapacity = inverterSettings.getBatteryCapacity(batteryPower, gridStatus, batteryShutdown, inverterProg, stateBatterySoc);
+					batteryCapacity = inverterSettings.getBatteryCapacity(batteryPower, gridStatus, batteryShutdown, inverterProg, stateBatterySoc, maximumSOC);
 			}
 		}
 
@@ -1655,6 +1659,7 @@ export class PowerFlowCard extends LitElement {
 			stateBatterySOH,
 			customGridIcon,
 			customGridIconColour,
+			maximumSOC,
 			stateLoadFrequency,
 			stateGridFrequency,
 		};

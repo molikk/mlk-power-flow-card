@@ -137,7 +137,7 @@ export class Load {
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
 
-		return svg`
+		let grid = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.LOAD_X + 5 : this.LOAD_X + 2}"
 				 y="${data.essIconSize === 1 ? '186' : '177.5'}" width="${data.essIconSize === 1 ? '75' : '79'}"
 				 height="${data.essIconSize === 1 ? '75' : '79'}"
@@ -162,5 +162,10 @@ export class Load {
 					  d="${data.essIcon}"/>
 			</svg>
 		`;
+		return config.load?.navigate?
+			svg `<a href="#" @click=${(e) => Utils.handleNavigation(e, config.load.navigate)}>
+					${grid}
+				</a>`
+				: grid;
 	}
 }

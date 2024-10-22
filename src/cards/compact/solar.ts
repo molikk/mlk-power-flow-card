@@ -140,10 +140,17 @@ export class Solar {
 		}
 
 		startPosition.x -= 2 + startPosition.gap / 2;
-		const icon = svg`
+		const icon_svg = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="sun" x="${startPosition.x}" y="10" width="40" height="40" viewBox="0 0 24 24">
 				<path fill="${data.solarColour}" d="${icons.sun}"/>
 			</svg>`;
+
+		const icon = config.solar?.navigate?
+			svg `<a href="#" @click=${(e) => Utils.handleNavigation(e, config.solar.navigate)}>
+					${icon_svg}
+				</a>`
+			: icon_svg;
+
 		const envTemp = svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.environment_temp)}>
 					<text id="environ_temp" x="${startPosition.x}"" y="45"
