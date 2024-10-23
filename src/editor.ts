@@ -379,6 +379,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'energy', selector: { number: { min: 0 } } },
 											{ name: 'shutdown_soc', selector: { number: { mode: 'box', min: 0, max: 100 } } },
 											{ name: 'shutdown_soc_offgrid', selector: { number: { mode: 'box', min: 0, max: 100 } } },
+											{ name: 'soc_end_of_charge', selector: { number: { mode: 'box', min: 80, max: 100 } } },
 											{ name: 'show_daily', selector: { boolean: {} } },
 											{ name: 'auto_scale', selector: { boolean: {} } },
 											{ name: 'invert_power', selector: { boolean: {} } },
@@ -502,6 +503,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'battery_bank_2_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{ name: 'battery_bank_2_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
 													{ name: 'battery_bank_2_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_2_temp', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{
 														name: 'battery_bank_2_remaining_storage',
 														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
@@ -523,6 +525,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'battery_bank_3_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{ name: 'battery_bank_3_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
 													{ name: 'battery_bank_3_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_3_temp', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{
 														name: 'battery_bank_3_remaining_storage',
 														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
@@ -544,6 +547,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'battery_bank_4_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{ name: 'battery_bank_4_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
 													{ name: 'battery_bank_4_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_4_temp', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{
 														name: 'battery_bank_4_remaining_storage',
 														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
@@ -565,6 +569,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'battery_bank_5_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{ name: 'battery_bank_5_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
 													{ name: 'battery_bank_5_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_5_temp', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{
 														name: 'battery_bank_5_remaining_storage',
 														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
@@ -586,6 +591,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'battery_bank_6_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{ name: 'battery_bank_6_current', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
 													{ name: 'battery_bank_6_delta', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+													{ name: 'battery_bank_6_temp', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
 													{
 														name: 'battery_bank_6_remaining_storage',
 														selector: { entity: { device_class: [SensorDeviceClass.ENERGY, SensorDeviceClass.ENERGY_STORAGE] } },
@@ -866,15 +872,21 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_colour', selector: { color_rgb: {} } },
 													{ name: 'aux_off_colour', selector: { color_rgb: {} } },
 													{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 4 } } },
-													{ name: 'aux_load1_name', selector: { text: {} } },
-													{ name: 'aux_load1_icon', selector: { icon: {} } },
-													{ name: 'aux_load2_name', selector: { text: {} } },
-													{ name: 'aux_load2_icon', selector: { icon: {} } },
-													{ name: 'aux_load3_name', selector: { text: {} } },
-													{ name: 'aux_load3_icon', selector: { icon: {} } },
-													{ name: 'aux_load4_name', selector: { text: {} } },
-													{ name: 'aux_load4_icon', selector: { icon: {} } },
 													{ name: 'show_daily_aux', selector: { boolean: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('aux_load_ent'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'day_aux_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_power_166', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 												],
 											},
 										],
@@ -884,11 +896,29 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 										title: this._title('aux_load_row_1'),
 										schema: [
 											{
+												name: 'load',
+												type: 'grid',
+												schema: [
+													{ name: 'aux_load1_name', selector: { text: {} } },
+													{ name: 'aux_load1_icon', selector: { icon: {} } },
+													{ name: 'aux_load2_name', selector: { text: {} } },
+													{ name: 'aux_load2_icon', selector: { icon: {} } },
+													{ name: 'aux_load3_name', selector: { text: {} } },
+													{ name: 'aux_load3_icon', selector: { icon: {} } },
+													{ name: 'aux_load4_name', selector: { text: {} } },
+													{ name: 'aux_load4_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('aux_load_row_1_ent'),
+										schema: [
+											{
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													{ name: 'day_aux_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'aux_power_166', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'aux_load1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'aux_load1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'aux_load1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },

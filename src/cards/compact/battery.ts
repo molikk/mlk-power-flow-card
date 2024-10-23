@@ -6,7 +6,7 @@ import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfEnergy, UnitOfP
 
 export class Battery {
 
-	private static batteryColour(data: DataDto, config: PowerFlowCardConfig) {
+	static batteryColour(data: DataDto, config: PowerFlowCardConfig) {
 		return config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour;
 	}
 
