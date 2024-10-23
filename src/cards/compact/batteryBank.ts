@@ -2,6 +2,7 @@ import { BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../../types'
 import { svg } from 'lit';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { Utils } from '../../helpers/utils';
+import { Battery } from './battery';
 
 export class BatteryBank {
 
@@ -196,7 +197,7 @@ export class BatteryBank {
  					<svg id="battery-pack-flow-${id}">
 						<path id="bat-line"
 					  		d="M 239 385 L 239 392 L ${x} 392 L ${x} 399" fill="none"
-					  		stroke="${config.battery.dynamic_colour ? data.flowBatColour : data.batteryColour}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
+					  		stroke="${Battery.batteryColour(data, config)}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
 					  		pointer-events="stroke"/>
 				  	</svg>
 					<rect x="${column - 8 + width / 2}" y="400" width="10" height="5" rx="1.5" ry="1.5" fill="${colour}" pointer-events="all" stroke="${colour}" stroke-width="2.0"></rect>
