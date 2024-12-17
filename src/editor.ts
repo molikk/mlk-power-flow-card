@@ -26,7 +26,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_4', 'essential_load4', false);
 			this.rewriteConfig(this._config, 'entities', 'essential_load_1_5', 'essential_load5');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_5', 'essential_load6');
-			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1', 'essential_load7');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_1', 'essential_load7');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1', 'essential_load8');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_3_1', 'essential_load9');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_3_2', 'essential_load10');
@@ -50,7 +50,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_4_extra', 'essential_load4_extra', false);
 			this.rewriteConfig(this._config, 'entities', 'essential_load_1_5_extra', 'essential_load5_extra');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_5_extra', 'essential_load6_extra');
-			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_extra', 'essential_load7_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_1_extra', 'essential_load7_extra');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_extra', 'essential_load8_extra');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_3_1_extra', 'essential_load9_extra');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_3_2_extra', 'essential_load10_extra');
@@ -74,7 +74,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_4_toggle', 'essential_load4_toggle', false);
 			this.rewriteConfig(this._config, 'entities', 'essential_load_1_5_toggle', 'essential_load5_toggle');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_5_toggle', 'essential_load6_toggle');
-			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_toggle', 'essential_load7_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_1_toggle', 'essential_load7_toggle');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_toggle', 'essential_load8_toggle');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_3_1_toggle', 'essential_load9_toggle');
 			this.rewriteConfig(this._config, 'entities', 'essential_load_3_2_toggle', 'essential_load10_toggle');
@@ -98,7 +98,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this.rewriteConfig(this._config, 'load', 'load_2_4_name', 'load4_name', false);
 			this.rewriteConfig(this._config, 'load', 'load_1_5_name', 'load5_name');
 			this.rewriteConfig(this._config, 'load', 'load_2_5_name', 'load6_name');
-			this.rewriteConfig(this._config, 'load', 'load_2_1_name', 'load7_name');
+			this.rewriteConfig(this._config, 'load', 'load_1_1_name', 'load7_name');
 			this.rewriteConfig(this._config, 'load', 'load_2_1_name', 'load8_name');
 			this.rewriteConfig(this._config, 'load', 'load_3_1_name', 'load9_name');
 			this.rewriteConfig(this._config, 'load', 'load_3_2_name', 'load10_name');
@@ -122,7 +122,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this.rewriteConfig(this._config, 'load', 'load_2_4_icon', 'load4_icon', false);
 			this.rewriteConfig(this._config, 'load', 'load_1_5_icon', 'load5_icon');
 			this.rewriteConfig(this._config, 'load', 'load_2_5_icon', 'load6_icon');
-			this.rewriteConfig(this._config, 'load', 'load_2_1_icon', 'load7_icon');
+			this.rewriteConfig(this._config, 'load', 'load_1_1_icon', 'load7_icon');
 			this.rewriteConfig(this._config, 'load', 'load_2_1_icon', 'load8_icon');
 			this.rewriteConfig(this._config, 'load', 'load_3_1_icon', 'load9_icon');
 			this.rewriteConfig(this._config, 'load', 'load_3_2_icon', 'load10_icon');
