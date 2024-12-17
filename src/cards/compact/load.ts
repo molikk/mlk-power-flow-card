@@ -36,7 +36,7 @@ export class Load {
 			<text id="daily_load" x="${this.LOAD_X - 5}" y="195"
 				    class="st3 right-align"
 				    fill="${!data.loadShowDaily ? 'transparent' : `${data.loadColour}`}">
-				${localize('common.daily_load')}
+				${config.load.label_daily_load || localize('common.daily_load')}
 			</text>
 		`;
 	}
@@ -60,7 +60,7 @@ export class Load {
 						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
 					<animateMotion dur="${data.durationCur['load']}s" repeatCount="indefinite"
-								   keyPoints="0;1"
+								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints("0;1") : "0;1"}
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#es-line"/>
 					</animateMotion>
@@ -73,7 +73,7 @@ export class Load {
 						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
 					<animateMotion dur="${data.durationCur['load']}s" repeatCount="indefinite"
-								   keyPoints="0;1"
+								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints("0;1") : "0;1"}
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#es-line1"/>
 					</animateMotion>

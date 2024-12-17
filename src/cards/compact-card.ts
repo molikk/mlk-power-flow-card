@@ -61,7 +61,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${Grid.generateShapeAndName(data, config)}
 	                            ${Grid.generateDailyImport(data, config)}
 	                            ${Grid.generateDailyExport(data, config)}
-	                            ${Grid.generateFlowLines(data)}
+	                            ${Grid.generateFlowLines(data, config)}
 	                            ${Grid.generateIcon(data, config)}
 	                            ${Grid.generateEnergyCost(data, config)}
 	                            ${Grid.generatePhases(data, config)}
@@ -183,7 +183,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 						${data.showAux ?
 							svg`
 								${AuxLoad.generateShapes(data, config)}
-								${AuxLoad.generateLines(data)}
+								${AuxLoad.generateLines(data, config)}
 								${AuxLoad.generateLoad(data, config, 1)}
 								${AuxLoad.generateLoad(data, config, 2)}
 								${AuxLoad.generateLoad(data, config, 3)}

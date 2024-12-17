@@ -22,8 +22,10 @@ export class AuxLoad {
 		`;
 	}
 
-	static generateLines(data: DataDto) {
+	static generateLines(data: DataDto, config: PowerFlowCardConfig) {
 		let lineWidth = data.auxLineWidth;
+		let keyPoints = data.auxPower > 0 ? '0;1' : '1;0';
+		keyPoints = config.load.aux_invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
 		const x = 400 + (Load.LOAD_X - 400) / 2 - 101.3;
 		return svg`
 			<svg id="aux-flow">
@@ -35,7 +37,7 @@ export class AuxLoad {
 						r="${Math.min(2 + lineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['aux']}s" repeatCount="indefinite"
-								   keyPoints=${data.auxPower > 0 ? '0;1' : '1;0'}
+								   keyPoints=${keyPoints}
 								   keyTimes="0;1" 
 								   calcMode="linear">
 						<mpath href='#aux-line1'/>
@@ -49,7 +51,7 @@ export class AuxLoad {
 						r="${Math.min(2 + lineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['aux'] * 2}s" repeatCount="indefinite"
-								   keyPoints=${data.auxPower > 0 ? '0;1' : '1;0'}
+								   keyPoints=${keyPoints}
 								   keyTimes="0;1" 
 								   calcMode="linear">
 						<mpath href='#aux-line2'/>

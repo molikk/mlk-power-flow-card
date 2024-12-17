@@ -962,7 +962,7 @@ export class PowerFlowCard extends LitElement {
 		if (config.show_battery) {
 			switch (true) {
 				case !inverterProg.show:
-					if (batteryPower > 0) {
+					if (config.battery.invert_flow ? batteryPower < 0 : batteryPower > 0) {
 						if (
 							(gridStatus === 'on' || gridStatus === '1' || gridStatus.toLowerCase() === 'on-grid') &&
 							!inverterProg.show
@@ -977,13 +977,13 @@ export class PowerFlowCard extends LitElement {
 						} else {
 							batteryCapacity = batteryShutdown;
 						}
-					} else if (batteryPower < 0) {
-						batteryCapacity = 100;
+					} else if (config.battery.invert_flow ? batteryPower > 0 : batteryPower < 0) {
+						batteryCapacity = maximumSOC;
 					}
 					break;
 
 				default:
-					batteryCapacity = inverterSettings.getBatteryCapacity(batteryPower, gridStatus, batteryShutdown, inverterProg, stateBatterySoc, maximumSOC);
+					batteryCapacity = inverterSettings.getBatteryCapacity(batteryPower, gridStatus, batteryShutdown, inverterProg, stateBatterySoc, maximumSOC, config.battery.invert_flow);
 			}
 		}
 
@@ -1001,12 +1001,12 @@ export class PowerFlowCard extends LitElement {
 		if (config.show_battery || batteryEnergy !== 0) {
 			if (batteryPower === 0) {
 				totalSeconds = ((stateBatterySoc.toNum() - batteryShutdown) / 100) * batteryEnergy * 60 * 60;
-			} else if (batteryPower > 0) {
+			} else if (config.battery.invert_flow ? batteryPower < 0 : batteryPower > 0) {
 				totalSeconds =
-					((((stateBatterySoc.toNum() - batteryCapacity) / 100) * batteryEnergy) / batteryPower) * 60 * 60;
-			} else if (batteryPower < 0) {
+					((((stateBatterySoc.toNum() - batteryCapacity) / 100) * batteryEnergy) / Math.abs(batteryPower)) * 60 * 60;
+			} else if (config.battery.invert_flow ? batteryPower > 0 : batteryPower < 0) {
 				totalSeconds =
-					((((batteryCapacity - stateBatterySoc.toNum(0)) / 100) * batteryEnergy) / batteryPower) * 60 * 60 * -1;
+					((((batteryCapacity - stateBatterySoc.toNum(0)) / 100) * batteryEnergy) / Math.abs(batteryPower)) * 60 * 60;
 			}
 			const currentTime = new Date(); // Create a new Date object representing the current time
 			const durationMilliseconds = totalSeconds * 1000; // Convert the duration to milliseconds
@@ -1033,14 +1033,14 @@ export class PowerFlowCard extends LitElement {
 		const isFloating = this.isFloating(stateBatteryCurrent, stateBatterySoc);
 
 		// Determine battery colours
-		const batteryColour = this.batteryColour(batteryPower, isFloating, batteryChargeColour, batteryColourConfig);
+		const batteryColour = this.batteryColour(config.battery.invert_flow, batteryPower, isFloating, batteryChargeColour, batteryColourConfig);
 		const batteryBatteryBankColour = [
-			this.batteryColour(batteryBankPowerState[1 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[1 - 1], batteryBankSocState[1 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(batteryBankPowerState[2 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[2 - 1], batteryBankSocState[2 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(batteryBankPowerState[3 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[3 - 1], batteryBankSocState[3 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(batteryBankPowerState[4 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[4 - 1], batteryBankSocState[4 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(batteryBankPowerState[5 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[5 - 1], batteryBankSocState[5 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(batteryBankPowerState[6 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[6 - 1], batteryBankSocState[6 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[1 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[1 - 1], batteryBankSocState[1 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[2 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[2 - 1], batteryBankSocState[2 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[3 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[3 - 1], batteryBankSocState[3 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[4 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[4 - 1], batteryBankSocState[4 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[5 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[5 - 1], batteryBankSocState[5 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[6 - 1].toPower(config.battery?.invert_power), this.isFloating(batteryBankCurrentState[6 - 1], batteryBankSocState[6 - 1]), batteryChargeColour, batteryColourConfig),
 		];
 		//Set Inverter Status Message and dot
 		let inverterStateColour = '';
@@ -1117,7 +1117,7 @@ export class PowerFlowCard extends LitElement {
 
 		const productionPower =
 			totalPV +
-			Utils.toNum(`${batteryPower > 0 ? batteryPower : 0}`) +
+			Utils.toNum(`${(config.battery.invert_flow ? batteryPower < 0 : batteryPower > 0) ? Math.abs(batteryPower) : 0}`) +
 			Utils.toNum(`${auxPower < 0 ? auxPower * -1 : 0}`);
 		//console.log(`Production Data`);
 		//console.log(`P_Solar Power:${totalPV}`);
@@ -1129,7 +1129,7 @@ export class PowerFlowCard extends LitElement {
 			essentialPower +
 			Math.max(nonessentialPower, 0) +
 			Utils.toNum(`${auxPower > 0 ? auxPower : 0}`) +
-			Utils.toNum(`${batteryPower < 0 ? batteryPower * -1 : 0}`);
+			Utils.toNum(`${(config.battery.invert_flow ? batteryPower > 0 : batteryPower < 0) ? Math.abs(batteryPower) : 0}`);
 		//console.log(`Consumption Data`);
 		//console.log(`C_Essential Power:${essentialPower}`);
 		//console.log(`C_NonEssential Power:${nonessentialPower}`);
@@ -1259,12 +1259,24 @@ export class PowerFlowCard extends LitElement {
 		//Calculate dynamic colour for load icon based on the contribution of the power source (battery, grid, solar) supplying the load
 		const pvPercentageRaw = totalPV === 0
 			? 0
-			: priorityLoad === 'off' || !priorityLoad
-				? batteryPower > 0
-					? (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100
-					: ((totalPV - Math.abs(batteryPower)) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100
+			: (priorityLoad === 'off' || !priorityLoad)
+				? (config.battery.invert_flow
+					? (batteryPower < 0
+						? (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100
+						: ((totalPV - Math.abs(batteryPower)) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100)
+					: (batteryPower > 0
+						? (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100
+						: ((totalPV - Math.abs(batteryPower)) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100))
 				: (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100;
-		const batteryPercentageRaw = batteryPower <= 0 ? 0 : (Math.abs(batteryPower) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100;
+
+		const batteryPercentageRaw =
+			config.battery.invert_flow
+				? (batteryPower >= 0
+					? 0
+					: (Math.abs(batteryPower) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100)
+				: (batteryPower <= 0
+					? 0
+					: (Math.abs(batteryPower) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100);
 
 		//console.log(`${pvPercentageRaw} % RAW PV to load, ${batteryPercentageRaw} % RAW Bat to load`);
 
@@ -1290,12 +1302,12 @@ export class PowerFlowCard extends LitElement {
 		//console.log(`${pvPercentage} % PVPercentage, ${batteryPercentage} % BatteryPercentage, ${gridPercentage} % GridPercentage`);
 
 		//Calculate dynamic colour for battery icon based on the contribution of the power source (grid, solar) supplying the battery
-		const pvPercentageRawBat = (totalPV === 0 || batteryPower >= 0)
+		const pvPercentageRawBat = (totalPV === 0 || (config.battery.invert_flow ? batteryPower <= 0 : batteryPower >= 0))
 			? 0
 			: priorityLoad === 'off' || !priorityLoad
 				? (totalPV / Math.abs(batteryPower)) * 100
 				: ((totalPV - essentialPower) / Math.abs(batteryPower)) * 100;
-		const gridPercentageRawBat = (batteryPower >= 0 || totalGridPower <= 0)
+		const gridPercentageRawBat = ((config.battery.invert_flow ? batteryPower <= 0 : batteryPower >= 0) || totalGridPower <= 0)
 			? 0
 			: priorityLoad === 'on'
 				? (totalPV - essentialPower) >= Math.abs(batteryPower)
@@ -1702,8 +1714,8 @@ export class PowerFlowCard extends LitElement {
 		return `${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedMilliSeconds}`;
 	}
 
-	private batteryColour(batteryPower: number, isFloating: boolean, batteryChargeColour: string, batteryColourConfig: string) {
-		if (batteryPower < 0 && !isFloating) {
+	private batteryColour(invertFlow: boolean, batteryPower: number, isFloating: boolean, batteryChargeColour: string, batteryColourConfig: string) {
+		if ((invertFlow ? batteryPower > 0 : batteryPower < 0) && !isFloating) {
 			return batteryChargeColour;
 		} else {
 			return batteryColourConfig;

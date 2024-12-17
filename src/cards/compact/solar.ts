@@ -69,8 +69,9 @@ export class Solar {
 						class="${!config.show_solar || config.solar.mppts === 1 ? 'st12' : ''}"
 						fill="${data.totalPV === 0 ? 'transparent' : `${data.solarColour}`}">
 					<animateMotion dur="${data.durationCur['solar']}s" repeatCount="indefinite"
-								   keyPoints="1;0"
-								   keyTimes="0;1" calcMode="linear">
+								   keyPoints=${config.solar.invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
+								   keyTimes="0;1" 
+									 calcMode="linear">
 						<mpath xlink:href="#so-line"/>
 					</animateMotion>
 				</circle>
@@ -318,7 +319,7 @@ export class Solar {
 		return svg`${config.show_solar ?
 			svg`
                 ${this.generateFrame(X, 'pv1', data.PV1Efficiency, config.solar.visualize_efficiency)}
-                ${this.generateFlowLine(X, 'pv1', data.statePV1Power, data.durationCur['pv1'], data.pv1LineWidth, data.minLineWidth)}
+                ${this.generateFlowLine(X, 'pv1', data.statePV1Power, data.durationCur['pv1'], data.pv1LineWidth, data.minLineWidth, config.solar.invert_flow)}
                 ${this.generateName(X[0] as number, config.solar.pv1_name)}
                 ${this.generateEfficiency(X, data.PV1Efficiency, config.solar.show_mppt_efficiency)}
                 ${this.generateEnergy(X, data.statePV1Energy, config.solar.show_mppt_production)}
@@ -337,7 +338,7 @@ export class Solar {
 		return svg`${(config.show_solar && config.solar.mppts >= 2) ?
 			svg`
                 ${this.generateFrame(X, 'PV2', data.PV2Efficiency, config.solar.visualize_efficiency)}
-                ${this.generateFlowLine(X, 'pv2', data.statePV2Power, data.durationCur['pv2'], data.pv2LineWidth, data.minLineWidth)}
+                ${this.generateFlowLine(X, 'pv2', data.statePV2Power, data.durationCur['pv2'], data.pv2LineWidth, data.minLineWidth, config.solar.invert_flow)}
                 ${this.generateName(X[0] as number, config.solar.pv2_name)}
                 ${this.generateEfficiency(X, data.PV2Efficiency, config.solar.show_mppt_efficiency)}
                 ${this.generateEnergy(X, data.statePV2Energy, config.solar.show_mppt_production)}
@@ -355,7 +356,7 @@ export class Solar {
 		return svg`${(config.show_solar && config.solar.mppts >= 3) ?
 			svg`
                 ${this.generateFrame(X, 'PV3', data.PV3Efficiency, config.solar.visualize_efficiency)}
-                ${this.generateFlowLine(X, 'pv3', data.statePV3Power, data.durationCur['pv3'], data.pv3LineWidth, data.minLineWidth)}
+                ${this.generateFlowLine(X, 'pv3', data.statePV3Power, data.durationCur['pv3'], data.pv3LineWidth, data.minLineWidth, config.solar.invert_flow)}
                 ${this.generateName(X[0] as number, config.solar.pv3_name)}			
                 ${this.generateEfficiency(X, data.PV3Efficiency, config.solar.show_mppt_efficiency)}
                 ${this.generateEnergy(X, data.statePV3Energy, config.solar.show_mppt_production)}
@@ -372,7 +373,7 @@ export class Solar {
 		return svg`${(config.show_solar && config.solar.mppts >= 4) ?
 			svg`
                 ${this.generateFrame(X, 'PV4', data.PV4Efficiency, config.solar.visualize_efficiency)}
-                ${this.generateFlowLine(X, 'pv4', data.statePV4Power, data.durationCur['pv4'], data.pv4LineWidth, data.minLineWidth)}
+                ${this.generateFlowLine(X, 'pv4', data.statePV4Power, data.durationCur['pv4'], data.pv4LineWidth, data.minLineWidth, config.solar.invert_flow)}
                 ${this.generateName(X[0] as number, config.solar.pv4_name)}
                 ${this.generateEfficiency(X, data.PV4Efficiency, config.solar.show_mppt_efficiency)}
                 ${this.generateEnergy(X, data.statePV4Energy, config.solar.show_mppt_production)}
@@ -389,7 +390,7 @@ export class Solar {
 		return svg`${(config.show_solar && config.solar.mppts >= 5) ?
 			svg`
                 ${this.generateFrame(X, 'PV5', data.PV5Efficiency, config.solar.visualize_efficiency)}
-                ${this.generateFlowLine(X, 'pv5', data.statePV5Power, data.durationCur['pv5'], data.pv5LineWidth, data.minLineWidth)}
+                ${this.generateFlowLine(X, 'pv5', data.statePV5Power, data.durationCur['pv5'], data.pv5LineWidth, data.minLineWidth, config.solar.invert_flow)}
                 ${this.generateName(X[0] as number, config.solar.pv5_name)}
                 ${this.generateEfficiency(X, data.PV5Efficiency, config.solar.show_mppt_efficiency)}
                 ${this.generateEnergy(X, data.statePV5Energy, config.solar.show_mppt_production)}
@@ -443,6 +444,7 @@ export class Solar {
 		duration: number,
 		lineWidth: number,
 		minLineWidth: number,
+		invertFlow: boolean,
 	) {
 		const power = entity.toPower();
 		return svg`
@@ -455,8 +457,9 @@ export class Solar {
 						r="${Math.min(2 + lineWidth + Math.max(minLineWidth - 2, 0), 8)}"
 						fill="${Math.round(power) <= 0 ? 'transparent' : `${this.solarColour}`}">
 					<animateMotion dur="${duration}s" repeatCount="indefinite"
-								   keyPoints="0;1"
-								   keyTimes="0;1" calcMode="linear">
+								   keyPoints=${invertFlow ? Utils.invertKeyPoints("0;1") : "0;1"}
+								   keyTimes="0;1" 
+								   calcMode="linear">
 						<mpath href='${this.pvLineMap[id]}'/>
 					</animateMotion>
 				</circle>
