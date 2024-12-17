@@ -1,5 +1,5 @@
 import { html, svg } from 'lit';
-import { BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../types';
+import { AdditionalLoadsViewMode, BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../types';
 import { EssentialLoad } from './compact/essentialLoad';
 import { Autarky } from './compact/autarky';
 import { Style } from './compact/style';
@@ -12,6 +12,7 @@ import { GridLoad } from './compact/gridLoad';
 import { AuxLoad } from './compact/auxLoad';
 import { BatteryBank } from './compact/batteryBank';
 import { DevMode } from './compact/devMode';
+import { ConfigurationCardEditor } from '../editor';
 
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
 	Solar.solarColour = data.solarColour;
@@ -21,15 +22,16 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	Grid.decimalPlaces = data.decimalPlaces;
 
 	let minx = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : 0;
-	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || data.additionalLoad > 6) ? 0 : (data.additionalLoad > 0 || !config.show_battery ? 80 : 146));
+	let additionalLoadVisible = config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none;
+	let miny = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : ((config.show_solar || additionalLoadVisible ? 0 : additionalLoadVisible || !config.show_battery ? 80 : 146));
 	let width = config.viewbox?.viewbox_width
 		? config.viewbox.viewbox_width
-		: (config.load.aux_loads > 4 || data.additionalLoad > 18) ? 648
-			: (config.load.aux_loads > 3 || data.additionalLoad > 13) ? 600
-				: (config.load.aux_loads > 2 || data.additionalLoad > 8) ? 552 : 505;
+		: (config.load.aux_loads > 4 || EssentialLoad.isColumnDisplayable(config, 5)) ? 648
+			: (config.load.aux_loads > 3 || EssentialLoad.isColumnDisplayable(config, 4)) ? 600
+				: (config.load.aux_loads > 2 || EssentialLoad.isColumnDisplayable(config, 3)) ? 552 : 505;
 	let batteryBanksHeight = config.battery.show_battery_banks && config.battery.battery_banks_view_mode == BatteryBanksViewMode.outer ? 80 : 0;
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height :
-		(config.show_battery ? 408 + batteryBanksHeight : (data.additionalLoad >= 2 ? 400 : 300));
+		(config.show_battery ? 408 + batteryBanksHeight : (additionalLoadVisible ? 400 : 300));
 
 	return html`
 			<ha-card>
@@ -41,13 +43,17 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 					<svg
 						viewBox="${minx} ${miny} ${width} ${height}"
 						preserveAspectRatio="xMidYMid meet"
-						height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (data.additionalLoad !== 0 ? '330px' : '246px') : config.show_solar && !config.show_battery ? (data.additionalLoad >= 2 ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
+						height="${data.panelMode === false ? `${!config.show_solar && !config.show_battery ? '270px' : !config.show_solar ? (additionalLoadVisible ? '330px' : '246px') : config.show_solar && !config.show_battery ? (additionalLoadVisible ? '400px' : '300px') : `${data.cardHeight}`}` : `${!config.show_solar ? '75%' : '100%'}`}"
 						width="${data.panelMode === true ? `${data.cardWidth}` : '100%'}">
 
-						${config.dev_mode ?
-							svg`
-								${DevMode.generateLoadTimes(data, config)}
-							` : ``
+
+						${ConfigurationCardEditor.isConfigUpgradeable(config) ?
+							svg`${DevMode.generateUpdateMsg()}`
+							:
+							config.dev_mode ?
+								svg`
+									${DevMode.generateLoadTimes(data, config)}
+								` : ``
 						}
 
 						${config.show_grid ?
@@ -65,7 +71,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${Grid.generateFrequency(data)}
 	                        ` : ``
 						}
-					  
+
 						${config.show_grid && config.grid.show_nonessential ?
 							svg`
 	                            ${GridLoad.generateShapeAndName(data, config)}
@@ -120,32 +126,57 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
                             ` : ``
 						}
 
-						${(data.additionalLoad > 0) ?
+						${(EssentialLoad.isColumnDisplayable(config, 1)) ?
+							svg`
+			                    ${EssentialLoad.generateLoadCol1(data, config, 1)}
+			                    ${EssentialLoad.generateLoadCol1(data, config, 2)}
+			                    ${EssentialLoad.generateLoadCol1(data, config, 4)}
+			                    ${EssentialLoad.generateLoadCol1(data, config, 5)}
+			                ` : ``
+						}
+						${(EssentialLoad.isColumnDisplayable(config, 2)) ?
+							svg`
+			                    ${EssentialLoad.generateLoadCol2(data, config, 1)}
+			                    ${EssentialLoad.generateLoadCol2(data, config, 2)}
+			                    ${EssentialLoad.generateLoadCol2(data, config, 4)}
+			                    ${EssentialLoad.generateLoadCol2(data, config, 5)}
+			                ` : ``
+						}
+						${(EssentialLoad.isColumnDisplayable(config, 3)) ?
+							svg`
+			                    ${EssentialLoad.generateLoadCol3(data, config, 1)}
+			                    ${EssentialLoad.generateLoadCol3(data, config, 2)}
+			                    ${EssentialLoad.generateLoadCol3(data, config, 3)}
+			                    ${EssentialLoad.generateLoadCol3(data, config, 4)}
+			                    ${EssentialLoad.generateLoadCol3(data, config, 5)}
+			                ` : ``
+						}
+						${(EssentialLoad.isColumnDisplayable(config, 4)) ?
+							svg`
+			                    ${EssentialLoad.generateLoadCol4(data, config, 1)}
+			                    ${EssentialLoad.generateLoadCol4(data, config, 2)}
+			                    ${EssentialLoad.generateLoadCol4(data, config, 3)}
+			                    ${EssentialLoad.generateLoadCol4(data, config, 4)}
+			                    ${EssentialLoad.generateLoadCol4(data, config, 5)}
+			                ` : ``
+						}
+						${(EssentialLoad.isColumnDisplayable(config, 5)) ?
+							svg`
+			                    ${EssentialLoad.generateLoadCol5(data, config, 1)}
+			                    ${EssentialLoad.generateLoadCol5(data, config, 2)}
+			                    ${EssentialLoad.generateLoadCol5(data, config, 3)}
+			                    ${EssentialLoad.generateLoadCol5(data, config, 4)}
+			                    ${EssentialLoad.generateLoadCol5(data, config, 5)}
+			                ` : ``
+						}
+
+						${([AdditionalLoadsViewMode.old].includes(config.load.additional_loads_view_mode)) ?
 							svg`
 			                    ${EssentialLoad.generateLines(data, config)}
 			                    ${EssentialLoad.generateLoad1(data, config)}
 			                    ${EssentialLoad.generateLoad2(data, config)}
 			                    ${EssentialLoad.generateLoad3(data, config)}
 			                    ${EssentialLoad.generateLoad4(data, config)}
-			                    ${EssentialLoad.generateLoad5(data, config)}
-			                    ${EssentialLoad.generateLoad6(data, config)}
-			                    ${EssentialLoad.generateLoad7(data, config)}
-			                    ${EssentialLoad.generateLoad8(data, config)}
-			                    ${EssentialLoad.generateLoad9(data, config)}
-			                    ${EssentialLoad.generateLoad10(data, config)}
-			                    ${EssentialLoad.generateLoad11(data, config)}
-			                    ${EssentialLoad.generateLoad12(data, config)}
-			                    ${EssentialLoad.generateLoad13(data, config)}
-			                    ${EssentialLoad.generateLoad14(data, config)}
-			                    ${EssentialLoad.generateLoad15(data, config)}
-			                    ${EssentialLoad.generateLoad16(data, config)}
-			                    ${EssentialLoad.generateLoad17(data, config)}
-			                    ${EssentialLoad.generateLoad18(data, config)}
-			                    ${EssentialLoad.generateLoad19(data, config)}
-			                    ${EssentialLoad.generateLoad20(data, config)}
-			                    ${EssentialLoad.generateLoad21(data, config)}
-			                    ${EssentialLoad.generateLoad22(data, config)}
-			                    ${EssentialLoad.generateLoad23(data, config)}
 			                ` : ``
 						}
 

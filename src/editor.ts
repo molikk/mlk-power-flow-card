@@ -1,12 +1,13 @@
 import { html, LitElement, TemplateResult } from 'lit';
 import { fireEvent, HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 
-import { AutarkyType, BatteryBanksViewMode, InverterModel, PowerFlowCardConfig } from './types';
+import { AdditionalLoadsViewMode, AutarkyType, BatteryBanksViewMode, InverterModel, PowerFlowCardConfig } from './types';
 import { customElement, property } from 'lit/decorators.js';
 import { capitalize } from 'lodash';
 import { EDITOR_NAME, SensorDeviceClass } from './const';
 import { LovelaceConfig } from 'custom-card-helpers/src/types';
 import { localize } from './localize/localize';
+import { getEntity } from './inverters/dto/custom-entity';
 
 @customElement(EDITOR_NAME)
 export class ConfigurationCardEditor extends LitElement implements LovelaceCardEditor {
@@ -16,6 +17,151 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 
 	public setConfig(config: PowerFlowCardConfig): void {
 		this._config = { ...this._config, ...config };
+		if (ConfigurationCardEditor.isUpgradeable(this._config, 1)) {
+			console.log('Updating version to schema 2');
+
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_2', 'essential_load1', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_2', 'essential_load2', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_4', 'essential_load3', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_4', 'essential_load4', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_5', 'essential_load5');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_5', 'essential_load6');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1', 'essential_load7');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1', 'essential_load8');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_1', 'essential_load9');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_2', 'essential_load10');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_3', 'essential_load11');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_4', 'essential_load12');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_5', 'essential_load13');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_1', 'essential_load14');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_2', 'essential_load15');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_3', 'essential_load16');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_4', 'essential_load17');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_5', 'essential_load18');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_1', 'essential_load19');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_2', 'essential_load20');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_3', 'essential_load21');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_4', 'essential_load22');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_5', 'essential_load23');
+
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_2_extra', 'essential_load1_extra', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_2_extra', 'essential_load2_extra', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_4_extra', 'essential_load3_extra', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_4_extra', 'essential_load4_extra', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_5_extra', 'essential_load5_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_5_extra', 'essential_load6_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_extra', 'essential_load7_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_extra', 'essential_load8_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_1_extra', 'essential_load9_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_2_extra', 'essential_load10_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_3_extra', 'essential_load11_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_4_extra', 'essential_load12_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_5_extra', 'essential_load13_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_1_extra', 'essential_load14_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_2_extra', 'essential_load15_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_3_extra', 'essential_load16_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_4_extra', 'essential_load17_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_5_extra', 'essential_load18_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_1_extra', 'essential_load19_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_2_extra', 'essential_load20_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_3_extra', 'essential_load21_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_4_extra', 'essential_load22_extra');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_5_extra', 'essential_load23_extra');
+
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_2_toggle', 'essential_load1_toggle', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_2_toggle', 'essential_load2_toggle', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_4_toggle', 'essential_load3_toggle', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_4_toggle', 'essential_load4_toggle', false);
+			this.rewriteConfig(this._config, 'entities', 'essential_load_1_5_toggle', 'essential_load5_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_5_toggle', 'essential_load6_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_toggle', 'essential_load7_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_2_1_toggle', 'essential_load8_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_1_toggle', 'essential_load9_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_2_toggle', 'essential_load10_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_3_toggle', 'essential_load11_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_4_toggle', 'essential_load12_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_3_5_toggle', 'essential_load13_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_1_toggle', 'essential_load14_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_2_toggle', 'essential_load15_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_3_toggle', 'essential_load16_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_4_toggle', 'essential_load17_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_4_5_toggle', 'essential_load18_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_1_toggle', 'essential_load19_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_2_toggle', 'essential_load20_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_3_toggle', 'essential_load21_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_4_toggle', 'essential_load22_toggle');
+			this.rewriteConfig(this._config, 'entities', 'essential_load_5_5_toggle', 'essential_load23_toggle');
+
+			this.rewriteConfig(this._config, 'load', 'load_1_2_name', 'load1_name', false);
+			this.rewriteConfig(this._config, 'load', 'load_2_2_name', 'load2_name', false);
+			this.rewriteConfig(this._config, 'load', 'load_1_4_name', 'load3_name', false);
+			this.rewriteConfig(this._config, 'load', 'load_2_4_name', 'load4_name', false);
+			this.rewriteConfig(this._config, 'load', 'load_1_5_name', 'load5_name');
+			this.rewriteConfig(this._config, 'load', 'load_2_5_name', 'load6_name');
+			this.rewriteConfig(this._config, 'load', 'load_2_1_name', 'load7_name');
+			this.rewriteConfig(this._config, 'load', 'load_2_1_name', 'load8_name');
+			this.rewriteConfig(this._config, 'load', 'load_3_1_name', 'load9_name');
+			this.rewriteConfig(this._config, 'load', 'load_3_2_name', 'load10_name');
+			this.rewriteConfig(this._config, 'load', 'load_3_3_name', 'load11_name');
+			this.rewriteConfig(this._config, 'load', 'load_3_4_name', 'load12_name');
+			this.rewriteConfig(this._config, 'load', 'load_3_5_name', 'load13_name');
+			this.rewriteConfig(this._config, 'load', 'load_4_1_name', 'load14_name');
+			this.rewriteConfig(this._config, 'load', 'load_4_2_name', 'load15_name');
+			this.rewriteConfig(this._config, 'load', 'load_4_3_name', 'load16_name');
+			this.rewriteConfig(this._config, 'load', 'load_4_4_name', 'load17_name');
+			this.rewriteConfig(this._config, 'load', 'load_4_5_name', 'load18_name');
+			this.rewriteConfig(this._config, 'load', 'load_5_1_name', 'load19_name');
+			this.rewriteConfig(this._config, 'load', 'load_5_2_name', 'load20_name');
+			this.rewriteConfig(this._config, 'load', 'load_5_3_name', 'load21_name');
+			this.rewriteConfig(this._config, 'load', 'load_5_4_name', 'load22_name');
+			this.rewriteConfig(this._config, 'load', 'load_5_5_name', 'load23_name');
+
+			this.rewriteConfig(this._config, 'load', 'load_1_2_icon', 'load1_icon', false);
+			this.rewriteConfig(this._config, 'load', 'load_2_2_icon', 'load2_icon', false);
+			this.rewriteConfig(this._config, 'load', 'load_1_4_icon', 'load3_icon', false);
+			this.rewriteConfig(this._config, 'load', 'load_2_4_icon', 'load4_icon', false);
+			this.rewriteConfig(this._config, 'load', 'load_1_5_icon', 'load5_icon');
+			this.rewriteConfig(this._config, 'load', 'load_2_5_icon', 'load6_icon');
+			this.rewriteConfig(this._config, 'load', 'load_2_1_icon', 'load7_icon');
+			this.rewriteConfig(this._config, 'load', 'load_2_1_icon', 'load8_icon');
+			this.rewriteConfig(this._config, 'load', 'load_3_1_icon', 'load9_icon');
+			this.rewriteConfig(this._config, 'load', 'load_3_2_icon', 'load10_icon');
+			this.rewriteConfig(this._config, 'load', 'load_3_3_icon', 'load11_icon');
+			this.rewriteConfig(this._config, 'load', 'load_3_4_icon', 'load12_icon');
+			this.rewriteConfig(this._config, 'load', 'load_3_5_icon', 'load13_icon');
+			this.rewriteConfig(this._config, 'load', 'load_4_1_icon', 'load14_icon');
+			this.rewriteConfig(this._config, 'load', 'load_4_2_icon', 'load15_icon');
+			this.rewriteConfig(this._config, 'load', 'load_4_3_icon', 'load16_icon');
+			this.rewriteConfig(this._config, 'load', 'load_4_4_icon', 'load17_icon');
+			this.rewriteConfig(this._config, 'load', 'load_4_5_icon', 'load18_icon');
+			this.rewriteConfig(this._config, 'load', 'load_5_1_icon', 'load19_icon');
+			this.rewriteConfig(this._config, 'load', 'load_5_2_icon', 'load20_icon');
+			this.rewriteConfig(this._config, 'load', 'load_5_3_icon', 'load21_icon');
+			this.rewriteConfig(this._config, 'load', 'load_5_4_icon', 'load22_icon');
+			this.rewriteConfig(this._config, 'load', 'load_5_5_icon', 'load23_icon');
+
+			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
+			this._config['schema_version'] = 2;
+
+			fireEvent(this, 'config-changed', { config: this._config });
+		}
+	}
+
+	private rewriteConfig(config: PowerFlowCardConfig, className: string, newName: string, oldName: string, clearOldValue: boolean=true) {
+		if (config[className][oldName]) {
+			config[className][newName] = config[className][oldName];
+			if(clearOldValue) {
+				config[className][oldName] = undefined;
+			}
+		}
+	}
+
+	public static isUpgradeable(config: PowerFlowCardConfig, version: number) {
+		return !config.schema_version || config.schema_version < version;
+	}
+
+	public static isConfigUpgradeable(config: PowerFlowCardConfig) {
+		return this.isUpgradeable(config, 2)
 	}
 
 	protected render(): TemplateResult | void {
@@ -379,7 +525,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'energy', selector: { number: { min: 0 } } },
 											{ name: 'shutdown_soc', selector: { number: { mode: 'box', min: 0, max: 100 } } },
 											{ name: 'shutdown_soc_offgrid', selector: { number: { mode: 'box', min: 0, max: 100 } } },
-											{ name: 'soc_end_of_charge', selector: { number: { mode: 'box', min: 80, max: 100 } } },
+											{ name: 'soc_end_of_charge', selector: { number: { mode: 'box', min: 50, max: 100 } } },
 											{ name: 'show_daily', selector: { boolean: {} } },
 											{ name: 'auto_scale', selector: { boolean: {} } },
 											{ name: 'invert_power', selector: { boolean: {} } },
@@ -619,11 +765,21 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'dynamic_icon', selector: { boolean: {} } },
 											{ name: 'invert_load', selector: { boolean: {} } },
 											{ name: 'essential_name', selector: { text: {} } },
-											{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 23 } } },
 											{ name: 'animation_speed', selector: { number: {} } },
 											{ name: 'max_power', selector: { number: {} } },
 											{ name: 'off_threshold', selector: { number: {} } },
 											{ name: 'path_threshold', selector: { number: {} } },
+											{
+												name: 'additional_loads_view_mode',
+												selector: {
+													select: {
+														options: Object.values(AdditionalLoadsViewMode).map(x => ({
+															label: capitalize(x),
+															value: x,
+														})),
+													},
+												},
+											},
 										],
 									},
 									{
@@ -645,12 +801,13 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('additional_loads_1'),
+										title: this._title('additional_loads_0'),
 										schema: [
 											{
 												name: 'load',
 												type: 'grid',
 												schema: [
+													{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 4 } } },
 													{ name: 'load1_name', selector: { text: {} } },
 													{ name: 'load1_icon', selector: { icon: {} } },
 													{ name: 'load2_name', selector: { text: {} } },
@@ -659,21 +816,13 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load3_icon', selector: { icon: {} } },
 													{ name: 'load4_name', selector: { text: {} } },
 													{ name: 'load4_icon', selector: { icon: {} } },
-													{ name: 'load5_name', selector: { text: {} } },
-													{ name: 'load5_icon', selector: { icon: {} } },
-													{ name: 'load6_name', selector: { text: {} } },
-													{ name: 'load6_icon', selector: { icon: {} } },
-													{ name: 'load7_name', selector: { text: {} } },
-													{ name: 'load7_icon', selector: { icon: {} } },
-													{ name: 'load8_name', selector: { text: {} } },
-													{ name: 'load8_icon', selector: { icon: {} } },
 												],
 											},
 										],
 									},
 									{
 										type: 'expandable',
-										title: this._title('ess_ld_1'),
+										title: this._title('ess_ld_0'),
 										schema: [
 											{
 												name: 'entities',
@@ -691,18 +840,50 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'essential_load4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'essential_load4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'essential_load4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load7', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load7_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load7_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load8', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load8_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load8_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_1'),
+										schema: [
+											{
+												name: 'load',
+												type: 'grid',
+												schema: [
+													{ name: 'load_1_1_name', selector: { text: {} } },
+													{ name: 'load_1_1_icon', selector: { icon: {} } },
+													{ name: 'load_1_2_name', selector: { text: {} } },
+													{ name: 'load_1_2_icon', selector: { icon: {} } },
+													{ name: 'load_1_4_name', selector: { text: {} } },
+													{ name: 'load_1_4_icon', selector: { icon: {} } },
+													{ name: 'load_1_5_name', selector: { text: {} } },
+													{ name: 'load_1_5_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('ess_ld_1'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load_1_1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_1_1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_1_1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_1_2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_1_2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_1_2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_1_4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_1_4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_1_4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_1_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_1_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_1_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -715,16 +896,14 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'load',
 												type: 'grid',
 												schema: [
-													{ name: 'load9_name', selector: { text: {} } },
-													{ name: 'load9_icon', selector: { icon: {} } },
-													{ name: 'load10_name', selector: { text: {} } },
-													{ name: 'load10_icon', selector: { icon: {} } },
-													{ name: 'load11_name', selector: { text: {} } },
-													{ name: 'load11_icon', selector: { icon: {} } },
-													{ name: 'load12_name', selector: { text: {} } },
-													{ name: 'load12_icon', selector: { icon: {} } },
-													{ name: 'load13_name', selector: { text: {} } },
-													{ name: 'load13_icon', selector: { icon: {} } },
+													{ name: 'load_2_1_name', selector: { text: {} } },
+													{ name: 'load_2_1_icon', selector: { icon: {} } },
+													{ name: 'load_2_2_name', selector: { text: {} } },
+													{ name: 'load_2_2_icon', selector: { icon: {} } },
+													{ name: 'load_2_4_name', selector: { text: {} } },
+													{ name: 'load_2_4_icon', selector: { icon: {} } },
+													{ name: 'load_2_5_name', selector: { text: {} } },
+													{ name: 'load_2_5_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -737,21 +916,18 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													{ name: 'essential_load9', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load9_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load9_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load10', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load10_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load10_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load11', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load11_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load11_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load12', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load12_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load12_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load13', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load13_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load13_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_2_1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_2_1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_2_1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_2_2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_2_2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_2_2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_2_4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_2_4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_2_4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_2_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_2_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_2_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -764,16 +940,16 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'load',
 												type: 'grid',
 												schema: [
-													{ name: 'load14_name', selector: { text: {} } },
-													{ name: 'load14_icon', selector: { icon: {} } },
-													{ name: 'load15_name', selector: { text: {} } },
-													{ name: 'load15_icon', selector: { icon: {} } },
-													{ name: 'load16_name', selector: { text: {} } },
-													{ name: 'load16_icon', selector: { icon: {} } },
-													{ name: 'load17_name', selector: { text: {} } },
-													{ name: 'load17_icon', selector: { icon: {} } },
-													{ name: 'load18_name', selector: { text: {} } },
-													{ name: 'load18_icon', selector: { icon: {} } },
+													{ name: 'load_3_1_name', selector: { text: {} } },
+													{ name: 'load_3_1_icon', selector: { icon: {} } },
+													{ name: 'load_3_2_name', selector: { text: {} } },
+													{ name: 'load_3_2_icon', selector: { icon: {} } },
+													{ name: 'load_3_3_name', selector: { text: {} } },
+													{ name: 'load_3_3_icon', selector: { icon: {} } },
+													{ name: 'load_3_4_name', selector: { text: {} } },
+													{ name: 'load_3_4_icon', selector: { icon: {} } },
+													{ name: 'load_3_5_name', selector: { text: {} } },
+													{ name: 'load_3_5_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -786,21 +962,21 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													{ name: 'essential_load14', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load14_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load14_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load15', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load15_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load15_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load16', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load16_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load16_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load17', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load17_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load17_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load18', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load18_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load18_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_3_1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_3_1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_3_1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_3_2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_3_2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_3_2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_3_3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_3_3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_3_3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_3_4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_3_4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_3_4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_3_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_3_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_3_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -813,16 +989,16 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'load',
 												type: 'grid',
 												schema: [
-													{ name: 'load19_name', selector: { text: {} } },
-													{ name: 'load19_icon', selector: { icon: {} } },
-													{ name: 'load20_name', selector: { text: {} } },
-													{ name: 'load20_icon', selector: { icon: {} } },
-													{ name: 'load21_name', selector: { text: {} } },
-													{ name: 'load21_icon', selector: { icon: {} } },
-													{ name: 'load22_name', selector: { text: {} } },
-													{ name: 'load22_icon', selector: { icon: {} } },
-													{ name: 'load23_name', selector: { text: {} } },
-													{ name: 'load23_icon', selector: { icon: {} } },
+													{ name: 'load_4_1_name', selector: { text: {} } },
+													{ name: 'load_4_1_icon', selector: { icon: {} } },
+													{ name: 'load_4_2_name', selector: { text: {} } },
+													{ name: 'load_4_2_icon', selector: { icon: {} } },
+													{ name: 'load_4_3_name', selector: { text: {} } },
+													{ name: 'load_4_3_icon', selector: { icon: {} } },
+													{ name: 'load_4_4_name', selector: { text: {} } },
+													{ name: 'load_4_4_icon', selector: { icon: {} } },
+													{ name: 'load_4_5_name', selector: { text: {} } },
+													{ name: 'load_4_5_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -835,21 +1011,70 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													{ name: 'essential_load19', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load19_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load19_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load20', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load20_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load20_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load21', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load21_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load21_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load22', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load22_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load22_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-													{ name: 'essential_load23', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'essential_load23_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_load23_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_4_1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_4_1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_4_1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_4_2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_4_2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_4_2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_4_3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_4_3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_4_3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_4_4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_4_4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_4_4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_4_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_4_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_4_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_5'),
+										schema: [
+											{
+												name: 'load',
+												type: 'grid',
+												schema: [
+													{ name: 'load_5_1_name', selector: { text: {} } },
+													{ name: 'load_5_1_icon', selector: { icon: {} } },
+													{ name: 'load_5_2_name', selector: { text: {} } },
+													{ name: 'load_5_2_icon', selector: { icon: {} } },
+													{ name: 'load_5_3_name', selector: { text: {} } },
+													{ name: 'load_5_3_icon', selector: { icon: {} } },
+													{ name: 'load_5_4_name', selector: { text: {} } },
+													{ name: 'load_5_4_icon', selector: { icon: {} } },
+													{ name: 'load_5_5_name', selector: { text: {} } },
+													{ name: 'load_5_5_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('ess_ld_5'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load_5_1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_5_1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_5_1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_5_2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_5_2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_5_2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_5_3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_5_3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_5_3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_5_4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_5_4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_5_4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_5_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_5_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_5_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -1125,4 +1350,59 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 	private _valueChanged(ev: CustomEvent): void {
 		fireEvent(this, 'config-changed', { config: ev.detail.value });
 	}
+
+
+	private getAdditionalLoadsViewMode(config: PowerFlowCardConfig, hass: HomeAssistant) {
+		if (!config.load.additional_loads_view_mode
+			|| config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none
+		) {
+
+			if (getEntity(config, hass, 'entities.essential_load_5_1')
+				|| getEntity(config, hass, 'entities.essential_load_5_2')
+				|| getEntity(config, hass, 'entities.essential_load_5_3')
+				|| getEntity(config, hass, 'entities.essential_load_5_4')
+				|| getEntity(config, hass, 'entities.essential_load_5_5')
+			) {
+				return AdditionalLoadsViewMode.col5;
+			}
+			if (getEntity(config, hass,'entities.essential_load_4_1')
+				|| getEntity(config, hass,'entities.essential_load_4_2')
+				|| getEntity(config, hass,'entities.essential_load_4_3')
+				|| getEntity(config, hass,'entities.essential_load_4_4')
+				|| getEntity(config, hass,'entities.essential_load_4_5')
+			) {
+				return AdditionalLoadsViewMode.col4;
+			}
+			if (getEntity(config, hass, 'entities.essential_load_3_1')
+				|| getEntity(config, hass, 'entities.essential_load_3_2')
+				|| getEntity(config, hass, 'entities.essential_load_3_3')
+				|| getEntity(config, hass, 'entities.essential_load_3_4')
+				|| getEntity(config, hass, 'entities.essential_load_3_5')
+			) {
+				return AdditionalLoadsViewMode.col3;
+			}
+			if (getEntity(config, hass, 'entities.essential_load_1_1')
+				|| getEntity(config, hass, 'entities.essential_load_1_2')
+				|| getEntity(config, hass, 'entities.essential_load_1_3')
+				|| getEntity(config, hass, 'entities.essential_load_1_4')
+				|| getEntity(config, hass, 'entities.essential_load_1_5')
+				|| getEntity(config, hass, 'entities.essential_load_2_1')
+				|| getEntity(config, hass, 'entities.essential_load_2_2')
+				|| getEntity(config, hass, 'entities.essential_load_2_3')
+				|| getEntity(config, hass, 'entities.essential_load_2_4')
+				|| getEntity(config, hass, 'entities.essential_load_2_5')
+			) {
+				return AdditionalLoadsViewMode.col2;
+			}
+			if (getEntity(config, hass, 'entities.essential_load1')
+				|| getEntity(config, hass, 'entities.essential_load2')
+				|| getEntity(config, hass, 'entities.essential_load3')
+				|| getEntity(config, hass, 'entities.essential_load4')
+			) {
+				return AdditionalLoadsViewMode.old;
+			}
+		}
+		return config.load.additional_loads_view_mode;
+	}
+
 }
