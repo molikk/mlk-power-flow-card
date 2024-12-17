@@ -147,10 +147,10 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		}
 	}
 
-	private rewriteConfig(config: PowerFlowCardConfig, className: string, newName: string, oldName: string, clearOldValue: boolean=true) {
+	private rewriteConfig(config: PowerFlowCardConfig, className: string, newName: string, oldName: string, clearOldValue: boolean = true) {
 		if (config[className][oldName]) {
 			config[className][newName] = config[className][oldName];
-			if(clearOldValue) {
+			if (clearOldValue) {
 				config[className][oldName] = undefined;
 			}
 		}
@@ -161,7 +161,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 	}
 
 	public static isConfigUpgradeable(config: PowerFlowCardConfig) {
-		return this.isUpgradeable(config, 2)
+		return this.isUpgradeable(config, 2);
 	}
 
 	protected render(): TemplateResult | void {
@@ -263,6 +263,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 											{ name: 'colour', selector: { color_rgb: {} } },
 											{ name: 'navigate', selector: { text: {} } },
+											{ name: 'invert_flow', selector: { boolean: {} } },
 											{ name: 'ac_icon', selector: { icon: {} } },
 											{ name: 'dc_icon', selector: { icon: {} } },
 										],
@@ -338,6 +339,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'auto_scale', selector: { boolean: {} } },
 											{ name: 'colour', selector: { color_rgb: {} } },
 											{ name: 'navigate', selector: { text: {} } },
+											{ name: 'invert_flow', selector: { boolean: {} } },
 											{ name: 'dynamic_colour', selector: { boolean: {} } },
 											{ name: 'animation_speed', selector: { number: {} } },
 											{ name: 'off_threshold', selector: { number: {} } },
@@ -532,6 +534,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'show_absolute', selector: { boolean: {} } },
 											{ name: 'colour', selector: { color_rgb: {} } },
 											{ name: 'navigate', selector: { text: {} } },
+											{ name: 'invert_flow', selector: { boolean: {} } },
 											{ name: 'charge_colour', selector: { color_rgb: {} } },
 											{ name: 'dynamic_colour', selector: { boolean: {} } },
 											{ name: 'linear_gradient', selector: { boolean: {} } },
@@ -758,9 +761,11 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 										type: 'grid',
 										schema: [
 											{ name: 'show_daily', selector: { boolean: {} } },
+											{ name: 'label_daily_load', selector: { text: {} } },
 											{ name: 'auto_scale', selector: { boolean: {} } },
 											{ name: 'colour', selector: { color_rgb: {} } },
 											{ name: 'navigate', selector: { text: {} } },
+											{ name: 'invert_flow', selector: { boolean: {} } },
 											{ name: 'dynamic_colour', selector: { boolean: {} } },
 											{ name: 'dynamic_icon', selector: { boolean: {} } },
 											{ name: 'invert_load', selector: { boolean: {} } },
@@ -1098,6 +1103,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_off_colour', selector: { color_rgb: {} } },
 													{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 4 } } },
 													{ name: 'show_daily_aux', selector: { boolean: {} } },
+													{ name: 'aux_invert_flow', selector: { boolean: {} } },
 												],
 											},
 										],
@@ -1181,6 +1187,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'show_absolute', selector: { boolean: {} } },
 											{ name: 'colour', selector: { color_rgb: {} } },
 											{ name: 'navigate', selector: { text: {} } },
+											{ name: 'invert_flow', selector: { boolean: {} } },
 											{ name: 'no_grid_colour', selector: { color_rgb: {} } },
 											{ name: 'export_colour', selector: { color_rgb: {} } },
 											{ name: 'grid_off_colour', selector: { color_rgb: {} } },
@@ -1365,11 +1372,11 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			) {
 				return AdditionalLoadsViewMode.col5;
 			}
-			if (getEntity(config, hass,'entities.essential_load_4_1')
-				|| getEntity(config, hass,'entities.essential_load_4_2')
-				|| getEntity(config, hass,'entities.essential_load_4_3')
-				|| getEntity(config, hass,'entities.essential_load_4_4')
-				|| getEntity(config, hass,'entities.essential_load_4_5')
+			if (getEntity(config, hass, 'entities.essential_load_4_1')
+				|| getEntity(config, hass, 'entities.essential_load_4_2')
+				|| getEntity(config, hass, 'entities.essential_load_4_3')
+				|| getEntity(config, hass, 'entities.essential_load_4_4')
+				|| getEntity(config, hass, 'entities.essential_load_4_5')
 			) {
 				return AdditionalLoadsViewMode.col4;
 			}

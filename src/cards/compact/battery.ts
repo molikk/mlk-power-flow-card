@@ -105,12 +105,12 @@ export class Battery {
 				${data.batteryDuration}
 			</text>
 			<text id="duration_text" x="270" y="${y}" class="st3 left-align"
-				  fill="${data.batteryEnergy === 0 || data.batteryPower <= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryEnergy === 0 || (config.battery.invert_flow ? data.batteryPower >= 0 : data.batteryPower <= 0) || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.runtime_to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
 			<text id="duration_text_charging" x="270" y="${y}"
 				  class="st3 left-align"
-				  fill="${data.batteryEnergy === 0 || data.batteryPower >= 0 || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
+				  fill="${data.batteryEnergy === 0 || (config.battery.invert_flow ? data.batteryPower <= 0 : data.batteryPower >= 0) || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
 			<text id="floating" x="270" y="${y}" class="st3 left-align"
@@ -170,7 +170,9 @@ export class Battery {
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.batteryPower <= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
-								   keyPoints="1;0" keyTimes="0;1" calcMode="linear">
+								   keyPoints=${config.battery.invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
+									 keyTimes="0;1" 
+									 calcMode="linear">
 						<mpath xlink:href="#bat-line"/>
 					</animateMotion>
 				</circle>
@@ -178,7 +180,9 @@ export class Battery {
 						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.batteryPower >= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}`}">
 					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
-								   keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+								   keyPoints=${config.battery.invert_flow ? Utils.invertKeyPoints("0;1") : "0;1"} 
+								   keyTimes="0;1" 
+								   calcMode="linear">
 						<mpath xlink:href="#bat-line"/>
 					</animateMotion>
 				</circle>

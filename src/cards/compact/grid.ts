@@ -81,7 +81,9 @@ export class Grid {
 		`;
 	}
 
-	static generateFlowLines(data: DataDto) {
+	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
+		let keyPoints = data.totalGridPower > 0 ? '0;1' : '1;0';
+		keyPoints = config.grid.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
 		return svg`
 			<svg id="grid-flow">
 				<path id="grid-line" d="M 175 218 L 215 218" fill="none" stroke="${data.gridColour}"
@@ -90,7 +92,7 @@ export class Grid {
 						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
 					<animateMotion dur="${data.durationCur['grid']}s" repeatCount="indefinite"
-								   keyPoints="${data.totalGridPower > 0 ? '0;1' : '1;0'}"
+								   keyPoints="${keyPoints}"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#grid-line"/>
 					</animateMotion>
@@ -103,7 +105,7 @@ export class Grid {
 						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
 					<animateMotion dur="${data.durationCur['grid']}s" repeatCount="indefinite"
-								   keyPoints="${data.totalGridPower > 0 ? '0;1' : '1;0'}"
+								   keyPoints="${keyPoints}"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#grid-line1"/>
 					</animateMotion>

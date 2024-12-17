@@ -63,4 +63,7 @@ The card can be installed via HACS (recommended) or manually.
 
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/e5d0618e-b4f8-4534-8e68-130cd220b618)
 
+### Credits
+This project was based and heavily influenced by [sunsynk-power-flow-card](https://github.com/slipx06/sunsynk-power-flow-card). Thanks for such a great starting point!
+
 

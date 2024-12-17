@@ -85,6 +85,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		modern: boolean;
 		colour: string;
 		navigate: string;
+		invert_flow: boolean;
 		autarky: AutarkyType;
 		model: InverterModel;
 		auto_scale: boolean;
@@ -101,6 +102,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		invert_power: boolean;
 		colour: string;
 		navigate: string;
+		invert_flow: boolean;
 		charge_colour: string;
 		show_daily: boolean;
 		animation_speed: number;
@@ -127,6 +129,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	solar: {
 		colour: string;
 		navigate: string;
+		invert_flow: boolean;
 		mppts: number;
 		animation_speed: number;
 		max_power: number;
@@ -151,6 +154,8 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	load: {
 		colour: string;
 		navigate: string;
+		invert_flow: boolean;
+		label_daily_load: string;
 		dynamic_colour: boolean;
 		aux_dynamic_colour: boolean;
 		dynamic_icon: boolean;
@@ -165,6 +170,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		aux_type: string;
 		aux_colour: string;
 		aux_off_colour: string;
+		aux_invert_flow: boolean;
 		off_threshold: number;
 		aux_loads: number;
 		aux_load1_name: string;
@@ -289,6 +295,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	grid: {
 		colour: string;
 		navigate: string;
+		invert_flow: boolean;
 		grid_name: string;
 		label_daily_grid_buy: string;
 		label_daily_grid_sell: string;
