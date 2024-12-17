@@ -23,7 +23,7 @@ import { compactCard } from './cards/compact-card';
 import { globalData } from './helpers/globals';
 import { InverterFactory } from './inverters/inverter-factory';
 import { BatteryIconManager } from './helpers/battery-icon-manager';
-import { convertToCustomEntity, CustomEntity } from './inverters/dto/custom-entity';
+import { getEntity, CustomEntity } from './inverters/dto/custom-entity';
 import { icons } from './helpers/icons';
 
 console.groupCollapsed(
@@ -126,7 +126,6 @@ export class PowerFlowCard extends LitElement {
 
 		const refreshTime = this.getNowTime();
 
-
 		//Energy
 		const stateDayBatteryDischarge = this.getEntity('entities.day_battery_discharge_71');
 		const stateDayBatteryCharge = this.getEntity('entities.day_battery_charge_70');
@@ -164,7 +163,7 @@ export class PowerFlowCard extends LitElement {
 		const stateShutdownSOC = this.getEntity('battery.shutdown_soc', { state: config.battery.shutdown_soc?.toString() ?? '' });
 		const stateShutdownSOCOffGrid = this.getEntity('battery.shutdown_soc_offgrid', { state: config.battery.shutdown_soc_offgrid?.toString() ?? '' });
 		const stateBatterySOH = this.getEntity('entities.battery_soh', { state: '' });
-		const stateSOCEndOfCharge = this.getEntity('battery.soc_end_of_charge', {state: config.battery.soc_end_of_charge?.toString() ?? ''});
+		const stateSOCEndOfCharge = this.getEntity('battery.soc_end_of_charge', { state: config.battery.soc_end_of_charge?.toString() ?? '' });
 		const stateBatteryRemainingStorage = this.getEntity('entities.battery_remaining_storage', { state: '' });
 
 		//BatteryBanks
@@ -230,80 +229,131 @@ export class PowerFlowCard extends LitElement {
 			config.battery.battery_bank_2_energy,
 			config.battery.battery_bank_3_energy,
 			config.battery.battery_bank_4_energy,
+			config.battery.battery_bank_5_energy,
+			config.battery.battery_bank_6_energy,
 		];
 
 		//Load
 		const stateEssentialPower = this.getEntity('entities.essential_power');
-
 		const stateEssentialLoad1 = this.getEntity('entities.essential_load1');
 		const stateEssentialLoad2 = this.getEntity('entities.essential_load2');
 		const stateEssentialLoad3 = this.getEntity('entities.essential_load3');
 		const stateEssentialLoad4 = this.getEntity('entities.essential_load4');
-		const stateEssentialLoad5 = this.getEntity('entities.essential_load5');
-		const stateEssentialLoad6 = this.getEntity('entities.essential_load6');
-		const stateEssentialLoad7 = this.getEntity('entities.essential_load7');
-		const stateEssentialLoad8 = this.getEntity('entities.essential_load8');
-		const stateEssentialLoad9 = this.getEntity('entities.essential_load9');
-		const stateEssentialLoad10 = this.getEntity('entities.essential_load10');
-		const stateEssentialLoad11 = this.getEntity('entities.essential_load11');
-		const stateEssentialLoad12 = this.getEntity('entities.essential_load12');
-		const stateEssentialLoad13 = this.getEntity('entities.essential_load13');
-		const stateEssentialLoad14 = this.getEntity('entities.essential_load14');
-		const stateEssentialLoad15 = this.getEntity('entities.essential_load15');
-		const stateEssentialLoad16 = this.getEntity('entities.essential_load16');
-		const stateEssentialLoad17 = this.getEntity('entities.essential_load17');
-		const stateEssentialLoad18 = this.getEntity('entities.essential_load18');
-		const stateEssentialLoad19 = this.getEntity('entities.essential_load19');
-		const stateEssentialLoad20 = this.getEntity('entities.essential_load20');
-		const stateEssentialLoad21 = this.getEntity('entities.essential_load21');
-		const stateEssentialLoad22 = this.getEntity('entities.essential_load22');
-		const stateEssentialLoad23 = this.getEntity('entities.essential_load23');
 		const stateEssentialLoad1Extra = this.getEntity('entities.essential_load1_extra');
 		const stateEssentialLoad2Extra = this.getEntity('entities.essential_load2_extra');
 		const stateEssentialLoad3Extra = this.getEntity('entities.essential_load3_extra');
 		const stateEssentialLoad4Extra = this.getEntity('entities.essential_load4_extra');
-		const stateEssentialLoad5Extra = this.getEntity('entities.essential_load5_extra');
-		const stateEssentialLoad6Extra = this.getEntity('entities.essential_load6_extra');
-		const stateEssentialLoad7Extra = this.getEntity('entities.essential_load7_extra');
-		const stateEssentialLoad8Extra = this.getEntity('entities.essential_load8_extra');
-		const stateEssentialLoad9Extra = this.getEntity('entities.essential_load9_extra');
-		const stateEssentialLoad10Extra = this.getEntity('entities.essential_load10_extra');
-		const stateEssentialLoad11Extra = this.getEntity('entities.essential_load11_extra');
-		const stateEssentialLoad12Extra = this.getEntity('entities.essential_load12_extra');
-		const stateEssentialLoad13Extra = this.getEntity('entities.essential_load13_extra');
-		const stateEssentialLoad14Extra = this.getEntity('entities.essential_load14_extra');
-		const stateEssentialLoad15Extra = this.getEntity('entities.essential_load15_extra');
-		const stateEssentialLoad16Extra = this.getEntity('entities.essential_load16_extra');
-		const stateEssentialLoad17Extra = this.getEntity('entities.essential_load17_extra');
-		const stateEssentialLoad18Extra = this.getEntity('entities.essential_load18_extra');
-		const stateEssentialLoad19Extra = this.getEntity('entities.essential_load19_extra');
-		const stateEssentialLoad20Extra = this.getEntity('entities.essential_load20_extra');
-		const stateEssentialLoad21Extra = this.getEntity('entities.essential_load21_extra');
-		const stateEssentialLoad22Extra = this.getEntity('entities.essential_load22_extra');
-		const stateEssentialLoad23Extra = this.getEntity('entities.essential_load23_extra');
 		const stateEssentialLoad1Toggle = this.getEntity('entities.essential_load1_toggle');
 		const stateEssentialLoad2Toggle = this.getEntity('entities.essential_load2_toggle');
 		const stateEssentialLoad3Toggle = this.getEntity('entities.essential_load3_toggle');
 		const stateEssentialLoad4Toggle = this.getEntity('entities.essential_load4_toggle');
-		const stateEssentialLoad5Toggle = this.getEntity('entities.essential_load5_toggle');
-		const stateEssentialLoad6Toggle = this.getEntity('entities.essential_load6_toggle');
-		const stateEssentialLoad7Toggle = this.getEntity('entities.essential_load7_toggle');
-		const stateEssentialLoad8Toggle = this.getEntity('entities.essential_load8_toggle');
-		const stateEssentialLoad9Toggle = this.getEntity('entities.essential_load9_toggle');
-		const stateEssentialLoad10Toggle = this.getEntity('entities.essential_load10_toggle');
-		const stateEssentialLoad11Toggle = this.getEntity('entities.essential_load11_toggle');
-		const stateEssentialLoad12Toggle = this.getEntity('entities.essential_load12_toggle');
-		const stateEssentialLoad13Toggle = this.getEntity('entities.essential_load13_toggle');
-		const stateEssentialLoad14Toggle = this.getEntity('entities.essential_load14_toggle');
-		const stateEssentialLoad15Toggle = this.getEntity('entities.essential_load15_toggle');
-		const stateEssentialLoad16Toggle = this.getEntity('entities.essential_load16_toggle');
-		const stateEssentialLoad17Toggle = this.getEntity('entities.essential_load17_toggle');
-		const stateEssentialLoad18Toggle = this.getEntity('entities.essential_load18_toggle');
-		const stateEssentialLoad19Toggle = this.getEntity('entities.essential_load19_toggle');
-		const stateEssentialLoad20Toggle = this.getEntity('entities.essential_load20_toggle');
-		const stateEssentialLoad21Toggle = this.getEntity('entities.essential_load21_toggle');
-		const stateEssentialLoad22Toggle = this.getEntity('entities.essential_load22_toggle');
-		const stateEssentialLoad23Toggle = this.getEntity('entities.essential_load23_toggle');
+
+		const essentialLoadCol1State = [
+			this.getEntity('entities.essential_load_1_1'),
+			this.getEntity('entities.essential_load_1_2'),
+			this.getEntity('entities.essential_load_1_3'),
+			this.getEntity('entities.essential_load_1_4'),
+			this.getEntity('entities.essential_load_1_5'),
+		];
+		const essentialLoadCol2State = [
+			this.getEntity('entities.essential_load_2_1'),
+			this.getEntity('entities.essential_load_2_2'),
+			this.getEntity('entities.essential_load_2_3'),
+			this.getEntity('entities.essential_load_2_4'),
+			this.getEntity('entities.essential_load_2_5'),
+		];
+		const essentialLoadCol3State = [
+			this.getEntity('entities.essential_load_3_1'),
+			this.getEntity('entities.essential_load_3_2'),
+			this.getEntity('entities.essential_load_3_3'),
+			this.getEntity('entities.essential_load_3_4'),
+			this.getEntity('entities.essential_load_3_5'),
+		];
+		const essentialLoadCol4State = [
+			this.getEntity('entities.essential_load_4_1'),
+			this.getEntity('entities.essential_load_4_2'),
+			this.getEntity('entities.essential_load_4_3'),
+			this.getEntity('entities.essential_load_4_4'),
+			this.getEntity('entities.essential_load_4_5'),
+		];
+		const essentialLoadCol5State = [
+			this.getEntity('entities.essential_load_5_1'),
+			this.getEntity('entities.essential_load_5_2'),
+			this.getEntity('entities.essential_load_5_3'),
+			this.getEntity('entities.essential_load_5_4'),
+			this.getEntity('entities.essential_load_5_5'),
+		];
+		const essentialLoadCol1ExtraState = [
+			this.getEntity('entities.essential_load_1_1_extra'),
+			this.getEntity('entities.essential_load_1_2_extra'),
+			this.getEntity('entities.essential_load_1_3_extra'),
+			this.getEntity('entities.essential_load_1_4_extra'),
+			this.getEntity('entities.essential_load_1_5_extra'),
+		];
+		const essentialLoadCol2ExtraState = [
+			this.getEntity('entities.essential_load_2_1_extra'),
+			this.getEntity('entities.essential_load_2_2_extra'),
+			this.getEntity('entities.essential_load_2_3_extra'),
+			this.getEntity('entities.essential_load_2_4_extra'),
+			this.getEntity('entities.essential_load_2_5_extra'),
+		];
+		const essentialLoadCol3ExtraState = [
+			this.getEntity('entities.essential_load_3_1_extra'),
+			this.getEntity('entities.essential_load_3_2_extra'),
+			this.getEntity('entities.essential_load_3_3_extra'),
+			this.getEntity('entities.essential_load_3_4_extra'),
+			this.getEntity('entities.essential_load_3_5_extra'),
+		];
+		const essentialLoadCol4ExtraState = [
+			this.getEntity('entities.essential_load_4_1_extra'),
+			this.getEntity('entities.essential_load_4_2_extra'),
+			this.getEntity('entities.essential_load_4_3_extra'),
+			this.getEntity('entities.essential_load_4_4_extra'),
+			this.getEntity('entities.essential_load_4_5_extra'),
+		];
+		const essentialLoadCol5ExtraState = [
+			this.getEntity('entities.essential_load_5_1_extra'),
+			this.getEntity('entities.essential_load_5_2_extra'),
+			this.getEntity('entities.essential_load_5_3_extra'),
+			this.getEntity('entities.essential_load_5_4_extra'),
+			this.getEntity('entities.essential_load_5_5_extra'),
+		];
+		const essentialLoadCol1ToggleState = [
+			this.getEntity('entities.essential_load_1_1_toggle'),
+			this.getEntity('entities.essential_load_1_2_toggle'),
+			this.getEntity('entities.essential_load_1_3_toggle'),
+			this.getEntity('entities.essential_load_1_4_toggle'),
+			this.getEntity('entities.essential_load_1_5_toggle'),
+		];
+		const essentialLoadCol2ToggleState = [
+			this.getEntity('entities.essential_load_2_1_toggle'),
+			this.getEntity('entities.essential_load_2_2_toggle'),
+			this.getEntity('entities.essential_load_2_3_toggle'),
+			this.getEntity('entities.essential_load_2_4_toggle'),
+			this.getEntity('entities.essential_load_2_5_toggle'),
+		];
+		const essentialLoadCol3ToggleState = [
+			this.getEntity('entities.essential_load_3_1_toggle'),
+			this.getEntity('entities.essential_load_3_2_toggle'),
+			this.getEntity('entities.essential_load_3_3_toggle'),
+			this.getEntity('entities.essential_load_3_4_toggle'),
+			this.getEntity('entities.essential_load_3_5_toggle'),
+		];
+		const essentialLoadCol4ToggleState = [
+			this.getEntity('entities.essential_load_4_1_toggle'),
+			this.getEntity('entities.essential_load_4_2_toggle'),
+			this.getEntity('entities.essential_load_4_3_toggle'),
+			this.getEntity('entities.essential_load_4_4_toggle'),
+			this.getEntity('entities.essential_load_4_5_toggle'),
+		];
+		const essentialLoadCol5ToggleState = [
+			this.getEntity('entities.essential_load_5_1_toggle'),
+			this.getEntity('entities.essential_load_5_2_toggle'),
+			this.getEntity('entities.essential_load_5_3_toggle'),
+			this.getEntity('entities.essential_load_5_4_toggle'),
+			this.getEntity('entities.essential_load_5_5_toggle'),
+		];
+
 		const stateLoadPowerL1 = this.getEntity('entities.load_power_L1');
 		const stateLoadPowerL2 = this.getEntity('entities.load_power_L2');
 		const stateLoadPowerL3 = this.getEntity('entities.load_power_L3');
@@ -442,25 +492,41 @@ export class PowerFlowCard extends LitElement {
 		const dynamicColourEssentialLoad2 = this.calculateEssentialLoadColour(stateEssentialLoad2, stateEssentialLoad2Toggle, config.load?.off_threshold) || loadColour;
 		const dynamicColourEssentialLoad3 = this.calculateEssentialLoadColour(stateEssentialLoad3, stateEssentialLoad3Toggle, config.load?.off_threshold) || loadColour;
 		const dynamicColourEssentialLoad4 = this.calculateEssentialLoadColour(stateEssentialLoad4, stateEssentialLoad4Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad5 = this.calculateEssentialLoadColour(stateEssentialLoad5, stateEssentialLoad5Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad6 = this.calculateEssentialLoadColour(stateEssentialLoad6, stateEssentialLoad6Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad7 = this.calculateEssentialLoadColour(stateEssentialLoad7, stateEssentialLoad7Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad8 = this.calculateEssentialLoadColour(stateEssentialLoad8, stateEssentialLoad8Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad9 = this.calculateEssentialLoadColour(stateEssentialLoad9, stateEssentialLoad9Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad10 = this.calculateEssentialLoadColour(stateEssentialLoad10, stateEssentialLoad10Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad11 = this.calculateEssentialLoadColour(stateEssentialLoad11, stateEssentialLoad11Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad12 = this.calculateEssentialLoadColour(stateEssentialLoad12, stateEssentialLoad12Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad13 = this.calculateEssentialLoadColour(stateEssentialLoad13, stateEssentialLoad13Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad14 = this.calculateEssentialLoadColour(stateEssentialLoad14, stateEssentialLoad14Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad15 = this.calculateEssentialLoadColour(stateEssentialLoad15, stateEssentialLoad15Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad16 = this.calculateEssentialLoadColour(stateEssentialLoad16, stateEssentialLoad16Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad17 = this.calculateEssentialLoadColour(stateEssentialLoad17, stateEssentialLoad17Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad18 = this.calculateEssentialLoadColour(stateEssentialLoad18, stateEssentialLoad18Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad19 = this.calculateEssentialLoadColour(stateEssentialLoad19, stateEssentialLoad19Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad20 = this.calculateEssentialLoadColour(stateEssentialLoad20, stateEssentialLoad20Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad21 = this.calculateEssentialLoadColour(stateEssentialLoad21, stateEssentialLoad21Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad22 = this.calculateEssentialLoadColour(stateEssentialLoad22, stateEssentialLoad22Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad23 = this.calculateEssentialLoadColour(stateEssentialLoad23, stateEssentialLoad23Toggle, config.load?.off_threshold) || loadColour;
+		const essentialLoadCol1DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol1State[1 - 1], essentialLoadCol1ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[2 - 1], essentialLoadCol1ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[3 - 1], essentialLoadCol1ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[4 - 1], essentialLoadCol1ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[5 - 1], essentialLoadCol1ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol2DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol2State[1 - 1], essentialLoadCol2ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[2 - 1], essentialLoadCol2ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[3 - 1], essentialLoadCol2ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[4 - 1], essentialLoadCol2ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[5 - 1], essentialLoadCol2ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol3DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol3State[1 - 1], essentialLoadCol3ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[2 - 1], essentialLoadCol3ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[3 - 1], essentialLoadCol3ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[4 - 1], essentialLoadCol3ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[5 - 1], essentialLoadCol3ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol4DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol4State[1 - 1], essentialLoadCol4ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[2 - 1], essentialLoadCol4ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[3 - 1], essentialLoadCol4ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[4 - 1], essentialLoadCol4ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[5 - 1], essentialLoadCol4ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol5DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol5State[1 - 1], essentialLoadCol5ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[2 - 1], essentialLoadCol5ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[3 - 1], essentialLoadCol5ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[4 - 1], essentialLoadCol5ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[5 - 1], essentialLoadCol5ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
 
 		config.title_colour = this.colourConvert(config.title_colour);
 
@@ -557,9 +623,9 @@ export class PowerFlowCard extends LitElement {
 
 		const showDailyAux = config.load?.show_daily_aux;
 
-		let additionalLoad = config.load?.additional_loads;
-		if (!validLoadValues.includes(additionalLoad)) {
-			additionalLoad = 0;
+		let additionalLoads = config.load?.additional_loads;
+		if (!validLoadValues.includes(additionalLoads)) {
+			additionalLoads = 0;
 		}
 
 		let additionalAuxLoad = config.load?.aux_loads;
@@ -574,25 +640,43 @@ export class PowerFlowCard extends LitElement {
 		const iconEssentialLoad2 = this.getEntity('load.load2_icon', { state: config.load?.load2_icon?.toString() ?? '' }).state;
 		const iconEssentialLoad3 = this.getEntity('load.load3_icon', { state: config.load?.load3_icon?.toString() ?? '' }).state;
 		const iconEssentialLoad4 = this.getEntity('load.load4_icon', { state: config.load?.load4_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad5 = this.getEntity('load.load5_icon', { state: config.load?.load5_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad6 = this.getEntity('load.load6_icon', { state: config.load?.load6_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad7 = this.getEntity('load.load7_icon', { state: config.load?.load7_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad8 = this.getEntity('load.load8_icon', { state: config.load?.load8_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad9 = this.getEntity('load.load9_icon', { state: config.load?.load9_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad10 = this.getEntity('load.load10_icon', { state: config.load?.load10_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad11 = this.getEntity('load.load11_icon', { state: config.load?.load11_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad12 = this.getEntity('load.load12_icon', { state: config.load?.load12_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad13 = this.getEntity('load.load13_icon', { state: config.load?.load13_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad14 = this.getEntity('load.load14_icon', { state: config.load?.load14_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad15 = this.getEntity('load.load15_icon', { state: config.load?.load15_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad16 = this.getEntity('load.load16_icon', { state: config.load?.load16_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad17 = this.getEntity('load.load17_icon', { state: config.load?.load17_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad18 = this.getEntity('load.load18_icon', { state: config.load?.load18_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad19 = this.getEntity('load.load19_icon', { state: config.load?.load19_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad20 = this.getEntity('load.load20_icon', { state: config.load?.load20_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad21 = this.getEntity('load.load21_icon', { state: config.load?.load21_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad22 = this.getEntity('load.load22_icon', { state: config.load?.load22_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad23 = this.getEntity('load.load23_icon', { state: config.load?.load23_icon?.toString() ?? '' }).state;
+		const essentialLoadCol1Icon = [
+			this.getEntity('load.load_1_1_icon', { state: config.load?.load_1_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_2_icon', { state: config.load?.load_1_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_3_icon', { state: config.load?.load_1_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_4_icon', { state: config.load?.load_1_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_5_icon', { state: config.load?.load_1_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol2Icon = [
+			this.getEntity('load.load_2_1_icon', { state: config.load?.load_2_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_2_icon', { state: config.load?.load_2_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_3_icon', { state: config.load?.load_2_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_4_icon', { state: config.load?.load_2_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_5_icon', { state: config.load?.load_2_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol3Icon = [
+			this.getEntity('load.load_3_1_icon', { state: config.load?.load_3_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_2_icon', { state: config.load?.load_3_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_3_icon', { state: config.load?.load_3_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_4_icon', { state: config.load?.load_3_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_5_icon', { state: config.load?.load_3_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol4Icon = [
+			this.getEntity('load.load_4_1_icon', { state: config.load?.load_4_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_2_icon', { state: config.load?.load_4_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_3_icon', { state: config.load?.load_4_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_4_icon', { state: config.load?.load_4_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_5_icon', { state: config.load?.load_4_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol5Icon = [
+			this.getEntity('load.load_5_1_icon', { state: config.load?.load_5_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_2_icon', { state: config.load?.load_5_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_3_icon', { state: config.load?.load_5_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_4_icon', { state: config.load?.load_5_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_5_icon', { state: config.load?.load_5_5_icon?.toString() ?? '' }).state,
+		];
+
+
 		const auxLoadIcon = [
 			this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state,
 			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
@@ -1369,7 +1453,7 @@ export class PowerFlowCard extends LitElement {
 			stateBatteryPower,
 			batteryDuration,
 			batteryCapacity,
-			additionalLoad,
+			additionalLoads,
 			essIconSize,
 			essIcon,
 			stateUseTimer,
@@ -1407,75 +1491,54 @@ export class PowerFlowCard extends LitElement {
 			stateGridCurrentL3,
 			decimalPlaces,
 			decimalPlacesEnergy,
+			//old essential load
 			stateEssentialLoad1,
 			stateEssentialLoad2,
 			stateEssentialLoad3,
 			stateEssentialLoad4,
-			stateEssentialLoad5,
-			stateEssentialLoad6,
-			stateEssentialLoad7,
-			stateEssentialLoad8,
-			stateEssentialLoad9,
-			stateEssentialLoad10,
-			stateEssentialLoad11,
-			stateEssentialLoad12,
-			stateEssentialLoad13,
-			stateEssentialLoad14,
-			stateEssentialLoad15,
-			stateEssentialLoad16,
-			stateEssentialLoad17,
-			stateEssentialLoad18,
-			stateEssentialLoad19,
-			stateEssentialLoad20,
-			stateEssentialLoad21,
-			stateEssentialLoad22,
-			stateEssentialLoad23,
 			stateEssentialLoad1Extra,
 			stateEssentialLoad2Extra,
 			stateEssentialLoad3Extra,
 			stateEssentialLoad4Extra,
-			stateEssentialLoad5Extra,
-			stateEssentialLoad6Extra,
-			stateEssentialLoad7Extra,
-			stateEssentialLoad8Extra,
-			stateEssentialLoad9Extra,
-			stateEssentialLoad10Extra,
-			stateEssentialLoad11Extra,
-			stateEssentialLoad12Extra,
-			stateEssentialLoad13Extra,
-			stateEssentialLoad14Extra,
-			stateEssentialLoad15Extra,
-			stateEssentialLoad16Extra,
-			stateEssentialLoad17Extra,
-			stateEssentialLoad18Extra,
-			stateEssentialLoad19Extra,
-			stateEssentialLoad20Extra,
-			stateEssentialLoad21Extra,
-			stateEssentialLoad22Extra,
-			stateEssentialLoad23Extra,
 			stateEssentialLoad1Toggle,
 			stateEssentialLoad2Toggle,
 			stateEssentialLoad3Toggle,
 			stateEssentialLoad4Toggle,
-			stateEssentialLoad5Toggle,
-			stateEssentialLoad6Toggle,
-			stateEssentialLoad7Toggle,
-			stateEssentialLoad8Toggle,
-			stateEssentialLoad9Toggle,
-			stateEssentialLoad10Toggle,
-			stateEssentialLoad11Toggle,
-			stateEssentialLoad12Toggle,
-			stateEssentialLoad13Toggle,
-			stateEssentialLoad14Toggle,
-			stateEssentialLoad15Toggle,
-			stateEssentialLoad16Toggle,
-			stateEssentialLoad17Toggle,
-			stateEssentialLoad18Toggle,
-			stateEssentialLoad19Toggle,
-			stateEssentialLoad20Toggle,
-			stateEssentialLoad21Toggle,
-			stateEssentialLoad22Toggle,
-			stateEssentialLoad23Toggle,
+			iconEssentialLoad1,
+			iconEssentialLoad2,
+			iconEssentialLoad3,
+			iconEssentialLoad4,
+			dynamicColourEssentialLoad1,
+			dynamicColourEssentialLoad2,
+			dynamicColourEssentialLoad3,
+			dynamicColourEssentialLoad4,
+			//new essential load
+			essentialLoadCol1State,
+			essentialLoadCol2State,
+			essentialLoadCol3State,
+			essentialLoadCol4State,
+			essentialLoadCol5State,
+			essentialLoadCol1ExtraState,
+			essentialLoadCol2ExtraState,
+			essentialLoadCol3ExtraState,
+			essentialLoadCol4ExtraState,
+			essentialLoadCol5ExtraState,
+			essentialLoadCol1ToggleState,
+			essentialLoadCol2ToggleState,
+			essentialLoadCol3ToggleState,
+			essentialLoadCol4ToggleState,
+			essentialLoadCol5ToggleState,
+			essentialLoadCol1DynamicColour,
+			essentialLoadCol2DynamicColour,
+			essentialLoadCol3DynamicColour,
+			essentialLoadCol4DynamicColour,
+			essentialLoadCol5DynamicColour,
+			essentialLoadCol1Icon,
+			essentialLoadCol2Icon,
+			essentialLoadCol3Icon,
+			essentialLoadCol4Icon,
+			essentialLoadCol5Icon,
+
 			gridShowDailyBuy,
 			gridShowDailySell,
 			batteryShowDaily,
@@ -1532,29 +1595,6 @@ export class PowerFlowCard extends LitElement {
 			statePrepaidUnits,
 			stateDCTransformerTemp,
 			stateInverterLoadPercentage,
-			iconEssentialLoad1,
-			iconEssentialLoad2,
-			iconEssentialLoad3,
-			iconEssentialLoad4,
-			iconEssentialLoad5,
-			iconEssentialLoad6,
-			iconEssentialLoad7,
-			iconEssentialLoad8,
-			iconEssentialLoad9,
-			iconEssentialLoad10,
-			iconEssentialLoad11,
-			iconEssentialLoad12,
-			iconEssentialLoad13,
-			iconEssentialLoad14,
-			iconEssentialLoad15,
-			iconEssentialLoad16,
-			iconEssentialLoad17,
-			iconEssentialLoad18,
-			iconEssentialLoad19,
-			iconEssentialLoad20,
-			iconEssentialLoad21,
-			iconEssentialLoad22,
-			iconEssentialLoad23,
 			enableTimer,
 			stateSolarSell,
 			priorityLoad,
@@ -1632,29 +1672,6 @@ export class PowerFlowCard extends LitElement {
 			flowColour,
 			flowBatColour,
 			flowInvColour,
-			dynamicColourEssentialLoad1,
-			dynamicColourEssentialLoad2,
-			dynamicColourEssentialLoad3,
-			dynamicColourEssentialLoad4,
-			dynamicColourEssentialLoad5,
-			dynamicColourEssentialLoad6,
-			dynamicColourEssentialLoad7,
-			dynamicColourEssentialLoad8,
-			dynamicColourEssentialLoad9,
-			dynamicColourEssentialLoad10,
-			dynamicColourEssentialLoad11,
-			dynamicColourEssentialLoad12,
-			dynamicColourEssentialLoad13,
-			dynamicColourEssentialLoad14,
-			dynamicColourEssentialLoad15,
-			dynamicColourEssentialLoad16,
-			dynamicColourEssentialLoad17,
-			dynamicColourEssentialLoad18,
-			dynamicColourEssentialLoad19,
-			dynamicColourEssentialLoad20,
-			dynamicColourEssentialLoad21,
-			dynamicColourEssentialLoad22,
-			dynamicColourEssentialLoad23,
 			stateBatteryRemainingStorage,
 			stateBatterySOH,
 			customGridIcon,
@@ -1676,13 +1693,13 @@ export class PowerFlowCard extends LitElement {
 		return result;
 	}
 
-
 	private getNowTime(): string {
 		const currentTime = new Date();
 		const formattedHours = currentTime.getHours().toString().padStart(2, '0');
 		const formattedMinutes = currentTime.getMinutes().toString().padStart(2, '0');
 		const formattedSeconds = currentTime.getSeconds().toString().padStart(2, '0');
-		return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+		const formattedMilliSeconds = currentTime.getMilliseconds().toString().padStart(2, '0');
+		return `${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedMilliSeconds}`;
 	}
 
 	private batteryColour(batteryPower: number, isFloating: boolean, batteryChargeColour: string, batteryColourConfig: string) {
@@ -1702,25 +1719,11 @@ export class PowerFlowCard extends LitElement {
 	 * @param entity
 	 * @param defaultValue
 	 */
-	getEntity(entity: keyof PowerFlowCardConfig,
-	          defaultValue: Partial<CustomEntity> | null = {
-		          state: '0', attributes: { unit_of_measurement: '' },
-	          }): CustomEntity {
-		const props = String(entity).split('.');
-
-		let entityString: string;
-		if (props.length > 1) {
-			entityString = this._config[props[0]][props[1]];
-		} else if (props.length > 0) {
-			entityString = this._config[props[0]];
-		} else {
-			entityString = '';
-		}
-
-		const state = entityString ? this.hass.states[entityString] : undefined;
-		return (state !== undefined ? convertToCustomEntity(state)
-			: defaultValue ? convertToCustomEntity(defaultValue)
-				: convertToCustomEntity({ state: undefined })) as CustomEntity;
+	private getEntity(entity: keyof PowerFlowCardConfig,
+	                  defaultValue: Partial<CustomEntity> | null = {
+		                  state: '0', attributes: { unit_of_measurement: '' },
+	                  }): CustomEntity {
+		return getEntity(this._config, this.hass, entity, defaultValue);
 	}
 
 	changeAnimationSpeed(el: string, speedRaw: number) {
@@ -1736,11 +1739,11 @@ export class PowerFlowCard extends LitElement {
 		this.durationPrev[el] = this.durationCur[el];
 	}
 
-	colourConvert(colour: string) {
+	private colourConvert(colour: string) {
 		return colour && Array.isArray(colour) ? `rgb(${colour})` : colour;
 	}
 
-	dynamicLineWidth(power: number, maxPower: number, width: number, defaultLineWidth: number = 1) {
+	private dynamicLineWidth(power: number, maxPower: number, width: number, defaultLineWidth: number = 1) {
 		let lineWidth: number;
 		// Check if dynamic_line_width is disabled in the config
 		if (!this._config.dynamic_line_width) {
@@ -1752,7 +1755,7 @@ export class PowerFlowCard extends LitElement {
 		return lineWidth;
 	}
 
-	calculateAuxLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
+	private calculateAuxLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
 		let colour = this.colourConvert(this._config.load?.aux_colour);
 		return !this._config.load.aux_dynamic_colour
 			? colour
@@ -1763,7 +1766,7 @@ export class PowerFlowCard extends LitElement {
 			);
 	}
 
-	calculateEssentialLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
+	private calculateEssentialLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
 		let colour = this.colourConvert(this._config.load?.colour);
 		return !this._config.load.dynamic_colour
 			? colour
@@ -1861,4 +1864,5 @@ export class PowerFlowCard extends LitElement {
 	preview: true,
 	description: localize('common.description'),
 	configurable: true,
+	element: PowerFlowCard,
 });

@@ -45,6 +45,14 @@ export enum BatteryBanksViewMode {
 	outer = 'Outside view'
 }
 
+export enum AdditionalLoadsViewMode {
+	none = 'none',
+	old = 'Minimal view (4 loads)',
+	col2 = 'Column 1-2',
+	col3 = 'Column 1-3',
+	col4 = 'Column 1-4',
+	col5 = 'Column 1-5',
+}
 
 export interface RefreshCardConfig extends LovelaceCardConfig {
 	refresh_time?: string;
@@ -52,6 +60,7 @@ export interface RefreshCardConfig extends LovelaceCardConfig {
 
 export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	type: string;
+	schema_version: number;
 	dev_mode: boolean;
 	refresh_time?: string;
 	panel_mode?: boolean;
@@ -157,16 +166,79 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		aux_colour: string;
 		aux_off_colour: string;
 		off_threshold: number;
-		additional_loads: number;
 		aux_loads: number;
 		aux_load1_name: string;
 		aux_load2_name: string;
 		aux_load3_name: string;
 		aux_load4_name: string;
+		aux_load5_name: string;
 		aux_load1_icon: string;
 		aux_load2_icon: string;
 		aux_load3_icon: string;
 		aux_load4_icon: string;
+		aux_load5_icon: string;
+		additional_loads: number;
+		additional_loads_view_mode: AdditionalLoadsViewMode;
+
+		load_1_1_name: string;
+		load_1_2_name: string;
+		load_1_3_name: string;
+		load_1_4_name: string;
+		load_1_5_name: string;
+		load_2_1_name: string;
+		load_2_2_name: string;
+		load_2_3_name: string;
+		load_2_4_name: string;
+		load_2_5_name: string;
+		load_3_1_name: string;
+		load_3_2_name: string;
+		load_3_3_name: string;
+		load_3_4_name: string;
+		load_3_5_name: string;
+		load_4_1_name: string;
+		load_4_2_name: string;
+		load_4_3_name: string;
+		load_4_4_name: string;
+		load_4_5_name: string;
+		load_5_1_name: string;
+		load_5_2_name: string;
+		load_5_3_name: string;
+		load_5_4_name: string;
+		load_5_5_name: string;
+
+		load_1_1_icon: string;
+		load_1_2_icon: string;
+		load_1_3_icon: string;
+		load_1_4_icon: string;
+		load_1_5_icon: string;
+		load_2_1_icon: string;
+		load_2_2_icon: string;
+		load_2_3_icon: string;
+		load_2_4_icon: string;
+		load_2_5_icon: string;
+		load_3_1_icon: string;
+		load_3_2_icon: string;
+		load_3_3_icon: string;
+		load_3_4_icon: string;
+		load_3_5_icon: string;
+		load_4_1_icon: string;
+		load_4_2_icon: string;
+		load_4_3_icon: string;
+		load_4_4_icon: string;
+		load_4_5_icon: string;
+		load_5_1_icon: string;
+		load_5_2_icon: string;
+		load_5_3_icon: string;
+		load_5_4_icon: string;
+		load_5_5_icon: string;
+
+		show_aux: boolean;
+		show_daily_aux: boolean;
+		auto_scale: boolean;
+		essential_name: string,
+		path_threshold: number,
+
+		//deprecated
 		load1_name: string;
 		load2_name: string;
 		load3_name: string;
@@ -213,11 +285,6 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		load21_icon: string;
 		load22_icon: string;
 		load23_icon: string;
-		show_aux: boolean;
-		show_daily_aux: boolean;
-		auto_scale: boolean;
-		essential_name: string,
-		path_threshold: number,
 	}
 	grid: {
 		colour: string;
@@ -345,7 +412,7 @@ export interface InverterSettings {
 
 export interface DataDto {
 	config: PowerFlowCardConfig,
-	refreshTime: string,
+	refreshTime: String,
 	panelMode?: boolean,
 	compactMode,
 	cardHeight,
@@ -375,7 +442,6 @@ export interface DataDto {
 	batteryBankEnergy: number[],
 	batteryBatteryBankColour: string[],
 	maximumSOC,
-	additionalLoad,
 	essIconSize,
 	essIcon: string,
 	batteryStateMsg,
@@ -436,29 +502,57 @@ export interface DataDto {
 	gridLineWidth,
 	batteryStateColour: string,
 	inverterStateColour: string,
-	iconEssentialLoad1: string,
-	iconEssentialLoad2: string,
-	iconEssentialLoad3: string,
-	iconEssentialLoad4: string,
-	iconEssentialLoad5: string,
-	iconEssentialLoad6: string,
-	iconEssentialLoad7: string,
-	iconEssentialLoad8: string,
-	iconEssentialLoad9: string,
-	iconEssentialLoad10: string,
-	iconEssentialLoad11: string,
-	iconEssentialLoad12: string,
-	iconEssentialLoad13: string,
-	iconEssentialLoad14: string,
-	iconEssentialLoad15: string,
-	iconEssentialLoad16: string,
-	iconEssentialLoad17: string,
-	iconEssentialLoad18: string,
-	iconEssentialLoad19: string,
-	iconEssentialLoad20: string,
-	iconEssentialLoad21: string,
-	iconEssentialLoad22: string,
-	iconEssentialLoad23: string,
+
+	//old essential loads
+	stateEssentialLoad1,
+	stateEssentialLoad2,
+	stateEssentialLoad3,
+	stateEssentialLoad4,
+	stateEssentialLoad1Extra,
+	stateEssentialLoad2Extra,
+	stateEssentialLoad3Extra,
+	stateEssentialLoad4Extra,
+	stateEssentialLoad1Toggle,
+	stateEssentialLoad2Toggle,
+	stateEssentialLoad3Toggle,
+	stateEssentialLoad4Toggle,
+	iconEssentialLoad1,
+	iconEssentialLoad2,
+	iconEssentialLoad3,
+	iconEssentialLoad4,
+	dynamicColourEssentialLoad1,
+	dynamicColourEssentialLoad2,
+	dynamicColourEssentialLoad3,
+	dynamicColourEssentialLoad4,
+
+	//new essential loads
+	additionalLoads: number,
+	essentialLoadCol1Icon: string[],
+	essentialLoadCol1State: CustomEntity[],
+	essentialLoadCol1ExtraState: CustomEntity[],
+	essentialLoadCol1ToggleState: CustomEntity[],
+	essentialLoadCol1DynamicColour: string[],
+	essentialLoadCol2Icon: string[],
+	essentialLoadCol2State: CustomEntity[],
+	essentialLoadCol2ExtraState: CustomEntity[],
+	essentialLoadCol2ToggleState: CustomEntity[],
+	essentialLoadCol2DynamicColour: string[],
+	essentialLoadCol3Icon: string[],
+	essentialLoadCol3State: CustomEntity[],
+	essentialLoadCol3ExtraState: CustomEntity[],
+	essentialLoadCol3ToggleState: CustomEntity[],
+	essentialLoadCol3DynamicColour: string[],
+	essentialLoadCol4Icon: string[],
+	essentialLoadCol4State: CustomEntity[],
+	essentialLoadCol4ExtraState: CustomEntity[],
+	essentialLoadCol4ToggleState: CustomEntity[],
+	essentialLoadCol4DynamicColour: string[],
+	essentialLoadCol5Icon: string[],
+	essentialLoadCol5State: CustomEntity[],
+	essentialLoadCol5ExtraState: CustomEntity[],
+	essentialLoadCol5ToggleState: CustomEntity[],
+	essentialLoadCol5DynamicColour: string[],
+
 	enableTimer,
 	priorityLoad,
 	inverterImg,
@@ -502,75 +596,6 @@ export interface DataDto {
 	stateBatterySoc: CustomEntity,
 	stateEnergyCostSell: CustomEntity,
 	stateEnergyCostBuy: CustomEntity,
-	stateEssentialLoad1: CustomEntity,
-	stateEssentialLoad2: CustomEntity,
-	stateEssentialLoad3: CustomEntity,
-	stateEssentialLoad4: CustomEntity,
-	stateEssentialLoad5: CustomEntity,
-	stateEssentialLoad6: CustomEntity,
-	stateEssentialLoad7: CustomEntity,
-	stateEssentialLoad8: CustomEntity,
-	stateEssentialLoad9: CustomEntity,
-	stateEssentialLoad10: CustomEntity,
-	stateEssentialLoad11: CustomEntity,
-	stateEssentialLoad12: CustomEntity,
-	stateEssentialLoad13: CustomEntity,
-	stateEssentialLoad14: CustomEntity,
-	stateEssentialLoad15: CustomEntity,
-	stateEssentialLoad16: CustomEntity,
-	stateEssentialLoad17: CustomEntity,
-	stateEssentialLoad18: CustomEntity,
-	stateEssentialLoad19: CustomEntity,
-	stateEssentialLoad20: CustomEntity,
-	stateEssentialLoad21: CustomEntity,
-	stateEssentialLoad22: CustomEntity,
-	stateEssentialLoad23: CustomEntity,
-	stateEssentialLoad1Extra: CustomEntity,
-	stateEssentialLoad2Extra: CustomEntity,
-	stateEssentialLoad3Extra: CustomEntity,
-	stateEssentialLoad4Extra: CustomEntity,
-	stateEssentialLoad5Extra: CustomEntity,
-	stateEssentialLoad6Extra: CustomEntity,
-	stateEssentialLoad7Extra: CustomEntity,
-	stateEssentialLoad8Extra: CustomEntity,
-	stateEssentialLoad9Extra: CustomEntity,
-	stateEssentialLoad10Extra: CustomEntity,
-	stateEssentialLoad11Extra: CustomEntity,
-	stateEssentialLoad12Extra: CustomEntity,
-	stateEssentialLoad13Extra: CustomEntity,
-	stateEssentialLoad14Extra: CustomEntity,
-	stateEssentialLoad15Extra: CustomEntity,
-	stateEssentialLoad16Extra: CustomEntity,
-	stateEssentialLoad17Extra: CustomEntity,
-	stateEssentialLoad18Extra: CustomEntity,
-	stateEssentialLoad19Extra: CustomEntity,
-	stateEssentialLoad20Extra: CustomEntity,
-	stateEssentialLoad21Extra: CustomEntity,
-	stateEssentialLoad22Extra: CustomEntity,
-	stateEssentialLoad23Extra: CustomEntity,
-	stateEssentialLoad1Toggle: CustomEntity,
-	stateEssentialLoad2Toggle: CustomEntity,
-	stateEssentialLoad3Toggle: CustomEntity,
-	stateEssentialLoad4Toggle: CustomEntity,
-	stateEssentialLoad5Toggle: CustomEntity,
-	stateEssentialLoad6Toggle: CustomEntity,
-	stateEssentialLoad7Toggle: CustomEntity,
-	stateEssentialLoad8Toggle: CustomEntity,
-	stateEssentialLoad9Toggle: CustomEntity,
-	stateEssentialLoad10Toggle: CustomEntity,
-	stateEssentialLoad11Toggle: CustomEntity,
-	stateEssentialLoad12Toggle: CustomEntity,
-	stateEssentialLoad13Toggle: CustomEntity,
-	stateEssentialLoad14Toggle: CustomEntity,
-	stateEssentialLoad15Toggle: CustomEntity,
-	stateEssentialLoad16Toggle: CustomEntity,
-	stateEssentialLoad17Toggle: CustomEntity,
-	stateEssentialLoad18Toggle: CustomEntity,
-	stateEssentialLoad19Toggle: CustomEntity,
-	stateEssentialLoad20Toggle: CustomEntity,
-	stateEssentialLoad21Toggle: CustomEntity,
-	stateEssentialLoad22Toggle: CustomEntity,
-	stateEssentialLoad23Toggle: CustomEntity,
 	stateRadiatorTemp: CustomEntity,
 	stateBatteryCurrent: CustomEntity,
 	stateEnvironmentTemp: CustomEntity,
@@ -626,29 +651,6 @@ export interface DataDto {
 	flowColour: string,
 	flowBatColour: string,
 	flowInvColour: string,
-	dynamicColourEssentialLoad1: string,
-	dynamicColourEssentialLoad2: string,
-	dynamicColourEssentialLoad3: string,
-	dynamicColourEssentialLoad4: string,
-	dynamicColourEssentialLoad5: string,
-	dynamicColourEssentialLoad6: string,
-	dynamicColourEssentialLoad7: string,
-	dynamicColourEssentialLoad8: string,
-	dynamicColourEssentialLoad9: string,
-	dynamicColourEssentialLoad10: string,
-	dynamicColourEssentialLoad11: string,
-	dynamicColourEssentialLoad12: string,
-	dynamicColourEssentialLoad13: string,
-	dynamicColourEssentialLoad14: string,
-	dynamicColourEssentialLoad15: string,
-	dynamicColourEssentialLoad16: string,
-	dynamicColourEssentialLoad17: string,
-	dynamicColourEssentialLoad18: string,
-	dynamicColourEssentialLoad19: string,
-	dynamicColourEssentialLoad20: string,
-	dynamicColourEssentialLoad21: string,
-	dynamicColourEssentialLoad22: string,
-	dynamicColourEssentialLoad23: string,
 	stateBatteryRemainingStorage: CustomEntity,
 	stateBatterySOH: CustomEntity,
 	customGridIcon: string,

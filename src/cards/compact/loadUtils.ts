@@ -31,6 +31,16 @@ export class LoadUtils {
 			</foreignObject>`;
 	}
 
+	static getIconWithStyle(x: number, y: number, icon: string, color: string, size = 30, icon_size= 20) {
+		return svg`
+			<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
+				<body xmlns="http://www.w3.org/1999/xhtml">
+				<div style="position: fixed; ">
+					<ha-icon icon="${icon}" style="color: ${color} !important; --mdc-icon-size: ${icon_size}px;"></ha-icon>
+				</div>
+				</body>
+			</foreignObject>`;
+	}
 	static getIconLink(entity: string, icon: TemplateResult<2>) {
 		return svg`
 		${entity
@@ -87,8 +97,7 @@ export class LoadUtils {
 			</a>`;
 	}
 
-
-	static generateEssentialLoad(
+	static generateEssentialLoadInternal(
 		id: number, icon: string,
 		color: string, name: string,
 		power: CustomEntity, energy: CustomEntity, toggle: CustomEntity,
@@ -97,7 +106,7 @@ export class LoadUtils {
 	) {
 		const icon_link = LoadUtils.getIconLink(
 			toggle.entity_id,
-			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `essload${id}_small-icon`),
+			LoadUtils.getIconWithStyle(mainX + xGaps[0], mainY, icon, color),
 		);
 
 		return svg`
@@ -111,6 +120,21 @@ export class LoadUtils {
 				)}`;
 	}
 
+	static generateEssentialLoad(
+		ID: number, icon: string[],
+		color: string[], name: string[],
+		power: CustomEntity[], energy: CustomEntity[], toggle: CustomEntity[],
+		loadAutoScale: boolean, decimalPlaces: number,
+		column: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
+	) {
+		const id = ID-1;
+		return LoadUtils.generateEssentialLoadInternal(
+			ID, icon[id], color[id], name[id],
+			power[id], energy[id], toggle[id],
+			loadAutoScale, decimalPlaces,
+			column, mainY, xGaps, yGaps
+		);
+	}
 
 	static generateGridLoad(
 		id: number, icon: string,

@@ -1,6 +1,8 @@
 import { HassEntity } from 'home-assistant-js-websocket/dist/types';
 import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfEnergy, UnitOfPower } from '../../const';
+import { PowerFlowCardConfig } from '../../types';
+import { HomeAssistant } from 'custom-card-helpers';
 
 /**
  * CustomEntity interface represents a custom entity in Home Assistant.
@@ -101,4 +103,27 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 		toOnOff: () => ['on', 'On', 'ON', 1, true].includes(entity.state) ? 'on' : 'off',
 		getUOM: () => entity?.attributes?.unit_of_measurement || '',
 	};
+}
+
+export function getEntity(config: PowerFlowCardConfig,
+	hass: HomeAssistant,
+	entity: keyof PowerFlowCardConfig,
+	defaultValue: Partial<CustomEntity> | null = {
+	state: '0', attributes: { unit_of_measurement: '' },
+}): CustomEntity {
+	const props = String(entity).split('.');
+
+	let entityString: string;
+	if (props.length > 1) {
+		entityString = config[props[0]][props[1]];
+	} else if (props.length > 0) {
+		entityString = config[props[0]];
+	} else {
+		entityString = '';
+	}
+
+	const state = entityString ? hass.states[entityString] : undefined;
+	return (state !== undefined ? convertToCustomEntity(state)
+		: defaultValue ? convertToCustomEntity(defaultValue)
+			: convertToCustomEntity({ state: undefined })) as CustomEntity;
 }

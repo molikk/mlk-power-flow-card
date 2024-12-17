@@ -1,9 +1,10 @@
 import { localize } from "./localize/localize";
-import { BatteryBanksViewMode, InverterModel } from './types';
+import { AdditionalLoadsViewMode, BatteryBanksViewMode, InverterModel } from './types';
 
 
 export default {
-    panel_mode: false,
+    schema_version: 1,
+	panel_mode: false,
 	dev_mode: false,
     large_font: false,
     show_solar: true,
@@ -65,6 +66,7 @@ export default {
 	    navigate:'',
     },
     load: {
+	    additional_loads_view_mode: AdditionalLoadsViewMode.none,
         colour: '#5fb6ad',
         dynamic_colour: true,
         dynamic_icon: true,
