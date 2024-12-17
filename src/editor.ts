@@ -1240,6 +1240,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												type: 'grid',
 												schema: [
 													{ name: 'show_nonessential', selector: { boolean: {} } },
+													{ name: 'ness_invert_flow', selector: { boolean: {} } },
 													{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
 													{ name: 'nonessential_name', selector: { text: {} } },
 													{ name: 'nonessential_icon', selector: { icon: {} } },

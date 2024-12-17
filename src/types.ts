@@ -307,6 +307,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		show_nonessential: boolean;
 		nonessential_icon: string;
 		nonessential_name: string;
+		ness_invert_flow: boolean;
 		additional_loads: number;
 		load1_name: string;
 		load1_icon: string;

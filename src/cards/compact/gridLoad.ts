@@ -174,7 +174,7 @@ export class GridLoad {
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints="1;0"
+								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#nes-line1"/>
 					</animateMotion>
@@ -187,7 +187,7 @@ export class GridLoad {
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints="1;0"
+								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#nes-line2"/>
 					</animateMotion>
