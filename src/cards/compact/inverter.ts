@@ -161,7 +161,7 @@ export class Inverter {
 		`;
 	}
 
-	static buildGradientStops(lvl: number) {
+	static buildGradientSteps(lvl: number) {
 		let result = svg`<stop offset="0%" stop-color="green" />`;
 		if (lvl < 2) {
 			result = svg`${result}<stop offset="2%" stop-color="green" /><stop offset="2%" stop-opacity="0" />`;
@@ -213,7 +213,7 @@ export class Inverter {
 					preserveAspectRatio="none" >
 						<defs>
 							<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
-						      ${this.buildGradientStops(data.stateInverterLoadPercentage.toNum(0))}
+						      ${this.buildGradientSteps(data.stateInverterLoadPercentage.toNum(0))}
 							</linearGradient>
 						</defs>
 						<rect x="1" y="1" width="50" height="65" rx="5" ry="5" stroke="url(#invG)" fill="none" stroke-width="3" 
@@ -223,6 +223,9 @@ export class Inverter {
 		switch (inverterModel) {
 			case InverterModel.Azzurro:
 				X = [213.5, 179.5, 51, 67, 3];
+				break;
+			case InverterModel.Sungrow:
+				X = [213.5, 179.5, 51, 69, 5];
 				break;
 			case InverterModel.Fronius:
 				X = [213.5, 179.5, 51, 73, 10];
@@ -239,7 +242,7 @@ export class Inverter {
 				preserveAspectRatio="none" >
 				<defs>
 					<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
-				      ${this.buildGradientStops(data.stateInverterLoadPercentage.toNum(0))}
+				      ${this.buildGradientSteps(data.stateInverterLoadPercentage.toNum(0))}
 					</linearGradient>
 				</defs>
 				<rect x="1" y="1" width="${X[2] - 2}" height="${X[3] - 2}" rx="${X[4]}" ry="${X[4]}" stroke="url(#invG)" fill="none" stroke-width="3" 
@@ -269,6 +272,9 @@ export class Inverter {
 		switch (inverterModel) {
 			case InverterModel.Azzurro:
 				X = [235, 222, 7, 6, 239, 240];
+				break;
+			case InverterModel.Sungrow:
+				X = [237, 196, 4, 6, 239, 240];
 				break;
 			case InverterModel.Deye:
 				X = [233.5, 205.5, 12, 6, 239, 225];
