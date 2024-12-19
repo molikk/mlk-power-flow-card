@@ -48,11 +48,11 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	let cardWidth = data.panelMode === true ? data.cardWidth : '100%';
 
 	function gridXTransform() {
-		return config.align_grid ? calculated_minX - minX : 0;
+		return config.align_grid || config.wide_view_mode ? calculated_minX - minX : 0;
 	}
 
 	function loadXTransform() {
-		return config.align_load ? width - calculated_width : 0;
+		return config.align_load || config.wide_view_mode ? width - calculated_width : 0;
 	}
 
 	function mainXTransform() {
@@ -82,7 +82,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	                            ${Grid.generateShapeAndName(data, config)}
 	                            ${Grid.generateDailyImport(data, config)}
 	                            ${Grid.generateDailyExport(data, config)}
-	                            ${Grid.generateFlowLines(data, config, gridXTransform()+mainXTransform())}
+	                            ${Grid.generateFlowLines(data, config, gridXTransform() + mainXTransform())}
 	                            ${Grid.generateIcon(data, config)}
 	                            ${Grid.generateEnergyCost(data, config)}
 	                            ${Grid.generatePhases(data, config)}
@@ -209,7 +209,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 							}
 
 							${Load.generateShapeAndName(data, config)}
-							${Load.generateFlowLines(data, config, loadXTransform()-mainXTransform())}
+							${Load.generateFlowLines(data, config, loadXTransform() - mainXTransform())}
 							${Load.generateIcon(data, config)}
 							${Load.generatePowers(data, config)}
 							${Load.generateTotalLoad(data, config)}
