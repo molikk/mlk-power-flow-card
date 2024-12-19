@@ -14,33 +14,35 @@ See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/i
 
 ## Features
 
-* Animated power flow based on positive/negative/zero sensor values with configurable dynamic speed. (Supports inverted battery, AUX and grid power).
-* Dynamic battery image based on SOC.
+* Animated power flow based on positive/negative/zero sensor values with configurable dynamic speed.
 * Grid connected status.
+* Dynamic battery image based on SOC with battery banks detailed info
 * Configurable battery size and shutdown SOC to calculate and display remaining battery runtime based on current battery usage and system time slot setting i.e. SOC, Grid Charge. Can be toggled off.
 * Daily Totals that can be toggled on or off.
-* Hide all solar data if not installed or specify number of mppts in use. Set custom MPPT labels.
-* "Use Timer" setting and "Energy Pattern" setting (Priority Load or Priority Battery) shown as dynamic icons, with the ability to hide if not required. If setup as switches can be toggled by clicking on the card.
-* Panel mode for bigger card.
+* Hide all solar data if not installed or specify number of mppts in use (up to 5 MPPTs). Set custom MPPT labels.
+* Panel mode & wide view mode for bigger card.
 * AUX and Non-essential can be hidden from the full card or assigned configurable labels.
 * Customisable - Change colours and images.
 * Most entities can be clicked to show more-info dialog.
 * Optional data points include self-sufficiency and ratio percentages, battery temperature, AC and DC temperature.
-* Display additional non-essential, essential and AUX loads.
+* Display additional grid/non-essential (up to 6 items), essential (up to 23 items) and AUX loads (up to 5 items).
 * Display energy cost per kWh and solar sell status.
-* Select your inverter model for custom inverter status and battery status messages i.e. Sunsynk, Lux, Goodwe, Solis.
+* Select your inverter model for custom inverter status and battery status messages i.e. Sunsynk, Lux, Goodwe, Solis, Easun.
+* "Use Timer" setting and "Energy Pattern" setting (Priority Load or Priority Battery) shown as dynamic icons, with the ability to hide if not required. If setup as switches can be toggled by clicking on the card.
 
 ## Screenshots
-
+### non solar view
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/25d458f7-9137-442e-a2c0-85e179ee07d0)
-
+### non battery view
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/3cfcff4b-a609-41b6-9da1-eea63ff44c2d)
-
+### offgrid view (no grid view)
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/a269a066-f8e1-41a7-af1f-1411d89cd438)
-
+### Detailed solar production up to 5 MPPTs with solar production & prediction
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/256c43de-4062-48f9-b0b4-f9cb0153d71f)
-
-![image](https://github.com/user-attachments/assets/902fce6f-666a-4027-97e3-2b58703efa76)
+### Fully detailed view with grid/non-essential, aux & essential Loads and battery bank details
+![image](https://github.com/user-attachments/assets/20c7f756-c307-4793-8a36-41f96b65efa7)
+### Wide view mode
+![image](https://github.com/user-attachments/assets/f44e14ac-84ec-4e0a-84d0-ef352f994064)
 
 ## Installation
 
