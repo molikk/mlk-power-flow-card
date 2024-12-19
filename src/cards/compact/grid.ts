@@ -81,17 +81,20 @@ export class Grid {
 		`;
 	}
 
-	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
+	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig, xTransform: number) {
 		let keyPoints = data.totalGridPower > 0 ? '0;1' : '1;0';
 		keyPoints = config.grid.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
+
+		const lineEnd = 215 + xTransform;
+		const animationDuration = (lineEnd - 175) / (215 - 175) * data.durationCur['grid'];
 		return svg`
 			<svg id="grid-flow">
-				<path id="grid-line" d="M 175 218 L 215 218" fill="none" stroke="${data.gridColour}"
+				<path id="grid-line" d="M 175 218 L ${lineEnd} 218" fill="none" stroke="${data.gridColour}"
 					  stroke-width="${data.gridLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				<circle id="grid-dot" cx="0" cy="0"
 						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
-					<animateMotion dur="${data.durationCur['grid']}s" repeatCount="indefinite"
+					<animateMotion dur="${animationDuration}s" repeatCount="indefinite"
 								   keyPoints="${keyPoints}"
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#grid-line"/>

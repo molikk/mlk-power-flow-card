@@ -22,28 +22,33 @@ export class AuxLoad {
 		`;
 	}
 
-	static generateLines(data: DataDto, config: PowerFlowCardConfig) {
+	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig, xTransform: number, mainXTransform: number) {
 		let lineWidth = data.auxLineWidth;
 		let keyPoints = data.auxPower > 0 ? '0;1' : '1;0';
 		keyPoints = config.load.aux_invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
+
 		const x = 400 + (Load.LOAD_X - 400) / 2 - 101.3;
+		const lineBegin = 260+mainXTransform;
+		const lineEnd = x + xTransform;
+		const animationSpeed = (lineEnd - lineBegin) / (x - 260) * data.durationCur['aux'];
+
 		return svg`
 			<svg id="aux-flow">
-				<path id="aux-line1" d="M 260 190 L 260 180 Q 260 153 287 153 L ${x} 153"
+				<path id="aux-line1" d="M ${lineBegin} 190 L ${lineBegin} 180 Q ${lineBegin} 153 ${lineBegin+27} 153 L ${lineEnd} 153"
 					  fill="none" stroke="${data.auxLoadMainDynamicColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
 				<circle id="aux-dot1" cx="0" cy="0"
 						r="${Math.min(2 + lineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${Math.round(data.auxPower) == 0 ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
-					<animateMotion dur="${data.durationCur['aux']}s" repeatCount="indefinite"
+					<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
 								   keyPoints=${keyPoints}
 								   keyTimes="0;1" 
 								   calcMode="linear">
 						<mpath href='#aux-line1'/>
 					</animateMotion>
 				</circle>
-				<path id="aux-line2" d="M ${x + 70} 153 L ${x + 70 } 153 Q ${x + 70 + 27} 153 ${x + 70 + 27} 126 L ${x + 70 +  27} 46 Q ${x + 70 + 27} 39 ${x + 70 + 27 + 5} 39 L ${Load.column1 + Load.xGaps[1]} 39 "
+				<path id="aux-line2" d="M ${lineEnd + 70} 153 L ${lineEnd + 70} 153 Q ${lineEnd + 70 + 27} 153 ${lineEnd + 70 + 27} 126 L ${lineEnd + 70 + 27} 46 Q ${lineEnd + 70 + 27} 39 ${lineEnd + 70 + 27 + 5} 39 L ${lineEnd - x + Load.column1 + Load.xGaps[1]} 39 "
 					  fill="none" stroke="${data.auxLoadMainDynamicColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
@@ -77,12 +82,12 @@ export class AuxLoad {
 		}`;
 	}
 
-	static auxLoadName(config: PowerFlowCardConfig){
+	static auxLoadName(config: PowerFlowCardConfig) {
 		return [
 			config.load?.aux_load1_name,
 			config.load?.aux_load2_name,
 			config.load?.aux_load3_name,
-			config.load?.aux_load4_name
+			config.load?.aux_load4_name,
 		];
 	}
 
