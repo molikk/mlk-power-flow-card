@@ -19,7 +19,7 @@ export class Load {
 	public static readonly column3: number = Load.column2 + 43 + Load.GAP / 2;
 	public static readonly column4: number = Load.column3 + 43 + Load.GAP / 2;
 	public static readonly column5: number = Load.column4 + 43 + Load.GAP / 2;
-	public static readonly columns: number[] = [ Load.column1,  Load.column2,  Load.column3,  Load.column4, Load.column5]
+	public static readonly columns: number[] = [Load.column1, Load.column2, Load.column3, Load.column4, Load.column5];
 	public static readonly yGaps = [26, 55, 37, 67]; //shape, name, power, energy
 	public static readonly xGaps = [53, 43, 63.5]; //icon, shape, names
 
@@ -41,7 +41,7 @@ export class Load {
 		`;
 	}
 
-	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
+	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig, xTransform: number) {
 		const startX = 264.7;
 		const gap = 70;
 		const width = this.LOAD_X + 3 - startX - gap;
@@ -50,34 +50,41 @@ export class Load {
 		const start2 = stop1 + gap;
 		const stop2 = start2 + width / 2;
 
-		const line1 = `M ${start1} 218.5 L ${stop1} 218.5`;
+		const line1 = `M ${start1 - xTransform} 218.5 L ${stop1} 218.5`;
 		const line2 = `M ${start2} 218.5 L ${stop2} 218.5`;
-		return svg`
-			 <svg id="load-flow">
-				<path id="es-line" d="${line1}" fill="none" stroke="${config.load.dynamic_colour ? data.flowColour : data.loadColour}"
-					  stroke-width="${data.loadLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
+
+		const animationSpeed = (stop1 - (start1 - xTransform)) / (stop1 - start1) * data.durationCur['load'];
+		let circleMotion = svg`
+				<circle id="es-dot" cx="0" cy="0"
+						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
+						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
+					<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
+								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
+								   keyTimes="0;1" calcMode="linear">
+						<mpath xlink:href="#es-line"/>
+					</animateMotion>
+				</circle>`;
+		let circle1Motion = svg`
 				<circle id="es-dot" cx="0" cy="0"
 						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
 					<animateMotion dur="${data.durationCur['load']}s" repeatCount="indefinite"
-								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints("0;1") : "0;1"}
+								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
 								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#es-line"/>
+						<mpath xlink:href="#es-line1"/>
 					</animateMotion>
-				</circle>
+				</circle>`;
+
+		return svg `
+			 <svg id="load-flow">
+				<path id="es-line" d="${line1}" fill="none" stroke="${config.load.dynamic_colour ? data.flowColour : data.loadColour}"
+					  stroke-width="${data.loadLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
+				${circleMotion}
 			</svg>
 			<svg id="load-flow1">
 				<path id="es-line1" d="${line2}" fill="none" stroke="${config.load.dynamic_colour ? data.flowColour : data.loadColour}"
 					  stroke-width="${data.loadLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
-				<circle id="es-dot" cx="0" cy="0"
-						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
-					<animateMotion dur="${data.durationCur['load']}s" repeatCount="indefinite"
-								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints("0;1") : "0;1"}
-								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#es-line1"/>
-					</animateMotion>
-				</circle>
+				${circle1Motion}
 			</svg>
 	`;
 	}
@@ -162,10 +169,10 @@ export class Load {
 					  d="${data.essIcon}"/>
 			</svg>
 		`;
-		return config.load?.navigate?
-			svg `<a href="#" @click=${(e) => Utils.handleNavigation(e, config.load.navigate)}>
+		return config.load?.navigate ?
+			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.load.navigate)}>
 					${grid}
 				</a>`
-				: grid;
+			: grid;
 	}
 }
