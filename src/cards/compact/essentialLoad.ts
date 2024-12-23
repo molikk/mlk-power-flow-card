@@ -313,7 +313,7 @@ export class EssentialLoad {
 	}
 
 	static generateLoadCol1(data: DataDto, config: PowerFlowCardConfig, id: number) {
-		if (id == 1 && config.load.show_aux && config.load.aux_loads >= 1)
+		if (id == 1 && config.load.show_aux && (config.load.aux_loads >= 1 || config.load.show_daily_aux))
 			return svg``;
 		return svg`
 		${LoadUtils.generateEssentialLoad(
@@ -329,7 +329,7 @@ export class EssentialLoad {
 	}
 
 	static generateLoadCol2(data: DataDto, config: PowerFlowCardConfig, id: number) {
-		if (id == 1 && config.load.show_aux && config.load.aux_loads >= 2)
+		if (id == 1 && config.load.show_aux && (config.load.aux_loads >= 2 || config.load.show_daily_aux))
 			return svg``;
 		return svg`
 		${LoadUtils.generateEssentialLoad(
