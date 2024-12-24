@@ -436,46 +436,45 @@ The `invert_power` attribute can be used to reverse direction if needed by your 
 
 ### Aux Load: Entities
 
-| Attribute         | Requirement | Default                    | Description                                                                                                         |
-|-------------------|-------------|----------------------------|---------------------------------------------------------------------------------------------------------------------|
-| day_aux_energy:   | Optional    |                            | Sensor that provides the daily AUX energy (kWh)                                                                     |
-| aux_power_166:    | Optional    | `sensor.sunsynk_aux_power` | Auxiliary power (W)                                                                                                 |
+| Attribute       | Requirement | Default                    | Description                                     |
+|-----------------|-------------|----------------------------|-------------------------------------------------|
+| day_aux_energy: | Optional    |                            | Sensor that provides the daily AUX energy (kWh) |
+| aux_power_166:  | Optional    | `sensor.sunsynk_aux_power` | Auxiliary power (W)                             |
 
 ### Aux Load: Item Options
 
-| Attribute       | Requirement | Default           | Description                                                                                                                 |
-|-----------------|-------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| aux_load1_name: | Optional    |                   | Set the display name for the AUX load 1                                                                                     |
-| aux_load1_icon: | Optional    |                   | Set the AUX load 1 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| aux_load2_name: | Optional    |                   | Set the display name for the AUX load 2                                                                                     |
-| aux_load2_icon: | Optional    |                   | Set the AUX load 2 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| aux_load3_name: | Optional    |                   | Set the display name for the AUX load 3                                                                                     |
-| aux_load3_icon: | Optional    |                   | Set the AUX load 3 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| aux_load4_name: | Optional    |                   | Set the display name for the AUX load 4                                                                                     |
-| aux_load4_icon: | Optional    |                   | Set the AUX load 4 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| aux_load5_name: | Optional    |                   | Set the display name for the AUX load 5                                                                                     |
-| aux_load5_icon: | Optional    |                   | Set the AUX load 5 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| Attribute       | Requirement | Default | Description                                                                                                                 |
+|-----------------|-------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
+| aux_load1_name: | Optional    |         | Set the display name for the AUX load 1                                                                                     |
+| aux_load1_icon: | Optional    |         | Set the AUX load 1 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load2_name: | Optional    |         | Set the display name for the AUX load 2                                                                                     |
+| aux_load2_icon: | Optional    |         | Set the AUX load 2 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load3_name: | Optional    |         | Set the display name for the AUX load 3                                                                                     |
+| aux_load3_icon: | Optional    |         | Set the AUX load 3 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load4_name: | Optional    |         | Set the display name for the AUX load 4                                                                                     |
+| aux_load4_icon: | Optional    |         | Set the AUX load 4 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load5_name: | Optional    |         | Set the display name for the AUX load 5                                                                                     |
+| aux_load5_icon: | Optional    |         | Set the AUX load 5 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
 
 ### Aux Load: Item Entities
 
-| Attribute         | Requirement | Default                    | Description                                                                                                         |
-|-------------------|-------------|----------------------------|---------------------------------------------------------------------------------------------------------------------|
-| aux_load1:        | Optional    |                            | Sensor that contains the power of your AUX load 1 (W)                                                               |
-| aux_load1_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 1 e.g. Daily kWh, Temperature etc. |
-| aux_load1_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 1 icon clicked                                  |
-| aux_load2:        | Optional    |                            | Sensor that contains the power of your AUX load 2 (W)                                                               |
-| aux_load2_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 2 e.g. Daily kWh, Temperature etc  |
-| aux_load2_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 2 icon clicked                                  |
-| aux_load3:        | Optional    |                            | Sensor that contains the power of your AUX load 3 (W)                                                               |
-| aux_load3_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 3 e.g. Daily kWh, Temperature etc  |
-| aux_load3_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 3 icon clicked                                  |
-| aux_load4:        | Optional    |                            | Sensor that contains the power of your AUX load 4 (W)                                                               |
-| aux_load4_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 4 e.g. Daily kWh, Temperature etc  |
-| aux_load4_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 4 icon clicked                                  |
-| aux_load5:        | Optional    |                            | Sensor that contains the power of your AUX load 5 (W)                                                               |
-| aux_load5_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 5 e.g. Daily kWh, Temperature etc  |
-| aux_load5_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 5 icon clicked                                  |
-
+| Attribute         | Requirement | Default | Description                                                                                                         |
+|-------------------|-------------|---------|---------------------------------------------------------------------------------------------------------------------|
+| aux_load1:        | Optional    |         | Sensor that contains the power of your AUX load 1 (W)                                                               |
+| aux_load1_extra:  | Optional    |         | Sensor that contains additional information you want displayed for your aux load 1 e.g. Daily kWh, Temperature etc. |
+| aux_load1_toggle: | Optional    |         | Sensor that contains link to entity that will show up when aux load 1 icon clicked                                  |
+| aux_load2:        | Optional    |         | Sensor that contains the power of your AUX load 2 (W)                                                               |
+| aux_load2_extra:  | Optional    |         | Sensor that contains additional information you want displayed for your aux load 2 e.g. Daily kWh, Temperature etc  |
+| aux_load2_toggle: | Optional    |         | Sensor that contains link to entity that will show up when aux load 2 icon clicked                                  |
+| aux_load3:        | Optional    |         | Sensor that contains the power of your AUX load 3 (W)                                                               |
+| aux_load3_extra:  | Optional    |         | Sensor that contains additional information you want displayed for your aux load 3 e.g. Daily kWh, Temperature etc  |
+| aux_load3_toggle: | Optional    |         | Sensor that contains link to entity that will show up when aux load 3 icon clicked                                  |
+| aux_load4:        | Optional    |         | Sensor that contains the power of your AUX load 4 (W)                                                               |
+| aux_load4_extra:  | Optional    |         | Sensor that contains additional information you want displayed for your aux load 4 e.g. Daily kWh, Temperature etc  |
+| aux_load4_toggle: | Optional    |         | Sensor that contains link to entity that will show up when aux load 4 icon clicked                                  |
+| aux_load5:        | Optional    |         | Sensor that contains the power of your AUX load 5 (W)                                                               |
+| aux_load5_extra:  | Optional    |         | Sensor that contains additional information you want displayed for your aux load 5 e.g. Daily kWh, Temperature etc  |
+| aux_load5_toggle: | Optional    |         | Sensor that contains link to entity that will show up when aux load 5 icon clicked                                  |
 
 ## Grid
 
@@ -536,19 +535,22 @@ The `invert_power` attribute can be used to reverse direction if needed by your 
 
 ## Grid: Non-Essential Load Options
 
-| Attribute          | Requirement | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|--------------------|-------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| show_nonessential: | Optional    | `true`          | Toggles the display of non-essential                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |   
-| ness_invert_flow:  | Optional    | `false`         | Inverts the animated flow.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| additional_loads:  | Optional    | `0`             | Toggle the display of additional loads on the non-essential side (`0/1/2/3`) The third load will only be displayed if the inverter timer schedules are not used  due to limited space. Set the battery attribute `hide_soc: true` to display                                                                                                                                                                                                                                                                                                                                                               |
-| nonessential_icon: | Optional    | `default`       | Change the non-essential image using presets or any mdi icon e.g. `mdi:ev-station`. Presets are: <br /> <img height="25px" src="https://api.iconify.design/mdi/house-import-outline.svg"> `default`  <img height="25px" src="https://api.iconify.design/fluent/oven-32-regular.svg"> `oven`, <img height="25px" src="https://api.iconify.design/material-symbols/water-heater.svg"> `boiler` </br> <br/> <img height="25px" src="https://api.iconify.design/material-symbols/water-pump-outline.svg"> `pump`,  <img height="25px" src="https://api.iconify.design/mdi/air-conditioner.svg"> `aircon` </br> |
-| nonessential_name: | Optional    | `Non Essential` | Set the display name for the non-essential load                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 
+| Attribute               | Requirement | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|-------------------------|-------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| show_nonessential:      | Optional    | `true`          | Toggles the display of non-essential                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |   
+| ness_invert_flow:       | Optional    | `false`         | Inverts the animated flow.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| additional_loads:       | Optional    | `0`             | Toggle the display of additional loads on the non-essential side (`0/1/2/3`) The third load will only be displayed if the inverter timer schedules are not used  due to limited space. Set the battery attribute `hide_soc: true` to display                                                                                                                                                                                                                                                                                                                                                               |
+| nonessential_icon:      | Optional    | `default`       | Change the non-essential image using presets or any mdi icon e.g. `mdi:ev-station`. Presets are: <br /> <img height="25px" src="https://api.iconify.design/mdi/house-import-outline.svg"> `default`  <img height="25px" src="https://api.iconify.design/fluent/oven-32-regular.svg"> `oven`, <img height="25px" src="https://api.iconify.design/material-symbols/water-heater.svg"> `boiler` </br> <br/> <img height="25px" src="https://api.iconify.design/material-symbols/water-pump-outline.svg"> `pump`,  <img height="25px" src="https://api.iconify.design/mdi/air-conditioner.svg"> `aircon` </br> |
+| nonessential_name:      | Optional    | `Non Essential` | Set the display name for the non-essential load                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| show_nonessential_daily | Optional    |                 | Toggles the display of non-essential daily energy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| nonessential_daily_name | Optional    |                 | 'Set the display name for the non-essential daily energy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 
 
 ### Grid: Non-Essential Load Entities
 
-| Attribute          | Requirement | Default | Description                                                                                                                                             |
-|--------------------|-------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| nonessential_power | Optional    | `none`  | Sensor that provides Essential Load power (W). Check [Nonessential Power Calculation](#nonessential-power-calculation) if entity not provided or `none` |
+| Attribute           | Requirement | Default | Description                                                                                                                                             |
+|---------------------|-------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| nonessential_power  | Optional    | `none`  | Sensor that provides Essential Load power (W). Check [Nonessential Power Calculation](#nonessential-power-calculation) if entity not provided or `none` |
+| nonessential_energy | Optional    | `none`  | Sensor that provides Essential Daily energy (kWh).                                                                                                      |
 
 ## Grid: Non-Essential Load Row 1 Options
 
@@ -664,7 +666,7 @@ Nonessential Load is provided through `nonessential_power` entity.
 nonessentialPower = non_essential_load1 + non_essential_load2 + non_essential_load3
 ```
 
-* otherwise
+* otherwise If there is no  `nonessential_power` entity
 
 	* If `three_phase:false`
 
@@ -676,6 +678,11 @@ nonessentialPower = non_essential_load1 + non_essential_load2 + non_essential_lo
 
   ```
   nonessential = grid_ct_power_172 + grid_ct_power_L2 + grid_ct_power_L3 - grid_power_169
+  ```
+* otherwise
+  ```
+  essential=  nonessential_power entity
+
   ```
 
 ### Autarky
