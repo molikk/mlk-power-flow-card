@@ -352,8 +352,6 @@ The `invert_power` attribute can be used to reverse direction if needed by your 
 | Additional Load Column 4 Entities | [Sub-menu](#load-additional-load-entities) |             | Shows sub-menu with Essential Load Column 4 Entities                                                                                                                                                                                                                                                                                                                                                      |
 | Additional Load Column 5 Options  | [Sub-menu](#load-additional-load-options)  |             | Shows sub-menu with Additional Load Column 5 Options                                                                                                                                                                                                                                                                                                                                                      |
 | Additional Load Column 5 Entities | [Sub-menu](#load-additional-load-entities) |             | Shows sub-menu with Essential Load Column 5 Entities                                                                                                                                                                                                                                                                                                                                                      |
-| Aux Load Options                  | [Sub-menu](#load-aux)                      |             | Shows sub-menu with Auxiliary Load details                                                                                                                                                                                                                                                                                                                                                                |
-| Aux Load Entities                 | [Sub-menu](#load-aux-entities)             |             | Shows sub-menu with Auxiliary Load Entities                                                                                                                                                                                                                                                                                                                                                               |
 
 ### Load Entities
 
@@ -410,11 +408,21 @@ The `invert_power` attribute can be used to reverse direction if needed by your 
 | essential_load_2_1_extra:  | Optional    |         | Sensor that contains additional information you want displayed for your essential load column X row Y e.g. Daily kWh, Temperature etc                                                                                 |
 | essential_load_2_1_toggle: | Optional    |         | Sensor that contains link to entity that will show up when essential load column X row Y icon clicked                                                                                                                 |
 
-### Load: aux
+### AUX Load
+
+| Attribute               | Requirement                         | Default | Description                                 |
+|-------------------------|-------------------------------------|---------|---------------------------------------------|
+| Aux Load Options        | [Sub-menu](#aux-load-options)       |         | Shows sub-menu with Auxiliary Load details  |
+| Aux Load Entities       | [Sub-menu](#aux-load-entities)      |         | Shows sub-menu with Auxiliary Load Entities |
+| Aux Load Item Options   | [Sub-menu](#aux-load-item-options)  |         | Shows sub-menu with Auxiliary Load details  |
+| Aux Load Items Entities | [Sub-menu](#aux-load-item-entities) |         | Shows sub-menu with Auxiliary Load Entities |
+
+### Aux Load: Options
 
 | Attribute           | Requirement | Default           | Description                                                                                                                                             |
 |---------------------|-------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | show_aux:           | Optional    | `false`           | Toggles the display of AUX                                                                                                                              |
+| aux_loads:          | Optional    | `0`               | Display additional loads on the AUX side (`0/1/2/3/4/5`)                                                                                                |
 | aux_name:           | Optional    | `Auxilary`        | Set the display name for the AUX Load                                                                                                                   |
 | aux_daily_name:     | Optional    | `DAILY AUX`       | Set the display name for the DAILY AUX label                                                                                                            |
 | aux_type:           | Optional    | `default`         | Sets the AUX image using preset or any mdi icon e.g. `mdi:ev-station`. Presets are: `gen`, `inverter` `default`, `oven`, `pump`, `aircon` and `boiler`. |
@@ -424,23 +432,34 @@ The `invert_power` attribute can be used to reverse direction if needed by your 
 | aux_dynamic_colour: | Optional    | `true`            | The respective aux elements on the card will be greyed out if aux power = 0W.                                                                           |
 | aux_colour:         | Optional    | `the load colour` | Sets the colour of all the AUX card objects. Hex codes (`'#66ff00'` etc) or names (`red`, `green`, `blue` etc)                                          |
 | aux_off_colour:     | Optional    | `the load colour` | Sets the colour of the AUX icon and label when disconnected. Hex codes (`'#66ff00'` etc) or names (`red`, `green`, `blue` etc)                          |
-| aux_loads:          | Optional    | `0`               | Display additional loads on the AUX side (`0/1/2/3/4`)                                                                                                  |
-| aux_load1_name:     | Optional    |                   | Set the display name for the AUX load 1                                                                                                                 |
-| aux_load1_icon:     | Optional    |                   | Set the AUX load 1 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon.                             |
-| aux_load2_name:     | Optional    |                   | Set the display name for the AUX load 2                                                                                                                 |
-| aux_load2_icon:     | Optional    |                   | Set the AUX load 2 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon.                             |
-| aux_load3_name:     | Optional    |                   | Set the display name for the AUX load 3                                                                                                                 |
-| aux_load3_icon:     | Optional    |                   | Set the AUX load 3 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon.                             |
-| aux_load4_name:     | Optional    |                   | Set the display name for the AUX load 4                                                                                                                 |
-| aux_load4_icon:     | Optional    |                   | Set the AUX load 4 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon.                             |
 | show_daily_aux:     | Optional    | `false`           | Toggles the daily AUX total. Only displayed if `show_aux` is set to `true`                                                                              |
 
-### Load: Aux Entities
+### Aux Load: Entities
 
 | Attribute         | Requirement | Default                    | Description                                                                                                         |
 |-------------------|-------------|----------------------------|---------------------------------------------------------------------------------------------------------------------|
 | day_aux_energy:   | Optional    |                            | Sensor that provides the daily AUX energy (kWh)                                                                     |
 | aux_power_166:    | Optional    | `sensor.sunsynk_aux_power` | Auxiliary power (W)                                                                                                 |
+
+### Aux Load: Item Options
+
+| Attribute       | Requirement | Default           | Description                                                                                                                 |
+|-----------------|-------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| aux_load1_name: | Optional    |                   | Set the display name for the AUX load 1                                                                                     |
+| aux_load1_icon: | Optional    |                   | Set the AUX load 1 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load2_name: | Optional    |                   | Set the display name for the AUX load 2                                                                                     |
+| aux_load2_icon: | Optional    |                   | Set the AUX load 2 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load3_name: | Optional    |                   | Set the display name for the AUX load 3                                                                                     |
+| aux_load3_icon: | Optional    |                   | Set the AUX load 3 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load4_name: | Optional    |                   | Set the display name for the AUX load 4                                                                                     |
+| aux_load4_icon: | Optional    |                   | Set the AUX load 4 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| aux_load5_name: | Optional    |                   | Set the display name for the AUX load 5                                                                                     |
+| aux_load5_icon: | Optional    |                   | Set the AUX load 5 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+
+### Aux Load: Item Entities
+
+| Attribute         | Requirement | Default                    | Description                                                                                                         |
+|-------------------|-------------|----------------------------|---------------------------------------------------------------------------------------------------------------------|
 | aux_load1:        | Optional    |                            | Sensor that contains the power of your AUX load 1 (W)                                                               |
 | aux_load1_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 1 e.g. Daily kWh, Temperature etc. |
 | aux_load1_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 1 icon clicked                                  |
@@ -453,6 +472,10 @@ The `invert_power` attribute can be used to reverse direction if needed by your 
 | aux_load4:        | Optional    |                            | Sensor that contains the power of your AUX load 4 (W)                                                               |
 | aux_load4_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 4 e.g. Daily kWh, Temperature etc  |
 | aux_load4_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 4 icon clicked                                  |
+| aux_load5:        | Optional    |                            | Sensor that contains the power of your AUX load 5 (W)                                                               |
+| aux_load5_extra:  | Optional    |                            | Sensor that contains additional information you want displayed for your aux load 5 e.g. Daily kWh, Temperature etc  |
+| aux_load5_toggle: | Optional    |                            | Sensor that contains link to entity that will show up when aux load 5 icon clicked                                  |
+
 
 ## Grid
 

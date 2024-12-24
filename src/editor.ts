@@ -1087,15 +1087,22 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										],
 									},
+								],
+							},
+							{
+								type: 'expandable',
+								title: this._title('aux_load'),
+								schema: [
 									{
 										type: 'expandable',
-										title: this._title('aux_load'),
+										title: this._title('aux_load_opt'),
 										schema: [
 											{
 												name: 'load',
 												type: 'grid',
 												schema: [
 													{ name: 'show_aux', selector: { boolean: {} } },
+													{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 5 } } },
 													{ name: 'aux_name', selector: { text: {} } },
 													{ name: 'aux_daily_name', selector: { text: {} } },
 													{ name: 'aux_type', selector: { icon: {} } },
@@ -1104,7 +1111,6 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_dynamic_colour', selector: { boolean: {} } },
 													{ name: 'aux_colour', selector: { color_rgb: {} } },
 													{ name: 'aux_off_colour', selector: { color_rgb: {} } },
-													{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 4 } } },
 													{ name: 'show_daily_aux', selector: { boolean: {} } },
 													{ name: 'aux_invert_flow', selector: { boolean: {} } },
 												],
@@ -1141,6 +1147,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_load3_icon', selector: { icon: {} } },
 													{ name: 'aux_load4_name', selector: { text: {} } },
 													{ name: 'aux_load4_icon', selector: { icon: {} } },
+													{ name: 'aux_load5_name', selector: { text: {} } },
+													{ name: 'aux_load5_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -1165,6 +1173,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_load4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'aux_load4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'aux_load4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'aux_load5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'aux_load5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_load5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],

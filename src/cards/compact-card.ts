@@ -225,6 +225,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 									${AuxLoad.generateLoad(data, config, 2)}
 									${AuxLoad.generateLoad(data, config, 3)}
 									${AuxLoad.generateLoad(data, config, 4)}
+									${AuxLoad.generateLoad(data, config, 5)}
 									${AuxLoad.generateTotalLoad(data, config)}
 									${AuxLoad.generateDailyLoad(data, config)}
 								</g>

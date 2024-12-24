@@ -273,10 +273,12 @@
       "ess_ld_3": "Additional Load Column 3 Entities",
       "ess_ld_4": "Additional Load Column 4 Entities",
       "ess_ld_5": "Additional Load Column 5 Entities",
-      "aux_load": "Aux Load Main Options",
+
+      "aux_load": "Aux Load Options",
+      "aux_load_opt": "Aux Load Main Options",
       "aux_load_ent": "Aux Load Main Entities",
-      "aux_load_row_1": "Aux Load 1-4 Options",
-      "aux_load_row_1_ent" : "Aux Load 1-4 Entities",
+      "aux_load_row_1": "Aux Load Item Options",
+      "aux_load_row_1_ent" : "Aux Load Items Entities",
 
       "grid": "Grid Options",
       "gri_ent": "Grid Entities",

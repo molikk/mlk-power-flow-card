@@ -145,7 +145,8 @@ export class Grid {
 					<foreignObject x="-0.5" y="187.5" width="70" height="70" style="position: fixed; ">
 						<body xmlns="http://www.w3.org/1999/xhtml">
 						<div style="position: fixed; ">
-							<ha-icon icon="${data.customGridIcon}" class="grid-icon"></ha-icon>
+							<ha-icon icon="${data.customGridIcon}" 
+							style="color: ${data.customGridIconColour} !important; --mdc-icon-size: 64px;" />
 						</div>
 						</body>
 					</foreignObject>
