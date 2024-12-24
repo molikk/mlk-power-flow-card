@@ -4,8 +4,7 @@ export const styles: CSSResultGroup = css`
    text_debug {
        outline: 1px solid blue;
    }
-    
-   
+	
     .container {
     display: flex;
     flex-direction: column;
