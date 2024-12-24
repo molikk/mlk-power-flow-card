@@ -102,6 +102,8 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                            ${GridLoad.generateFlowLine(data, config)}
 			                            ${GridLoad.generateTotalPower(data, config)}
 			                            ${GridLoad.generateIcon(data, config)}
+			                            ${GridLoad.generateDailyLoad(data, config)}
+			                            
 		                            </g>` : ``
 							}
                             </g>` : ``

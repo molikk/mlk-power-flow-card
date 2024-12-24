@@ -1,4 +1,4 @@
-import { DataDto, PowerFlowCardConfig } from '../../types';
+import { BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../../types';
 import { svg } from 'lit';
 import { LoadUtils } from './loadUtils';
 import { Utils } from '../../helpers/utils';
@@ -122,7 +122,22 @@ export class GridLoad {
 	}
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
-		const icon = LoadUtils.getIconWithStyleAndCondition(config.grid.show_nonessential, config.battery.show_battery_banks ? 58 : 68, 290, data.nonessentialIcon, data.nonEssentialLoadMainDynamicColour, 32, 32);
+		let show = config.grid.show_nonessential;
+		let x = config.battery.show_battery_banks ? 58 : 68;
+		if (config.grid.show_nonessential && config.grid.show_nonessential_daily) {
+			if (config.battery.show_battery_banks && config.battery.battery_banks_view_mode == BatteryBanksViewMode.inner) {
+				show = false;
+			}
+			x = 158;
+		}
+
+		const icon = LoadUtils.getIconWithStyleAndCondition(
+			show,
+			x, 290,
+			data.nonessentialIcon,
+			data.nonEssentialLoadMainDynamicColour,
+			32, 32,
+		);
 
 		return svg`${icon}`;
 	}
@@ -224,17 +239,22 @@ export class GridLoad {
 	}
 
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
-			    <text id="nes_daily_load_value" class="st10 right-align" 
-			    	x="10"  y="302" 
-			     	display="${!config.load?.show_daily_aux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
-			     	fill="${data.nonEssentialLoadMainDynamicColour}">
-			        XX${data.stateDayAuxEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
-			    </text>
-			</a>
-			<text id="nes_daily_load" y="315" class="st3 right-align" x="10" fill="#5fb6ad">
-			    ${config.load?.aux_daily_name ? config.load?.aux_daily_name : localize('common.daily_aux')}
-			</text>`;
+		if (config.grid?.show_nonessential_daily) {
+			return svg`
+				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateNonessentialDailyEnergy?.entity_id)}>
+				    <text id="nes_daily_load_value" class="st10 right-align" 
+				        x="85" y="302" 
+				        display="${data.stateNonessentialDailyEnergy.isValid() ? '' : 'none'}"
+				        fill="${data.nonEssentialLoadMainDynamicColour}">
+				        ${data.stateNonessentialDailyEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
+				    </text>
+				</a>
+				<text id="nes_daily_load" class="st3 right-align" 
+					x="85" y="315" 
+					fill="${data.nonEssentialLoadMainDynamicColour}">
+				    ${config.grid?.nonessential_daily_name ? config.grid?.nonessential_daily_name : localize('common.daily_grid')}
+				</text>`;
+		}
+		return svg``;
 	}
 }

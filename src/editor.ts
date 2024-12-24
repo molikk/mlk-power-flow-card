@@ -1258,7 +1258,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
 													{ name: 'nonessential_name', selector: { text: {} } },
 													{ name: 'nonessential_icon', selector: { icon: {} } },
-													{ name: 'nonessential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'show_nonessential_daily', selector: { boolean: {} } },
+													{ name: 'nonessential_daily_name', selector: { text: {} } },
 												],
 											},
 										],
@@ -1272,6 +1273,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												type: 'grid',
 												schema: [
 													{ name: 'nonessential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'nonessential_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 												],
 											},
 										],

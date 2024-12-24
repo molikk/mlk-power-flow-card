@@ -336,6 +336,8 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		export_icon: string;
 		disconnected_icon: string;
 		prepaid_unit_name: string;
+		show_nonessential_daily: boolean;
+		nonessential_daily_name: string;
 	}
 	entities: ConfigCardEntities
 }
@@ -587,6 +589,7 @@ export interface DataDto {
 
 	inverterStateMsg,
 	nonessentialPower,
+	stateNonessentialDailyEnergy,
 	nonessLineWidth,
 	grid169LineWidth,
 	autoScaledInverterPower,
