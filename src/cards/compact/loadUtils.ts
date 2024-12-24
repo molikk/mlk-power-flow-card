@@ -62,13 +62,13 @@ export class LoadUtils {
 			${icon}
 			<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" 
 				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" 
-				display="${power.isValid() || toggle.isValidSwitch() ? '' : 'none'}" />
+				display="${power?.isValid() || toggle?.isValidSwitch() ? '' : 'none'}" />
 			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8" fill="${color}">
 				${name ? `${name}` : ''}
 			</text>
-			${!power.isValid() && toggle.isValidSwitch() ?
+			${!power?.isValid() && toggle?.isValidSwitch() ?
 			svg`
-				<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle.entity_id)}>
+				<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle?.entity_id)}>
 					<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
 							class="st3"
 							fill="${color}">
@@ -78,21 +78,21 @@ export class LoadUtils {
 				`
 			:
 			svg`
-				<a href = "#" @click=${(e) => Utils.handlePopup(e, power.entity_id)}>
+				<a href = "#" @click=${(e) => Utils.handlePopup(e, power?.entity_id)}>
 					<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
-							display="${power.isValid() ? '' : 'none'}"
+							display="${power?.isValid() ? '' : 'none'}"
 							class="st3"
 							fill="${color}">
 						${power?.toPowerString(loadAutoScale, decimalPlaces)}
 					</text>
 				</a>`
 		}
-			<a href="#" @click=${(e) => Utils.handlePopup(e, energy.entity_id)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, energy?.entity_id)}>
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
-							display="${energy.isValid() ? '' : 'none'}"
+							display="${energy?.isValid() ? '' : 'none'}"
 							class="st3" fill="${color}">
-					${energy.isValidElectric()?energy.toStr(1):energy.toString()}
-					${energy.getUOM()}
+					${energy?.isValidElectric()?energy?.toStr(1):energy?.toString()}
+					${energy?.getUOM()}
 				</text>
 			</a>`;
 	}
@@ -105,7 +105,7 @@ export class LoadUtils {
 		mainX: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
 	) {
 		const icon_link = LoadUtils.getIconLink(
-			toggle.entity_id,
+			toggle?.entity_id,
 			LoadUtils.getIconWithStyle(mainX + xGaps[0], mainY, icon, color),
 		);
 
@@ -144,7 +144,7 @@ export class LoadUtils {
 		mainX: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
 	) {
 		const icon_link = LoadUtils.getIconLink(
-			toggle.entity_id,
+			toggle?.entity_id,
 			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `nes-load${id}_small-icon`),
 		);
 
@@ -183,8 +183,8 @@ export class LoadUtils {
 		mainX: number, mainY: number, xGaps: number[], yGaps: number[],
 	) {
 		const icon_link = LoadUtils.getIconLink(
-			toggle.entity_id,
-			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `aux-load${id}_small-icon`),
+			toggle?.entity_id,
+			LoadUtils.getIconWithStyle(mainX + xGaps[0], mainY, icon, color, 30, 20),
 		);
 
 		return svg`
@@ -220,9 +220,9 @@ export class LoadUtils {
 		color,
 	) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
 				<text id="grid-current-${id}" x="${x}" y="${y}"
-					  display="${entity.isValid() ? '' : 'none'}"
+					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 left-align"
 					  fill="${color}">
 					${entity.toStr(1) || 0} ${UnitOfElectricalCurrent.AMPERE}
@@ -238,9 +238,9 @@ export class LoadUtils {
 		color,
 	) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
 				<text id="grid-potencial-${id}" x="${x}" y="${y}"
-					  display="${entity.isValid() ? '' : 'none'}"
+					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 right-align"
 					  fill="${color}">
 					${entity.toStr(1) || 0} ${UnitOfElectricPotential.VOLT}
@@ -258,9 +258,9 @@ export class LoadUtils {
 		decimalPlaces: number,
 	) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
 				<text id="grid-power-${id}" x="${x}" y="${y}"
-					  display="${entity.isValid() ? '' : 'none'}"
+					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 right-align"
 					  fill="${color}">
 					${autoScale ? `${Utils.convertValue(entity, decimalPlaces) || 0}` : `${entity || 0} ${UnitOfPower.WATT}`}

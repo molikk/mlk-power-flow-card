@@ -394,18 +394,24 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.aux_load2'),
 			this.getEntity('entities.aux_load3'),
 			this.getEntity('entities.aux_load4'),
+			this.getEntity('entities.aux_load5'),
+			this.getEntity('entities.aux_load6'),
 		];
 		const auxLoadExtraState = [
 			this.getEntity('entities.aux_load1_extra'),
 			this.getEntity('entities.aux_load2_extra'),
 			this.getEntity('entities.aux_load3_extra'),
 			this.getEntity('entities.aux_load4_extra'),
+			this.getEntity('entities.aux_load5_extra'),
+			this.getEntity('entities.aux_load6_extra'),
 		];
 		const auxLoadToggleState = [
 			this.getEntity('entities.aux_load1_toggle'),
 			this.getEntity('entities.aux_load2_toggle'),
 			this.getEntity('entities.aux_load3_toggle'),
 			this.getEntity('entities.aux_load4_toggle'),
+			this.getEntity('entities.aux_load5_toggle'),
+			this.getEntity('entities.aux_load6_toggle'),
 		];
 
 		//Grid
@@ -468,7 +474,12 @@ export class PowerFlowCard extends LitElement {
 		const { invert_aux } = config.load;
 
 		const auxPower = stateAuxPower?.isValid() ? stateAuxPower.toPower(invert_aux) :
-			(auxLoadState[0]?.toPower(invert_aux) || 0) + (auxLoadState[1]?.toPower(invert_aux) || 0) + (auxLoadState[2]?.toPower(invert_aux) || 0) + (auxLoadState[3]?.toPower(invert_aux) || 0);
+			(auxLoadState[0]?.toPower(invert_aux) || 0)
+			+ (auxLoadState[1]?.toPower(invert_aux) || 0)
+			+ (auxLoadState[2]?.toPower(invert_aux) || 0)
+			+ (auxLoadState[3]?.toPower(invert_aux) || 0)
+			+ (auxLoadState[4]?.toPower(invert_aux) || 0)
+			+ (auxLoadState[5]?.toPower(invert_aux) || 0);
 
 		const { invert_grid } = config.grid;
 		const gridPowerL1 = stateGridPowerL1.toPower(invert_grid);
@@ -595,6 +606,8 @@ export class PowerFlowCard extends LitElement {
 			this.calculateAuxLoadColour(auxLoadState[1], auxLoadToggleState[1], config.load?.off_threshold) || auxColour,
 			this.calculateAuxLoadColour(auxLoadState[2], auxLoadToggleState[2], config.load?.off_threshold) || auxColour,
 			this.calculateAuxLoadColour(auxLoadState[3], auxLoadToggleState[3], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[4], auxLoadToggleState[4], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[5], auxLoadToggleState[5], config.load?.off_threshold) || auxColour,
 		];
 
 		let auxDynamicColour = auxOffColour;
@@ -602,6 +615,8 @@ export class PowerFlowCard extends LitElement {
 		auxDynamicColour = auxLoadDynamicColour[1] != auxOffColour ? auxLoadDynamicColour[1] : auxDynamicColour;
 		auxDynamicColour = auxLoadDynamicColour[2] != auxOffColour ? auxLoadDynamicColour[2] : auxDynamicColour;
 		auxDynamicColour = auxLoadDynamicColour[3] != auxOffColour ? auxLoadDynamicColour[3] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[4] != auxOffColour ? auxLoadDynamicColour[4] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[5] != auxOffColour ? auxLoadDynamicColour[5] : auxDynamicColour;
 		auxDynamicColour = stateAuxPower.isValid() && Math.abs(stateAuxPower.toPower()) > Utils.toNum(config.load?.off_threshold, 0) ? auxColour : auxDynamicColour;
 
 		let nonessentialLoads = config.grid?.additional_loads;
@@ -682,6 +697,8 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
 			this.getEntity('load.aux_load3_icon', { state: config.load?.aux_load3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.aux_load4_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load5_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load6_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
 		];
 		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
 
@@ -785,7 +802,11 @@ export class PowerFlowCard extends LitElement {
 			essential_power === 'none' || !essential_power
 				? threePhase === true && config.entities.load_power_L1 && config.entities.load_power_L2 && config.entities.load_power_L3
 					? Number(loadPowerL1) + Number(loadPowerL2) + Number(loadPowerL3)
-					: (config.entities.inverter_power_175 ? autoScaledInverterPower + autoScaledGridPower - auxPower : totalPV + batteryPower + autoScaledGridPower - auxPower)
+					: (
+						config.entities.inverter_power_175
+							? autoScaledInverterPower + autoScaledGridPower - auxPower
+							: totalPV + batteryPower + autoScaledGridPower - auxPower
+					)
 				: stateEssentialPower.toPower(invert_load);
 
 		//Timer entities
