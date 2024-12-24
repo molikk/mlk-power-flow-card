@@ -9,7 +9,6 @@ import {
 	EDITOR_NAME,
 	MAIN_NAME,
 	valid3phase,
-	validAux,
 	validAuxLoads,
 	validGridConnected,
 	validGridDisconnected,
@@ -23,7 +22,7 @@ import { compactCard } from './cards/compact-card';
 import { globalData } from './helpers/globals';
 import { InverterFactory } from './inverters/inverter-factory';
 import { BatteryIconManager } from './helpers/battery-icon-manager';
-import { getEntity, CustomEntity } from './inverters/dto/custom-entity';
+import { CustomEntity, getEntity } from './inverters/dto/custom-entity';
 import { icons } from './helpers/icons';
 
 console.groupCollapsed(
@@ -631,13 +630,6 @@ export class PowerFlowCard extends LitElement {
 		const batteryChargeColour = this.colourConvert(config.battery?.charge_colour || batteryColourConfig);
 		const batteryShowDaily = config.battery?.show_daily;
 
-		let showAux = config.load?.show_aux;
-		if (!validAux.includes(showAux)) {
-			showAux = false;
-		}
-
-		const showDailyAux = config.load?.show_daily_aux;
-
 		let additionalLoads = config.load?.additional_loads;
 		if (!validLoadValues.includes(additionalLoads)) {
 			additionalLoads = 0;
@@ -793,7 +785,10 @@ export class PowerFlowCard extends LitElement {
 						: stateNonessentialPower.toPower();
 			}
 		} else {
-			nonessentialPower = this.sumPowers(nonessentialLoadState);
+			nonessentialPower =
+				nonessential_power === 'none' || !nonessential_power
+					? this.sumPowers(nonessentialLoadState)
+					: stateNonessentialPower.toPower();
 		}
 
 		//console.log('ESS POWER', essential_power, threePhase, config.entities.load_power_L1, config.entities.inverter_power_175, "with_inv_power",  autoScaledInverterPower, autoScaledGridPower, auxPower, autoScaledInverterPower + autoScaledGridPower - auxPower, "without_inv_power", totalPV, batteryPower, autoScaledGridPower, auxPower, totalPV + batteryPower + autoScaledGridPower - auxPower);
@@ -1661,7 +1656,6 @@ export class PowerFlowCard extends LitElement {
 			gridOffColour,
 			batteryIcon,
 			formattedResultTime,
-			showAux,
 
 			showNonessential,
 			nonessentialLoads,
@@ -1679,7 +1673,6 @@ export class PowerFlowCard extends LitElement {
 			grid169LineWidth,
 
 			auxType,
-			showDailyAux,
 			auxPower,
 			additionalAuxLoad,
 			stateAuxPower,

@@ -2,7 +2,6 @@ import { html, svg } from 'lit';
 import { AdditionalLoadsViewMode, BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../types';
 import { EssentialLoad } from './compact/essentialLoad';
 import { Autarky } from './compact/autarky';
-import { Style } from './compact/style';
 import { Load } from './compact/load';
 import { Solar } from './compact/solar';
 import { Battery } from './compact/battery';
@@ -61,7 +60,6 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 
 	return html`
 			<ha-card>
-				${Style.getStyle(data)}
 				<div class="container card">
 					${config.title ? html`<h1
 						style="text-align: center; color: ${config.title_colour || 'inherit'}; data.largeFont-size: ${config.title_size || '32px'};">
@@ -216,7 +214,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 							${Load.generateDailyLoad(data, config)}
 						</g>
 
-						${data.showAux ?
+						${config.load?.show_aux ?
 							svg`
 								${AuxLoad.generateFlowLines(data, config, loadXTransform(), mainXTransform())}
 								<g id="aux-load-group" transform="translate(${loadXTransform()}, 0)">
