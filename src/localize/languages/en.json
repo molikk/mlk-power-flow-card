@@ -8,6 +8,7 @@
     "to": "TO",
     "daily_load": "DAILY LOAD",
     "daily_aux": "DAILY AUX",
+    "daily_grid": "DAILY GRID",
     "daily_grid_buy": "DAILY GRID BUY",
     "daily_grid_sell": "DAILY GRID SELL",
     "daily_solar_name": "DAILY SOLAR",
@@ -207,8 +208,12 @@
     "essential_name": "Essential Name",
     "additional_loads": "Additional Loads",
     "export_colour": "Export Colour",
-    "nonessential_name": "Non Essential Name",
-    "nonessential_icon": "Non Essential Icon",
+
+    "nonessential_name": "Name",
+    "nonessential_icon": "Icon",
+    "nonessential_daily_name": "Daily Name",
+    "show_nonessential_daily": "Show Daily",
+
     "energy_cost_decimals": "Energy Cost Decimals",
     "show_remaining_energy": "Show Remaining Energy",
     "path_threshold": "Path Threshold",

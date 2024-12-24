@@ -360,6 +360,8 @@ export class PowerFlowCard extends LitElement {
 		//Grid Load non-essential
 
 		const stateNonessentialPower = this.getEntity('entities.nonessential_power');
+		const stateNonessentialDailyEnergy = this.getEntity('entities.nonessential_energy');
+
 		const nonessentialLoadState = [
 			this.getEntity('entities.non_essential_load1'),
 			this.getEntity('entities.non_essential_load2'),
@@ -1669,6 +1671,7 @@ export class PowerFlowCard extends LitElement {
 
 			inverterStateMsg,
 			nonessentialPower,
+			stateNonessentialDailyEnergy,
 			nonessLineWidth,
 			grid169LineWidth,
 
