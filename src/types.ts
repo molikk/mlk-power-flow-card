@@ -575,7 +575,6 @@ export interface DataDto {
 	gridOffColour: string,
 	batteryIcon: string,
 	formattedResultTime,
-	showAux,
 	showNonessential,
 	nonessentialLoads,
 	nonessentialIcon: string,
@@ -647,7 +646,6 @@ export interface DataDto {
 	gridPercentage,
 
 	auxType,
-	showDailyAux,
 	auxPower,
 	additionalAuxLoad,
 	stateAuxPower: CustomEntity,

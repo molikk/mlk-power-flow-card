@@ -21,33 +21,30 @@ export class LoadUtils {
 	}
 
 	static getIcon(x: number, y: number, icon: string, style_class: string, size = 30) {
-		return svg`
-			<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
-				<body xmlns="http://www.w3.org/1999/xhtml">
-				<div style="position: fixed; ">
-					<ha-icon icon="${icon}" class="${style_class}"></ha-icon>
-				</div>
-				</body>
-			</foreignObject>`;
+		return this.getIconWithCondition(true, x, y, icon, style_class, size);
 	}
 
-	static getIconWithStyle(x: number, y: number, icon: string, color: string, size = 30, icon_size= 20) {
+	static getIconWithStyleAndCondition(condition: boolean, x: number, y: number, icon: string, color: string, size = 30, icon_size = 20) {
 		return svg`
-			<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
-				<body xmlns="http://www.w3.org/1999/xhtml">
-				<div style="position: fixed; ">
-					<ha-icon icon="${icon}" style="color: ${color} !important; --mdc-icon-size: ${icon_size}px;"></ha-icon>
-				</div>
-				</body>
-			</foreignObject>`;
+			<g display="${condition ? '' : 'none'}">
+				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
+					<body xmlns="http://www.w3.org/1999/xhtml">
+					<div style="position: fixed; ">
+						<ha-icon icon="${icon}" style="color: ${color} !important; --mdc-icon-size: ${icon_size}px;"></ha-icon>
+					</div>
+					</body>
+				</foreignObject>
+			</g>`;
 	}
+
+	static getIconWithStyle(x: number, y: number, icon: string, color: string, size = 30, icon_size = 20) {
+		return this.getIconWithStyleAndCondition(true, x, y, icon, color, size, icon_size);
+	}
+
 	static getIconLink(entity: string, icon: TemplateResult<2>) {
-		return svg`
-		${entity
+		return entity
 			? svg`<a href="#" @click=${(e) => Utils.handlePopup(e, entity)}>${icon}</a>`
-			: svg`${icon}`
-		}
-		`;
+			: svg`${icon}`;
 	}
 
 	static generateLoadItem(
@@ -91,7 +88,7 @@ export class LoadUtils {
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
 							display="${energy?.isValid() ? '' : 'none'}"
 							class="st3" fill="${color}">
-					${energy?.isValidElectric()?energy?.toStr(1):energy?.toString()}
+					${energy?.isValidElectric() ? energy?.toStr(1) : energy?.toString()}
 					${energy?.getUOM()}
 				</text>
 			</a>`;
@@ -109,15 +106,14 @@ export class LoadUtils {
 			LoadUtils.getIconWithStyle(mainX + xGaps[0], mainY, icon, color),
 		);
 
-		return svg`
-				${LoadUtils.generateLoadItem(
-					'es', id, icon_link,
-					color, mainX + xGaps[1], mainY + yGaps[0],
-					name, mainX + xGaps[2], mainY + yGaps[1],
-					power, mainX + xGaps[2], mainY + yGaps[2],
-					energy, mainX + xGaps[2], mainY + yGaps[3],
-					toggle, loadAutoScale, decimalPlaces,
-				)}`;
+		return LoadUtils.generateLoadItem(
+			'es', id, icon_link,
+			color, mainX + xGaps[1], mainY + yGaps[0],
+			name, mainX + xGaps[2], mainY + yGaps[1],
+			power, mainX + xGaps[2], mainY + yGaps[2],
+			energy, mainX + xGaps[2], mainY + yGaps[3],
+			toggle, loadAutoScale, decimalPlaces,
+		);
 	}
 
 	static generateEssentialLoad(
@@ -127,12 +123,12 @@ export class LoadUtils {
 		loadAutoScale: boolean, decimalPlaces: number,
 		column: number, mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
 	) {
-		const id = ID-1;
+		const id = ID - 1;
 		return LoadUtils.generateEssentialLoadInternal(
 			ID, icon[id], color[id], name[id],
 			power[id], energy[id], toggle[id],
 			loadAutoScale, decimalPlaces,
-			column, mainY, xGaps, yGaps
+			column, mainY, xGaps, yGaps,
 		);
 	}
 
@@ -145,18 +141,17 @@ export class LoadUtils {
 	) {
 		const icon_link = LoadUtils.getIconLink(
 			toggle?.entity_id,
-			LoadUtils.getIcon(mainX + xGaps[0], mainY, icon, `nes-load${id}_small-icon`),
+			LoadUtils.getIconWithStyle(mainX + xGaps[0], mainY, icon, color, 30, 20),
 		);
 
-		return svg`
-				${LoadUtils.generateLoadItem(
+		return LoadUtils.generateLoadItem(
 			'nes', id, icon_link,
 			color, mainX + xGaps[1], mainY + yGaps[0],
 			name, mainX + xGaps[2], mainY + yGaps[1],
 			power, mainX + xGaps[2], mainY + yGaps[2],
 			energy, mainX + xGaps[2], mainY + yGaps[3],
 			toggle, loadAutoScale, decimalPlaces,
-		)}`;
+		);
 	}
 
 	static generateAuxLoad(
@@ -166,12 +161,12 @@ export class LoadUtils {
 		loadAutoScale: boolean, decimalPlaces: number,
 		columns: number[], mainY: number, xGaps: number[] = Load.xGaps, yGaps: number[] = Load.yGaps,
 	) {
-		const id = ID-1;
+		const id = ID - 1;
 		return LoadUtils.generateAuxLoadInternal(
 			ID, icon[id], color[id], name[id],
 			power[id], energy[id], toggle[id],
 			loadAutoScale, decimalPlaces,
-			columns[id], mainY, xGaps, yGaps
+			columns[id], mainY, xGaps, yGaps,
 		);
 	}
 
@@ -187,15 +182,14 @@ export class LoadUtils {
 			LoadUtils.getIconWithStyle(mainX + xGaps[0], mainY, icon, color, 30, 20),
 		);
 
-		return svg`
-				${LoadUtils.generateLoadItem(
-					'aux', id, icon_link,
-					color, mainX + xGaps[1], mainY + yGaps[0],
-					name, mainX + xGaps[2], mainY + yGaps[1],
-					power, mainX + xGaps[2], mainY + yGaps[2],
-					energy, mainX + xGaps[2], mainY + yGaps[3],
-					toggle, loadAutoScale, decimalPlaces,
-				)}`;
+		return LoadUtils.generateLoadItem(
+			'aux', id, icon_link,
+			color, mainX + xGaps[1], mainY + yGaps[0],
+			name, mainX + xGaps[2], mainY + yGaps[1],
+			power, mainX + xGaps[2], mainY + yGaps[2],
+			energy, mainX + xGaps[2], mainY + yGaps[3],
+			toggle, loadAutoScale, decimalPlaces,
+		);
 	}
 
 
@@ -205,7 +199,7 @@ export class LoadUtils {
             <a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
                 <text id="${id}" x="${x}" y="${y}"
                       display="${entity?.isValid() ? '' : 'none'}"
-                      class="st3 ${align}" fill="${color}">${entity.toStr(1, false)} ${UnitOfFrequency.HERTZ}
+                      class="st3 ${align}" fill="${color}">${entity?.toStr(1, false)} ${UnitOfFrequency.HERTZ}
                 </text>
             </a>`
 			: ``;
@@ -225,7 +219,7 @@ export class LoadUtils {
 					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 left-align"
 					  fill="${color}">
-					${entity.toStr(1) || 0} ${UnitOfElectricalCurrent.AMPERE}
+					${entity?.toStr(1) || 0} ${UnitOfElectricalCurrent.AMPERE}
 				</text>
 			</a>`;
 	}
@@ -243,7 +237,7 @@ export class LoadUtils {
 					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 right-align"
 					  fill="${color}">
-					${entity.toStr(1) || 0} ${UnitOfElectricPotential.VOLT}
+					${entity?.toStr(1) || 0} ${UnitOfElectricPotential.VOLT}
 				</text>
 			</a>`;
 	}

@@ -123,7 +123,7 @@ export class AuxLoad {
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
 				<text id="daily_load_value" x="${this.mainX + 10}" y="87"
-					  class="st10 left-align" display="${!data.showDailyAux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
+					  class="st10 left-align" display="${!config.load?.show_daily_aux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.auxLoadMainDynamicColour}">
 					${data.stateDayAuxEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
@@ -132,7 +132,7 @@ export class AuxLoad {
 					x="${this.mainX + 10}"
 				    y="100"
 				    class="st3 left-align"
-				    fill="${!data.showDailyAux ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
+				    fill="${!config.load?.show_daily_aux ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
 				${config.load?.aux_daily_name ? config.load?.aux_daily_name : localize('common.daily_aux')}
 			</text>
 		`;

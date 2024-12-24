@@ -20,7 +20,7 @@ export class Inverter {
 				</svg>`
 			: svg`<image x="214" y="180" width="50" height="72" preserveAspectRatio="none" href="${inverterImg}" />`
 		}`;
-		return config.inverter?.navigate?
+		return config.inverter?.navigate ?
 			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.inverter.navigate)}>
 					${inverter}
 				</a>`
@@ -130,14 +130,14 @@ export class Inverter {
 
 	static generateTemperatures(data: DataDto, config: PowerFlowCardConfig) {
 		let ac = config.inverter?.ac_icon
-			? LoadUtils.getIcon(178, 218, config.inverter.ac_icon, 'small_ac_dc_icon', 16)
+			? LoadUtils.getIconWithStyle(178, 218, config.inverter.ac_icon, data.inverterColour, 16, 10)
 			: svg`
 				<text id="ac_temp" x="190" y="229" class="st3 right-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     AC:
                 </text>`;
 		let dc = config.inverter?.dc_icon
-			? LoadUtils.getIcon(178, 230, config.inverter.dc_icon, 'small_ac_dc_icon', 16)
+			? LoadUtils.getIconWithStyle(178, 230, config.inverter.dc_icon, data.inverterColour, 16, 10)
 			: svg`
 			<text id="dc_temp" x="190" y="241" class="st3 right-align" fill="${data.inverterColour}"
                   display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">

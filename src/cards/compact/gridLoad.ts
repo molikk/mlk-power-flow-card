@@ -4,15 +4,16 @@ import { LoadUtils } from './loadUtils';
 import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
 import { Load } from './load';
+import { localize } from '../../localize/localize';
 
 export class GridLoad {
 
 	private static getPositions(no: number, max: number): number {
-		switch(max) {
+		switch (max) {
 			case 1:
 				return 86;
 			case 2:
-				switch(no){
+				switch (no) {
 					case 1:
 						return 43;
 					case 2:
@@ -20,7 +21,7 @@ export class GridLoad {
 				}
 				break;
 			case 3:
-				switch(no){
+				switch (no) {
 					case 1:
 						return 0;
 					case 2:
@@ -30,7 +31,7 @@ export class GridLoad {
 				}
 				break;
 			case 4:
-				switch(no){
+				switch (no) {
 					case 1:
 						return 0;
 					case 2:
@@ -42,7 +43,7 @@ export class GridLoad {
 				break;
 			case 5:
 			case 6:
-				switch(no){
+				switch (no) {
 					case 1:
 					case 4:
 						return 0;
@@ -54,19 +55,18 @@ export class GridLoad {
 						return 86;
 				}
 				break;
-
 		}
 		return 0;
 	}
 
 	static generateLoad(data: DataDto, config: PowerFlowCardConfig, ID: number) {
-		const id = ID-1;
+		const id = ID - 1;
 		const X = this.getPositions(ID, config.grid.additional_loads);
 		const row = id < 3 ? Load.row5 : Load.row6;
-		return svg`${data.nonessentialLoads > id ?
+		return data.nonessentialLoads > id ?
 			svg`
 				${LoadUtils.generateGridLoad(
-				id+1, data.nonessentialLoadIcon[id],
+				id + 1, data.nonessentialLoadIcon[id],
 				data.nonEssentialLoadDynamicColour[id],
 				GridLoad.nonessentialLoadName(config)[id],
 				data.nonessentialLoadState[id],
@@ -75,19 +75,17 @@ export class GridLoad {
 				config.grid.auto_scale, data.decimalPlaces,
 				X, row, [11, 0, 20.5],
 			)}`
-			: svg``
-		}`;
-
+			: svg``;
 	}
 
-	static nonessentialLoadName(config: PowerFlowCardConfig){
+	static nonessentialLoadName(config: PowerFlowCardConfig) {
 		return [
 			config.grid?.load1_name,
 			config.grid?.load2_name,
 			config.grid?.load3_name,
 			config.grid?.load4_name,
 			config.grid?.load5_name,
-			config.grid?.load6_name
+			config.grid?.load6_name,
 		];
 	}
 
@@ -119,16 +117,14 @@ export class GridLoad {
 				break;
 			case 3:
 				return `M 109 328L 109 333`;
-
 		}
 		return ``;
 	}
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
-		const icon = LoadUtils.getIconWithCondition(data.nonessentialLoads >= 1, config.battery.show_battery_banks ? 53 : 68, 290, data.nonessentialIcon, 'nes-load-icon', 32);
+		const icon = LoadUtils.getIconWithStyleAndCondition(config.grid.show_nonessential, config.battery.show_battery_banks ? 58 : 68, 290, data.nonessentialIcon, data.nonEssentialLoadMainDynamicColour, 32, 32);
 
 		return svg`${icon}`;
-
 	}
 
 	static generateLines(data: DataDto, config: PowerFlowCardConfig) {
@@ -166,20 +162,25 @@ export class GridLoad {
 		})();
 
 		const line1 = `M ${startX} 328 L 135 328 Q 140 328 140 323 L 140 320`;
-		return svg`
-			 <svg id="nes-flow1">
+		let flowLine1 = svg`<svg id="nes-flow1">
 				<path id="nes-line1" d="${line1}" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
 					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				<circle id="nes-dot1" cx="0" cy="0"
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
+								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#nes-line1"/>
 					</animateMotion>
 				</circle>
-			 </svg>
+			 </svg`;
+		if (config.grid.additional_loads == 0) {
+			flowLine1 = svg``;
+		}
+
+		return svg`
+			${flowLine1}>
 			 <svg id="nes-flow2">
 				<path id="nes-line2" d="M 140 290 L 140 234" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
 					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
@@ -187,38 +188,53 @@ export class GridLoad {
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
+								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
 								   keyTimes="0;1" calcMode="linear">
 						<mpath xlink:href="#nes-line2"/>
 					</animateMotion>
 				</circle>
-			</svg>
-	`;
+			</svg>`;
 	}
 
 	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
+		return config.grid.show_nonessential ?
+			svg`
 			<rect x="${config.battery.show_battery_banks ? '90' : '105'}" y="290" width="70" height="30" rx="4.5" ry="4.5" 
 				fill="none"
-				stroke="${data.nonEssentialLoadMainDynamicColour}" pointer-events="all"
-				display="${data.nonessentialLoads === 0 ? 'none' : ''}"/>
+				stroke="${data.nonEssentialLoadMainDynamicColour}" pointer-events="all"/>
 			<text id="ess_load_name" class="st16 left-align" x="${config.battery.show_battery_banks ? '93' : '108'}" y="295" 
 				fill="${data.nonEssentialLoadMainDynamicColour}">
 				${config.grid.nonessential_name}
-			</text>
-		`;
+			</text>`
+			: svg``;
 	}
 
 	static generateTotalPower(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
+		return config.grid.show_nonessential ?
+			svg`
 			<text id="nonessential_load_power" x="${config.battery.show_battery_banks ? '125' : '140'}" y="307"
-				  display="${data.nonessentialLoads === 0 ? 'none' : ''}"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 				  fill="${data.nonEssentialLoadMainDynamicColour}">
 				${config.grid.auto_scale
-			? Utils.convertValue(data.nonessentialPower, data.decimalPlaces) || 0
-			: `${data.nonessentialPower || 0} ${UnitOfPower.WATT}`
-		}
+				? Utils.convertValue(data.nonessentialPower, data.decimalPlaces) || 0
+				: `${data.nonessentialPower || 0} ${UnitOfPower.WATT}`
+			}
+			</text>`
+			: svg``;
+	}
+
+	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
+		return svg`
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
+			    <text id="nes_daily_load_value" class="st10 right-align" 
+			    	x="10"  y="302" 
+			     	display="${!config.load?.show_daily_aux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
+			     	fill="${data.nonEssentialLoadMainDynamicColour}">
+			        XX${data.stateDayAuxEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
+			    </text>
+			</a>
+			<text id="nes_daily_load" y="315" class="st3 right-align" x="10" fill="#5fb6ad">
+			    ${config.load?.aux_daily_name ? config.load?.aux_daily_name : localize('common.daily_aux')}
 			</text>`;
 	}
 }
