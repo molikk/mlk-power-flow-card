@@ -10,7 +10,7 @@ See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/i
 ![GitHub latest version](https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?include_prereleases&style=for-the-badge&label=Latest%20version)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?style=for-the-badge) 
 <!-- [![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge)](https://community.home-assistant.io/t/sunsynk-deye-inverter-power-flow-card/562933/1) -->
-<!-- <a href="https://www.buymeacoffee.com/slipx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="28" width="120"></a> -->
+<a href="https://www.buymeacoffee.com/molikk" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="28" width="120"></a>
 
 ## Features
 
