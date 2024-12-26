@@ -182,7 +182,7 @@ export class GridLoad {
 					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				<circle id="nes-dot1" cx="0" cy="0"
 						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
+						fill="${data.nonEssentialLoadMainDynamicColour}">
 					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
 								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
 								   keyTimes="0;1" calcMode="linear">
@@ -194,20 +194,27 @@ export class GridLoad {
 			flowLine1 = svg``;
 		}
 
+		let circle2 = svg`
+			<circle id="nes-dot2" cx="0" cy="0"
+					r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
+					fill="${data.nonEssentialLoadMainDynamicColour}">
+				<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
+							   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
+							   keyTimes="0;1" calcMode="linear">
+					<mpath xlink:href="#nes-line2"/>
+				</animateMotion>
+			</circle`;
+
+		if (!config.grid.show_nonessential) {
+			circle2 = svg``;
+		}
+
 		return svg`
 			${flowLine1}>
 			 <svg id="nes-flow2">
 				<path id="nes-line2" d="M 140 290 L 140 234" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
 					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
-				<circle id="nes-dot2" cx="0" cy="0"
-						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.nonessentialLoads === 0 ? 'transparent' : `${data.nonEssentialLoadMainDynamicColour}`}">
-					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
-								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#nes-line2"/>
-					</animateMotion>
-				</circle>
+				${circle2}>
 			</svg>`;
 	}
 
