@@ -9,9 +9,8 @@ See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/i
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=molikk&repository=mlk-power-flow-card&category=plugin)
 ![GitHub latest version](https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?include_prereleases&style=for-the-badge&label=Latest%20version)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?style=for-the-badge) 
+<a href="https://www.buymeacoffee.com/molikk"><img src="https://img.buymeacoffee.com/button-api/?text=&nbsp;&slug=molikk&button_colour=5F7FFF&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" height="28" width="60" /></a>
 <!-- [![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge)](https://community.home-assistant.io/t/sunsynk-deye-inverter-power-flow-card/562933/1) -->
-<a href="https://www.buymeacoffee.com/molikk"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a tea&emoji=🍵&slug=molikk&button_colour=5F7FFF&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" /></a>
-
 ## Features
 
 * Animated power flow based on positive/negative/zero sensor values with configurable dynamic speed.
