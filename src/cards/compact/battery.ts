@@ -81,7 +81,7 @@ export class Battery {
 	static generateTemp(data: DataDto, config: PowerFlowCardConfig) {
 		const x = Battery.showOuterBatteryBanks(config) ? 322 : 227;
 		const y = Battery.showOuterBatteryBanks(config) ? 294 : 334;
-		const align = Battery.showOuterBatteryBanks(config) ?'left-align':  'right-align';
+		const align = Battery.showOuterBatteryBanks(config) ? 'left-align' : 'right-align';
 
 		return svg`
 				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
@@ -97,7 +97,7 @@ export class Battery {
 	}
 
 	static generateDuration(data: DataDto, config: PowerFlowCardConfig) {
-		const y =  Battery.showOuterBatteryBanks(config)?377.5 : 393.5;
+		const y = Battery.showOuterBatteryBanks(config) ? 377.5 : 393.5;
 		return svg`
 			<text id="duration" x="270" y="${y - 16}"
 				  class="${data.largeFont !== true ? 'st14' : 'st4'} left-align"
@@ -124,7 +124,7 @@ export class Battery {
 		const x = Battery.showOuterBatteryBanks(config) ? 142 : 132;
 		const y = Battery.showOuterBatteryBanks(config) ? 333 : 343;
 		return svg`
-			<text id="daily_bat_charge" x="${x}" y="${y+13}" class="st3 left-align"
+			<text id="daily_bat_charge" x="${x}" y="${y + 13}" class="st3 left-align"
 				  fill="${data.batteryShowDaily !== true ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_charge')}
 			</text>
@@ -142,7 +142,7 @@ export class Battery {
 		const x = Battery.showOuterBatteryBanks(config) ? 142 : 132;
 		const y = Battery.showOuterBatteryBanks(config) ? 365 : 380;
 		return svg`
-			<text id="daily_bat_dischcharge" x="${x}" y="${y+13}"
+			<text id="daily_bat_dischcharge" x="${x}" y="${y + 13}"
 				  class="st3 left-align"
 				  fill="${data.batteryShowDaily !== true ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_discharge')}
@@ -160,32 +160,27 @@ export class Battery {
 
 	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 285 : 290;
+		let keyPoints = data.batteryPower > 0 ? '1;0' : '0;1';
+		keyPoints = config.battery.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
+
+		let circle = data.batteryPower != 0 ? svg`
+			<circle id="power-dot" cx="0" cy="0"
+					r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
+					fill="${Battery.batteryColour(data, config)}">
+				<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
+							   keyPoints=${keyPoints}
+								 keyTimes="0;1" 
+								 calcMode="linear">
+					<mpath href='#bat-line'/>
+				</animateMotion>
+			</circle>` : svg``;
 		return svg`
  			<svg id="battery-flow">
 				<path id="bat-line"
 					  d="M 239 250 L 239 ${y}" fill="none"
 					  stroke="${Battery.batteryColour(data, config)}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
 					  pointer-events="stroke"/>
-				<circle id="power-dot-discharge" cx="0" cy="0"
-						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.batteryPower <= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}`}">
-					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
-								   keyPoints=${config.battery.invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
-									 keyTimes="0;1" 
-									 calcMode="linear">
-						<mpath xlink:href="#bat-line"/>
-					</animateMotion>
-				</circle>
-				<circle id="power-dot-charge" cx="0" cy="0"
-						r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.batteryPower >= 0 ? 'transparent' : `${Battery.batteryColour(data, config)}`}">
-					<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
-								   keyPoints=${config.battery.invert_flow ? Utils.invertKeyPoints("0;1") : "0;1"} 
-								   keyTimes="0;1" 
-								   calcMode="linear">
-						<mpath xlink:href="#bat-line"/>
-					</animateMotion>
-				</circle>
+				${circle}
 			</svg>`;
 	}
 
@@ -202,9 +197,9 @@ export class Battery {
 
 
 	static generateCapacity(data: DataDto, config: PowerFlowCardConfig) {
-		const x = Battery.showInnerBatteryBanks(config) ? 202 : ( Battery.showOuterBatteryBanks(config) ? 322 : 270);
-		const y = Battery.showInnerBatteryBanks(config) ? 325 : ( Battery.showOuterBatteryBanks(config) ? 307 : 338);
-		const align = Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align'
+		const x = Battery.showInnerBatteryBanks(config) ? 202 : (Battery.showOuterBatteryBanks(config) ? 322 : 270);
+		const y = Battery.showInnerBatteryBanks(config) ? 325 : (Battery.showOuterBatteryBanks(config) ? 307 : 338);
+		const align = Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align';
 
 		if (data.stateBatteryRemainingStorage?.isValid()) {
 			return svg`
@@ -227,30 +222,30 @@ export class Battery {
 	}
 
 	static generateSOC(data: DataDto, config: PowerFlowCardConfig) {
-		const y = Battery.showOuterBatteryBanks(config) ? 335: 351;
+		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
 		return svg`
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
-				<text id="battery_prog_soc_184" x="330" y="${y+7}" fill=${data.batteryColour}
+				<text id="battery_prog_soc_184" x="330" y="${y + 7}" fill=${data.batteryColour}
 						class="st13 st8 left-align"
 						display="${!data.inverterProg.show || config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
 					| ${data.inverterProg.capacity || 0}%
 				</text>
 			</a>
 			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
-				<text id="battery_prog_soc_184" x="330" y="${y+7}" fill=${data.batteryColour}
+				<text id="battery_prog_soc_184" x="330" y="${y + 7}" fill=${data.batteryColour}
 				    	class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
 				    	display="${!data.inverterProg.show && config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 			  		| ${data.batteryShutdown || 0}%
 				</text>
 			</a>
         	<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
-          		<text id="battery_soc_184" x="270" y="${y+7}" fill=${data.batteryColour} 
+          		<text id="battery_soc_184" x="270" y="${y + 7}" fill=${data.batteryColour} 
 	                class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
 	                display="${data.stateBatterySoc.isValid() ? '' : 'none'}" >
 	              ${data.stateBatterySoc.toStr(data.stateBatterySoc.toNum(1) === 100.0 ? 0 : 1)}%
           		</text>
 	      	</a>
-			<text id="battery_soc_184" x="331" y="${y+7}" fill=${data.batteryColour}
+			<text id="battery_soc_184" x="331" y="${y + 7}" fill=${data.batteryColour}
               		class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
               		display="${!data.inverterProg.show && config.battery.shutdown_soc_offgrid ? '' : 'none'}" >
                 |
@@ -260,7 +255,7 @@ export class Battery {
 				  	display="${!data.inverterProg.show && config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.batteryShutdown}%
 			</text>
-			<text id="battery_prog_soc_184" x="343" y="${y+13}" fill=${data.batteryColour}
+			<text id="battery_prog_soc_184" x="343" y="${y + 13}" fill=${data.batteryColour}
 		  			class="${config.battery.hide_soc ? 'st12' : 'st14 left-align'}"
 				  	display="${!data.inverterProg.show && config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.shutdownOffGrid}%
@@ -268,7 +263,7 @@ export class Battery {
 	}
 
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
-		const y =  Battery.showOuterBatteryBanks(config)?312.5 : 325.5;
+		const y = Battery.showOuterBatteryBanks(config) ? 312.5 : 325.5;
 		let bat = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="212.5"
 				 y="${y}" width="78.75"
@@ -311,7 +306,7 @@ export class Battery {
 					  d="${data.batteryCharge}"/>
 			</svg>		
 		`;
-		return config.battery.navigate?
+		return config.battery.navigate ?
 			svg` <a href="#" @click=${(e) => Utils.handleNavigation(e, config.battery.navigate)}>
 				${bat}
 			</a>`

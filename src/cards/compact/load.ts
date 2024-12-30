@@ -54,26 +54,8 @@ export class Load {
 		const line2 = `M ${start2} 218.5 L ${stop2} 218.5`;
 
 		const animationSpeed = (stop1 - (start1 - xTransform)) / (stop1 - start1) * data.durationCur['load'];
-		let circleMotion = svg`
-				<circle id="es-dot" cx="0" cy="0"
-						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
-					<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
-								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
-								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#es-line"/>
-					</animateMotion>
-				</circle>`;
-		let circle1Motion = svg`
-				<circle id="es-dot" cx="0" cy="0"
-						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.essentialPower === 0 ? 'transparent' : `${config.load.dynamic_colour ? data.flowColour : data.loadColour}`}">
-					<animateMotion dur="${data.durationCur['load']}s" repeatCount="indefinite"
-								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
-								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#es-line1"/>
-					</animateMotion>
-				</circle>`;
+		const circleMotion = this.getCircleMotion(data.essentialPower > 0, 'es-dot', '#es-line', data, config, animationSpeed);
+		const circle1Motion = this.getCircleMotion(data.essentialPower > 0, 'es-dot1', '#es-line1', data, config, animationSpeed);
 
 		return svg `
 			 <svg id="load-flow">
@@ -87,6 +69,19 @@ export class Load {
 				${circle1Motion}
 			</svg>
 	`;
+	}
+
+	private static getCircleMotion(condition: boolean, circleId:string, lineId:string, data: DataDto, config: PowerFlowCardConfig, animationSpeed: number) {
+		return condition?svg`
+				<circle id="${circleId}" cx="0" cy="0"
+						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
+						fill="${config.load.dynamic_colour ? data.flowColour : data.loadColour}">
+					<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
+								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
+								   keyTimes="0;1" calcMode="linear">
+						<mpath href='${lineId}'/>
+					</animateMotion>
+				</circle>`:svg``;
 	}
 
 	static generatePowers(data: DataDto, config: PowerFlowCardConfig) {

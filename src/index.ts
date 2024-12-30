@@ -1,5 +1,5 @@
 import { CSSResultGroup, LitElement } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import { styles } from './style';
 import { DataDto, InverterModel, InverterSettings, PowerFlowCardConfig, RefreshCardConfig } from './types';
@@ -37,19 +37,6 @@ console.groupEnd();
 export class PowerFlowCard extends LitElement {
 	@property() public hass!: HomeAssistant;
 	@property() private _config!: PowerFlowCardConfig;
-	@query('#grid-flow') gridFlow?: SVGSVGElement;
-	@query('#grid1-flow') grid1Flow?: SVGSVGElement;
-	@query('#solar-flow') solarFlow?: SVGSVGElement;
-	@query('#pv1-flow') pv1Flow?: SVGSVGElement;
-	@query('#pv2-flow') pv2Flow?: SVGSVGElement;
-	@query('#pv3-flow') pv3Flow?: SVGSVGElement;
-	@query('#pv4-flow') pv4Flow?: SVGSVGElement;
-	@query('#pv5-flow') pv5Flow?: SVGSVGElement;
-	@query('#battery-flow') batteryFlow?: SVGSVGElement;
-	@query('#load-flow') loadFlow?: SVGSVGElement;
-	@query('#aux-flow') auxFlow?: SVGSVGElement;
-	@query('#ne-flow') neFlow?: SVGSVGElement;
-	@query('#ne1-flow') ne1Flow?: SVGSVGElement;
 
 	private readonly GREY_COLOUR = 'grey';
 
@@ -499,49 +486,6 @@ export class PowerFlowCard extends LitElement {
 		const decimalPlaces = config.decimal_places;
 		const decimalPlacesEnergy = config.decimal_places_energy;
 
-		const loadColour = this.colourConvert(config.load?.colour);
-		const dynamicColourEssentialLoad1 = this.calculateEssentialLoadColour(stateEssentialLoad1, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad2 = this.calculateEssentialLoadColour(stateEssentialLoad2, stateEssentialLoad2Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad3 = this.calculateEssentialLoadColour(stateEssentialLoad3, stateEssentialLoad3Toggle, config.load?.off_threshold) || loadColour;
-		const dynamicColourEssentialLoad4 = this.calculateEssentialLoadColour(stateEssentialLoad4, stateEssentialLoad4Toggle, config.load?.off_threshold) || loadColour;
-		const essentialLoadCol1DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol1State[1 - 1], essentialLoadCol1ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[2 - 1], essentialLoadCol1ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[3 - 1], essentialLoadCol1ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[4 - 1], essentialLoadCol1ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[5 - 1], essentialLoadCol1ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-		];
-		const essentialLoadCol2DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol2State[1 - 1], essentialLoadCol2ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[2 - 1], essentialLoadCol2ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[3 - 1], essentialLoadCol2ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[4 - 1], essentialLoadCol2ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[5 - 1], essentialLoadCol2ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-		];
-		const essentialLoadCol3DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol3State[1 - 1], essentialLoadCol3ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[2 - 1], essentialLoadCol3ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[3 - 1], essentialLoadCol3ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[4 - 1], essentialLoadCol3ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[5 - 1], essentialLoadCol3ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-		];
-		const essentialLoadCol4DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol4State[1 - 1], essentialLoadCol4ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[2 - 1], essentialLoadCol4ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[3 - 1], essentialLoadCol4ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[4 - 1], essentialLoadCol4ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[5 - 1], essentialLoadCol4ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-		];
-		const essentialLoadCol5DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol5State[1 - 1], essentialLoadCol5ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[2 - 1], essentialLoadCol5ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[3 - 1], essentialLoadCol5ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[4 - 1], essentialLoadCol5ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[5 - 1], essentialLoadCol5ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-		];
-
-		config.title_colour = this.colourConvert(config.title_colour);
-
 		const loadShowDaily = config.load?.show_daily;
 		const showNonessential = config.grid?.show_nonessential;
 		let gridStatus = config.entities?.grid_connected_status_194 ? stateGridConnectedStatus.state : 'on';
@@ -586,40 +530,6 @@ export class PowerFlowCard extends LitElement {
 				break;
 		}
 
-		const nonEssentialLoadMainDynamicColour = this.sumPowers(nonessentialLoadState, true) > Utils.toNum(config.grid?.off_threshold, 0)
-			? this.sumPowers(nonessentialLoadState, false) > 0 ? gridImportColour : gridExportColour
-			: this.GREY_COLOUR;
-
-		const nonEssentialLoadDynamicColour = [
-			this.getDynamicColorWithToggle(nonessentialLoadState[1 - 1], nonEssentialLoadToggleState[1 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[2 - 1], nonEssentialLoadToggleState[2 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[3 - 1], nonEssentialLoadToggleState[3 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[4 - 1], nonEssentialLoadToggleState[4 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[5 - 1], nonEssentialLoadToggleState[5 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[6 - 1], nonEssentialLoadToggleState[6 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-		];
-		const gridOffColour = this.colourConvert(config.grid?.grid_off_colour || gridColour);
-
-		const auxColour = this.colourConvert(config.load?.aux_colour);
-		const auxOffColour = this.colourConvert(config.load?.aux_off_colour || this.GREY_COLOUR);
-		const auxLoadDynamicColour = [
-			this.calculateAuxLoadColour(auxLoadState[0], auxLoadToggleState[0], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[1], auxLoadToggleState[1], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[2], auxLoadToggleState[2], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[3], auxLoadToggleState[3], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[4], auxLoadToggleState[4], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[5], auxLoadToggleState[5], config.load?.off_threshold) || auxColour,
-		];
-
-		let auxDynamicColour = auxOffColour;
-		auxDynamicColour = auxLoadDynamicColour[0] != auxOffColour ? auxLoadDynamicColour[0] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[1] != auxOffColour ? auxLoadDynamicColour[1] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[2] != auxOffColour ? auxLoadDynamicColour[2] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[3] != auxOffColour ? auxLoadDynamicColour[3] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[4] != auxOffColour ? auxLoadDynamicColour[4] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[5] != auxOffColour ? auxLoadDynamicColour[5] : auxDynamicColour;
-		auxDynamicColour = stateAuxPower.isValid() && Math.abs(stateAuxPower.toPower()) > Utils.toNum(config.load?.off_threshold, 0) ? auxColour : auxDynamicColour;
-
 		let nonessentialLoads = config.grid?.additional_loads;
 		if (!validNonLoadValues.includes(nonessentialLoads)) {
 			nonessentialLoads = 0;
@@ -644,69 +554,6 @@ export class PowerFlowCard extends LitElement {
 
 		const auxType = config.load?.aux_type; //valid options are gen,inverter, default, gen, boiler, pump, aircon
 
-		//Icons
-		const iconEssentialLoad1 = this.getEntity('load.load1_icon', { state: config.load?.load1_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad2 = this.getEntity('load.load2_icon', { state: config.load?.load2_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad3 = this.getEntity('load.load3_icon', { state: config.load?.load3_icon?.toString() ?? '' }).state;
-		const iconEssentialLoad4 = this.getEntity('load.load4_icon', { state: config.load?.load4_icon?.toString() ?? '' }).state;
-		const essentialLoadCol1Icon = [
-			this.getEntity('load.load_1_1_icon', { state: config.load?.load_1_1_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_1_2_icon', { state: config.load?.load_1_2_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_1_3_icon', { state: config.load?.load_1_3_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_1_4_icon', { state: config.load?.load_1_4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_1_5_icon', { state: config.load?.load_1_5_icon?.toString() ?? '' }).state,
-		];
-		const essentialLoadCol2Icon = [
-			this.getEntity('load.load_2_1_icon', { state: config.load?.load_2_1_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_2_2_icon', { state: config.load?.load_2_2_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_2_3_icon', { state: config.load?.load_2_3_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_2_4_icon', { state: config.load?.load_2_4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_2_5_icon', { state: config.load?.load_2_5_icon?.toString() ?? '' }).state,
-		];
-		const essentialLoadCol3Icon = [
-			this.getEntity('load.load_3_1_icon', { state: config.load?.load_3_1_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_3_2_icon', { state: config.load?.load_3_2_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_3_3_icon', { state: config.load?.load_3_3_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_3_4_icon', { state: config.load?.load_3_4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_3_5_icon', { state: config.load?.load_3_5_icon?.toString() ?? '' }).state,
-		];
-		const essentialLoadCol4Icon = [
-			this.getEntity('load.load_4_1_icon', { state: config.load?.load_4_1_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_4_2_icon', { state: config.load?.load_4_2_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_4_3_icon', { state: config.load?.load_4_3_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_4_4_icon', { state: config.load?.load_4_4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_4_5_icon', { state: config.load?.load_4_5_icon?.toString() ?? '' }).state,
-		];
-		const essentialLoadCol5Icon = [
-			this.getEntity('load.load_5_1_icon', { state: config.load?.load_5_1_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_5_2_icon', { state: config.load?.load_5_2_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_5_3_icon', { state: config.load?.load_5_3_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_5_4_icon', { state: config.load?.load_5_4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.load_5_5_icon', { state: config.load?.load_5_5_icon?.toString() ?? '' }).state,
-		];
-
-
-		const auxLoadIcon = [
-			this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load3_icon', { state: config.load?.aux_load3_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load4_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load5_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load6_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
-		];
-		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
-
-		const nonessentialLoadIcon = [
-			this.getEntity('grid.load1_icon', { state: config.grid?.load1_icon?.toString() ?? '' }).state,
-			this.getEntity('grid.load2_icon', { state: config.grid?.load2_icon?.toString() ?? '' }).state,
-			this.getEntity('grid.load3_icon', { state: config.grid?.load3_icon?.toString() ?? '' }).state,
-			this.getEntity('grid.load4_icon', { state: config.grid?.load4_icon?.toString() ?? '' }).state,
-			this.getEntity('grid.load5_icon', { state: config.grid?.load5_icon?.toString() ?? '' }).state,
-			this.getEntity('grid.load6_icon', { state: config.grid?.load6_icon?.toString() ?? '' }).state,
-		];
-		const iconGridImport = this.getEntity('grid.import_icon', { state: config.grid?.import_icon?.toString() ?? '' }).state;
-		const iconGridDisconnected = this.getEntity('grid.disconnected_icon', { state: config.grid?.disconnected_icon?.toString() ?? '' }).state;
-		const iconGridExport = this.getEntity('grid.export_icon', { state: config.grid?.export_icon?.toString() ?? '' }).state;
 
 		const largeFont = config.large_font;
 		const panelMode = config.panel_mode;
@@ -1351,6 +1198,128 @@ export class PowerFlowCard extends LitElement {
 			gridPercentageBat = Utils.toNum(Math.min(gridPercentageRawBat, 100), 0);
 		}
 
+
+		//console.log(`${pvPercentageBat} % PV to charge battery, ${gridPercentageBat} % Grid to charge battery`);
+
+		let essIcon: string;
+		let essIconSize: number;
+
+		switch (true) {
+			case pvPercentageRaw >= 100 && batteryPercentageRaw <= 5 && (totalGridPower - nonessentialPower) < 50 && config.load.dynamic_icon:
+				essIcon = icons.essPv;
+				essIconSize = 1;
+				break;
+			case batteryPercentageRaw >= 100 && pvPercentageRaw <= 5 && (totalGridPower - nonessentialPower) < 50 && config.load.dynamic_icon:
+				essIcon = icons.essBat;
+				essIconSize = 0;
+				break;
+			case pvPercentageRaw < 5 && batteryPercentageRaw < 5 && gridPercentage > 0 && config.load.dynamic_icon:
+				essIcon = icons.essGrid;
+				essIconSize = 0;
+				break;
+			default:
+				essIcon = icons.ess;
+				essIconSize = 0;
+				break;
+		}
+
+		const { batteryIcon, batteryCharge, stopColour, battery0 } = BatteryIconManager.convert(stateBatterySoc);
+
+		//Calculate pv efficiency
+		const pv1MaxPower = this.getEntity('solar.pv1_max_power', { state: config.solar.pv1_max_power?.toString() ?? '' });
+		const pv2MaxPower = this.getEntity('solar.pv2_max_power', { state: config.solar.pv2_max_power?.toString() ?? '' });
+		const pv3MaxPower = this.getEntity('solar.pv3_max_power', { state: config.solar.pv3_max_power?.toString() ?? '' });
+		const pv4MaxPower = this.getEntity('solar.pv4_max_power', { state: config.solar.pv4_max_power?.toString() ?? '' });
+		const pv5MaxPower = this.getEntity('solar.pv5_max_power', { state: config.solar.pv5_max_power?.toString() ?? '' });
+
+		const totalPVEfficiency = (config.solar.max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 200), 0) : 100;
+		const PV1Efficiency = (config.solar.pv1_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 200), 0) : 100;
+		const PV2Efficiency = (config.solar.pv2_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 200), 0) : 100;
+		const PV3Efficiency = (config.solar.pv3_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 200), 0) : 100;
+		const PV4Efficiency = (config.solar.pv4_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 200), 0) : 100;
+		const PV5Efficiency = (config.solar.pv5_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 200), 0) : 100;
+
+
+		//colors
+		const loadColour = this.colourConvert(config.load?.colour);
+		const dynamicColourEssentialLoad1 = this.calculateEssentialLoadColour(stateEssentialLoad1, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad2 = this.calculateEssentialLoadColour(stateEssentialLoad2, stateEssentialLoad2Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad3 = this.calculateEssentialLoadColour(stateEssentialLoad3, stateEssentialLoad3Toggle, config.load?.off_threshold) || loadColour;
+		const dynamicColourEssentialLoad4 = this.calculateEssentialLoadColour(stateEssentialLoad4, stateEssentialLoad4Toggle, config.load?.off_threshold) || loadColour;
+		const essentialLoadCol1DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol1State[1 - 1], essentialLoadCol1ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[2 - 1], essentialLoadCol1ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[3 - 1], essentialLoadCol1ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[4 - 1], essentialLoadCol1ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[5 - 1], essentialLoadCol1ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol2DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol2State[1 - 1], essentialLoadCol2ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[2 - 1], essentialLoadCol2ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[3 - 1], essentialLoadCol2ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[4 - 1], essentialLoadCol2ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[5 - 1], essentialLoadCol2ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol3DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol3State[1 - 1], essentialLoadCol3ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[2 - 1], essentialLoadCol3ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[3 - 1], essentialLoadCol3ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[4 - 1], essentialLoadCol3ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[5 - 1], essentialLoadCol3ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol4DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol4State[1 - 1], essentialLoadCol4ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[2 - 1], essentialLoadCol4ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[3 - 1], essentialLoadCol4ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[4 - 1], essentialLoadCol4ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[5 - 1], essentialLoadCol4ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol5DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol5State[1 - 1], essentialLoadCol5ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[2 - 1], essentialLoadCol5ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[3 - 1], essentialLoadCol5ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[4 - 1], essentialLoadCol5ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[5 - 1], essentialLoadCol5ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+		];
+
+		config.title_colour = this.colourConvert(config.title_colour);
+
+
+		const nonEssentialLoadMainDynamicColour =  nonessentialPower > Utils.toNum(config.grid?.off_threshold, 0)
+			? nonessentialPower > 0 ? gridImportColour : gridExportColour
+			: this.GREY_COLOUR;
+
+		const nonEssentialLoadDynamicColour = [
+			this.getDynamicColorWithToggle(nonessentialLoadState[1 - 1], nonEssentialLoadToggleState[1 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[2 - 1], nonEssentialLoadToggleState[2 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[3 - 1], nonEssentialLoadToggleState[3 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[4 - 1], nonEssentialLoadToggleState[4 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[5 - 1], nonEssentialLoadToggleState[5 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[6 - 1], nonEssentialLoadToggleState[6 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+		];
+		const gridOffColour = this.colourConvert(config.grid?.grid_off_colour || gridColour);
+
+		const auxColour = this.colourConvert(config.load?.aux_colour);
+		const auxOffColour = this.colourConvert(config.load?.aux_off_colour || this.GREY_COLOUR);
+		const auxLoadDynamicColour = [
+			this.calculateAuxLoadColour(auxLoadState[0], auxLoadToggleState[0], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[1], auxLoadToggleState[1], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[2], auxLoadToggleState[2], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[3], auxLoadToggleState[3], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[4], auxLoadToggleState[4], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[5], auxLoadToggleState[5], config.load?.off_threshold) || auxColour,
+		];
+
+		let auxDynamicColour = auxOffColour;
+		auxDynamicColour = auxLoadDynamicColour[0] != auxOffColour ? auxLoadDynamicColour[0] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[1] != auxOffColour ? auxLoadDynamicColour[1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[2] != auxOffColour ? auxLoadDynamicColour[2] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[3] != auxOffColour ? auxLoadDynamicColour[3] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[4] != auxOffColour ? auxLoadDynamicColour[4] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[5] != auxOffColour ? auxLoadDynamicColour[5] : auxDynamicColour;
+		auxDynamicColour = stateAuxPower.isValid() && Math.abs(stateAuxPower.toPower()) > Utils.toNum(config.load?.off_threshold, 0) ? auxColour : auxDynamicColour;
+
+
 		let flowBatColour: string;
 		switch (true) {
 			case pvPercentageBat >= Utils.toNum(config.battery?.path_threshold, 0):
@@ -1399,45 +1368,71 @@ export class PowerFlowCard extends LitElement {
 				break;
 		}
 
-		//console.log(`${pvPercentageBat} % PV to charge battery, ${gridPercentageBat} % Grid to charge battery`);
 
-		let essIcon: string;
-		let essIconSize: number;
+		//Icons
+		const iconEssentialLoad1 = this.getEntity('load.load1_icon', { state: config.load?.load1_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad2 = this.getEntity('load.load2_icon', { state: config.load?.load2_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad3 = this.getEntity('load.load3_icon', { state: config.load?.load3_icon?.toString() ?? '' }).state;
+		const iconEssentialLoad4 = this.getEntity('load.load4_icon', { state: config.load?.load4_icon?.toString() ?? '' }).state;
+		const essentialLoadCol1Icon = [
+			this.getEntity('load.load_1_1_icon', { state: config.load?.load_1_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_2_icon', { state: config.load?.load_1_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_3_icon', { state: config.load?.load_1_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_4_icon', { state: config.load?.load_1_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_5_icon', { state: config.load?.load_1_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol2Icon = [
+			this.getEntity('load.load_2_1_icon', { state: config.load?.load_2_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_2_icon', { state: config.load?.load_2_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_3_icon', { state: config.load?.load_2_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_4_icon', { state: config.load?.load_2_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_5_icon', { state: config.load?.load_2_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol3Icon = [
+			this.getEntity('load.load_3_1_icon', { state: config.load?.load_3_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_2_icon', { state: config.load?.load_3_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_3_icon', { state: config.load?.load_3_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_4_icon', { state: config.load?.load_3_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_5_icon', { state: config.load?.load_3_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol4Icon = [
+			this.getEntity('load.load_4_1_icon', { state: config.load?.load_4_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_2_icon', { state: config.load?.load_4_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_3_icon', { state: config.load?.load_4_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_4_icon', { state: config.load?.load_4_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_5_icon', { state: config.load?.load_4_5_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol5Icon = [
+			this.getEntity('load.load_5_1_icon', { state: config.load?.load_5_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_2_icon', { state: config.load?.load_5_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_3_icon', { state: config.load?.load_5_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_4_icon', { state: config.load?.load_5_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_5_icon', { state: config.load?.load_5_5_icon?.toString() ?? '' }).state,
+		];
 
-		switch (true) {
-			case pvPercentageRaw >= 100 && batteryPercentageRaw <= 5 && (totalGridPower - nonessentialPower) < 50 && config.load.dynamic_icon:
-				essIcon = icons.essPv;
-				essIconSize = 1;
-				break;
-			case batteryPercentageRaw >= 100 && pvPercentageRaw <= 5 && (totalGridPower - nonessentialPower) < 50 && config.load.dynamic_icon:
-				essIcon = icons.essBat;
-				essIconSize = 0;
-				break;
-			case pvPercentageRaw < 5 && batteryPercentageRaw < 5 && gridPercentage > 0 && config.load.dynamic_icon:
-				essIcon = icons.essGrid;
-				essIconSize = 0;
-				break;
-			default:
-				essIcon = icons.ess;
-				essIconSize = 0;
-				break;
-		}
 
-		const { batteryIcon, batteryCharge, stopColour, battery0 } = BatteryIconManager.convert(stateBatterySoc);
+		const auxLoadIcon = [
+			this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load3_icon', { state: config.load?.aux_load3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load4_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load5_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load6_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+		];
+		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
 
-		//Calculate pv efficiency
-		const pv1MaxPower = this.getEntity('solar.pv1_max_power', { state: config.solar.pv1_max_power?.toString() ?? '' });
-		const pv2MaxPower = this.getEntity('solar.pv2_max_power', { state: config.solar.pv2_max_power?.toString() ?? '' });
-		const pv3MaxPower = this.getEntity('solar.pv3_max_power', { state: config.solar.pv3_max_power?.toString() ?? '' });
-		const pv4MaxPower = this.getEntity('solar.pv4_max_power', { state: config.solar.pv4_max_power?.toString() ?? '' });
-		const pv5MaxPower = this.getEntity('solar.pv5_max_power', { state: config.solar.pv5_max_power?.toString() ?? '' });
+		const nonessentialLoadIcon = [
+			this.getEntity('grid.load1_icon', { state: config.grid?.load1_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load2_icon', { state: config.grid?.load2_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load3_icon', { state: config.grid?.load3_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load4_icon', { state: config.grid?.load4_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load5_icon', { state: config.grid?.load5_icon?.toString() ?? '' }).state,
+			this.getEntity('grid.load6_icon', { state: config.grid?.load6_icon?.toString() ?? '' }).state,
+		];
+		const iconGridImport = this.getEntity('grid.import_icon', { state: config.grid?.import_icon?.toString() ?? '' }).state;
+		const iconGridDisconnected = this.getEntity('grid.disconnected_icon', { state: config.grid?.disconnected_icon?.toString() ?? '' }).state;
+		const iconGridExport = this.getEntity('grid.export_icon', { state: config.grid?.export_icon?.toString() ?? '' }).state;
 
-		const totalPVEfficiency = (config.solar.max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV1Efficiency = (config.solar.pv1_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV2Efficiency = (config.solar.pv2_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV3Efficiency = (config.solar.pv3_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV4Efficiency = (config.solar.pv4_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV5Efficiency = (config.solar.pv5_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 200), 0) : 100;
 
 		let customGridIcon: string;
 		let customGridIconColour: string;

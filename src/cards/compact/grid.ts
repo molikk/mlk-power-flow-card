@@ -87,34 +87,34 @@ export class Grid {
 
 		const lineEnd = 215 + xTransform;
 		const animationDuration = (lineEnd - 175) / (215 - 175) * data.durationCur['grid'];
+
+		let circle1 = this.getCircle(data.totalGridPower > 0, 'grid-dot1', data, animationDuration, keyPoints, '#grid-line1');
+		let circle2 = this.getCircle(data.totalGridPower > 0, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
+
 		return svg`
-			<svg id="grid-flow">
-				<path id="grid-line" d="M 175 218 L ${lineEnd} 218" fill="none" stroke="${data.gridColour}"
+			<svg id="grid-flow1">
+				<path id="grid-line1" d="M 175 218 L ${lineEnd} 218" fill="none" stroke="${data.gridColour}"
 					  stroke-width="${data.gridLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
-				<circle id="grid-dot" cx="0" cy="0"
+				${circle1}
+			</svg>
+			<svg id="grid-flow2">
+				<path id="grid-line2" d="M 65 218 L 105 218" fill="none" stroke="${data.gridColour}"
+					  stroke-width="${data.gridLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
+				${circle2}
+			</svg>`;
+	}
+
+	private static getCircle(condition: boolean, circleId: string, data: DataDto, animationDuration: number, keyPoints: string, lineId: string) {
+		return condition ? svg`
+				<circle id="${circleId}" cx="0" cy="0"
 						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
+						fill="${data.gridColour}">
 					<animateMotion dur="${animationDuration}s" repeatCount="indefinite"
 								   keyPoints="${keyPoints}"
 								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#grid-line"/>
+						<mpath href='${lineId}'/>
 					</animateMotion>
-				</circle>
-			</svg>
-			<svg id="grid1-flow">
-				<path id="grid-line1" d="M 65 218 L 105 218" fill="none" stroke="${data.gridColour}"
-					  stroke-width="${data.gridLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
-				<circle id="grid-dot1" cx="0" cy="0"
-						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.totalGridPower === 0 ? 'transparent' : `${data.gridColour}`}">
-					<animateMotion dur="${data.durationCur['grid']}s" repeatCount="indefinite"
-								   keyPoints="${keyPoints}"
-								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#grid-line1"/>
-					</animateMotion>
-				</circle>
-			</svg>		
-		`;
+				</circle>` : svg``;
 	}
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
