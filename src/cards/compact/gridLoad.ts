@@ -1,5 +1,5 @@
 import { BatteryBanksViewMode, DataDto, PowerFlowCardConfig } from '../../types';
-import { svg } from 'lit';
+import { svg, TemplateResult } from 'lit';
 import { LoadUtils } from './loadUtils';
 import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
@@ -160,7 +160,7 @@ export class GridLoad {
 	}
 
 	static generateFlowLine(data: DataDto, config: PowerFlowCardConfig) {
-		const startX = (() => {
+		const startX: number = (() => {
 			switch (config.grid.additional_loads) {
 				case 1:
 					return 109;
@@ -177,45 +177,41 @@ export class GridLoad {
 		})();
 
 		const line1 = `M ${startX} 328 L 135 328 Q 140 328 140 323 L 140 320`;
-		let flowLine1 = svg`<svg id="nes-flow1">
-				<path id="nes-line1" d="${line1}" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
-					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
-				<circle id="nes-dot1" cx="0" cy="0"
-						r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.nonEssentialLoadMainDynamicColour}">
-					<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-								   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
-								   keyTimes="0;1" calcMode="linear">
-						<mpath xlink:href="#nes-line1"/>
-					</animateMotion>
-				</circle>
-			 </svg`;
-		if (config.grid.additional_loads == 0) {
-			flowLine1 = svg``;
-		}
+		const line2 = "M 140 290 L 140 234";
 
-		let circle2 = svg`
-			<circle id="nes-dot2" cx="0" cy="0"
+		const circle1 = this.getCircle(config.grid.show_nonessential && data.nonessentialPower > 0, 'nes-dot1', data, config, '#nes-line1');
+		const circle2 = this.getCircle(config.grid.show_nonessential && data.nonessentialPower > 0, 'nes-dot2', data, config, '#nes-line2');
+
+		const flowLine1 = this.getFlowLine(config.grid.additional_loads > 0, 'nes-flow1', 'nes-line1', line1, data, circle1);
+		const flowLine2 =  this.getFlowLine(true, 'nes-flow2', 'nes-line2', line2, data, circle2);
+
+		return svg `
+			${flowLine1}
+			${flowLine2}
+			`;
+	}
+
+	private static getCircle(condition: boolean, circleId: string, data: DataDto, config: PowerFlowCardConfig, lineId: string) {
+		return condition ? svg`
+			<circle id="${circleId}" cx="0" cy="0"
 					r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 					fill="${data.nonEssentialLoadMainDynamicColour}">
 				<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
 							   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
 							   keyTimes="0;1" calcMode="linear">
-					<mpath xlink:href="#nes-line2"/>
+					<mpath href='${lineId}'/>
 				</animateMotion>
-			</circle`;
+			</circle>` : svg``;
+	}
 
-		if (!config.grid.show_nonessential) {
-			circle2 = svg``;
-		}
-
-		return svg`
-			${flowLine1}>
-			 <svg id="nes-flow2">
-				<path id="nes-line2" d="M 140 290 L 140 234" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
+	private static getFlowLine(condition: boolean, flowId: string, lineId:string,line: string, data: DataDto, circle: TemplateResult<2>) {
+		return condition ? svg`
+			<svg id="${flowId}">
+				<path id="${lineId}" d="${line}" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
 					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
-				${circle2}>
-			</svg>`;
+				${circle}
+			 </svg` : svg``;
+
 	}
 
 	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {

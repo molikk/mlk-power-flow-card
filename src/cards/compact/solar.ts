@@ -37,84 +37,74 @@ export class Solar {
 	}
 
 	static generateSolarPower(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="pvtotal" x="205" y="116.5" width="70" height="30"
-				 viewBox="0 0 70 30" overflow="visible">
-				  <rect width="70" height="30" rx="4.5" ry="4.5" fill="none"
-				  stroke="${config.solar.visualize_efficiency ? 'url(#SlG)' : data.solarColour}" pointer-events="all"
-				  display="${config.solar.mppts === 1 ? 'none' : ''}"
-				  class="${!config.show_solar ? 'st12' : ''}"/>
-				  <defs>
-					<linearGradient id="SlG" x1="0%" x2="0%" y1="100%" y2="0%">
-						<stop offset="0%"
-							  stop-color="${data.totalPVEfficiency === 0 ? 'grey' : data.solarColour}"/>
-						<stop offset="${data.totalPVEfficiency}%"
-							  stop-color="${data.totalPVEfficiency === 0 ? 'grey' : data.solarColour}"/>
-						<stop offset="${data.totalPVEfficiency}%"
-							  stop-color="${data.totalPVEfficiency < 100 ? 'grey' : data.solarColour}"/>
-						<stop offset="100%"
-							  stop-color="${data.totalPVEfficiency < 100 ? 'grey' : data.solarColour}"/>
-					</linearGradient>
-				  </defs>
-			</svg>
-			
+		const circle = this.getCircle(data.totalPV > 0, 'so', data.solarLineWidth, data.minLineWidth, data.durationCur['solar'], config.solar.invert_flow);
+		const path = (config.show_solar && config.solar.mppts > 1) ? svg`
 			<svg id="solar-flow">
-				<path id="so-line" d="M 239 190 L 239 147"
-					  class="${!config.show_solar || config.solar.mppts === 1 ? 'st12' : ''}"
+				<path id="so-line" d="M 239 147 L 239 190"
 					  fill="none" stroke="${data.solarColour}" stroke-width="${data.solarLineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
-				<circle id="so-dot" cx="0" cy="0"
-						r="${Math.min(2 + data.solarLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						class="${!config.show_solar || config.solar.mppts === 1 ? 'st12' : ''}"
-						fill="${data.totalPV === 0 ? 'transparent' : `${data.solarColour}`}">
-					<animateMotion dur="${data.durationCur['solar']}s" repeatCount="indefinite"
-								   keyPoints=${config.solar.invert_flow ? Utils.invertKeyPoints("1;0") : "1;0"}
-								   keyTimes="0;1" 
-									 calcMode="linear">
-						<mpath xlink:href="#so-line"/>
-					</animateMotion>
-				</circle>
-			</svg>
-			<text x="233" y="156" class="${config.solar.show_mppt_efficiency ? 'st3 st8 right-align' : 'st12'}"
-				  display="${config.solar.mppts === 1 ? 'none' : ''}"
+				${circle}
+			</svg>` : svg``;
+		const efficiency = config.solar.show_mppt_efficiency ? svg`
+			<text x="233" y="156" class="st3 st8 right-align"
 				  fill="${data.solarColour}">${data.totalPVEfficiency}%
-			</text>
-			${data.statePVTotal.isValid()
-			? svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.pv_total)}>
-					<text id="pvtotal_power" x="238.8" y="132.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
-						  display="${!config.show_solar || config.solar.mppts === 1 ? 'none' : ''}" 
-						  fill="${data.solarColour}">
-						${config.solar.auto_scale
-				? Utils.convertValueNew(data.totalPV, data.statePVTotal.getUOM(), data.decimalPlaces)
-				: `${Utils.toNum(data.totalPV || 0, 0)} ${UnitOfPower.WATT}`
-			}
-				</text>
-			</a>`
-			: svg`
-				<text id="pvtotal_power" x="238.8" y="132.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
-					  display="${!config.show_solar || config.solar.mppts === 1 ? 'none' : ''}" 
-					  fill="${data.solarColour}">
-					${config.solar.auto_scale
-				? Utils.convertValue(data.totalPV, data.decimalPlaces) || 0
-				: `${Utils.toNum(data.totalPV || 0, 0)} ${UnitOfPower.WATT}`
-			}
-				</text>`
+			</text>` : svg``;
+
+		const power = config.solar.auto_scale
+			? data.statePVTotal.isValid() ? Utils.convertValueNew(data.totalPV, data.statePVTotal.getUOM(), data.decimalPlaces) : Utils.convertValue(data.totalPV, data.decimalPlaces) || 0
+			: `${Utils.toNum(data.totalPV || 0, 0)} ${UnitOfPower.WATT}`;
+
+		let totalPower = svg`
+			<text id="pvtotal_power" x="238.8" y="132.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
+				  fill="${data.solarColour}">
+				${power}
+			</text>`;
+
+		if (data.statePVTotal.isValid()) {
+			totalPower = svg`
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.pv_total)}>
+				${totalPower}
+			</a>`;
 		}
-		`;
+
+		return config.solar.mppts > 1 ? svg`
+			<svg id="pv-total" 
+					x="205" y="116.5" width="70" height="30"
+		 			viewBox="0 0 70 30" overflow="visible">
+				<rect width="70" height="30" rx="4.5" ry="4.5" fill="none"
+			        stroke="${config.solar.visualize_efficiency ? 'url(#SlG)' : data.solarColour}" pointer-events="all"
+			    />
+			    <defs>
+					<linearGradient id="SlG" x1="0%" x2="0%" y1="100%" y2="0%">
+						<stop offset="0%"
+							stop-color="${data.totalPVEfficiency === 0 ? 'grey' : data.solarColour}"/>
+						<stop offset="${data.totalPVEfficiency}%"
+							stop-color="${data.totalPVEfficiency === 0 ? 'grey' : data.solarColour}"/>
+						<stop offset="${data.totalPVEfficiency}%"
+							stop-color="${data.totalPVEfficiency < 100 ? 'grey' : data.solarColour}"/>
+						<stop offset="100%"
+							stop-color="${data.totalPVEfficiency < 100 ? 'grey' : data.solarColour}"/>
+					</linearGradient>
+			    </defs>
+			</svg>
+			${path}
+			${efficiency}
+			${totalPower
+		}
+		` : svg``;
 	}
 
 
 	static generateSolarHeader(data: DataDto, config: PowerFlowCardConfig) {
-		let startPosition;
+
 		let daily = svg``, monthly = svg``, yearly = svg``, total = svg``, remaining = svg``, tomorrow = svg``;
 
 		let no: number = this.countGenerationElements(data);
 		if (no == 0) {
 			return svg``;
 		}
-		startPosition = this.setStartPosition(no);
+		const startPosition = this.setStartPosition(no);
 
 		if (data.stateTomorrowSolar.isValid()) {
 			tomorrow = this.getProduction('tomorrow_solar_name', data.stateTomorrowSolar, startPosition, config);
@@ -146,8 +136,8 @@ export class Solar {
 				<path fill="${data.solarColour}" d="${icons.sun}"/>
 			</svg>`;
 
-		const icon = config.solar?.navigate?
-			svg `<a href="#" @click=${(e) => Utils.handleNavigation(e, config.solar.navigate)}>
+		const icon = config.solar?.navigate ?
+			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.solar.navigate)}>
 					${icon_svg}
 				</a>`
 			: icon_svg;
@@ -306,6 +296,7 @@ export class Solar {
 	}
 
 	private static pvLineMap: Record<string, string> = {
+		so: '#so-line',
 		pv1: '#pv1-line',
 		pv2: '#pv2-line',
 		pv3: '#pv3-line',
@@ -447,23 +438,30 @@ export class Solar {
 		invertFlow: boolean,
 	) {
 		const power = entity.toPower();
+		const circle = this.getCircle(Math.round(power) > 0, id, lineWidth, minLineWidth, duration, invertFlow);
+
 		return svg`
 			<svg id="${id}-flow">
 				<path id="${id}-line" d="${X[1]}"
 					  fill="none" stroke="${this.solarColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
 					  pointer-events="stroke"/>
+				${circle}
+			</svg>`;
+	}
+
+	private static getCircle(condition: boolean, id: string, lineWidth: number, minLineWidth: number, duration: number, invertFlow: boolean) {
+		return condition ? svg`
 				<circle id="${id}-dot" cx="0" cy="0"
 						r="${Math.min(2 + lineWidth + Math.max(minLineWidth - 2, 0), 8)}"
-						fill="${Math.round(power) <= 0 ? 'transparent' : `${this.solarColour}`}">
+						fill="${this.solarColour}">
 					<animateMotion dur="${duration}s" repeatCount="indefinite"
-								   keyPoints=${invertFlow ? Utils.invertKeyPoints("0;1") : "0;1"}
+								   keyPoints=${invertFlow ? Utils.invertKeyPoints('0;1') : '0;1'}
 								   keyTimes="0;1" 
 								   calcMode="linear">
 						<mpath href='${this.pvLineMap[id]}'/>
 					</animateMotion>
-				</circle>
-			</svg>`;
+				</circle>` : svg``;
 	}
 
 	private static generateName(X: number, name: string) {
