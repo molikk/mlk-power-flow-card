@@ -97,6 +97,7 @@ export class AuxLoad {
 			config.load?.aux_load3_name,
 			config.load?.aux_load4_name,
 			config.load?.aux_load5_name,
+			config.load?.aux_load6_name,
 		];
 	}
 
