@@ -240,6 +240,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_1_3'),
 			this.getEntity('entities.essential_load_1_4'),
 			this.getEntity('entities.essential_load_1_5'),
+			this.getEntity('entities.essential_load_1_6'),
 		];
 		const essentialLoadCol2State = [
 			this.getEntity('entities.essential_load_2_1'),
@@ -247,6 +248,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_2_3'),
 			this.getEntity('entities.essential_load_2_4'),
 			this.getEntity('entities.essential_load_2_5'),
+			this.getEntity('entities.essential_load_2_6'),
 		];
 		const essentialLoadCol3State = [
 			this.getEntity('entities.essential_load_3_1'),
@@ -254,6 +256,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_3_3'),
 			this.getEntity('entities.essential_load_3_4'),
 			this.getEntity('entities.essential_load_3_5'),
+			this.getEntity('entities.essential_load_3_6'),
 		];
 		const essentialLoadCol4State = [
 			this.getEntity('entities.essential_load_4_1'),
@@ -261,6 +264,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_4_3'),
 			this.getEntity('entities.essential_load_4_4'),
 			this.getEntity('entities.essential_load_4_5'),
+			this.getEntity('entities.essential_load_4_6'),
 		];
 		const essentialLoadCol5State = [
 			this.getEntity('entities.essential_load_5_1'),
@@ -268,6 +272,15 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_5_3'),
 			this.getEntity('entities.essential_load_5_4'),
 			this.getEntity('entities.essential_load_5_5'),
+			this.getEntity('entities.essential_load_5_6'),
+		];
+		const essentialLoadCol6State = [
+			this.getEntity('entities.essential_load_6_1'),
+			this.getEntity('entities.essential_load_6_2'),
+			this.getEntity('entities.essential_load_6_3'),
+			this.getEntity('entities.essential_load_6_4'),
+			this.getEntity('entities.essential_load_6_5'),
+			this.getEntity('entities.essential_load_6_6'),
 		];
 		const essentialLoadCol1ExtraState = [
 			this.getEntity('entities.essential_load_1_1_extra'),
@@ -275,6 +288,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_1_3_extra'),
 			this.getEntity('entities.essential_load_1_4_extra'),
 			this.getEntity('entities.essential_load_1_5_extra'),
+			this.getEntity('entities.essential_load_1_6_extra'),
 		];
 		const essentialLoadCol2ExtraState = [
 			this.getEntity('entities.essential_load_2_1_extra'),
@@ -282,6 +296,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_2_3_extra'),
 			this.getEntity('entities.essential_load_2_4_extra'),
 			this.getEntity('entities.essential_load_2_5_extra'),
+			this.getEntity('entities.essential_load_2_6_extra'),
 		];
 		const essentialLoadCol3ExtraState = [
 			this.getEntity('entities.essential_load_3_1_extra'),
@@ -289,6 +304,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_3_3_extra'),
 			this.getEntity('entities.essential_load_3_4_extra'),
 			this.getEntity('entities.essential_load_3_5_extra'),
+			this.getEntity('entities.essential_load_3_6_extra'),
 		];
 		const essentialLoadCol4ExtraState = [
 			this.getEntity('entities.essential_load_4_1_extra'),
@@ -296,6 +312,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_4_3_extra'),
 			this.getEntity('entities.essential_load_4_4_extra'),
 			this.getEntity('entities.essential_load_4_5_extra'),
+			this.getEntity('entities.essential_load_4_6_extra'),
 		];
 		const essentialLoadCol5ExtraState = [
 			this.getEntity('entities.essential_load_5_1_extra'),
@@ -303,6 +320,15 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_5_3_extra'),
 			this.getEntity('entities.essential_load_5_4_extra'),
 			this.getEntity('entities.essential_load_5_5_extra'),
+			this.getEntity('entities.essential_load_5_6_extra'),
+		];
+		const essentialLoadCol6ExtraState = [
+			this.getEntity('entities.essential_load_6_1_extra'),
+			this.getEntity('entities.essential_load_6_2_extra'),
+			this.getEntity('entities.essential_load_6_3_extra'),
+			this.getEntity('entities.essential_load_6_4_extra'),
+			this.getEntity('entities.essential_load_6_5_extra'),
+			this.getEntity('entities.essential_load_6_6_extra'),
 		];
 		const essentialLoadCol1ToggleState = [
 			this.getEntity('entities.essential_load_1_1_toggle'),
@@ -310,6 +336,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_1_3_toggle'),
 			this.getEntity('entities.essential_load_1_4_toggle'),
 			this.getEntity('entities.essential_load_1_5_toggle'),
+			this.getEntity('entities.essential_load_1_6_toggle'),
 		];
 		const essentialLoadCol2ToggleState = [
 			this.getEntity('entities.essential_load_2_1_toggle'),
@@ -317,6 +344,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_2_3_toggle'),
 			this.getEntity('entities.essential_load_2_4_toggle'),
 			this.getEntity('entities.essential_load_2_5_toggle'),
+			this.getEntity('entities.essential_load_2_6_toggle'),
 		];
 		const essentialLoadCol3ToggleState = [
 			this.getEntity('entities.essential_load_3_1_toggle'),
@@ -324,6 +352,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_3_3_toggle'),
 			this.getEntity('entities.essential_load_3_4_toggle'),
 			this.getEntity('entities.essential_load_3_5_toggle'),
+			this.getEntity('entities.essential_load_3_6_toggle'),
 		];
 		const essentialLoadCol4ToggleState = [
 			this.getEntity('entities.essential_load_4_1_toggle'),
@@ -331,6 +360,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_4_3_toggle'),
 			this.getEntity('entities.essential_load_4_4_toggle'),
 			this.getEntity('entities.essential_load_4_5_toggle'),
+			this.getEntity('entities.essential_load_4_6_toggle'),
 		];
 		const essentialLoadCol5ToggleState = [
 			this.getEntity('entities.essential_load_5_1_toggle'),
@@ -338,6 +368,15 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.essential_load_5_3_toggle'),
 			this.getEntity('entities.essential_load_5_4_toggle'),
 			this.getEntity('entities.essential_load_5_5_toggle'),
+			this.getEntity('entities.essential_load_5_6_toggle'),
+		];
+		const essentialLoadCol6ToggleState = [
+			this.getEntity('entities.essential_load_6_1_toggle'),
+			this.getEntity('entities.essential_load_6_2_toggle'),
+			this.getEntity('entities.essential_load_6_3_toggle'),
+			this.getEntity('entities.essential_load_6_4_toggle'),
+			this.getEntity('entities.essential_load_6_5_toggle'),
+			this.getEntity('entities.essential_load_6_6_toggle'),
 		];
 
 		const stateLoadPowerL1 = this.getEntity('entities.load_power_L1');
@@ -1252,6 +1291,7 @@ export class PowerFlowCard extends LitElement {
 			this.calculateEssentialLoadColour(essentialLoadCol1State[3 - 1], essentialLoadCol1ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol1State[4 - 1], essentialLoadCol1ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol1State[5 - 1], essentialLoadCol1ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[6 - 1], essentialLoadCol1ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
 		];
 		const essentialLoadCol2DynamicColour = [
 			this.calculateEssentialLoadColour(essentialLoadCol2State[1 - 1], essentialLoadCol2ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
@@ -1259,6 +1299,7 @@ export class PowerFlowCard extends LitElement {
 			this.calculateEssentialLoadColour(essentialLoadCol2State[3 - 1], essentialLoadCol2ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol2State[4 - 1], essentialLoadCol2ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol2State[5 - 1], essentialLoadCol2ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[6 - 1], essentialLoadCol2ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
 		];
 		const essentialLoadCol3DynamicColour = [
 			this.calculateEssentialLoadColour(essentialLoadCol3State[1 - 1], essentialLoadCol3ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
@@ -1266,6 +1307,7 @@ export class PowerFlowCard extends LitElement {
 			this.calculateEssentialLoadColour(essentialLoadCol3State[3 - 1], essentialLoadCol3ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol3State[4 - 1], essentialLoadCol3ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol3State[5 - 1], essentialLoadCol3ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[6 - 1], essentialLoadCol3ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
 		];
 		const essentialLoadCol4DynamicColour = [
 			this.calculateEssentialLoadColour(essentialLoadCol4State[1 - 1], essentialLoadCol4ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
@@ -1273,6 +1315,7 @@ export class PowerFlowCard extends LitElement {
 			this.calculateEssentialLoadColour(essentialLoadCol4State[3 - 1], essentialLoadCol4ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol4State[4 - 1], essentialLoadCol4ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol4State[5 - 1], essentialLoadCol4ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[6 - 1], essentialLoadCol4ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
 		];
 		const essentialLoadCol5DynamicColour = [
 			this.calculateEssentialLoadColour(essentialLoadCol5State[1 - 1], essentialLoadCol5ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
@@ -1280,6 +1323,15 @@ export class PowerFlowCard extends LitElement {
 			this.calculateEssentialLoadColour(essentialLoadCol5State[3 - 1], essentialLoadCol5ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol5State[4 - 1], essentialLoadCol5ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
 			this.calculateEssentialLoadColour(essentialLoadCol5State[5 - 1], essentialLoadCol5ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[6 - 1], essentialLoadCol5ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+		];
+		const essentialLoadCol6DynamicColour = [
+			this.calculateEssentialLoadColour(essentialLoadCol6State[1 - 1], essentialLoadCol6ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[2 - 1], essentialLoadCol6ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[3 - 1], essentialLoadCol6ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[4 - 1], essentialLoadCol6ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[5 - 1], essentialLoadCol6ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[6 - 1], essentialLoadCol6ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
 		];
 
 		config.title_colour = this.colourConvert(config.title_colour);
@@ -1380,6 +1432,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.load_1_3_icon', { state: config.load?.load_1_3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_1_4_icon', { state: config.load?.load_1_4_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_1_5_icon', { state: config.load?.load_1_5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_1_6_icon', { state: config.load?.load_1_6_icon?.toString() ?? '' }).state,
 		];
 		const essentialLoadCol2Icon = [
 			this.getEntity('load.load_2_1_icon', { state: config.load?.load_2_1_icon?.toString() ?? '' }).state,
@@ -1387,6 +1440,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.load_2_3_icon', { state: config.load?.load_2_3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_2_4_icon', { state: config.load?.load_2_4_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_2_5_icon', { state: config.load?.load_2_5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_2_6_icon', { state: config.load?.load_2_6_icon?.toString() ?? '' }).state,
 		];
 		const essentialLoadCol3Icon = [
 			this.getEntity('load.load_3_1_icon', { state: config.load?.load_3_1_icon?.toString() ?? '' }).state,
@@ -1394,6 +1448,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.load_3_3_icon', { state: config.load?.load_3_3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_3_4_icon', { state: config.load?.load_3_4_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_3_5_icon', { state: config.load?.load_3_5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_3_6_icon', { state: config.load?.load_3_6_icon?.toString() ?? '' }).state,
 		];
 		const essentialLoadCol4Icon = [
 			this.getEntity('load.load_4_1_icon', { state: config.load?.load_4_1_icon?.toString() ?? '' }).state,
@@ -1401,6 +1456,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.load_4_3_icon', { state: config.load?.load_4_3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_4_4_icon', { state: config.load?.load_4_4_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_4_5_icon', { state: config.load?.load_4_5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_4_6_icon', { state: config.load?.load_4_6_icon?.toString() ?? '' }).state,
 		];
 		const essentialLoadCol5Icon = [
 			this.getEntity('load.load_5_1_icon', { state: config.load?.load_5_1_icon?.toString() ?? '' }).state,
@@ -1408,6 +1464,15 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.load_5_3_icon', { state: config.load?.load_5_3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_5_4_icon', { state: config.load?.load_5_4_icon?.toString() ?? '' }).state,
 			this.getEntity('load.load_5_5_icon', { state: config.load?.load_5_5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_5_6_icon', { state: config.load?.load_5_6_icon?.toString() ?? '' }).state,
+		];
+		const essentialLoadCol6Icon = [
+			this.getEntity('load.load_6_1_icon', { state: config.load?.load_6_1_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_6_2_icon', { state: config.load?.load_6_2_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_6_3_icon', { state: config.load?.load_6_3_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_6_4_icon', { state: config.load?.load_6_4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_6_5_icon', { state: config.load?.load_6_5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.load_6_6_icon', { state: config.load?.load_6_6_icon?.toString() ?? '' }).state,
 		];
 
 
@@ -1416,8 +1481,8 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
 			this.getEntity('load.aux_load3_icon', { state: config.load?.aux_load3_icon?.toString() ?? '' }).state,
 			this.getEntity('load.aux_load4_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load5_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
-			this.getEntity('load.aux_load6_icon', { state: config.load?.aux_load4_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load5_icon', { state: config.load?.aux_load5_icon?.toString() ?? '' }).state,
+			this.getEntity('load.aux_load6_icon', { state: config.load?.aux_load6_icon?.toString() ?? '' }).state,
 		];
 		const nonessentialIcon = this.getEntity('grid.nonessential_icon', { state: config.grid?.nonessential_icon?.toString() ?? '' }).state;
 
@@ -1543,26 +1608,31 @@ export class PowerFlowCard extends LitElement {
 			essentialLoadCol3State,
 			essentialLoadCol4State,
 			essentialLoadCol5State,
+			essentialLoadCol6State,
 			essentialLoadCol1ExtraState,
 			essentialLoadCol2ExtraState,
 			essentialLoadCol3ExtraState,
 			essentialLoadCol4ExtraState,
 			essentialLoadCol5ExtraState,
+			essentialLoadCol6ExtraState,
 			essentialLoadCol1ToggleState,
 			essentialLoadCol2ToggleState,
 			essentialLoadCol3ToggleState,
 			essentialLoadCol4ToggleState,
 			essentialLoadCol5ToggleState,
+			essentialLoadCol6ToggleState,
 			essentialLoadCol1DynamicColour,
 			essentialLoadCol2DynamicColour,
 			essentialLoadCol3DynamicColour,
 			essentialLoadCol4DynamicColour,
 			essentialLoadCol5DynamicColour,
+			essentialLoadCol6DynamicColour,
 			essentialLoadCol1Icon,
 			essentialLoadCol2Icon,
 			essentialLoadCol3Icon,
 			essentialLoadCol4Icon,
 			essentialLoadCol5Icon,
+			essentialLoadCol6Icon,
 
 			gridShowDailyBuy,
 			gridShowDailySell,
