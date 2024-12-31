@@ -202,13 +202,15 @@ export class EssentialLoad {
 		switch (id) {
 			case 1:
 			case 2:
-				return [AdditionalLoadsViewMode.col5, AdditionalLoadsViewMode.col4, AdditionalLoadsViewMode.col3, AdditionalLoadsViewMode.col2].includes(config.load.additional_loads_view_mode);
+				return [AdditionalLoadsViewMode.col6, AdditionalLoadsViewMode.col5, AdditionalLoadsViewMode.col4, AdditionalLoadsViewMode.col3, AdditionalLoadsViewMode.col2].includes(config.load.additional_loads_view_mode);
 			case 3:
-				return [AdditionalLoadsViewMode.col5, AdditionalLoadsViewMode.col4, AdditionalLoadsViewMode.col3].includes(config.load.additional_loads_view_mode);
+				return [AdditionalLoadsViewMode.col6, AdditionalLoadsViewMode.col5, AdditionalLoadsViewMode.col4, AdditionalLoadsViewMode.col3].includes(config.load.additional_loads_view_mode);
 			case 4:
-				return [AdditionalLoadsViewMode.col5, AdditionalLoadsViewMode.col4].includes(config.load.additional_loads_view_mode);
+				return [AdditionalLoadsViewMode.col6, AdditionalLoadsViewMode.col5, AdditionalLoadsViewMode.col4].includes(config.load.additional_loads_view_mode);
 			case 5:
-				return [AdditionalLoadsViewMode.col5].includes(config.load.additional_loads_view_mode);
+				return [AdditionalLoadsViewMode.col6, AdditionalLoadsViewMode.col5].includes(config.load.additional_loads_view_mode);
+			case 6:
+				return [AdditionalLoadsViewMode.col6].includes(config.load.additional_loads_view_mode);
 			default:
 				return false;
 		}
@@ -254,6 +256,7 @@ export class EssentialLoad {
 			config.load?.load_1_3_name,
 			config.load?.load_1_4_name,
 			config.load?.load_1_5_name,
+			config.load?.load_1_6_name,
 		];
 	}
 
@@ -264,6 +267,7 @@ export class EssentialLoad {
 			config.load?.load_2_3_name,
 			config.load?.load_2_4_name,
 			config.load?.load_2_5_name,
+			config.load?.load_2_6_name,
 		];
 	}
 
@@ -274,6 +278,7 @@ export class EssentialLoad {
 			config.load?.load_3_3_name,
 			config.load?.load_3_4_name,
 			config.load?.load_3_5_name,
+			config.load?.load_3_6_name,
 		];
 	}
 
@@ -284,6 +289,7 @@ export class EssentialLoad {
 			config.load?.load_4_3_name,
 			config.load?.load_4_4_name,
 			config.load?.load_4_5_name,
+			config.load?.load_4_6_name,
 		];
 	}
 
@@ -294,6 +300,18 @@ export class EssentialLoad {
 			config.load?.load_5_3_name,
 			config.load?.load_5_4_name,
 			config.load?.load_5_5_name,
+			config.load?.load_5_6_name,
+		];
+	}
+
+	private static loadNameCol6(config: PowerFlowCardConfig) {
+		return [
+			config.load?.load_6_1_name,
+			config.load?.load_6_2_name,
+			config.load?.load_6_3_name,
+			config.load?.load_6_4_name,
+			config.load?.load_6_5_name,
+			config.load?.load_6_6_name,
 		];
 	}
 
@@ -307,6 +325,8 @@ export class EssentialLoad {
 				return Load.row4;
 			case 5:
 				return Load.row5;
+			case 6:
+				return Load.row6;
 			default:
 				return Load.row1;
 		}
@@ -389,6 +409,22 @@ export class EssentialLoad {
 			data.essentialLoadCol5ToggleState,
 			config.load.auto_scale, data.decimalPlaces,
 			Load.column5, EssentialLoad.row(id),
+		)}`;
+	}
+
+	static generateLoadCol6(data: DataDto, config: PowerFlowCardConfig, id: number) {
+		if (id == 1 && config.load.show_aux && config.load.aux_loads >= 6)
+			return svg``;
+		return svg`
+		${LoadUtils.generateEssentialLoad(
+			id, data.essentialLoadCol6Icon,
+			data.essentialLoadCol6DynamicColour,
+			EssentialLoad.loadNameCol6(config),
+			data.essentialLoadCol6State,
+			data.essentialLoadCol6ExtraState,
+			data.essentialLoadCol6ToggleState,
+			config.load.auto_scale, data.decimalPlaces,
+			Load.column6, EssentialLoad.row(id),
 		)}`;
 	}
 

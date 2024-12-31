@@ -49,10 +49,11 @@ export enum BatteryBanksViewMode {
 export enum AdditionalLoadsViewMode {
 	none = 'none',
 	old = 'Minimal view (4 loads)',
-	col2 = 'Column 1-2',
-	col3 = 'Column 1-3',
-	col4 = 'Column 1-4',
-	col5 = 'Column 1-5',
+	col2 = '2 Columns',
+	col3 = '3 Columns',
+	col4 = '4 Columns',
+	col5 = '5 Columns',
+	col6 = '6 Columns',
 }
 
 export interface RefreshCardConfig extends LovelaceCardConfig {
@@ -182,11 +183,13 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		aux_load3_name: string;
 		aux_load4_name: string;
 		aux_load5_name: string;
+		aux_load6_name: string;
 		aux_load1_icon: string;
 		aux_load2_icon: string;
 		aux_load3_icon: string;
 		aux_load4_icon: string;
 		aux_load5_icon: string;
+		aux_load6_icon: string;
 		additional_loads: number;
 		additional_loads_view_mode: AdditionalLoadsViewMode;
 
@@ -195,52 +198,74 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		load_1_3_name: string;
 		load_1_4_name: string;
 		load_1_5_name: string;
+		load_1_6_name: string;
 		load_2_1_name: string;
 		load_2_2_name: string;
 		load_2_3_name: string;
 		load_2_4_name: string;
 		load_2_5_name: string;
+		load_2_6_name: string;
 		load_3_1_name: string;
 		load_3_2_name: string;
 		load_3_3_name: string;
 		load_3_4_name: string;
 		load_3_5_name: string;
+		load_3_6_name: string;
 		load_4_1_name: string;
 		load_4_2_name: string;
 		load_4_3_name: string;
 		load_4_4_name: string;
 		load_4_5_name: string;
+		load_4_6_name: string;
 		load_5_1_name: string;
 		load_5_2_name: string;
 		load_5_3_name: string;
 		load_5_4_name: string;
 		load_5_5_name: string;
+		load_5_6_name: string;
+		load_6_1_name: string;
+		load_6_2_name: string;
+		load_6_3_name: string;
+		load_6_4_name: string;
+		load_6_5_name: string;
+		load_6_6_name: string;
 
 		load_1_1_icon: string;
 		load_1_2_icon: string;
 		load_1_3_icon: string;
 		load_1_4_icon: string;
 		load_1_5_icon: string;
+		load_1_6_icon: string;
 		load_2_1_icon: string;
 		load_2_2_icon: string;
 		load_2_3_icon: string;
 		load_2_4_icon: string;
 		load_2_5_icon: string;
+		load_2_6_icon: string;
 		load_3_1_icon: string;
 		load_3_2_icon: string;
 		load_3_3_icon: string;
 		load_3_4_icon: string;
 		load_3_5_icon: string;
+		load_3_6_icon: string;
 		load_4_1_icon: string;
 		load_4_2_icon: string;
 		load_4_3_icon: string;
 		load_4_4_icon: string;
 		load_4_5_icon: string;
+		load_4_6_icon: string;
 		load_5_1_icon: string;
 		load_5_2_icon: string;
 		load_5_3_icon: string;
 		load_5_4_icon: string;
 		load_5_5_icon: string;
+		load_5_6_icon: string;
+		load_6_1_icon: string;
+		load_6_2_icon: string;
+		load_6_3_icon: string;
+		load_6_4_icon: string;
+		load_6_5_icon: string;
+		load_6_6_icon: string;
 
 		show_aux: boolean;
 		show_daily_aux: boolean;
@@ -566,6 +591,11 @@ export interface DataDto {
 	essentialLoadCol5ExtraState: CustomEntity[],
 	essentialLoadCol5ToggleState: CustomEntity[],
 	essentialLoadCol5DynamicColour: string[],
+	essentialLoadCol6Icon: string[],
+	essentialLoadCol6State: CustomEntity[],
+	essentialLoadCol6ExtraState: CustomEntity[],
+	essentialLoadCol6ToggleState: CustomEntity[],
+	essentialLoadCol6DynamicColour: string[],
 
 	enableTimer,
 	priorityLoad,

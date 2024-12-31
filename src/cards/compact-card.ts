@@ -26,9 +26,10 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	let calculated_minX = 0;
 	let calculated_minY = config.show_solar || additionalLoadVisible ? 0 : additionalLoadVisible || !config.show_battery ? 80 : 146;
 	let calculated_width =
-		(config.load.aux_loads > 4 || EssentialLoad.isColumnDisplayable(config, 5)) ? 648
-			: (config.load.aux_loads > 3 || EssentialLoad.isColumnDisplayable(config, 4)) ? 600
-				: (config.load.aux_loads > 2 || EssentialLoad.isColumnDisplayable(config, 3)) ? 552 : 505;
+		(config.load.aux_loads > 5 || EssentialLoad.isColumnDisplayable(config, 6)) ? 696
+			: (config.load.aux_loads > 4 || EssentialLoad.isColumnDisplayable(config, 5)) ? 648
+				: (config.load.aux_loads > 3 || EssentialLoad.isColumnDisplayable(config, 4)) ? 600
+					: (config.load.aux_loads > 2 || EssentialLoad.isColumnDisplayable(config, 3)) ? 552 : 505;
 	let calculated_height = config.show_battery ? 408 + batteryBanksHeight : (additionalLoadVisible ? 400 : 300);
 
 	let minX = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : config.wide_view_mode ? 0 : calculated_minX;
@@ -160,6 +161,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoadCol1(data, config, 2)}
 			                    ${EssentialLoad.generateLoadCol1(data, config, 4)}
 			                    ${EssentialLoad.generateLoadCol1(data, config, 5)}
+			                    ${EssentialLoad.generateLoadCol1(data, config, 6)}
 			                ` : ``
 							}
 							${(EssentialLoad.isColumnDisplayable(config, 2)) ?
@@ -168,6 +170,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoadCol2(data, config, 2)}
 			                    ${EssentialLoad.generateLoadCol2(data, config, 4)}
 			                    ${EssentialLoad.generateLoadCol2(data, config, 5)}
+			                    ${EssentialLoad.generateLoadCol2(data, config, 6)}
 			                ` : ``
 							}
 							${(EssentialLoad.isColumnDisplayable(config, 3)) ?
@@ -177,6 +180,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoadCol3(data, config, 3)}
 			                    ${EssentialLoad.generateLoadCol3(data, config, 4)}
 			                    ${EssentialLoad.generateLoadCol3(data, config, 5)}
+			                    ${EssentialLoad.generateLoadCol3(data, config, 6)}
 			                ` : ``
 							}
 							${(EssentialLoad.isColumnDisplayable(config, 4)) ?
@@ -186,6 +190,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoadCol4(data, config, 3)}
 			                    ${EssentialLoad.generateLoadCol4(data, config, 4)}
 			                    ${EssentialLoad.generateLoadCol4(data, config, 5)}
+			                    ${EssentialLoad.generateLoadCol4(data, config, 6)}
 			                ` : ``
 							}
 							${(EssentialLoad.isColumnDisplayable(config, 5)) ?
@@ -195,6 +200,17 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 			                    ${EssentialLoad.generateLoadCol5(data, config, 3)}
 			                    ${EssentialLoad.generateLoadCol5(data, config, 4)}
 			                    ${EssentialLoad.generateLoadCol5(data, config, 5)}
+			                    ${EssentialLoad.generateLoadCol5(data, config, 6)}
+			                ` : ``
+							}
+							${(EssentialLoad.isColumnDisplayable(config, 6)) ?
+								svg`
+			                    ${EssentialLoad.generateLoadCol6(data, config, 1)}
+			                    ${EssentialLoad.generateLoadCol6(data, config, 2)}
+			                    ${EssentialLoad.generateLoadCol6(data, config, 3)}
+			                    ${EssentialLoad.generateLoadCol6(data, config, 4)}
+			                    ${EssentialLoad.generateLoadCol6(data, config, 5)}
+			                    ${EssentialLoad.generateLoadCol6(data, config, 6)}
 			                ` : ``
 							}
 
@@ -226,6 +242,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 									${AuxLoad.generateLoad(data, config, 3)}
 									${AuxLoad.generateLoad(data, config, 4)}
 									${AuxLoad.generateLoad(data, config, 5)}
+									${AuxLoad.generateLoad(data, config, 6)}
 									${AuxLoad.generateTotalLoad(data, config)}
 									${AuxLoad.generateDailyLoad(data, config)}
 								</g>

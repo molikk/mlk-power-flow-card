@@ -17,7 +17,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 
 	public setConfig(config: PowerFlowCardConfig): void {
 		this._config = { ...this._config, ...config };
-		if (ConfigurationCardEditor.isUpgradeable(this._config, 1)) {
+		if (ConfigurationCardEditor.isUpgradeable(this._config, 2)) {
 			console.log('Updating version to schema 2');
 
 			this.rewriteConfig(this._config, 'entities', 'essential_load_1_2', 'essential_load1', false);
@@ -145,6 +145,15 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 
 			fireEvent(this, 'config-changed', { config: this._config });
 		}
+		if (ConfigurationCardEditor.isUpgradeable(this._config, 3)) {
+			console.log('Updating version to schema 3');
+
+			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
+
+			this._config['schema_version'] = 3;
+
+			fireEvent(this, 'config-changed', { config: this._config });
+		}
 	}
 
 	private rewriteConfig(config: PowerFlowCardConfig, className: string, newName: string, oldName: string, clearOldValue: boolean = true) {
@@ -161,7 +170,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 	}
 
 	public static isConfigUpgradeable(config: PowerFlowCardConfig) {
-		return this.isUpgradeable(config, 2);
+		return this.isUpgradeable(config, 3);
 	}
 
 	protected render(): TemplateResult | void {
@@ -589,36 +598,36 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										],
 									},
+								],
+							},
+							{
+								type: 'expandable',
+								title: this._title('battery_bank'),
+								schema: [
 									{
-										type: 'expandable',
-										title: this._title('battery_bank'),
+										name: 'battery',
+										type: 'grid',
 										schema: [
+											{ name: 'show_battery_banks', selector: { boolean: {} } },
 											{
-												name: 'battery',
-												type: 'grid',
-												schema: [
-													{ name: 'show_battery_banks', selector: { boolean: {} } },
-													{
-														name: 'battery_banks_view_mode',
-														selector: {
-															select: {
-																options: Object.values(BatteryBanksViewMode).map(x => ({
-																	label: capitalize(x),
-																	value: x,
-																})),
-															},
-														},
+												name: 'battery_banks_view_mode',
+												selector: {
+													select: {
+														options: Object.values(BatteryBanksViewMode).map(x => ({
+															label: capitalize(x),
+															value: x,
+														})),
 													},
-													{ name: 'battery_banks', selector: { number: { mode: 'box', min: 0, max: 6 } } },
-													{ name: 'battery_bank_1_energy', selector: { number: { min: 0 } } },
-													{ name: 'battery_bank_2_energy', selector: { number: { min: 0 } } },
-													{ name: 'battery_bank_3_energy', selector: { number: { min: 0 } } },
-													{ name: 'battery_bank_4_energy', selector: { number: { min: 0 } } },
-													{ name: 'battery_bank_5_energy', selector: { number: { min: 0 } } },
-													{ name: 'battery_bank_6_energy', selector: { number: { min: 0 } } },
-
-												],
+												},
 											},
+											{ name: 'battery_banks', selector: { number: { mode: 'box', min: 0, max: 6 } } },
+											{ name: 'battery_bank_1_energy', selector: { number: { min: 0 } } },
+											{ name: 'battery_bank_2_energy', selector: { number: { min: 0 } } },
+											{ name: 'battery_bank_3_energy', selector: { number: { min: 0 } } },
+											{ name: 'battery_bank_4_energy', selector: { number: { min: 0 } } },
+											{ name: 'battery_bank_5_energy', selector: { number: { min: 0 } } },
+											{ name: 'battery_bank_6_energy', selector: { number: { min: 0 } } },
+
 										],
 									},
 									{
@@ -777,17 +786,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'max_power', selector: { number: {} } },
 											{ name: 'off_threshold', selector: { number: {} } },
 											{ name: 'path_threshold', selector: { number: {} } },
-											{
-												name: 'additional_loads_view_mode',
-												selector: {
-													select: {
-														options: Object.values(AdditionalLoadsViewMode).map(x => ({
-															label: capitalize(x),
-															value: x,
-														})),
-													},
-												},
-											},
+
 										],
 									},
 									{
@@ -804,6 +803,29 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'load_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 												],
+											},
+										],
+									},
+								],
+							},
+							{
+								type: 'expandable',
+								title: this._title('additional_loads'),
+								schema: [
+									{
+										name: 'load',
+										type: 'grid',
+										schema: [
+											{
+												name: 'additional_loads_view_mode',
+												selector: {
+													select: {
+														options: Object.values(AdditionalLoadsViewMode).map(x => ({
+															label: capitalize(x),
+															value: x,
+														})),
+													},
+												},
 											},
 										],
 									},
@@ -868,6 +890,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load_1_4_icon', selector: { icon: {} } },
 													{ name: 'load_1_5_name', selector: { text: {} } },
 													{ name: 'load_1_5_icon', selector: { icon: {} } },
+													{ name: 'load_1_6_name', selector: { text: {} } },
+													{ name: 'load_1_6_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -892,6 +916,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'essential_load_1_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'essential_load_1_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'essential_load_1_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_1_6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_1_6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_1_6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -912,6 +939,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load_2_4_icon', selector: { icon: {} } },
 													{ name: 'load_2_5_name', selector: { text: {} } },
 													{ name: 'load_2_5_icon', selector: { icon: {} } },
+													{ name: 'load_2_6_name', selector: { text: {} } },
+													{ name: 'load_2_6_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -936,6 +965,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'essential_load_2_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'essential_load_2_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'essential_load_2_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_2_6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_2_6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_2_6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -958,6 +990,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load_3_4_icon', selector: { icon: {} } },
 													{ name: 'load_3_5_name', selector: { text: {} } },
 													{ name: 'load_3_5_icon', selector: { icon: {} } },
+													{ name: 'load_3_6_name', selector: { text: {} } },
+													{ name: 'load_3_6_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -985,6 +1019,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'essential_load_3_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'essential_load_3_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'essential_load_3_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_3_6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_3_6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_3_6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -1007,6 +1044,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load_4_4_icon', selector: { icon: {} } },
 													{ name: 'load_4_5_name', selector: { text: {} } },
 													{ name: 'load_4_5_icon', selector: { icon: {} } },
+													{ name: 'load_4_6_name', selector: { text: {} } },
+													{ name: 'load_4_6_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -1034,6 +1073,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'essential_load_4_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'essential_load_4_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'essential_load_4_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_4_6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_4_6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_4_6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -1056,6 +1098,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'load_5_4_icon', selector: { icon: {} } },
 													{ name: 'load_5_5_name', selector: { text: {} } },
 													{ name: 'load_5_5_icon', selector: { icon: {} } },
+													{ name: 'load_5_6_name', selector: { text: {} } },
+													{ name: 'load_5_6_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -1083,6 +1127,63 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'essential_load_5_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'essential_load_5_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'essential_load_5_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_5_6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_5_6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_5_6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('additional_loads_6'),
+										schema: [
+											{
+												name: 'load',
+												type: 'grid',
+												schema: [
+													{ name: 'load_6_1_name', selector: { text: {} } },
+													{ name: 'load_6_1_icon', selector: { icon: {} } },
+													{ name: 'load_6_2_name', selector: { text: {} } },
+													{ name: 'load_6_2_icon', selector: { icon: {} } },
+													{ name: 'load_6_3_name', selector: { text: {} } },
+													{ name: 'load_6_3_icon', selector: { icon: {} } },
+													{ name: 'load_6_4_name', selector: { text: {} } },
+													{ name: 'load_6_4_icon', selector: { icon: {} } },
+													{ name: 'load_6_5_name', selector: { text: {} } },
+													{ name: 'load_6_5_icon', selector: { icon: {} } },
+													{ name: 'load_6_6_name', selector: { text: {} } },
+													{ name: 'load_6_6_icon', selector: { icon: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('ess_ld_6'),
+										schema: [
+											{
+												name: 'entities',
+												type: 'grid',
+												schema: [
+													{ name: 'essential_load_6_1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_6_1_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_6_1_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_6_2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_6_2_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_6_2_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_6_3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_6_3_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_6_3_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_6_4', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_6_4_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_6_4_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_6_5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_6_5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_6_5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'essential_load_6_6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'essential_load_6_6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'essential_load_6_6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -1094,28 +1195,23 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 								title: this._title('aux_load'),
 								schema: [
 									{
-										type: 'expandable',
-										title: this._title('aux_load_opt'),
+										name: 'load',
+										type: 'grid',
 										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													{ name: 'show_aux', selector: { boolean: {} } },
-													{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 5 } } },
-													{ name: 'aux_name', selector: { text: {} } },
-													{ name: 'aux_daily_name', selector: { text: {} } },
-													{ name: 'aux_type', selector: { icon: {} } },
-													{ name: 'invert_aux', selector: { boolean: {} } },
-													{ name: 'show_absolute_aux', selector: { boolean: {} } },
-													{ name: 'aux_dynamic_colour', selector: { boolean: {} } },
-													{ name: 'aux_colour', selector: { color_rgb: {} } },
-													{ name: 'aux_off_colour', selector: { color_rgb: {} } },
-													{ name: 'show_daily_aux', selector: { boolean: {} } },
-													{ name: 'aux_invert_flow', selector: { boolean: {} } },
-												],
-											},
+											{ name: 'show_aux', selector: { boolean: {} } },
+											{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
+											{ name: 'aux_name', selector: { text: {} } },
+											{ name: 'aux_daily_name', selector: { text: {} } },
+											{ name: 'aux_type', selector: { icon: {} } },
+											{ name: 'invert_aux', selector: { boolean: {} } },
+											{ name: 'show_absolute_aux', selector: { boolean: {} } },
+											{ name: 'aux_dynamic_colour', selector: { boolean: {} } },
+											{ name: 'aux_colour', selector: { color_rgb: {} } },
+											{ name: 'aux_off_colour', selector: { color_rgb: {} } },
+											{ name: 'show_daily_aux', selector: { boolean: {} } },
+											{ name: 'aux_invert_flow', selector: { boolean: {} } },
 										],
+
 									},
 									{
 										type: 'expandable',
@@ -1149,6 +1245,8 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_load4_icon', selector: { icon: {} } },
 													{ name: 'aux_load5_name', selector: { text: {} } },
 													{ name: 'aux_load5_icon', selector: { icon: {} } },
+													{ name: 'aux_load6_name', selector: { text: {} } },
+													{ name: 'aux_load6_icon', selector: { icon: {} } },
 												],
 											},
 										],
@@ -1176,6 +1274,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'aux_load5', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 													{ name: 'aux_load5_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
 													{ name: 'aux_load5_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+													{ name: 'aux_load6', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+													{ name: 'aux_load6_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+													{ name: 'aux_load6_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
 												],
 											},
 										],
@@ -1245,28 +1346,28 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											},
 										],
 									},
+								],
+							},
+							{
+								type: 'expandable',
+								title: this._title('grid_load'),
+								schema: [
 									{
-										type: 'expandable',
-										title: this._title('ness_load'),
+										name: 'grid',
+										type: 'grid',
 										schema: [
-											{
-												name: 'grid',
-												type: 'grid',
-												schema: [
-													{ name: 'show_nonessential', selector: { boolean: {} } },
-													{ name: 'ness_invert_flow', selector: { boolean: {} } },
-													{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
-													{ name: 'nonessential_name', selector: { text: {} } },
-													{ name: 'nonessential_icon', selector: { icon: {} } },
-													{ name: 'show_nonessential_daily', selector: { boolean: {} } },
-													{ name: 'nonessential_daily_name', selector: { text: {} } },
-												],
-											},
+											{ name: 'show_nonessential', selector: { boolean: {} } },
+											{ name: 'ness_invert_flow', selector: { boolean: {} } },
+											{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
+											{ name: 'nonessential_name', selector: { text: {} } },
+											{ name: 'nonessential_icon', selector: { icon: {} } },
+											{ name: 'show_nonessential_daily', selector: { boolean: {} } },
+											{ name: 'nonessential_daily_name', selector: { text: {} } },
 										],
 									},
 									{
 										type: 'expandable',
-										title: this._title('ness_load_ent'),
+										title: this._title('grid_load_ent'),
 										schema: [
 											{
 												name: 'entities',
@@ -1280,7 +1381,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('ness_load_row_1'),
+										title: this._title('grid_load_row_1'),
 										schema: [
 											{
 												name: 'grid',
@@ -1298,7 +1399,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('ness_load_row_1_ent'),
+										title: this._title('grid_load_row_1_ent'),
 										schema: [
 											{
 												name: 'entities',
@@ -1319,7 +1420,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('ness_load_row_2'),
+										title: this._title('grid_load_row_2'),
 										schema: [
 											{
 												name: 'grid',
@@ -1337,7 +1438,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('ness_load_row_2_ent'),
+										title: this._title('grid_load_row_2_ent'),
 										schema: [
 											{
 												name: 'entities',
@@ -1365,7 +1466,25 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		`;
 	}
 
-	private _computeLabelCallback = (data) => localize(`config.${data.name}`) ?? data.name;
+	private _computeLabelCallback = (data) => data.name ? this.localizeOrChange(data) ?? data.name : data;
+
+	private localizeOrChange(opt) {
+		let result = localize(`config.${opt.name}`) ?? opt.name;
+		if (result === opt.name && opt?.selector?.entity === undefined) {
+			result = opt.name.replace(/(\d)_(\d)|_/g, (_match, p1, p2) => {
+				if (p1 && p2) {
+					return `${p1}-${p2}`;
+				}
+				return ` `;
+			})
+			.toLowerCase()
+			.replace(/([^a-zA-Z0-9]+)(.)/g, (_match, nonAlpha, chr) => {
+				return nonAlpha + chr.toUpperCase();
+			})
+			.replace(/^./, (match) => match.toUpperCase());
+		}
+		return result;
+	}
 
 	private _title(opt) {
 		return localize(`config.cat_title.${opt}`) ?? opt;
@@ -1380,12 +1499,21 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		if (!config.load.additional_loads_view_mode
 			|| config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none
 		) {
-
+			if (getEntity(config, hass, 'entities.essential_load_6_1')
+				|| getEntity(config, hass, 'entities.essential_load_6_2')
+				|| getEntity(config, hass, 'entities.essential_load_6_3')
+				|| getEntity(config, hass, 'entities.essential_load_6_4')
+				|| getEntity(config, hass, 'entities.essential_load_6_5')
+				|| getEntity(config, hass, 'entities.essential_load_6_6')
+			) {
+				return AdditionalLoadsViewMode.col6;
+			}
 			if (getEntity(config, hass, 'entities.essential_load_5_1')
 				|| getEntity(config, hass, 'entities.essential_load_5_2')
 				|| getEntity(config, hass, 'entities.essential_load_5_3')
 				|| getEntity(config, hass, 'entities.essential_load_5_4')
 				|| getEntity(config, hass, 'entities.essential_load_5_5')
+				|| getEntity(config, hass, 'entities.essential_load_5_6')
 			) {
 				return AdditionalLoadsViewMode.col5;
 			}
@@ -1394,6 +1522,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 				|| getEntity(config, hass, 'entities.essential_load_4_3')
 				|| getEntity(config, hass, 'entities.essential_load_4_4')
 				|| getEntity(config, hass, 'entities.essential_load_4_5')
+				|| getEntity(config, hass, 'entities.essential_load_4_6')
 			) {
 				return AdditionalLoadsViewMode.col4;
 			}
@@ -1402,6 +1531,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 				|| getEntity(config, hass, 'entities.essential_load_3_3')
 				|| getEntity(config, hass, 'entities.essential_load_3_4')
 				|| getEntity(config, hass, 'entities.essential_load_3_5')
+				|| getEntity(config, hass, 'entities.essential_load_3_6')
 			) {
 				return AdditionalLoadsViewMode.col3;
 			}
@@ -1410,11 +1540,13 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 				|| getEntity(config, hass, 'entities.essential_load_1_3')
 				|| getEntity(config, hass, 'entities.essential_load_1_4')
 				|| getEntity(config, hass, 'entities.essential_load_1_5')
+				|| getEntity(config, hass, 'entities.essential_load_1_6')
 				|| getEntity(config, hass, 'entities.essential_load_2_1')
 				|| getEntity(config, hass, 'entities.essential_load_2_2')
 				|| getEntity(config, hass, 'entities.essential_load_2_3')
 				|| getEntity(config, hass, 'entities.essential_load_2_4')
 				|| getEntity(config, hass, 'entities.essential_load_2_5')
+				|| getEntity(config, hass, 'entities.essential_load_2_6')
 			) {
 				return AdditionalLoadsViewMode.col2;
 			}
