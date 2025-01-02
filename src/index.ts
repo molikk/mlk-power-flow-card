@@ -595,7 +595,6 @@ export class PowerFlowCard extends LitElement {
 
 
 		const largeFont = config.large_font;
-		const panelMode = config.panel_mode;
 		const inverterColour = this.colourConvert(config.inverter?.colour);
 		const enableAutarky = config.inverter?.autarky;
 		const enableTimer = !config.entities.use_timer_248 ? false : stateUseTimer.state;
@@ -1524,7 +1523,6 @@ export class PowerFlowCard extends LitElement {
 		const data: DataDto = {
 			config,
 			refreshTime,
-			panelMode,
 			compactMode,
 			cardHeight,
 			cardWidth,

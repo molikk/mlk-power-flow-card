@@ -4,13 +4,12 @@ import { AdditionalLoadsViewMode, BatteryBanksViewMode, InverterModel } from './
 
 export default {
 	schema_version: 1,
-	panel_mode: false,
 	dev_mode: false,
 	large_font: false,
 	show_solar: true,
 	show_battery: true,
 	show_grid: true,
-	card_height: '396px',
+	card_height: '100%',
 	card_width: '100%',
 	decimal_places: 2,
 	decimal_places_energy: 1,

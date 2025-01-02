@@ -59,12 +59,12 @@ export class Load {
 		const circle1Motion = this.getCircleMotion(data.essentialPower > 0, 'es-dot1', '#es-line1', data, config, animationSpeed);
 
 		return svg `
-			 <svg id="load-flow">
+			 <svg id="load-flow" style="overflow: visible">
 				<path id="es-line" d="${line1}" fill="none" stroke="${config.load.dynamic_colour ? data.flowColour : data.loadColour}"
 					  stroke-width="${data.loadLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				${circleMotion}
 			</svg>
-			<svg id="load-flow1">
+			<svg id="load-flow1" style="overflow: visible">
 				<path id="es-line1" d="${line2}" fill="none" stroke="${config.load.dynamic_colour ? data.flowColour : data.loadColour}"
 					  stroke-width="${data.loadLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				${circle1Motion}

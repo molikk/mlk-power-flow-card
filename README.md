@@ -19,7 +19,7 @@ See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/i
 * Configurable battery size and shutdown SOC to calculate and display remaining battery runtime based on current battery usage and system time slot setting i.e. SOC, Grid Charge. Can be toggled off.
 * Daily Totals that can be toggled on or off.
 * Hide all solar data if not installed or specify number of mppts in use (up to 5 MPPTs). Set custom MPPT labels.
-* Panel mode & wide view mode for bigger card.
+* Custom card scaling by turning on Wide View Mode or setting Card height and width.
 * AUX and Non-essential can be hidden from the full card or assigned configurable labels.
 * Customisable - Change colours and images.
 * Most entities can be clicked to show more-info dialog.

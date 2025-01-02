@@ -175,7 +175,7 @@ export class Battery {
 				</animateMotion>
 			</circle>` : svg``;
 		return svg`
- 			<svg id="battery-flow">
+ 			<svg id="battery-flow" style="overflow: visible">
 				<path id="bat-line"
 					  d="M 239 250 L 239 ${y}" fill="none"
 					  stroke="${Battery.batteryColour(data, config)}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"
@@ -268,7 +268,7 @@ export class Battery {
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="212.5"
 				 y="${y}" width="78.75"
 				 height="78.75" preserveAspectRatio="none"
-				 viewBox="0 0 24 24">
+				 viewBox="0 0 24 24" >
 				<defs>
 					<linearGradient id="bLg" x1="0%" x2="0%" y1="100%" y2="0%">
 						<stop offset="0%"

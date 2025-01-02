@@ -39,7 +39,7 @@ export class Solar {
 	static generateSolarPower(data: DataDto, config: PowerFlowCardConfig) {
 		const circle = this.getCircle(data.totalPV > 0, 'so', data.solarLineWidth, data.minLineWidth, data.durationCur['solar'], config.solar.invert_flow);
 		const path = (config.show_solar && config.solar.mppts > 1) ? svg`
-			<svg id="solar-flow">
+			<svg id="solar-flow" style="overflow: visible">
 				<path id="so-line" d="M 239 147 L 239 190"
 					  fill="none" stroke="${data.solarColour}" stroke-width="${data.solarLineWidth}"
 					  stroke-miterlimit="10"
@@ -71,7 +71,7 @@ export class Solar {
 		return config.solar.mppts > 1 ? svg`
 			<svg id="pv-total" 
 					x="205" y="116.5" width="70" height="30"
-		 			viewBox="0 0 70 30" overflow="visible">
+		 			viewBox="0 0 70 30" style="overflow: visible">
 				<rect width="70" height="30" rx="4.5" ry="4.5" fill="none"
 			        stroke="${config.solar.visualize_efficiency ? 'url(#SlG)' : data.solarColour}" pointer-events="all"
 			    />
@@ -132,7 +132,7 @@ export class Solar {
 
 		startPosition.x -= 2 + startPosition.gap / 2;
 		const icon_svg = svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="sun" x="${startPosition.x}" y="10" width="40" height="40" viewBox="0 0 24 24">
+			<svg xmlns="http://www.w3.org/2000/svg" id="sun" x="${startPosition.x}" y="10" width="40" height="40" viewBox="0 0 24 24" style="overflow: visible">
 				<path fill="${data.solarColour}" d="${icons.sun}"/>
 			</svg>`;
 
@@ -413,7 +413,7 @@ export class Solar {
 	) {
 		return svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="${id}" x="${X[0]}" y="54.5" width="70" height="30"
-				viewBox="0 0 70 30" overflow="visible">
+				viewBox="0 0 70 30" style="overflow: visible">
 				<rect id="${id}" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				stroke="${efficiencyMode ? ('url(#' + id + 'LG)') : this.solarColour}" pointer-events="all"
 				/>
@@ -441,7 +441,7 @@ export class Solar {
 		const circle = this.getCircle(Math.round(power) > 0, id, lineWidth, minLineWidth, duration, invertFlow);
 
 		return svg`
-			<svg id="${id}-flow">
+			<svg id="${id}-flow" style="overflow: visible">
 				<path id="${id}-line" d="${X[1]}"
 					  fill="none" stroke="${this.solarColour}" stroke-width="${lineWidth}"
 					  stroke-miterlimit="10"
@@ -514,13 +514,13 @@ export class Solar {
 		return svg`
             <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.solar_sell_247)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_on" x="245" y="150" width="18"
-                     height="18" viewBox="0 0 30 30">
+                     height="18" viewBox="0 0 30 30" style="overflow: visible">
                     <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'off' || data.stateSolarSell.state === '0' || !['1', 'on'].includes(data.stateSolarSell.state) ? 'none' : ''}"
                           fill="${data.solarColour}"
                           d="${icons.solarSellOn}"/>
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_off" x="245" y="150" width="18"
-                     height="18" viewBox="0 0 30 30">
+                     height="18" viewBox="0 0 30 30" style="overflow: visible">
                     <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'on' || data.stateSolarSell.state === '1' || !['0', 'off'].includes(data.stateSolarSell.state) ? 'none' : ''}"
                           fill="${data.solarColour}"
                           d="${icons.solarSellOff}"/>

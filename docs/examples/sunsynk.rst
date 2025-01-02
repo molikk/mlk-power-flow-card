@@ -180,7 +180,6 @@ Full Configuration (All Options)
   :linenos:
   
   type: custom:mlk-power-flow-card
-  panel_mode: false
   large_font: false
   title: Sunsynk Inverter
   title_colour: grey

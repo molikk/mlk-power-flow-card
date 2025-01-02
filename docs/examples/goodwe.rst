@@ -10,7 +10,6 @@ Example 1
   :linenos:
 
   type: custom:mlk-power-flow-card
-  panel_mode: false
   large_font: true
   title: Goodwe
   title_colour: grey
