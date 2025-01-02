@@ -51,7 +51,7 @@ export class AuxLoad {
 
 	private static getPath(condition: boolean, svgId: string, pathId: string, line: string, data: DataDto, lineWidth: number, circle: TemplateResult<2>) {
 		return condition ? svg`
-				<svg id="${svgId}">
+				<svg id="${svgId}" style="overflow: visible">
 					<path id="${pathId}" d="${line}"
 						fill="none" stroke="${data.auxLoadMainDynamicColour}" stroke-width="${lineWidth}"
 					  	stroke-miterlimit="10"

@@ -206,7 +206,7 @@ export class GridLoad {
 
 	private static getFlowLine(condition: boolean, flowId: string, lineId:string,line: string, data: DataDto, circle: TemplateResult<2>) {
 		return condition ? svg`
-			<svg id="${flowId}">
+			<svg id="${flowId}" style="overflow: visible">
 				<path id="${lineId}" d="${line}" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
 					  stroke-width="${data.nonessLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				${circle}

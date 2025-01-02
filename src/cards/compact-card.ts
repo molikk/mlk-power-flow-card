@@ -13,6 +13,56 @@ import { BatteryBank } from './compact/batteryBank';
 import { DevMode } from './compact/devMode';
 import { ConfigurationCardEditor } from '../editor';
 
+function calculateWidth(config: PowerFlowCardConfig) {
+	const getWidth = (): number => {
+		switch (true) {
+			case (config.load.show_aux && config.load.aux_loads >= 6 || EssentialLoad.isColumnDisplayable(config, 6)) :
+				return 696;
+			case  (config.load.show_aux && config.load.aux_loads >= 5 || EssentialLoad.isColumnDisplayable(config, 5)) :
+				return 648;
+			case  (config.load.show_aux && config.load.aux_loads >= 4 || EssentialLoad.isColumnDisplayable(config, 4)) :
+				return 600;
+			case  (config.load.show_aux && config.load.aux_loads >= 3 || EssentialLoad.isColumnDisplayable(config, 3)) :
+				return 552;
+			default:
+				return 495;
+		}
+	};
+	return getWidth();
+}
+
+function calculateHeight(config: PowerFlowCardConfig) {
+	const getHeight = (): number => {
+		switch (true) {
+			case  config.show_battery && config.battery.show_battery_banks && config.battery.battery_banks_view_mode == BatteryBanksViewMode.outer:
+				return 488;
+			case  config.show_battery :
+				return 408;
+			case config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none:
+				return 400;
+			default:
+				return 300;
+		}
+	};
+	return getHeight();
+}
+
+function calculateMinY(config: PowerFlowCardConfig) {
+	const getMinY = (): number => {
+		switch (true) {
+			case config.show_solar:
+			case config.load.show_aux:
+			case config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none:
+				return 0;
+			case !config.show_battery :
+				return 80;
+			default:
+				return 140;
+		}
+	};
+	return getMinY();
+}
+
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
 	Solar.solarColour = data.solarColour;
 	Solar.decimalPlacesEnergy = data.decimalPlacesEnergy;
@@ -20,43 +70,29 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	Grid.gridColour = data.gridColour;
 	Grid.decimalPlaces = data.decimalPlaces;
 
-	let additionalLoadVisible = config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none;
-	let batteryBanksHeight = config.battery.show_battery_banks && config.battery.battery_banks_view_mode == BatteryBanksViewMode.outer ? 80 : 0;
-
 	let calculated_minX = 0;
-	let calculated_minY = config.show_solar || additionalLoadVisible ? 0 : additionalLoadVisible || !config.show_battery ? 80 : 146;
-	let calculated_width =
-		(config.load.aux_loads > 5 || EssentialLoad.isColumnDisplayable(config, 6)) ? 696
-			: (config.load.aux_loads > 4 || EssentialLoad.isColumnDisplayable(config, 5)) ? 648
-				: (config.load.aux_loads > 3 || EssentialLoad.isColumnDisplayable(config, 4)) ? 600
-					: (config.load.aux_loads > 2 || EssentialLoad.isColumnDisplayable(config, 3)) ? 552 : 505;
-	let calculated_height = config.show_battery ? 408 + batteryBanksHeight : (additionalLoadVisible ? 400 : 300);
+	let calculated_minY = calculateMinY(config);
+	let calculated_width = calculateWidth(config);
+	let calculated_height = calculateHeight(config);
 
 	let minX = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : config.wide_view_mode ? 0 : calculated_minX;
 	let minY = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : calculated_minY;
-	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 : calculated_width;
-	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : calculated_height;
+	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 : calculated_width - minX;
+	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : calculated_height - calculated_minY;
 
-	let cardHeight = data.panelMode === true ?
-		config.show_solar ? '100%' : '75%'
-		: !config.show_solar && !config.show_battery ? '270px'
-			: !config.show_solar
-				? additionalLoadVisible ? '330px' : '246px'
-				: config.show_solar && !config.show_battery
-					? additionalLoadVisible ? '400px' : '300px'
-					: data.cardHeight;
-	let cardWidth = data.panelMode === true ? data.cardWidth : '100%';
+	let cardHeight = data.panelMode === true ? '100%' : data.cardHeight;
+	let cardWidth = data.panelMode === true ? '720px' : data.cardWidth;
 
 	function gridXTransform() {
 		return config.align_grid || config.wide_view_mode ? calculated_minX - minX : 0;
 	}
 
 	function loadXTransform() {
-		return config.align_load || config.wide_view_mode ? width - calculated_width : 0;
+		return config.align_load || config.wide_view_mode ? width - calculated_width - gridXTransform() : 0;
 	}
 
 	function mainXTransform() {
-		return config.wide_view_mode ? (width - calculated_width) / 2 : 0;
+		return config.center_sol_inv_bat || config.wide_view_mode ? (loadXTransform() - gridXTransform()) / 2 : 0;
 	}
 
 	return html`

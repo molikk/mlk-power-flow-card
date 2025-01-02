@@ -92,12 +92,12 @@ export class Grid {
 		let circle2 = this.getCircle(data.totalGridPower > 0, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
 
 		return svg`
-			<svg id="grid-flow1">
+			<svg id="grid-flow1" style="overflow: visible">
 				<path id="grid-line1" d="M 175 218 L ${lineEnd} 218" fill="none" stroke="${data.gridColour}"
 					  stroke-width="${data.gridLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				${circle1}
 			</svg>
-			<svg id="grid-flow2">
+			<svg id="grid-flow2" style="overflow: visible">
 				<path id="grid-line2" d="M 65 218 L 105 218" fill="none" stroke="${data.gridColour}"
 					  stroke-width="${data.gridLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
 				${circle2}
@@ -120,20 +120,20 @@ export class Grid {
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
 		const grid = svg`
 				<svg xmlns="http://www.w3.org/2000/svg" id="transmission_on" x="-0.5" y="187.5"
-					 width="64.5" height="64.5" viewBox="0 0 24 24">
+					 width="64.5" height="64.5" viewBox="0 0 24 24" style="overflow: visible">
 					<path class="${validGridDisconnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
 						  fill="${data.gridColour}"
 						  display="${data.totalGridPower < 0 || config.grid.import_icon ? 'none' : ''}"
 						  d="${icons.gridOn}"/>
 				</svg>
 				<svg xmlns="http://www.w3.org/2000/svg" id="transmission_off" x="-0.5" y="187.5"
-					 width="64.5" height="64.5" viewBox="0 0 24 24">
+					 width="64.5" height="64.5" viewBox="0 0 24 24" style="overflow: visible">
 					<path class="${validGridConnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
 						  fill="${data.gridOffColour}" display="${config.grid.disconnected_icon ? 'none' : ''}"
 						  d="${icons.gridOff}"/>
 				</svg>
 				<svg xmlns="http://www.w3.org/2000/svg" id="grid_export" x="-0.5" y="187.5"
-					 width="64.5" height="64.5" viewBox="0 0 24 24">
+					 width="64.5" height="64.5" viewBox="0 0 24 24" style="overflow: visible">
 					<path class="${validGridDisconnected.includes(data.gridStatus.toLowerCase()) ? 'st12' : ''}"
 						  fill="${data.gridColour}"
 						  display="${data.totalGridPower >= 0 || config.grid.export_icon ? 'none' : ''}"
@@ -142,13 +142,11 @@ export class Grid {
 			`;
 		const custom_grid = svg`
 				<g display="${config.grid.import_icon || config.grid.disconnected_icon || config.grid.export_icon ? '' : 'none'}">
-					<foreignObject x="-0.5" y="187.5" width="70" height="70" style="position: fixed; ">
-						<body xmlns="http://www.w3.org/1999/xhtml">
-						<div style="position: fixed; ">
+					<foreignObject x="-0.5" y="187.5" width="70" height="70">
+						<div xmlns="http://www.w3.org/1999/xhtml"  style="position: fixed;; width: 70px; height: 70px; ">
 							<ha-icon icon="${data.customGridIcon}" 
 							style="color: ${data.customGridIconColour} !important; --mdc-icon-size: 64px;" />
 						</div>
-						</body>
 					</foreignObject>
 				</g>
 			`;

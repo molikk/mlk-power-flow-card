@@ -79,7 +79,7 @@ export class Inverter {
 	static generatePriorityLoad(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`${data.priorityLoad === 'on' ?
 			svg`
-						<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="pload" x="267.7" y="252.5" width="18"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.priorityLoad === 'on' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
@@ -92,7 +92,7 @@ export class Inverter {
                 </text>
             </a>`
 			: svg`
-						<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="pbat" x="267.7" y="252.5" width="18"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
@@ -239,7 +239,7 @@ export class Inverter {
 		}
 		return svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="inverter" x="${X[0]}" y="${X[1]}" width="${X[2]}" height="${X[3]}"
-				preserveAspectRatio="none" >
+				preserveAspectRatio="none" style="overflow: visible">
 				<defs>
 					<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
 				      ${this.buildGradientSteps(data.stateInverterLoadPercentage.toNum(0))}

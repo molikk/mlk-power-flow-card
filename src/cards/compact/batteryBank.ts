@@ -194,7 +194,7 @@ export class BatteryBank {
 				? storageEntity.toStr(2)
 				: Utils.toNum((batteryEnergy * (socEntity.toNum(2) / 100) / 1000), 2).toFixed(2);
 			return svg`
- 					<svg id="battery-pack-flow-${id}">
+ 					<svg id="battery-pack-flow-${id}" style="overflow: visible">
 						<path id="bat-line"
 					  		d="M 239 385 L 239 392 L ${x} 392 L ${x} 399" fill="none"
 					  		stroke="${Battery.batteryColour(data, config)}" stroke-width="${data.batLineWidth}" stroke-miterlimit="10"

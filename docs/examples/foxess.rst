@@ -10,7 +10,6 @@ Example 1 - Integration via https://github.com/nathanmarlor/foxess_modbus
   :linenos:
 
     type: custom:mlk-power-flow-card
-    panel_mode: true
     card_width: 80%
     show_solar: true
     inverter:
