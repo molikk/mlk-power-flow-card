@@ -10,12 +10,10 @@ export class LoadUtils {
 	static getIconWithCondition(condition: boolean, x: number, y: number, icon: string, style_class: string, size = 30) {
 		return svg`
 			<g display="${condition ? '' : 'none'}">
-				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
-					<body xmlns="http://www.w3.org/1999/xhtml">
-					<div style="position: fixed; ">
+				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}">
+					<div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: ${size}px; height: ${size}px;">
 						<ha-icon icon="${icon}" class="${style_class}"></ha-icon>
 					</div>
-					</body>
 				</foreignObject>
 			</g>`;
 	}
@@ -27,12 +25,10 @@ export class LoadUtils {
 	static getIconWithStyleAndCondition(condition: boolean, x: number, y: number, icon: string, color: string, size = 30, icon_size = 20) {
 		return svg`
 			<g display="${condition ? '' : 'none'}">
-				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}" style="position: fixed; ">
-					<body xmlns="http://www.w3.org/1999/xhtml">
-					<div style="position: fixed; ">
+				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}">
+					<div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: ${size}px; height: ${size}px;">
 						<ha-icon icon="${icon}" style="color: ${color} !important; --mdc-icon-size: ${icon_size}px;"></ha-icon>
 					</div>
-					</body>
 				</foreignObject>
 			</g>`;
 	}
