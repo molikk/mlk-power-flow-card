@@ -1,6 +1,6 @@
 {
   "name": "mlk-power-flow-card",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A customizable Home Assistant card to emulate power flow based on Sunsynk's Inverter screen with load devices controls.",
   "main": "mlk-power-flow-card.js",
   "scripts": {
