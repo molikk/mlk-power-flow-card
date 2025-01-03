@@ -89,7 +89,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 
 	let minX = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : config.wide_view_mode ? 0 : calculated_minX;
 	let minY = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : calculated_minY;
-	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 : calculated_width - minX;
+	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 - minX : calculated_width - minX;
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : calculated_height - calculated_minY;
 
 	function gridXTransform() {
