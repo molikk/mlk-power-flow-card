@@ -63,6 +63,18 @@ function calculateMinY(config: PowerFlowCardConfig) {
 	return getMinY();
 }
 
+function calculateMinX(config: PowerFlowCardConfig) {
+	const getMinX = (): number => {
+		switch (true) {
+			case !config.show_solar && !config.show_grid:
+				return 130;
+			default:
+				return 0;
+		}
+	};
+	return getMinX();
+}
+
 export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, data: DataDto) => {
 	Solar.solarColour = data.solarColour;
 	Solar.decimalPlacesEnergy = data.decimalPlacesEnergy;
@@ -70,7 +82,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	Grid.gridColour = data.gridColour;
 	Grid.decimalPlaces = data.decimalPlaces;
 
-	let calculated_minX = 0;
+	let calculated_minX = calculateMinX(config);
 	let calculated_minY = calculateMinY(config);
 	let calculated_width = calculateWidth(config);
 	let calculated_height = calculateHeight(config);
@@ -80,19 +92,16 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 : calculated_width - minX;
 	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : calculated_height - calculated_minY;
 
-	let cardHeight = data.panelMode === true ? '100%' : data.cardHeight;
-	let cardWidth = data.panelMode === true ? '720px' : data.cardWidth;
-
 	function gridXTransform() {
-		return config.align_grid || config.wide_view_mode ? calculated_minX - minX : 0;
+		return config.wide_view_mode ? calculated_minX - minX : 0;
 	}
 
 	function loadXTransform() {
-		return config.align_load || config.wide_view_mode ? width - calculated_width - gridXTransform() : 0;
+		return config.wide_view_mode ? width - calculated_width + minX : 0;
 	}
 
 	function mainXTransform() {
-		return config.center_sol_inv_bat || config.wide_view_mode ? (loadXTransform() - gridXTransform()) / 2 : 0;
+		return config.wide_view_mode ? (loadXTransform() - gridXTransform()) / 2 : 0;
 	}
 
 	return html`
@@ -104,8 +113,8 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 					<svg
 						viewBox="${minX} ${minY} ${width} ${height}"
 						preserveAspectRatio="xMidYMid meet"
-						height="${cardHeight}"
-						width="${cardWidth}">
+						height="${data.cardHeight}"
+						width="${data.cardWidth}">
 
 						${ConfigurationCardEditor.isConfigUpgradeable(config) ?
 							svg`${DevMode.generateUpdateMsg()}`
