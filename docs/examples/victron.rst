@@ -15,7 +15,6 @@ Integration via https://github.com/sfstar/hass-victron
   :linenos:
 
   type: custom:mlk-power-flow-card
-  panel_mode: false
   large_font: false
   title: Victron - Power Monitor
   title_colour: White

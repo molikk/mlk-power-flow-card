@@ -1,4 +1,4 @@
-import { unitOfEnergyConversionRules, UnitOfEnergyOrPower, UnitOfPower } from '../const';
+import { UnitOfEnergy, unitOfEnergyConversionRules, UnitOfEnergyOrPower, UnitOfPower } from '../const';
 import { navigate } from 'custom-card-helpers';
 
 export class Utils {
@@ -52,16 +52,22 @@ export class Utils {
 			return `${this.toNum(numberValue, decimal)}`;
 		}
 
-		if (unit === UnitOfPower.WATT && Math.abs(numberValue) < 1000) {
+		if ((unit === UnitOfPower.WATT || unit === UnitOfEnergy.WATT_HOUR ) && Math.abs(numberValue) < 1000) {
 			if (withUnit) {
 				return `${Math.round(numberValue)} ${unit}`;
 			}
 			return `${Math.round(numberValue)}`;
 		}
 
-		if (unit === UnitOfPower.KILO_WATT && Math.abs(numberValue) < 1) {
+		if (unit === UnitOfPower.KILO_WATT  && Math.abs(numberValue) < 1) {
 			if (withUnit) {
 				return `${Math.round(numberValue * 1000)} W`;
+			}
+			return `${Math.round(numberValue * 1000)}`;
+		}
+		if ( unit === UnitOfEnergy.KILO_WATT_HOUR  && Math.abs(numberValue) < 1) {
+			if (withUnit) {
+				return `${Math.round(numberValue * 1000)} Wh`;
 			}
 			return `${Math.round(numberValue * 1000)}`;
 		}
@@ -69,6 +75,12 @@ export class Utils {
 		if (unit === UnitOfPower.MEGA_WATT && Math.abs(numberValue) < 1) {
 			if (withUnit) {
 				return `${(numberValue * 1000).toFixed(decimal)} kW`;
+			}
+			return `${(numberValue * 1000).toFixed(decimal)}`;
+		}
+		if ( unit === UnitOfEnergy.MEGA_WATT_HOUR && Math.abs(numberValue) < 1) {
+			if (withUnit) {
+				return `${(numberValue * 1000).toFixed(decimal)} kWh`;
 			}
 			return `${(numberValue * 1000).toFixed(decimal)}`;
 		}

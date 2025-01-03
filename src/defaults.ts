@@ -35,6 +35,7 @@ export default {
 		colour: 'pink',
 		show_daily: false,
 		show_remaining_energy: true,
+		remaining_energy_to_shutdown: false,
 		animation_speed: 6,
 		max_power: 4500,
 		show_absolute: false,

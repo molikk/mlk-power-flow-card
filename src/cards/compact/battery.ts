@@ -195,7 +195,6 @@ export class Battery {
           	</a>`;
 	}
 
-
 	static generateCapacity(data: DataDto, config: PowerFlowCardConfig) {
 		const x = Battery.showInnerBatteryBanks(config) ? 202 : (Battery.showOuterBatteryBanks(config) ? 322 : 270);
 		const y = Battery.showInnerBatteryBanks(config) ? 325 : (Battery.showOuterBatteryBanks(config) ? 307 : 338);
@@ -212,11 +211,17 @@ export class Battery {
 					</text>
 				</a>`;
 		}
+
+		let shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
+		let storage = config.battery.remaining_energy_to_shutdown
+			? Utils.toNum((data.batteryEnergy * ((data.stateBatterySoc.toNum(2) - shutdown) / 100) / 1000), 2).toFixed(2)
+			: Utils.toNum((data.batteryEnergy * (data.stateBatterySoc.toNum(2) / 100) / 1000), 2).toFixed(2);
+
 		return svg`
 			<text x="${x}" y="${y}" class="st3 ${align}"
 				  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
 				  fill="${data.batteryColour}">
-				${Utils.toNum((data.batteryEnergy * (data.stateBatterySoc.toNum(2) / 100) / 1000), 2)}
+				${storage}
 				${UnitOfEnergy.KILO_WATT_HOUR}
 			</text>`;
 	}

@@ -65,10 +65,10 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	schema_version: number;
 	dev_mode: boolean;
 	refresh_time?: string;
-	panel_mode?: boolean;
 	wide_view_mode: boolean,
 	align_grid: boolean;
 	align_load: boolean;
+	center_sol_inv_bat: boolean;
 	large_font?: boolean;
 	show_solar: boolean;
 	show_battery: boolean;
@@ -117,6 +117,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		show_absolute: boolean;
 		auto_scale: boolean;
 		show_remaining_energy: boolean;
+		remaining_energy_to_shutdown: boolean;
 		dynamic_colour: boolean;
 		linear_gradient: boolean;
 		animate: boolean;
