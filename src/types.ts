@@ -66,15 +66,12 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 	dev_mode: boolean;
 	refresh_time?: string;
 	wide_view_mode: boolean,
-	align_grid: boolean;
-	align_load: boolean;
-	center_sol_inv_bat: boolean;
 	large_font?: boolean;
 	show_solar: boolean;
 	show_battery: boolean;
 	show_grid: boolean;
-	card_height?: string;
-	card_width?: string;
+	card_height: string;
+	card_width: string;
 	decimal_places?: number;
 	decimal_places_energy?: number;
 	dynamic_line_width?: boolean;
@@ -453,7 +450,6 @@ export interface InverterSettings {
 export interface DataDto {
 	config: PowerFlowCardConfig,
 	refreshTime: String,
-	panelMode?: boolean,
 	compactMode,
 	cardHeight,
 	cardWidth,

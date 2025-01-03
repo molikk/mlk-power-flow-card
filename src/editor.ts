@@ -212,8 +212,6 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'show_solar', selector: { boolean: {} } },
 											{ name: 'show_battery', selector: { boolean: {} } },
 											{ name: 'show_grid', selector: { boolean: {} } },
-											{ name: 'align_grid', selector: { boolean: {} } },
-											{ name: 'align_load', selector: { boolean: {} } },
 											{ name: 'dynamic_line_width', selector: { boolean: {} } },
 											{ name: 'max_line_width', selector: { number: {} } },
 											{ name: 'min_line_width', selector: { number: {} } },
