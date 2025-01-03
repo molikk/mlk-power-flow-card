@@ -229,6 +229,7 @@
 
     "energy_cost_decimals": "Energy Cost Decimals",
     "show_remaining_energy": "Show Remaining Energy",
+    "remaining_energy_to_shutdown": "Show Remaining Energy to Shutdown",
     "path_threshold": "Path Threshold",
     "label_daily_grid_buy": "Daily Grid Buy Label",
     "label_daily_grid_sell": "Daily Grid Sell Label",

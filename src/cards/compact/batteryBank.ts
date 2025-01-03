@@ -11,7 +11,7 @@ export class BatteryBank {
 			return svg``;
 		}
 		let banks = config.battery.battery_banks;
-		banks = banks > 4?4:banks;
+		banks = banks > 4 ? 4 : banks;
 		let columns = [281, 312, 343, 374];
 		let gap = 10, width = 28;
 		if (banks <= 2) {
@@ -91,15 +91,9 @@ export class BatteryBank {
 	) {
 		if (id <= banks) {
 			const textX = column + width / 2 + gap;
-			const power = config.battery.auto_scale
-				? config.battery.show_absolute
-					? Utils.convertValueNew(Math.abs(powerEntity.toNum(decimalPlaces)), powerEntity.getUOM(), decimalPlaces, false)
-					: Utils.convertValueNew(powerEntity.toNum(decimalPlaces), powerEntity.getUOM(), decimalPlaces, false) || '0'
-				: powerEntity.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute);
+			const power = this.getPower(config, powerEntity, decimalPlaces);
+			const storage = this.getStorage(storageEntity, config, batteryEnergy, socEntity);
 
-			const storage = storageEntity?.isValid()
-				? storageEntity.toStr(2)
-				: Utils.toNum((batteryEnergy * (socEntity.toNum(2) / 100) / 1000), 2).toFixed(2);
 			return svg`
 					<rect x="${column + gap}" y="274" width="${width}" height="66" rx="4.5" ry="4.5" fill="none" pointer-events="all" stroke="${colour}"></rect>
 					<text x="${textX}" y="283" class="st15" fill="${colour}" id="battery_bank_${id}_power">${power}</text>
@@ -182,17 +176,10 @@ export class BatteryBank {
 	) {
 		if (id <= banks) {
 			const textX = column + width / 2 - 3;
-			const power = config.battery.auto_scale
-				? config.battery.show_absolute
-					? Utils.convertValueNew(Math.abs(powerEntity.toNum(decimalPlaces)), powerEntity.getUOM(), decimalPlaces, false)
-					: Utils.convertValueNew(powerEntity.toNum(decimalPlaces), powerEntity.getUOM(), decimalPlaces, false) || '0'
-				: powerEntity.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute);
-
+			const power = this.getPower(config, powerEntity, decimalPlaces);
 			const x = column - 3 + width / 2;
+			const storage = this.getStorage(storageEntity, config, batteryEnergy, socEntity);
 
-			const storage = storageEntity?.isValid()
-				? storageEntity.toStr(2)
-				: Utils.toNum((batteryEnergy * (socEntity.toNum(2) / 100) / 1000), 2).toFixed(2);
 			return svg`
  					<svg id="battery-pack-flow-${id}" style="overflow: visible">
 						<path id="bat-line"
@@ -214,4 +201,20 @@ export class BatteryBank {
 		return svg``;
 	}
 
+	private static getStorage(storageEntity: CustomEntity, config: PowerFlowCardConfig, batteryEnergy: number, socEntity: CustomEntity) {
+		let shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
+		return storageEntity?.isValid()
+			? storageEntity.toStr(2)
+			: config.battery.remaining_energy_to_shutdown
+				? Utils.toNum((batteryEnergy * ((socEntity.toNum(2) - shutdown) / 100) / 1000), 2).toFixed(2)
+				: Utils.toNum((batteryEnergy * (socEntity.toNum(2) / 100) / 1000), 2).toFixed(2);
+	}
+
+	private static getPower(config: PowerFlowCardConfig, powerEntity: CustomEntity, decimalPlaces: number) {
+		return config.battery.auto_scale
+			? config.battery.show_absolute
+				? Utils.convertValueNew(Math.abs(powerEntity.toNum(decimalPlaces)), powerEntity.getUOM(), decimalPlaces, false)
+				: Utils.convertValueNew(powerEntity.toNum(decimalPlaces), powerEntity.getUOM(), decimalPlaces, false) || '0'
+			: powerEntity.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute);
+	}
 }
