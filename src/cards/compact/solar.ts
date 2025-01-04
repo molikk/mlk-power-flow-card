@@ -63,7 +63,7 @@ export class Solar {
 
 		if (data.statePVTotal.isValid()) {
 			totalPower = svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.pv_total)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.pv_total)}>
 				${totalPower}
 			</a>`;
 		}
@@ -137,13 +137,13 @@ export class Solar {
 			</svg>`;
 
 		const icon = config.solar?.navigate ?
-			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.solar.navigate)}>
+			svg`<a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.solar.navigate)}>
 					${icon_svg}
 				</a>`
 			: icon_svg;
 
 		const envTemp = svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.environment_temp)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.environment_temp)}>
 					<text id="environ_temp" x="${startPosition.x}"" y="45"
 						  class="${config.entities?.environment_temp ? 'st3 left-align' : 'st12'}"
 						  fill="${data.solarColour}"
@@ -218,7 +218,7 @@ export class Solar {
 		startPosition.x -= startPosition.gap + 8;
 
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, entity.entity_id)}>
 				<text id="${fieldId}_value" x="${startX - startPosition.gap / 2}" y="26" class="st10" fill="${this.solarColour}">
 					${power}
 				</text>
@@ -387,17 +387,16 @@ export class Solar {
                 ${this.generateEnergy(X, data.statePV5Energy, config.solar.show_mppt_production)}
                 ${this.generateVoltage(X, data.statePV5Voltage)}
                 ${this.generateAmperage(X, data.statePV5Current)}
-			          ${this.generatePower(X, data.statePV5Power, config.solar.auto_scale, data.largeFont)}
+                ${this.generatePower(X, data.statePV5Power, config.solar.auto_scale, data.largeFont)}
 			      `
 			: svg``
 		}`;
 	}
 
-
-	private static generatePower(X: (number | string)[], entity: CustomEntity, autoScale: boolean, largeFont) {
+	private static generatePower(X: (number | string)[], entity: CustomEntity, autoScale: boolean, largeFont: boolean) {
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
-                <text x="${X[4]}" y="72" class="${largeFont !== true ? 'st14' : 'st4'} st8" 
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, entity.entity_id)}>
+                <text x="${X[4]}" y="72" class="${!largeFont ? 'st14' : 'st4'} st8" 
                     display="${entity.isValid() ? '' : 'none'}" 
                     fill="${this.solarColour}">
                     ${autoScale ? Utils.convertValue(entity, this.decimalPlaces) || 0 : entity.toNum(0) + ' ' + UnitOfPower.WATT}
@@ -481,7 +480,7 @@ export class Solar {
 
 	private static generateEnergy(X: (number | string)[], energyEntity: CustomEntity, showProduction: boolean) {
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, energyEntity.entity_id)} >
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, energyEntity.entity_id)} >
                 <text x="${X[2]}" y="106" class="st3 st8 right-align" 
                     display="${showProduction && energyEntity.isValid() ? '' : 'none'}" 
                     fill="${this.solarColour}">
@@ -492,7 +491,7 @@ export class Solar {
 
 	private static generateVoltage(X: (number | string)[], voltageEntity: CustomEntity) {
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, voltageEntity.entity_id)}>
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, voltageEntity.entity_id)}>
                 <text x="${X[3]}" y="106"
                       class="st3 left-align"
                       display="${voltageEntity.isValid() ? '' : 'none'}"
@@ -503,7 +502,7 @@ export class Solar {
 
 	private static generateAmperage(X: (number | string)[], entity: CustomEntity) {
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, entity.entity_id)}>
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, entity.entity_id)}>
 				<text id="" x="${X[3]}" y="94" class="st3 left-align" display="${entity.isValid() ? '' : 'none'}" fill="${this.solarColour}">
 					${entity.toNum(1)}${UnitOfElectricalCurrent.AMPERE}
 				</text>
@@ -512,7 +511,7 @@ export class Solar {
 
 	static generateSolarSellIcon(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.solar_sell_247)}>
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.solar_sell_247)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="solar_sell_on" x="245" y="150" width="18"
                      height="18" viewBox="0 0 30 30" style="overflow: visible">
                     <path display="${!config.entities.solar_sell_247 || data.stateSolarSell.state === 'off' || data.stateSolarSell.state === '0' || !['1', 'on'].includes(data.stateSolarSell.state) ? 'none' : ''}"
