@@ -29,11 +29,11 @@ Please delete options that are not relevant.
 ## Checklist
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 
-- [X] My code follows the style guidelines of this project
-- [X] I have performed a self-review of my code
-- [X] I have commented my code, particularly in hard-to-understand areas
-- [X] I have made corresponding changes to the documentation
-- [X] My changes generate no new warnings
-- [X] Any dependent changes have been merged and published in downstream modules
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] Any dependent changes have been merged and published in downstream modules
 - [ ] I have updated the version in `package.json` following [semver](https://semver.org/)
 
