@@ -516,7 +516,7 @@ export class PowerFlowCard extends LitElement {
 			? stateGridCTPowerTotal.toPower(invert_grid)
 			: gridPowerL1 + gridPowerL2 + gridPowerL3;
 
-		const totalGridPower = config.inverter.three_phase ? gridPowerTotal : gridPowerL1;
+		const totalGridPower = gridPowerTotal;
 
 		const gridVoltage = !stateGridVoltage.isNaN() ? stateGridVoltage.toNum(0) : null;
 		const batteryCurrentDirection = !stateBatteryCurrentDirection.isNaN() ? stateBatteryCurrentDirection.toNum(0) : null;
@@ -1160,26 +1160,36 @@ export class PowerFlowCard extends LitElement {
 		}
 
 		//Calculate dynamic colour for load icon based on the contribution of the power source (battery, grid, solar) supplying the load
-		const pvPercentageRaw = totalPV === 0
-			? 0
-			: (priorityLoad === 'off' || !priorityLoad)
-				? (config.battery.invert_flow
-					? (batteryPower < 0
-						? (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100
-						: ((totalPV - Math.abs(batteryPower)) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100)
-					: (batteryPower > 0
-						? (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100
-						: ((totalPV - Math.abs(batteryPower)) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100))
-				: (totalPV / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100;
+		let allLoadPower = essentialPower + Math.max(auxPower, 0);
 
-		const batteryPercentageRaw =
-			config.battery.invert_flow
-				? (batteryPower >= 0
-					? 0
-					: (Math.abs(batteryPower) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100)
-				: (batteryPower <= 0
-					? 0
-					: (Math.abs(batteryPower) / (threePhase ? essentialPower + Math.max(auxPower, 0) : essentialPower)) * 100);
+		const getPvPercentageRaw = (): number => {
+			switch (true) {
+				case totalPV === 0 :
+					return 0;
+				case (priorityLoad === 'off' || !priorityLoad) && config.battery.invert_flow && batteryPower >= 0:
+				case (priorityLoad === 'off' || !priorityLoad) && !config.battery.invert_flow && batteryPower <= 0:
+					return 100 * (totalPV - Math.abs(batteryPower)) / allLoadPower;
+				case (priorityLoad === 'off' || !priorityLoad) && config.battery.invert_flow && batteryPower < 0:
+				case (priorityLoad === 'off' || !priorityLoad) && !config.battery.invert_flow && batteryPower > 0:
+				default:
+					return 100 * totalPV / allLoadPower;
+			}
+		};
+		const getBatteryPercentageRaw = (): number => {
+			switch (true) {
+				case config.battery.invert_flow && batteryPower >= 0:
+				case !config.battery.invert_flow && batteryPower <= 0:
+					return 0;
+				case config.battery.invert_flow && batteryPower < 0:
+				case !config.battery.invert_flow && batteryPower > 0:
+				default:
+					return 100 * Math.abs(batteryPower) / allLoadPower;
+			}
+		};
+
+		const pvPercentageRaw = getPvPercentageRaw();
+
+		const batteryPercentageRaw = getBatteryPercentageRaw();
 
 		//console.log(`${pvPercentageRaw} % RAW PV to load, ${batteryPercentageRaw} % RAW Bat to load`);
 
@@ -1336,7 +1346,7 @@ export class PowerFlowCard extends LitElement {
 		config.title_colour = this.colourConvert(config.title_colour);
 
 
-		const nonEssentialLoadMainDynamicColour =  nonessentialPower > Utils.toNum(config.grid?.off_threshold, 0)
+		const nonEssentialLoadMainDynamicColour = nonessentialPower > Utils.toNum(config.grid?.off_threshold, 0)
 			? nonessentialPower > 0 ? gridImportColour : gridExportColour
 			: this.GREY_COLOUR;
 
@@ -1537,7 +1547,7 @@ export class PowerFlowCard extends LitElement {
 			auxOffColour,
 			batteryEnergy,
 			largeFont,
-			batteryPower,
+			batteryPower: batteryPower,
 			stateBatteryPower,
 			batteryDuration,
 			batteryCapacity,
