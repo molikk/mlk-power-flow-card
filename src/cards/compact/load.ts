@@ -27,7 +27,7 @@ export class Load {
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 
 		return svg`
-			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
 				<text id="daily_load_value" x="${this.LOAD_X - 5}" y="182"
 					  class="st10 right-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.loadColour}">
@@ -87,28 +87,27 @@ export class Load {
 
 	static generatePowers(data: DataDto, config: PowerFlowCardConfig) {
 		const x = 400 + (this.LOAD_X - 400) / 2 - 30;
-		return svg`
-			<text id="load-power-L1" x="${x}" y="241"
-				  display="${config.inverter.three_phase && config.entities?.load_power_L1 ? '' : 'none'}"
-				  class="st3 left-align" fill="${data.loadColour}">
+		const l1 = config.entities?.load_power_L1
+			? svg`<text id="load-power-L1" x="${x}" y="241" class="st3 left-align" fill="${data.loadColour}">
 				${config.load.auto_scale ? `${Utils.convertValue(data.loadPowerL1, data.decimalPlaces) || 0}` : `${data.loadPowerL1 || 0} ${UnitOfPower.WATT}`}
-			</text>
-			<text id="load-power-L2" x="${x}" y="254"
-				  display="${config.inverter.three_phase && config.entities?.load_power_L2 ? '' : 'none'}"
-				  class="st3 left-align" fill="${data.loadColour}">
+			</text>` : svg``;
+		let l2 = config.entities?.load_power_L2
+			? svg`<text id="load-power-L2" x="${x}" y="254" class="st3 left-align" fill="${data.loadColour}">
 				${config.load.auto_scale ? `${Utils.convertValue(data.loadPowerL2, data.decimalPlaces) || 0}` : `${data.loadPowerL2 || 0} ${UnitOfPower.WATT}`}
-			</text>
-			<text id="load-power-L3" x="${x}" y="267"
-				  display="${config.inverter.three_phase && config.entities?.load_power_L3 ? '' : 'none'}"
-				  class="st3 left-align" fill="${data.loadColour}">
+			</text>` : svg``;
+		let l3 = config.entities?.load_power_L3
+			? svg`<text id="load-power-L3" x="${x}" y="267" class="st3 left-align" fill="${data.loadColour}">
 				${config.load.auto_scale ? `${Utils.convertValue(data.loadPowerL3, data.decimalPlaces) || 0}` : `${data.loadPowerL3 || 0} ${UnitOfPower.WATT}`}
-			</text>
+			</text>` : svg``;
+		return svg`
+			${l1}
+			${l2}
+			${l3}
 		`;
 	}
 
 	static generateShapeAndName(data: DataDto, config: PowerFlowCardConfig) {
 		const x = 400 + (this.LOAD_X - 400) / 2 - 101.3;
-
 		return svg`
 			<rect x="${x}" y="203.5" width="70" height="30" rx="4.5" ry="4.5" fill="none"
 				stroke="${data.loadColour}" pointer-events="all"/>
@@ -123,7 +122,7 @@ export class Load {
 		return svg`
 			${config.entities?.essential_power && config.entities.essential_power !== 'none'
 			? svg`
-				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.essential_power)}>
+				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.essential_power)}>
 					<text id="ess_power" x="${x}" y="220" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 						  fill="${data.loadColour}">
 						${config.load.auto_scale ? `${Utils.convertValue(data.essentialPower, data.decimalPlaces) || 0}` : `${data.essentialPower || 0} ${UnitOfPower.WATT}`}
@@ -161,12 +160,11 @@ export class Load {
 							stop-color="${data.solarColour}"/>
 					</linearGradient>
 				</defs>
-				<path fill="${config.load.dynamic_colour ? 'url(#Lg)' : data.loadColour}"
-					  d="${data.essIcon}"/>
+				<path fill="${config.load.dynamic_colour ? 'url(#Lg)' : data.loadColour}" d="${data.essIcon}"/>
 			</svg>
 		`;
 		return config.load?.navigate ?
-			svg`<a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.load.navigate)}>
+			svg`<a href="#" @click=${(e: Event) => Utils.handleNavigation(e, config.load.navigate)}>
 					${grid}
 				</a>`
 			: grid;
