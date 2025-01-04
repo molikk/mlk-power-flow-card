@@ -244,7 +244,7 @@ export class GridLoad {
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 		if (config.grid?.show_nonessential_daily) {
 			return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateNonessentialDailyEnergy?.entity_id)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateNonessentialDailyEnergy?.entity_id)}>
 				    <text id="nes_daily_load_value" class="st10 right-align" 
 				        x="85" y="302" 
 				        display="${data.stateNonessentialDailyEnergy.isValid() ? '' : 'none'}"

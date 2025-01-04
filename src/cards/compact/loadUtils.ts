@@ -8,10 +8,13 @@ import { Load } from './load';
 export class LoadUtils {
 
 	static getIconWithCondition(condition: boolean, x: number, y: number, icon: string, style_class: string, size = 30) {
+		const width = `${size}px`;
+		const height = `${size}px`;
+
 		return svg`
 			<g display="${condition ? '' : 'none'}">
 				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}">
-					<div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: ${size}px; height: ${size}px;">
+					<div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: ${width}; height: ${height};">
 						<ha-icon icon="${icon}" class="${style_class}"></ha-icon>
 					</div>
 				</foreignObject>
@@ -23,10 +26,13 @@ export class LoadUtils {
 	}
 
 	static getIconWithStyleAndCondition(condition: boolean, x: number, y: number, icon: string, color: string, size = 30, icon_size = 20) {
+		const width = `${size}px`;
+		const height = `${size}px`;
+
 		return svg`
 			<g display="${condition ? '' : 'none'}">
 				<foreignObject x="${x}" y="${y}" width="${size}" height="${size}">
-					<div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: ${size}px; height: ${size}px;">
+					<div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: ${width}; height: ${height};">
 						<ha-icon icon="${icon}" style="color: ${color} !important; --mdc-icon-size: ${icon_size}px;"></ha-icon>
 					</div>
 				</foreignObject>
@@ -39,7 +45,7 @@ export class LoadUtils {
 
 	static getIconLink(entity: string, icon: TemplateResult<2>) {
 		return entity
-			? svg`<a href="#" @click=${(e) => Utils.handlePopup(e, entity)}>${icon}</a>`
+			? svg`<a href="#" @click=${(e: Event) => Utils.handlePopup(e, entity)}>${icon}</a>`
 			: svg`${icon}`;
 	}
 
@@ -61,7 +67,7 @@ export class LoadUtils {
 			</text>
 			${!power?.isValid() && toggle?.isValidSwitch() ?
 			svg`
-				<a href = "#" @click=${(e) => Utils.handlePopup(e, toggle?.entity_id)}>
+				<a href = "#" @click=${(e: Event) => Utils.handlePopup(e, toggle?.entity_id)}>
 					<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
 							class="st3"
 							fill="${color}">
@@ -71,16 +77,18 @@ export class LoadUtils {
 				`
 			:
 			svg`
-				<a href = "#" @click=${(e) => Utils.handlePopup(e, power?.entity_id)}>
-					<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
-							display="${power?.isValid() ? '' : 'none'}"
-							class="st3"
-							fill="${color}">
-						${power?.toPowerString(loadAutoScale, decimalPlaces)}
-					</text>
-				</a>`
+			<a href = "#" @click=${(e: Event) => Utils.handlePopup(e, power?.entity_id)}>
+				<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
+						display="${power?.isValid() ? '' : 'none'}"
+						class="st3"
+						fill="${color}">
+				${energy?.isValidElectric()
+				? power?.toPowerString(loadAutoScale, decimalPlaces)
+				: power?.toString() + (power?.getUOM() != '' ? ' ' + power?.getUOM() : '')}
+				</text>
+			</a>`
 		}
-			<a href="#" @click=${(e) => Utils.handlePopup(e, energy?.entity_id)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, energy?.entity_id)}>
 				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
 							display="${energy?.isValid() ? '' : 'none'}"
 							class="st3" fill="${color}">
@@ -189,10 +197,10 @@ export class LoadUtils {
 	}
 
 
-	static generateFrequency(entity: CustomEntity, color, id: string, x: number, y: number, align: string) {
+	static generateFrequency(entity: CustomEntity, color: string, id: string, x: number, y: number, align: string) {
 		return entity?.isValid() ?
 			svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
+            <a href="#" @click=${(e: Event) => Utils.handlePopup(e, entity?.entity_id)}>
                 <text id="${id}" x="${x}" y="${y}"
                       display="${entity?.isValid() ? '' : 'none'}"
                       class="st3 ${align}" fill="${color}">${entity?.toStr(1, false)} ${UnitOfFrequency.HERTZ}
@@ -202,15 +210,9 @@ export class LoadUtils {
 	}
 
 
-	static generatePhaseAmperage(
-		id: string,
-		entity: CustomEntity,
-		x: number,
-		y: number,
-		color,
-	) {
+	static generatePhaseAmperage(id: string, entity: CustomEntity, x: number, y: number, color: string) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, entity?.entity_id)}>
 				<text id="grid-current-${id}" x="${x}" y="${y}"
 					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 left-align"
@@ -220,15 +222,9 @@ export class LoadUtils {
 			</a>`;
 	}
 
-	static generatePhaseVoltage(
-		id: string,
-		entity: CustomEntity,
-		x: number,
-		y: number,
-		color,
-	) {
+	static generatePhaseVoltage(id: string, entity: CustomEntity, x: number, y: number, color: string) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, entity?.entity_id)}>
 				<text id="grid-potencial-${id}" x="${x}" y="${y}"
 					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 right-align"
@@ -244,11 +240,11 @@ export class LoadUtils {
 		x: number,
 		y: number,
 		autoScale: boolean,
-		color,
+		color: string,
 		decimalPlaces: number,
 	) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, entity?.entity_id)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, entity?.entity_id)}>
 				<text id="grid-power-${id}" x="${x}" y="${y}"
 					  display="${entity?.isValid() ? '' : 'none'}"
 					  class="st3 right-align"

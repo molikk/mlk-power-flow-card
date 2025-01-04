@@ -343,8 +343,8 @@ template:
 
         
   # Provides the combined status of inverter(s).  If either inverter is in state unknown or an error/stop state
-  # then the combined state will be shown as the error/stop state. Otherwise the standby/grid connected state
-  # of Inverter 1 will be shown, with Inverter 2 state as a fall back.
+  # then the combined state will be shown as the error/stop state. Otherwise, the standby/grid connected state
+  # of Inverter 1 will be shown, with Inverter 2 state as a fallback.
   #       
   - sensor:
     - name: "Inverters - State"

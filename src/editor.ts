@@ -1464,27 +1464,27 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		`;
 	}
 
-	private _computeLabelCallback = (data) => data.name ? this.localizeOrChange(data) ?? data.name : data;
+	private _computeLabelCallback = (data:any) => data.name ? this.localizeOrChange(data) ?? data.name : data;
 
-	private localizeOrChange(opt) {
+	private localizeOrChange(opt:any) {
 		let result = localize(`config.${opt.name}`) ?? opt.name;
 		if (result === opt.name && opt?.selector?.entity === undefined) {
-			result = opt.name.replace(/(\d)_(\d)|_/g, (_match, p1, p2) => {
+			result = opt.name.replace(/(\d)_(\d)|_/g, (_match: string, p1: string, p2: string) => {
 				if (p1 && p2) {
 					return `${p1}-${p2}`;
 				}
 				return ` `;
 			})
 			.toLowerCase()
-			.replace(/([^a-zA-Z0-9]+)(.)/g, (_match, nonAlpha, chr) => {
+			.replace(/([^a-zA-Z0-9]+)(.)/g, (_match: string, nonAlpha: string, chr: string) => {
 				return nonAlpha + chr.toUpperCase();
 			})
-			.replace(/^./, (match) => match.toUpperCase());
+			.replace(/^./, (match:string) => match.toUpperCase());
 		}
 		return result;
 	}
 
-	private _title(opt) {
+	private _title(opt: string) {
 		return localize(`config.cat_title.${opt}`) ?? opt;
 	}
 

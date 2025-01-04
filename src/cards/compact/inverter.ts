@@ -21,7 +21,7 @@ export class Inverter {
 			: svg`<image x="214" y="180" width="50" height="72" preserveAspectRatio="none" href="${inverterImg}" />`
 		}`;
 		return config.inverter?.navigate ?
-			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.inverter.navigate)}>
+			svg`<a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.inverter.navigate)}>
 					${inverter}
 				</a>`
 			: inverter;
@@ -29,7 +29,7 @@ export class Inverter {
 
 	static generateTimerInfo(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.use_timer_248)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.use_timer_248)}>
 				<svg xmlns="http://www.w3.org/2000/svg" id="timer" x="267.7" y="233.3" width="18"
 					 height="18" viewBox="0 0 24 24">
 					<path display="${data.stateUseTimer.state == 'on' && data.enableTimer !== 'no' ? '' : 'none'}"
@@ -79,7 +79,7 @@ export class Inverter {
 	static generatePriorityLoad(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`${data.priorityLoad === 'on' ?
 			svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.priority_load_243)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="pload" x="267.7" y="252.5" width="18"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.priorityLoad === 'on' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
@@ -92,7 +92,7 @@ export class Inverter {
                 </text>
             </a>`
 			: svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.priority_load_243)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="pbat" x="267.7" y="252.5" width="18"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.priorityLoad === 'off' && (data.priorityLoad !== 'no' || !data.priorityLoad) ? '' : 'none'}"
@@ -109,7 +109,7 @@ export class Inverter {
 
 	static generateInverterProgram(data: DataDto) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, data.inverterProg.entityID)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.inverterProg.entityID)}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="prog_grid_on" x="323" y="233" width="20"
                      height="18" viewBox="0 0 24 24">
                     <path display="${data.inverterProg.show === false || data.enableTimer === 'no' ? 'none' : ''}"
@@ -144,14 +144,14 @@ export class Inverter {
                 DC:
             </text>`;
 		return svg`
-            <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.radiator_temp_91)}>
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.radiator_temp_91)}>
                 ${ac}
                 <text id="ac_temp" x="192" y="229" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     ${data.stateRadiatorTemp.toStr(1, false)}
                 </text>
             </a>
-            <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90)}>
+            <a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90)}>
                 ${dc}
                 <text id="dc_temp" x="192" y="241" class="st3 left-align" fill="${data.inverterColour}"
                       display="${config.entities?.dc_transformer_temp_90 && data.stateDCTransformerTemp.isValid() ? '' : 'none'}">
@@ -261,7 +261,7 @@ export class Inverter {
 			return svg`
 				<rect x="221.5" y="193" width="37.5" height="12" rx="1" ry="1" fill="${data.inverterStateColour}" stroke="${data.inverterStateColour}" pointer-events="all"
 				  display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}" />
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_status_59)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.inverter_status_59)}>
 	                <text id="standby" x=240 y="200" class="st15" fill="white"
 	                      display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}">
 	                    ${data.inverterStateMsg}
@@ -320,7 +320,7 @@ export class Inverter {
 		return svg`
 			<rect x="${X[0]}" y="${X[1]}" width="${X[2]}" height="${X[3]}" rx="1" ry="1" fill="${data.inverterStateColour}" stroke="${data.inverterStateColour}" pointer-events="all" 
 			 display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}" />
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.inverter_status_59)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.inverter_status_59)}>
                 <text id="standby" x="${X[4]}" y="${X[5]}" class="st15" fill="${data.inverterStateColour}"
                       display="${config.entities.inverter_status_59 && data.inverterStateMsg ? '' : 'none'}">
                     ${data.inverterStateMsg}

@@ -1,4 +1,5 @@
-import {InverterModel} from '../../types';
+import { InverterModel, InverterSettings } from '../../types';
+import { CustomEntity } from './custom-entity';
 
 export class InverterSettingsDto {
     brand!: InverterModel;
@@ -14,8 +15,8 @@ export class InverterSettingsDto {
 		batteryPower: number,
 		gridStatus: string,
 		shutdown: number,
-		inverterProg,
-		stateBatterySOC,
+		inverterProg: InverterSettings,
+		stateBatterySOC: CustomEntity,
 		maxSOC: number,
 		invertBatFlow: boolean
     ) {

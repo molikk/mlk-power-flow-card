@@ -29,7 +29,7 @@ export class Battery {
 		;
 
 		return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_power_190)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.battery_power_190)}>
             <text id="data.batteryPower_190" x="239"
                   y="${y}"
                   display="${config.entities.battery_power_190 === 'none' ? 'none' : ''}"
@@ -53,7 +53,7 @@ export class Battery {
 		const y = Battery.showOuterBatteryBanks(config) ? 294 : 299;
 
 		return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryVoltage.entity_id)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatteryVoltage.entity_id)}>
             <text id="battery_voltage_183" x="${x}" y="${y}"
                   display="${data.stateBatteryVoltage.isValid() ? '' : 'none'}"
                   fill=${data.batteryColour} class="st3 ${Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align'}">
@@ -68,7 +68,7 @@ export class Battery {
 		const y = Battery.showOuterBatteryBanks(config) ? 307 : 312;
 
 		return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
             <text id="battery_current_191" x="${x}" y="${y}"
                   display="${data.stateBatteryCurrent.isValid() ? '' : 'none'}"
                   fill=${data.batteryColour} class="st3 ${Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align'}">
@@ -84,7 +84,7 @@ export class Battery {
 		const align = Battery.showOuterBatteryBanks(config) ? 'left-align' : 'right-align';
 
 		return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
                 <text id="battery_temp_182" x="${x}" y="${y}"
                       class="st3 ${align}"
                       fill="${data.batteryColour}"
@@ -128,7 +128,7 @@ export class Battery {
 				  fill="${data.batteryShowDaily !== true ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_charge')}
 			</text>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_charge_70)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_battery_charge_70)}>
 				<text id="daily_bat_charge_value" x="${x}" y="${y}" class="st10 left-align"
 					  display="${data.batteryShowDaily !== true || !data.stateDayBatteryCharge.isValid() ? 'none' : ''}"
 					  fill="${data.batteryColour}">
@@ -147,7 +147,7 @@ export class Battery {
 				  fill="${data.batteryShowDaily !== true ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.daily_discharge')}
 			</text>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_battery_discharge_71)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_battery_discharge_71)}>
 				<text id="daily_bat_discharge_value" x="${x}" y="${y}"
 					  class="st10 left-align"
 					  display="${data.batteryShowDaily !== true || !data.stateDayBatteryDischarge.isValid() ? 'none' : ''}"
@@ -186,7 +186,7 @@ export class Battery {
 
 	static generateSOH(data: DataDto) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatterySOH.entity_id)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatterySOH.entity_id)}>
               	<text id="battery_soh" x="205" y="332" fill="${data.batteryColour}"
                     class="${data.stateBatterySOH.isValid() ? 'st3 left-align' : 'st12'}"
                     display="${!data.stateBatterySOH.isValid() || data.stateBatteryTemp.isValid() ? 'none' : ''}">
@@ -202,7 +202,7 @@ export class Battery {
 
 		if (data.stateBatteryRemainingStorage?.isValid()) {
 			return svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
 					<text x="${x}" y="${y}" 
 						class="st3 ${align}"
 						  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
@@ -229,21 +229,21 @@ export class Battery {
 	static generateSOC(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
 				<text id="battery_prog_soc_184" x="330" y="${y + 7}" fill=${data.batteryColour}
 						class="st13 st8 left-align"
 						display="${!data.inverterProg.show || config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
 					| ${data.inverterProg.capacity || 0}%
 				</text>
 			</a>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
 				<text id="battery_prog_soc_184" x="330" y="${y + 7}" fill=${data.batteryColour}
 				    	class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
 				    	display="${!data.inverterProg.show && config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 			  		| ${data.batteryShutdown || 0}%
 				</text>
 			</a>
-        	<a href="#" @click=${(e) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
+        	<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
           		<text id="battery_soc_184" x="270" y="${y + 7}" fill=${data.batteryColour} 
 	                class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
 	                display="${data.stateBatterySoc.isValid() ? '' : 'none'}" >
@@ -312,7 +312,7 @@ export class Battery {
 			</svg>		
 		`;
 		return config.battery.navigate ?
-			svg` <a href="#" @click=${(e) => Utils.handleNavigation(e, config.battery.navigate)}>
+			svg` <a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.battery.navigate)}>
 				${bat}
 			</a>`
 			: bat;

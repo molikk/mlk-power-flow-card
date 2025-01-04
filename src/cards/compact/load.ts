@@ -27,7 +27,7 @@ export class Load {
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_load_energy_84)}>
 				<text id="daily_load_value" x="${this.LOAD_X - 5}" y="182"
 					  class="st10 right-align" display="${!data.loadShowDaily || !data.stateDayLoadEnergy.isValid() ? 'none' : ''}"
 					  fill="${data.loadColour}">
@@ -58,7 +58,7 @@ export class Load {
 		const circleMotion = this.getCircleMotion(data.essentialPower > 0, 'es-dot', '#es-line', data, config, animationSpeed);
 		const circle1Motion = this.getCircleMotion(data.essentialPower > 0, 'es-dot1', '#es-line1', data, config, animationSpeed);
 
-		return svg `
+		return svg`
 			 <svg id="load-flow" style="overflow: visible">
 				<path id="es-line" d="${line1}" fill="none" stroke="${config.load.dynamic_colour ? data.flowColour : data.loadColour}"
 					  stroke-width="${data.loadLineWidth}" stroke-miterlimit="10" pointer-events="stroke"/>
@@ -72,17 +72,17 @@ export class Load {
 	`;
 	}
 
-	private static getCircleMotion(condition: boolean, circleId:string, lineId:string, data: DataDto, config: PowerFlowCardConfig, animationSpeed: number) {
-		return condition?svg`
-				<circle id="${circleId}" cx="0" cy="0"
-						r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${config.load.dynamic_colour ? data.flowColour : data.loadColour}">
-					<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
-								   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
-								   keyTimes="0;1" calcMode="linear">
-						<mpath href='${lineId}'/>
-					</animateMotion>
-				</circle>`:svg``;
+	private static getCircleMotion(condition: boolean, circleId: string, lineId: string, data: DataDto, config: PowerFlowCardConfig, animationSpeed: number) {
+		return condition ? svg`
+			<circle id="${circleId}" cx="0" cy="0"
+					r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
+					fill="${config.load.dynamic_colour ? data.flowColour : data.loadColour}">
+				<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
+							   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
+							   keyTimes="0;1" calcMode="linear">
+					<mpath href='${lineId}'/>
+				</animateMotion>
+			</circle>` : svg``;
 	}
 
 	static generatePowers(data: DataDto, config: PowerFlowCardConfig) {
@@ -123,7 +123,7 @@ export class Load {
 		return svg`
 			${config.entities?.essential_power && config.entities.essential_power !== 'none'
 			? svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.essential_power)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.essential_power)}>
 					<text id="ess_power" x="${x}" y="220" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 						  fill="${data.loadColour}">
 						${config.load.auto_scale ? `${Utils.convertValue(data.essentialPower, data.decimalPlaces) || 0}` : `${data.essentialPower || 0} ${UnitOfPower.WATT}`}
@@ -166,7 +166,7 @@ export class Load {
 			</svg>
 		`;
 		return config.load?.navigate ?
-			svg`<a href="#" @click=${(e) => Utils.handleNavigation(e, config.load.navigate)}>
+			svg`<a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.load.navigate)}>
 					${grid}
 				</a>`
 			: grid;

@@ -23,7 +23,6 @@ export class Grid {
 		this._gridColour = value;
 	}
 
-
 	static get decimalPlaces(): 2 {
 		return this._decimalPlaces;
 	}
@@ -64,14 +63,14 @@ export class Grid {
 
 	static generateEnergyCost(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
 				<text id="energy_cost" x="${this._col3X}" y="182" class="st3 left-align" 
 					  fill="${data.gridImportColour}" 
 					  display="${config.entities?.energy_cost_buy && data.stateEnergyCostBuy.isValid() ? '' : 'none'}" >
 					${data.stateEnergyCostBuy.toStr(config.grid?.energy_cost_decimals || 2)} ${data.stateEnergyCostBuy.getUOM()}
 				</text>
 			</a>
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_sell)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.energy_cost_sell)}>
 				<text id="energy_cost" x="${this._col3X}" y="195"  class="st3 left-align" 
 					  fill="${data.gridExportColour}" 
 					  display="${config.entities?.energy_cost_sell && data.stateEnergyCostSell.isValid() ? '' : 'none'}" >
@@ -152,17 +151,17 @@ export class Grid {
 			`;
 		return config.grid?.navigate ?
 			svg`
-				 <a href="#" @click=${(e) => Utils.handleNavigation(e, config.grid.navigate)}>
+				 <a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.grid.navigate)}>
 				    ${grid}
 				</a>
-				 <a href="#" @click=${(e) => Utils.handleNavigation(e, config.grid.navigate)}>
+				 <a href="#" @click=${(e:Event) => Utils.handleNavigation(e, config.grid.navigate)}>
 				    ${custom_grid}
 				</a> `
 			: svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
 					${grid}
 				</a>
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
 					${custom_grid}
 				</a>
 			`;
@@ -170,7 +169,7 @@ export class Grid {
 
 	static generatePrepaidUnits(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.prepaid_units)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.prepaid_units)}>
 				<text id="prepaid" x="31.5" y="257"
 					  class="${config.entities?.prepaid_units ? 'st3' : 'st12'}"
 					  fill="${data.gridColour}" display="${!data.statePrepaidUnits.isValid() ? 'none' : ''}">
@@ -182,7 +181,7 @@ export class Grid {
 
 	static generateDailyImport(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_import_76)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_grid_import_76)}>
 				<text id="daily_grid_buy_value" x="5" y="270" class="st10 left-align"
 					  display="${data.gridShowDailyBuy !== true || !data.stateDayGridImport.isValid() ? 'none' : ''}"
 					  fill="${data.gridColour}">
@@ -198,7 +197,7 @@ export class Grid {
 
 	static generateDailyExport(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.day_grid_export_77)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_grid_export_77)}>
 				<text id="daily_grid_sell_value" x="5" y="150" class="st10 left-align"
 					  display="${data.gridShowDailySell !== true || !data.stateDayGridExport.isValid() ? 'none' : ''}"
 					  fill="${data.gridColour}">
@@ -214,7 +213,7 @@ export class Grid {
 
 	static generateLimit(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
-			<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.max_sell_power)}>
+			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.max_sell_power)}>
 				<text id="max_sell_power" x="5" y="179" class="st3 left-align"
 					  fill="${['off', '0'].includes(data.stateSolarSell.state) ? 'grey' : data.gridColour}"
 					  display="${!data.stateMaxSellPower.isValid || !config.entities?.max_sell_power ? 'none' : ''}">
@@ -224,56 +223,33 @@ export class Grid {
 	}
 
 	static generateTotalGridPower(data: DataDto, config: PowerFlowCardConfig) {
+		const totalGridPower = config.grid.auto_scale
+			? `${config.grid.show_absolute
+				? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
+				: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
+			: `${config.grid.show_absolute
+				? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
+				: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
+			}`;
 		return svg`
-			${config.inverter.three_phase
-			? config.entities?.grid_ct_power_total
-				? svg`
-					<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
-						<text id="grid_total_power" x="140" y="220"
-							  display="${config.entities.grid_ct_power_total === 'none' ? 'none' : ''}"
-							  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
-							${config.grid.auto_scale
-					? `${config.grid.show_absolute
-						? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-						: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-					: `${config.grid.show_absolute
-						? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-						: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-					}`
-				}
-						</text>
-					</a>`
-				: svg`
+			${config.inverter.three_phase && config.entities?.grid_ct_power_total
+			? svg`
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
 					<text id="grid_total_power" x="140" y="220"
-						  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
+						  display="${config.entities.grid_ct_power_total === 'none' ? 'none' : ''}"
 						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
-						${config.grid.auto_scale
-					? `${config.grid.show_absolute
-						? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-						: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-					: `${config.grid.show_absolute
-						? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-						: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-					}`
-				}
-					</text>`
-			: svg`
-				<a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
-					<text id="grid_total_power" x="140" y="220"
-						  display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
-						  class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
-						${config.grid.auto_scale
-				? `${config.grid.show_absolute
-					? `${Math.abs(parseFloat(Utils.convertValue(data.totalGridPower, data.decimalPlaces)))} ${Utils.convertValue(data.totalGridPower, data.decimalPlaces).split(' ')[1]}`
-					: Utils.convertValue(data.totalGridPower, data.decimalPlaces) || 0}`
-				: `${config.grid.show_absolute
-					? `${Math.abs(data.totalGridPower)} ${UnitOfPower.WATT}`
-					: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
-				}`
-			}
+						${totalGridPower}
 					</text>
 				</a>`
-		}		
+			: svg`
+				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
+					<text id="grid_total_power" x="140" y="220"
+				  			display="${config.entities.grid_ct_power_172 === 'none' ? 'none' : ''}"
+				  			class="${data.largeFont !== true ? 'st14' : 'st4'} st8" fill="${data.gridColour}">
+						${totalGridPower}
+					</text>
+				</a>`
+			}		
 		`;
 	}
 }

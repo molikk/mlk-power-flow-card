@@ -749,7 +749,7 @@ export class PowerFlowCard extends LitElement {
 				inverterProg.show = true;
 
 				const timer_now = new Date(); // Create a new Date object representing the current time
-//console.log(`Current date and time: ${timer_now.toLocaleString()}`);
+				//console.log(`Current date and time: ${timer_now.toLocaleString()}`);
 
 				assignInverterProgramBasedOnTime(timer_now);
 
