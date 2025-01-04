@@ -23,7 +23,7 @@ export class Utils {
 		return keyPoints.split(';').reverse().join(';');
 	}
 
-	static convertValue(value, decimal = 2) {
+	static convertValue(value: any, decimal: number = 2) {
 		decimal = Number.isNaN(decimal) ? 2 : decimal;
 		if (Math.abs(value) >= 1000000) {
 			return `${(value / 1000000).toFixed(decimal)} MW`;
@@ -52,20 +52,20 @@ export class Utils {
 			return `${this.toNum(numberValue, decimal)}`;
 		}
 
-		if ((unit === UnitOfPower.WATT || unit === UnitOfEnergy.WATT_HOUR ) && Math.abs(numberValue) < 1000) {
+		if ((unit === UnitOfPower.WATT || unit === UnitOfEnergy.WATT_HOUR) && Math.abs(numberValue) < 1000) {
 			if (withUnit) {
 				return `${Math.round(numberValue)} ${unit}`;
 			}
 			return `${Math.round(numberValue)}`;
 		}
 
-		if (unit === UnitOfPower.KILO_WATT  && Math.abs(numberValue) < 1) {
+		if (unit === UnitOfPower.KILO_WATT && Math.abs(numberValue) < 1) {
 			if (withUnit) {
 				return `${Math.round(numberValue * 1000)} W`;
 			}
 			return `${Math.round(numberValue * 1000)}`;
 		}
-		if ( unit === UnitOfEnergy.KILO_WATT_HOUR  && Math.abs(numberValue) < 1) {
+		if (unit === UnitOfEnergy.KILO_WATT_HOUR && Math.abs(numberValue) < 1) {
 			if (withUnit) {
 				return `${Math.round(numberValue * 1000)} Wh`;
 			}
@@ -78,7 +78,7 @@ export class Utils {
 			}
 			return `${(numberValue * 1000).toFixed(decimal)}`;
 		}
-		if ( unit === UnitOfEnergy.MEGA_WATT_HOUR && Math.abs(numberValue) < 1) {
+		if (unit === UnitOfEnergy.MEGA_WATT_HOUR && Math.abs(numberValue) < 1) {
 			if (withUnit) {
 				return `${(numberValue * 1000).toFixed(decimal)} kWh`;
 			}
@@ -103,7 +103,7 @@ export class Utils {
 
 	private static isPopupOpen = false;
 
-	static handlePopup(event, entityId) {
+	static handlePopup(event: Event, entityId: string) {
 		if (!entityId) {
 			return;
 		}
@@ -111,7 +111,7 @@ export class Utils {
 		this._handleClick(event, { action: 'more-info' }, entityId);
 	}
 
-	static handleNavigation(event, navigationPath) {
+	static handleNavigation(event: Event, navigationPath: string) {
 		if (!navigationPath) {
 			return;
 		}
@@ -119,7 +119,7 @@ export class Utils {
 		this._handleClick(event, { action: 'navigate', navigation_path: navigationPath }, null);
 	}
 
-	private static _handleClick(event, actionConfig, entityId) {
+	private static _handleClick(event: Event, actionConfig: any, entityId: string | null) {
 		if (!event || (!entityId && !actionConfig.navigation_path)) {
 			return;
 		}
@@ -129,7 +129,7 @@ export class Utils {
 		// Handle different actions based on actionConfig
 		switch (actionConfig.action) {
 			case 'more-info':
-				this._dispatchMoreInfoEvent(event, entityId);
+				this._dispatchMoreInfoEvent(event, <string>entityId);
 				break;
 			case 'navigate':
 				this._handleNavigationEvent(event, actionConfig.navigation_path);
@@ -139,8 +139,7 @@ export class Utils {
 		}
 	}
 
-	private static _dispatchMoreInfoEvent(event, entityId) {
-
+	private static _dispatchMoreInfoEvent(event: Event, entityId: string) {
 		if (Utils.isPopupOpen) {
 			return;
 		}
@@ -154,7 +153,9 @@ export class Utils {
 
 		history.pushState({ popupOpen: true }, '', window.location.href);
 
-		event.target.dispatchEvent(moreInfoEvent);
+		if (event.target != null) {
+			event.target.dispatchEvent(moreInfoEvent);
+		}
 
 		const closePopup = () => {
 
@@ -173,7 +174,7 @@ export class Utils {
 		window.addEventListener('popstate', closePopup, { once: true });
 	}
 
-	private static _handleNavigationEvent(event, navigationPath) {
+	private static _handleNavigationEvent(event: Event, navigationPath: string) {
 		// Perform the navigation action
 		if (navigationPath) {
 			navigate(event.target, navigationPath); // Assuming 'navigate' is a function available in your environment
