@@ -6,7 +6,7 @@ import { HomeAssistant } from 'custom-card-helpers';
 
 /**
  * CustomEntity interface represents a custom entity in Home Assistant.
- * - this entity aids in reducing common boiler plate code. the end goal is that we can just use the state object instead of multiple vars
+ * - this entity aids in reducing common boilerplate code. the end goal is that we can just use the state object instead of multiple vars
  */
 export interface CustomEntity extends HassEntity {
 	state: string,
@@ -69,7 +69,7 @@ export interface CustomEntity extends HassEntity {
 	 */
 	toPowerString(scale?: boolean, decimals?: number, invert?: boolean): string;
 
-	getUOM(): UnitOfPower | UnitOfEnergy | UnitOfElectricalCurrent
+	getUOM(): UnitOfPower | UnitOfEnergy | UnitOfElectricalCurrent | string
 }
 
 // Function to convert HassEntity to CustomEntity
@@ -87,12 +87,14 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 		isNaN: () => entity?.state === null || Number.isNaN(entity?.state),
 		toPower: (invert?: boolean) => {
 			const unit = (entity.attributes?.unit_of_measurement || '').toLowerCase();
-			if (unit === 'kw' || unit === 'kwh') {
+			if (unit === UnitOfPower.KILO_WATT || unit === UnitOfEnergy.KILO_WATT_HOUR) {
 				return Utils.toNum(((entity?.state || '0') * 1000), 0, invert);
-			} else if (unit === 'mw' || unit === 'mwh') {
+			} else if (unit === UnitOfPower.MEGA_WATT || unit === UnitOfEnergy.MEGA_WATT_HOUR) {
 				return Utils.toNum(((entity?.state || '0') * 1000000), 0, invert);
+			} else if (unit === UnitOfPower.WATT || unit === UnitOfEnergy.WATT_HOUR) {
+				return Utils.toNum(((entity?.state || '0')), 0, invert);
 			} else {
-				return Utils.toNum((entity?.state || '0'), 0, invert) || 0;
+				return Utils.toNum((entity?.state || '0'), 2, invert) || 0;
 			}
 		},
 		toPowerString: (scale?: boolean, decimals?: number, invert?: boolean) =>
@@ -106,11 +108,11 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 }
 
 export function getEntity(config: PowerFlowCardConfig,
-	hass: HomeAssistant,
-	entity: keyof PowerFlowCardConfig,
-	defaultValue: Partial<CustomEntity> | null = {
-	state: '0', attributes: { unit_of_measurement: '' },
-}): CustomEntity {
+                          hass: HomeAssistant,
+                          entity: keyof PowerFlowCardConfig,
+                          defaultValue: Partial<CustomEntity> | null = {
+	                          state: '0', attributes: { unit_of_measurement: '' },
+                          }): CustomEntity {
 	const props = String(entity).split('.');
 
 	let entityString: string;
