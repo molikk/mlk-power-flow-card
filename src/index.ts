@@ -1287,7 +1287,6 @@ export class PowerFlowCard extends LitElement {
 		const PV4Efficiency = (config.solar.pv4_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 200), 0) : 100;
 		const PV5Efficiency = (config.solar.pv5_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 200), 0) : 100;
 
-
 		//colors
 		const loadColour = this.colourConvert(config.load?.colour);
 		const dynamicColourEssentialLoad1 = this.calculateEssentialLoadColour(stateEssentialLoad1, stateEssentialLoad1Toggle, config.load?.off_threshold) || loadColour;
@@ -1295,52 +1294,52 @@ export class PowerFlowCard extends LitElement {
 		const dynamicColourEssentialLoad3 = this.calculateEssentialLoadColour(stateEssentialLoad3, stateEssentialLoad3Toggle, config.load?.off_threshold) || loadColour;
 		const dynamicColourEssentialLoad4 = this.calculateEssentialLoadColour(stateEssentialLoad4, stateEssentialLoad4Toggle, config.load?.off_threshold) || loadColour;
 		const essentialLoadCol1DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol1State[1 - 1], essentialLoadCol1ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[2 - 1], essentialLoadCol1ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[3 - 1], essentialLoadCol1ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[4 - 1], essentialLoadCol1ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[5 - 1], essentialLoadCol1ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol1State[6 - 1], essentialLoadCol1ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[1 - 1], essentialLoadCol1ToggleState[1 - 1], config.load?.off_threshold, config.load?.load_1_1_color, config.load?.load_1_1_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[2 - 1], essentialLoadCol1ToggleState[2 - 1], config.load?.off_threshold, config.load?.load_1_2_color, config.load?.load_1_2_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[3 - 1], essentialLoadCol1ToggleState[3 - 1], config.load?.off_threshold, config.load?.load_1_3_color, config.load?.load_1_3_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[4 - 1], essentialLoadCol1ToggleState[4 - 1], config.load?.off_threshold, config.load?.load_1_4_color, config.load?.load_1_4_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[5 - 1], essentialLoadCol1ToggleState[5 - 1], config.load?.off_threshold, config.load?.load_1_5_color, config.load?.load_1_5_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol1State[6 - 1], essentialLoadCol1ToggleState[6 - 1], config.load?.off_threshold, config.load?.load_1_6_color, config.load?.load_1_6_off_color) || loadColour,
 		];
 		const essentialLoadCol2DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol2State[1 - 1], essentialLoadCol2ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[2 - 1], essentialLoadCol2ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[3 - 1], essentialLoadCol2ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[4 - 1], essentialLoadCol2ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[5 - 1], essentialLoadCol2ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol2State[6 - 1], essentialLoadCol2ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[1 - 1], essentialLoadCol2ToggleState[1 - 1], config.load?.off_threshold, config.load?.load_2_1_color, config.load?.load_2_1_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[2 - 1], essentialLoadCol2ToggleState[2 - 1], config.load?.off_threshold, config.load?.load_2_2_color, config.load?.load_2_2_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[3 - 1], essentialLoadCol2ToggleState[3 - 1], config.load?.off_threshold, config.load?.load_2_3_color, config.load?.load_2_3_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[4 - 1], essentialLoadCol2ToggleState[4 - 1], config.load?.off_threshold, config.load?.load_2_4_color, config.load?.load_2_4_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[5 - 1], essentialLoadCol2ToggleState[5 - 1], config.load?.off_threshold, config.load?.load_2_5_color, config.load?.load_2_5_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol2State[6 - 1], essentialLoadCol2ToggleState[6 - 1], config.load?.off_threshold, config.load?.load_2_6_color, config.load?.load_2_6_off_color) || loadColour,
 		];
 		const essentialLoadCol3DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol3State[1 - 1], essentialLoadCol3ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[2 - 1], essentialLoadCol3ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[3 - 1], essentialLoadCol3ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[4 - 1], essentialLoadCol3ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[5 - 1], essentialLoadCol3ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol3State[6 - 1], essentialLoadCol3ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[1 - 1], essentialLoadCol3ToggleState[1 - 1], config.load?.off_threshold, config.load?.load_3_1_color, config.load?.load_3_1_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[2 - 1], essentialLoadCol3ToggleState[2 - 1], config.load?.off_threshold, config.load?.load_3_2_color, config.load?.load_3_2_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[3 - 1], essentialLoadCol3ToggleState[3 - 1], config.load?.off_threshold, config.load?.load_3_3_color, config.load?.load_3_3_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[4 - 1], essentialLoadCol3ToggleState[4 - 1], config.load?.off_threshold, config.load?.load_3_4_color, config.load?.load_3_4_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[5 - 1], essentialLoadCol3ToggleState[5 - 1], config.load?.off_threshold, config.load?.load_3_5_color, config.load?.load_3_5_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol3State[6 - 1], essentialLoadCol3ToggleState[6 - 1], config.load?.off_threshold, config.load?.load_3_6_color, config.load?.load_3_6_off_color) || loadColour,
 		];
 		const essentialLoadCol4DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol4State[1 - 1], essentialLoadCol4ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[2 - 1], essentialLoadCol4ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[3 - 1], essentialLoadCol4ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[4 - 1], essentialLoadCol4ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[5 - 1], essentialLoadCol4ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol4State[6 - 1], essentialLoadCol4ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[1 - 1], essentialLoadCol4ToggleState[1 - 1], config.load?.off_threshold, config.load?.load_4_1_color, config.load?.load_4_1_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[2 - 1], essentialLoadCol4ToggleState[2 - 1], config.load?.off_threshold, config.load?.load_4_2_color, config.load?.load_4_2_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[3 - 1], essentialLoadCol4ToggleState[3 - 1], config.load?.off_threshold, config.load?.load_4_3_color, config.load?.load_4_3_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[4 - 1], essentialLoadCol4ToggleState[4 - 1], config.load?.off_threshold, config.load?.load_4_4_color, config.load?.load_4_4_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[5 - 1], essentialLoadCol4ToggleState[5 - 1], config.load?.off_threshold, config.load?.load_4_5_color, config.load?.load_4_5_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol4State[6 - 1], essentialLoadCol4ToggleState[6 - 1], config.load?.off_threshold, config.load?.load_4_6_color, config.load?.load_4_6_off_color) || loadColour,
 		];
 		const essentialLoadCol5DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol5State[1 - 1], essentialLoadCol5ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[2 - 1], essentialLoadCol5ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[3 - 1], essentialLoadCol5ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[4 - 1], essentialLoadCol5ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[5 - 1], essentialLoadCol5ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol5State[6 - 1], essentialLoadCol5ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[1 - 1], essentialLoadCol5ToggleState[1 - 1], config.load?.off_threshold, config.load?.load_5_1_color, config.load?.load_5_1_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[2 - 1], essentialLoadCol5ToggleState[2 - 1], config.load?.off_threshold, config.load?.load_5_2_color, config.load?.load_5_2_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[3 - 1], essentialLoadCol5ToggleState[3 - 1], config.load?.off_threshold, config.load?.load_5_3_color, config.load?.load_5_3_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[4 - 1], essentialLoadCol5ToggleState[4 - 1], config.load?.off_threshold, config.load?.load_5_4_color, config.load?.load_5_4_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[5 - 1], essentialLoadCol5ToggleState[5 - 1], config.load?.off_threshold, config.load?.load_5_5_color, config.load?.load_5_5_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol5State[6 - 1], essentialLoadCol5ToggleState[6 - 1], config.load?.off_threshold, config.load?.load_5_6_color, config.load?.load_5_6_off_color) || loadColour,
 		];
 		const essentialLoadCol6DynamicColour = [
-			this.calculateEssentialLoadColour(essentialLoadCol6State[1 - 1], essentialLoadCol6ToggleState[1 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol6State[2 - 1], essentialLoadCol6ToggleState[2 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol6State[3 - 1], essentialLoadCol6ToggleState[3 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol6State[4 - 1], essentialLoadCol6ToggleState[4 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol6State[5 - 1], essentialLoadCol6ToggleState[5 - 1], config.load?.off_threshold) || loadColour,
-			this.calculateEssentialLoadColour(essentialLoadCol6State[6 - 1], essentialLoadCol6ToggleState[6 - 1], config.load?.off_threshold) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[1 - 1], essentialLoadCol6ToggleState[1 - 1], config.load?.off_threshold, config.load?.load_6_1_color, config.load?.load_6_1_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[2 - 1], essentialLoadCol6ToggleState[2 - 1], config.load?.off_threshold, config.load?.load_6_2_color, config.load?.load_6_2_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[3 - 1], essentialLoadCol6ToggleState[3 - 1], config.load?.off_threshold, config.load?.load_6_3_color, config.load?.load_6_3_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[4 - 1], essentialLoadCol6ToggleState[4 - 1], config.load?.off_threshold, config.load?.load_6_4_color, config.load?.load_6_4_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[5 - 1], essentialLoadCol6ToggleState[5 - 1], config.load?.off_threshold, config.load?.load_6_5_color, config.load?.load_6_5_off_color) || loadColour,
+			this.calculateEssentialLoadColour(essentialLoadCol6State[6 - 1], essentialLoadCol6ToggleState[6 - 1], config.load?.off_threshold, config.load?.load_6_6_color, config.load?.load_6_6_off_color) || loadColour,
 		];
 
 		config.title_colour = this.colourConvert(config.title_colour);
@@ -1351,35 +1350,34 @@ export class PowerFlowCard extends LitElement {
 			: this.GREY_COLOUR;
 
 		const nonEssentialLoadDynamicColour = [
-			this.getDynamicColorWithToggle(nonessentialLoadState[1 - 1], nonEssentialLoadToggleState[1 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[2 - 1], nonEssentialLoadToggleState[2 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[3 - 1], nonEssentialLoadToggleState[3 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[4 - 1], nonEssentialLoadToggleState[4 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[5 - 1], nonEssentialLoadToggleState[5 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
-			this.getDynamicColorWithToggle(nonessentialLoadState[6 - 1], nonEssentialLoadToggleState[6 - 1], config.grid?.off_threshold, gridImportColour, gridExportColour),
+			this.getDynamicColorWithToggle(nonessentialLoadState[1 - 1], nonEssentialLoadToggleState[1 - 1], config.grid?.off_threshold, config.grid?.load1_import_color, config.grid?.load1_export_color, config.grid?.load1_off_color),
+			this.getDynamicColorWithToggle(nonessentialLoadState[2 - 1], nonEssentialLoadToggleState[2 - 1], config.grid?.off_threshold, config.grid?.load2_import_color, config.grid?.load2_export_color, config.grid?.load2_off_color),
+			this.getDynamicColorWithToggle(nonessentialLoadState[3 - 1], nonEssentialLoadToggleState[3 - 1], config.grid?.off_threshold, config.grid?.load3_import_color, config.grid?.load3_export_color, config.grid?.load3_off_color),
+			this.getDynamicColorWithToggle(nonessentialLoadState[4 - 1], nonEssentialLoadToggleState[4 - 1], config.grid?.off_threshold, config.grid?.load4_import_color, config.grid?.load4_export_color, config.grid?.load4_off_color),
+			this.getDynamicColorWithToggle(nonessentialLoadState[5 - 1], nonEssentialLoadToggleState[5 - 1], config.grid?.off_threshold, config.grid?.load5_import_color, config.grid?.load5_export_color, config.grid?.load5_off_color),
+			this.getDynamicColorWithToggle(nonessentialLoadState[6 - 1], nonEssentialLoadToggleState[6 - 1], config.grid?.off_threshold, config.grid?.load6_import_color, config.grid?.load6_export_color, config.grid?.load6_off_color),
 		];
 		const gridOffColour = this.colourConvert(config.grid?.grid_off_colour || gridColour);
 
 		const auxColour = this.colourConvert(config.load?.aux_colour);
 		const auxOffColour = this.colourConvert(config.load?.aux_off_colour || this.GREY_COLOUR);
 		const auxLoadDynamicColour = [
-			this.calculateAuxLoadColour(auxLoadState[0], auxLoadToggleState[0], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[1], auxLoadToggleState[1], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[2], auxLoadToggleState[2], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[3], auxLoadToggleState[3], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[4], auxLoadToggleState[4], config.load?.off_threshold) || auxColour,
-			this.calculateAuxLoadColour(auxLoadState[5], auxLoadToggleState[5], config.load?.off_threshold) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[1 - 1], auxLoadToggleState[1 - 1], config.load?.off_threshold, config.load?.aux_load1_color, config.load?.aux_load1_off_color) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[2 - 1], auxLoadToggleState[2 - 1], config.load?.off_threshold, config.load?.aux_load2_color, config.load?.aux_load2_off_color) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[3 - 1], auxLoadToggleState[3 - 1], config.load?.off_threshold, config.load?.aux_load3_color, config.load?.aux_load3_off_color) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[4 - 1], auxLoadToggleState[4 - 1], config.load?.off_threshold, config.load?.aux_load4_color, config.load?.aux_load4_off_color) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[5 - 1], auxLoadToggleState[5 - 1], config.load?.off_threshold, config.load?.aux_load5_color, config.load?.aux_load5_off_color) || auxColour,
+			this.calculateAuxLoadColour(auxLoadState[6 - 1], auxLoadToggleState[6 - 1], config.load?.off_threshold, config.load?.aux_load6_color, config.load?.aux_load6_off_color) || auxColour,
 		];
 
 		let auxDynamicColour = auxOffColour;
-		auxDynamicColour = auxLoadDynamicColour[0] != auxOffColour ? auxLoadDynamicColour[0] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[1] != auxOffColour ? auxLoadDynamicColour[1] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[2] != auxOffColour ? auxLoadDynamicColour[2] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[3] != auxOffColour ? auxLoadDynamicColour[3] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[4] != auxOffColour ? auxLoadDynamicColour[4] : auxDynamicColour;
-		auxDynamicColour = auxLoadDynamicColour[5] != auxOffColour ? auxLoadDynamicColour[5] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[1 - 1] != auxOffColour ? auxLoadDynamicColour[1 - 1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[2 - 1] != auxOffColour ? auxLoadDynamicColour[2 - 1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[3 - 1] != auxOffColour ? auxLoadDynamicColour[3 - 1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[4 - 1] != auxOffColour ? auxLoadDynamicColour[4 - 1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[5 - 1] != auxOffColour ? auxLoadDynamicColour[5 - 1] : auxDynamicColour;
+		auxDynamicColour = auxLoadDynamicColour[6 - 1] != auxOffColour ? auxLoadDynamicColour[6 - 1] : auxDynamicColour;
 		auxDynamicColour = stateAuxPower.isValid() && Math.abs(stateAuxPower.toPower()) > Utils.toNum(config.load?.off_threshold, 0) ? auxColour : auxDynamicColour;
-
 
 		let flowBatColour: string;
 		switch (true) {
@@ -1833,10 +1831,7 @@ export class PowerFlowCard extends LitElement {
 		const flow = this[`${el}Flow`] as SVGSVGElement;
 		this.durationCur[el] = speed;
 		if (flow && this.durationPrev[el] != speed) {
-			// console.log(`${el} found, duration change ${this.durationPrev[el]} -> ${this.durationCur[el]}`);
-			// this.gridFlow.pauseAnimations();
 			flow.setCurrentTime(flow.getCurrentTime() * (speed / this.durationPrev[el]));
-			// this.gridFlow.unpauseAnimations();
 		}
 		this.durationPrev[el] = this.durationCur[el];
 	}
@@ -1847,44 +1842,44 @@ export class PowerFlowCard extends LitElement {
 
 	private dynamicLineWidth(power: number, maxPower: number, width: number, defaultLineWidth: number = 1) {
 		let lineWidth: number;
-		// Check if dynamic_line_width is disabled in the config
 		if (!this._config.dynamic_line_width) {
 			lineWidth = Math.min(defaultLineWidth, 8);
 		} else {
 			lineWidth = Math.min((defaultLineWidth + Math.min(power / maxPower, 1) * width), 8);
 		}
-
 		return lineWidth;
 	}
 
-	private calculateAuxLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
-		let colour = this.colourConvert(this._config.load?.aux_colour);
+	private calculateAuxLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number, load_color: string, load_off_color: string) {
+		let colour = this.colourConvert(load_color ? load_color : this._config.load?.aux_colour);
+		let off_colour = this.colourConvert(load_off_color ? load_off_color : this.GREY_COLOUR);
 		return !this._config.load.aux_dynamic_colour
 			? colour
-			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : this.GREY_COLOUR) : (
-				Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
-					? colour
-					: this.GREY_COLOUR
-			);
-	}
-
-	private calculateEssentialLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number) {
-		let colour = this.colourConvert(this._config.load?.colour);
-		return !this._config.load.dynamic_colour
-			? colour
-			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : this.GREY_COLOUR)
-				: Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
-					? colour
-					: this.GREY_COLOUR
+			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : off_colour)
+				: Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0) ? colour : off_colour
 			;
 	}
 
-	private getDynamicColorWithToggle(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number, gridImportColour: string, gridExportColour: string, gridOffColour = this.GREY_COLOUR) {
+	private calculateEssentialLoadColour(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number, load_color?: string, load_off_color?: string) {
+		let colour = this.colourConvert(load_color ? load_color : this._config.load?.colour);
+		let off_colour = this.colourConvert(load_off_color ? load_off_color : this.GREY_COLOUR);
+		return !this._config.load.dynamic_colour
+			? colour
+			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : off_colour)
+				: Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0) ? colour : off_colour
+			;
+	}
+
+	private getDynamicColorWithToggle(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number, import_color?: string, export_color?: string, off_color?: string) {
+		const gridImportColour = this.colourConvert(import_color ? import_color : this._config.grid?.colour);
+		const gridExportColour = this.colourConvert(export_color ? export_color : (this._config.grid?.export_colour || gridImportColour));
+		const noGridColour = this.colourConvert(off_color ? off_color : (this._config.grid?.no_grid_colour || this.GREY_COLOUR));
+
 		return toggleEntity.isValidSwitch()
-			? toggleEntity.toOnOff() === 'on' ? gridImportColour : gridOffColour
+			? toggleEntity.toOnOff() === 'on' ? gridImportColour : noGridColour
 			: Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
 				? powerEntity.toPower(false) > 0 ? gridImportColour : gridExportColour
-				: this.GREY_COLOUR
+				: noGridColour
 			;
 	}
 
@@ -1895,9 +1890,7 @@ export class PowerFlowCard extends LitElement {
 			if (config.show_battery && !config.battery.shutdown_soc) {
 				throw new Error(localize('errors.battery.shutdown_soc'));
 			}
-			if (
-				config.show_battery &&
-				config.battery.show_daily &&
+			if (config.show_battery && config.battery.show_daily &&
 				(!config.entities.day_battery_charge_70 || !config.entities.day_battery_discharge_71)
 			) {
 				throw Error(localize('errors.battery.show_daily'));
@@ -1905,28 +1898,18 @@ export class PowerFlowCard extends LitElement {
 		}
 		if (config.show_solar && !config.solar) {
 			throw Error(localize('errors.solar.sol'));
-		} else {
-			if (config.show_solar && !config.solar.mppts) {
-				throw Error(localize('errors.solar.mppts'));
-			}
+		} else if (config.show_solar && !config.solar.mppts) {
+			throw Error(localize('errors.solar.mppts'));
 		}
 
-		if (
-			(config && config.grid && config.grid.show_daily_buy && !config.entities.day_grid_import_76) ||
-			(config && config.grid && config.grid.show_daily_sell && !config.entities.day_grid_export_77)
+		if (config && config.grid && config.grid.show_daily_buy && !config.entities.day_grid_import_76 ||
+			config && config.grid && config.grid.show_daily_sell && !config.entities.day_grid_export_77
 		) {
 			throw Error(localize('errors.grid.show_daily'));
 		}
 
-		if (
-			(config &&
-				config.entities &&
-				config.entities.essential_power === 'none' &&
-				!config.entities.inverter_power_175) ||
-			(config &&
-				config.entities &&
-				config.entities.essential_power === 'none' &&
-				config.entities.inverter_power_175 === 'none')
+		if (config && config.entities && config.entities.essential_power === 'none' && !config.entities.inverter_power_175 ||
+			config && config.entities && config.entities.essential_power === 'none' && config.entities.inverter_power_175 === 'none'
 		) {
 			throw Error(localize('errors.essential_power'));
 		}
