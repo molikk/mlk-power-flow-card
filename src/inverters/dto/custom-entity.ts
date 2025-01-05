@@ -29,6 +29,11 @@ export interface CustomEntity extends HassEntity {
 	toString(): string;
 
 	/**
+	 *  returns time in HH:MM
+	 */
+	toShortTime(withTrailingHourZero: boolean): string;
+
+	/**
 	 * Checks that the state is not null, undefined or unknown
 	 */
 	isValid(): boolean;
@@ -42,6 +47,11 @@ export interface CustomEntity extends HassEntity {
 	 * Checks that the state is valid and entity is energy or Power
 	 */
 	isValidElectric(): boolean;
+
+	/**
+	 * Checks that the state is valid and entity is time
+	 */
+	isValidTime(): boolean;
 
 	/**
 	 * Returns normalized on/off value
@@ -83,15 +93,18 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 		isValid: () => isValid || false,
 		isValidSwitch: () => isValid && ['on', 'off', 'On', 'Off', 'ON', 'OFF', 0, 1, true, false].includes(entity?.state) || false,
 		isValidElectric: () => isValid && ['W', 'Wh', 'kW', 'kWh', 'MW', 'MWh', 'J', 'kJ', 'MJ', 'GJ', 'A', 'mA', 'V', 'mV', 'Hz', 'BTU/h'].includes(entity?.attributes?.unit_of_measurement) || false,
+		isValidTime: () => isValid && entity?.attributes?.has_time == true || false,
 		notEmpty: () => notEmpty || false,
 		isNaN: () => entity?.state === null || Number.isNaN(entity?.state),
 		toPower: (invert?: boolean) => {
 			const unit = (entity.attributes?.unit_of_measurement || '').toLowerCase();
-			if (unit === UnitOfPower.KILO_WATT || unit === UnitOfEnergy.KILO_WATT_HOUR) {
+			if (unit === UnitOfPower.KILO_WATT.toLowerCase() || unit === UnitOfEnergy.KILO_WATT_HOUR.toLowerCase()) {
 				return Utils.toNum(((entity?.state || '0') * 1000), 0, invert);
-			} else if (unit === UnitOfPower.MEGA_WATT || unit === UnitOfEnergy.MEGA_WATT_HOUR) {
+			} else if (unit === UnitOfPower.MEGA_WATT.toLowerCase() || unit === UnitOfEnergy.MEGA_WATT_HOUR.toLowerCase()) {
 				return Utils.toNum(((entity?.state || '0') * 1000000), 0, invert);
-			} else if (unit === UnitOfPower.WATT || unit === UnitOfEnergy.WATT_HOUR) {
+			} else if (unit === UnitOfPower.WATT.toLowerCase() || unit === UnitOfEnergy.WATT_HOUR.toLowerCase()) {
+				return Utils.toNum(((entity?.state || '0')), 0, invert);
+			} else if (unit === UnitOfPower.WATT.toLowerCase() || unit === UnitOfEnergy.WATT_HOUR.toLowerCase()) {
 				return Utils.toNum(((entity?.state || '0')), 0, invert);
 			} else {
 				return Utils.toNum((entity?.state || '0'), 2, invert) || 0;
@@ -102,6 +115,9 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 				Utils.convertValueNew(entity?.state, entity?.attributes?.unit_of_measurement, decimals) :
 				`${Utils.toNum(entity?.state, decimals, invert).toFixed(decimals)} ${entity?.attributes?.unit_of_measurement || ''}`,
 		toString: () => entity?.state?.toString() || '',
+		toShortTime: (withTrailingHourZero: boolean = true) =>
+			(withTrailingHourZero && entity?.attributes?.hour < 10 ? '0' : '') + entity?.attributes?.hour
+			+ ':' + (entity?.attributes?.minute < 10 ? '0' : '') + entity?.attributes?.minute,
 		toOnOff: () => ['on', 'On', 'ON', 1, true].includes(entity.state) ? 'on' : 'off',
 		getUOM: () => entity?.attributes?.unit_of_measurement || '',
 	};

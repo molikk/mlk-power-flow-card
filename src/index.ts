@@ -1872,21 +1872,20 @@ export class PowerFlowCard extends LitElement {
 		let colour = this.colourConvert(this._config.load?.colour);
 		return !this._config.load.dynamic_colour
 			? colour
-			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : this.GREY_COLOUR) : (
-				Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
+			: toggleEntity.isValidSwitch() ? (toggleEntity.toOnOff() === 'on' ? colour : this.GREY_COLOUR)
+				: Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
 					? colour
 					: this.GREY_COLOUR
-			);
+			;
 	}
 
 	private getDynamicColorWithToggle(powerEntity: CustomEntity, toggleEntity: CustomEntity, threshold: number, gridImportColour: string, gridExportColour: string, gridOffColour = this.GREY_COLOUR) {
-		return toggleEntity.isValidSwitch() ?
-			toggleEntity.toOnOff() === 'on' ? gridImportColour : gridOffColour :
-			(
-				Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
-					? powerEntity.toPower(false) > 0 ? gridImportColour : gridExportColour
-					: this.GREY_COLOUR
-			);
+		return toggleEntity.isValidSwitch()
+			? toggleEntity.toOnOff() === 'on' ? gridImportColour : gridOffColour
+			: Math.abs(powerEntity.toPower(false)) > Utils.toNum(threshold, 0)
+				? powerEntity.toPower(false) > 0 ? gridImportColour : gridExportColour
+				: this.GREY_COLOUR
+			;
 	}
 
 	setConfig(config: PowerFlowCardConfig) {

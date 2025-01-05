@@ -57,45 +57,56 @@ export class LoadUtils {
 		energy: CustomEntity, energyX: number, energyY: number,
 		toggle: CustomEntity, loadAutoScale: boolean, decimalPlaces: number,
 	) {
-		return svg`
-			${icon}
-			<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" 
-				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" 
-				display="${power?.isValid() || toggle?.isValidSwitch() ? '' : 'none'}" />
+		const rectSvg = power?.isValid() || toggle?.isValidSwitch() ?
+			svg`<rect id=${type}_load_frame-${id}" x="${shapeX}" y="${shapeY}" width="41" height="20" 
+				rx="4.5" ry="4.5" fill="none" stroke="${color}" pointer-events="all" />`
+			: svg``;
+		const nameSvg = name ? svg`
 			<text id="${type}_load_name-${id}" x="${nameX}" y="${nameY}" class="st3 st8" fill="${color}">
-				${name ? `${name}` : ''}
-			</text>
-			${!power?.isValid() && toggle?.isValidSwitch() ?
-			svg`
-				<a href = "#" @click=${(e: Event) => Utils.handlePopup(e, toggle?.entity_id)}>
-					<text id="${type}_load_toggle-${id}" x="${powerX}" y="${powerY}"
-							class="st3"
-							fill="${color}">
-						${localize('common.' + (toggle?.toOnOff() || 'off'))}
-					</text>
-				</a>
-				`
-			:
-			svg`
-			<a href = "#" @click=${(e: Event) => Utils.handlePopup(e, power?.entity_id)}>
-				<text id="${type}_load_power-${id}" x="${powerX}" y="${powerY}"
-						display="${power?.isValid() ? '' : 'none'}"
-						class="st3"
-						fill="${color}">
-				${energy?.isValidElectric()
-				? power?.toPowerString(loadAutoScale, decimalPlaces)
-				: power?.toString() + (power?.getUOM() != '' ? ' ' + power?.getUOM() : '')}
-				</text>
-			</a>`
-		}
-			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, energy?.entity_id)}>
-				<text id="${type}_load_extra-${id}" x="${energyX}" y="${energyY}"
-							display="${energy?.isValid() ? '' : 'none'}"
-							class="st3" fill="${color}">
-					${energy?.isValidElectric() ? energy?.toStr(1) : energy?.toString()}
-					${energy?.getUOM()}
+				${name}
+			</text>` : svg``;
+		const toggleSvg = svg`
+			<a href = "#" @click=${(e: Event) => Utils.handlePopup(e, toggle?.entity_id)}>
+				<text id="${type}_load_toggle-${id}" 
+						x="${powerX}" y="${powerY}"
+						class="st3" fill="${color}">
+					${localize('common.' + (toggle?.toOnOff() || 'off'))}
 				</text>
 			</a>`;
+		let powerStr = power?.isValidElectric()
+			? power?.toPowerString(loadAutoScale, decimalPlaces)
+			: power?.isValidTime()
+				? power.toShortTime(true)
+				: power?.toString() + (power?.getUOM() != '' ? ' ' + power?.getUOM() : '');
+		const powerSvg = power?.isValid()
+			? svg`
+			<a href = "#" @click=${(e: Event) => Utils.handlePopup(e, power?.entity_id)}>
+				<text id="${type}_load_power-${id}" 
+						x="${powerX}" y="${powerY}"
+						class="st3" fill="${color}">
+				${powerStr}
+				</text>
+			</a>` : svg``;
+		let energyStr = energy?.isValidElectric()
+			? energy?.toPowerString(loadAutoScale, decimalPlaces)
+			: energy?.isValidTime()
+				? energy.toShortTime(true)
+				: energy?.toString() + (energy?.getUOM() != '' ? ' ' + energy?.getUOM() : '');
+		const energySvg = energy?.isValid()
+			? svg`<a href="#" @click=${(e: Event) => Utils.handlePopup(e, energy?.entity_id)}>
+				<text id="${type}_load_extra-${id}" 
+					x="${energyX}" y="${energyY}"
+					class="st3" fill="${color}">
+				${energyStr}
+				</text>
+			</a>` : svg``;
+
+		return svg`
+			${icon}
+			${rectSvg}
+			${nameSvg}
+			${!power?.isValid() && toggle?.isValidSwitch() ? toggleSvg : powerSvg}
+			${energySvg}`;
 	}
 
 	static generateEssentialLoadInternal(
