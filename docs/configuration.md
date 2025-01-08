@@ -417,10 +417,12 @@ Note: `X` is integer between `1` and `6`
 
 ### Additional Load: Column X Options
 
-| Editor name (en) | Attribute      | Default | Description                                                                                                  |
-|------------------|----------------|---------|--------------------------------------------------------------------------------------------------------------|
-| Load X-Y Name    | load_X_Y_name: |         | Set the display name for the essential load column X row Y                                                   |
-| Load X-Y Icon    | load_X_Y_icon: | none    | Set the essential load  column X row Y image using preset or any mdi icon. Check [icon](#icons) for details. |
+| Editor name (en)   | Attribute           | Default | Description                                                                                                  |
+|--------------------|---------------------|---------|--------------------------------------------------------------------------------------------------------------|
+| Load X-Y Name      | load_X_Y_name:      |         | Set the display name for the essential load column X row Y                                                   |
+| Load X-Y Icon      | load_X_Y_icon:      |         | Set the essential load  column X row Y image using preset or any mdi icon. Check [icon](#icons) for details. |
+| Load X-Y Color     | load_X_Y_color:     |         | Overrides color of load card object                                                                          |
+| Load X-Y Off Color | load_X_Y_off_color: |         | Overrides off color of load card object                                                                      |
 
 Note: `X` stands for column, values `1` to `6`;
 Note2: `Y` stands for row, values `1` to `6`
@@ -467,43 +469,24 @@ Note3: items `1-3` and `2-3` doesn't exist
 
 ### Aux Load: Item Options
 
-| Editor name (en) | Attribute       | Default | Description                                                                                                                 |
-|------------------|-----------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
-| Aux Load 1 Name  | aux_load1_name: |         | Set the display name for the AUX load 1                                                                                     |
-| Aux Load 1 Icon  | aux_load1_icon: |         | Set the AUX load 1 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| Aux Load 2 Name  | aux_load2_name: |         | Set the display name for the AUX load 2                                                                                     |
-| Aux Load 2 Icon  | aux_load2_icon: |         | Set the AUX load 2 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| Aux Load 3 Name  | aux_load3_name: |         | Set the display name for the AUX load 3                                                                                     |
-| Aux Load 3 Icon  | aux_load3_icon: |         | Set the AUX load 3 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| Aux Load 4 Name  | aux_load4_name: |         | Set the display name for the AUX load 4                                                                                     |
-| Aux Load 4 Icon  | aux_load4_icon: |         | Set the AUX load 4 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| Aux Load 5 Name  | aux_load5_name: |         | Set the display name for the AUX load 5                                                                                     |
-| Aux Load 5 Icon  | aux_load5_icon: |         | Set the AUX load 5 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| Aux Load 6 Name  | aux_load6_name: |         | Set the display name for the AUX load 6                                                                                     |
-| Aux Load 6 Icon  | aux_load6_icon: |         | Set the AUX load 6 image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| Editor name (en)     | Attribute            | Default | Description                                                                                                               |
+|----------------------|----------------------|---------|---------------------------------------------------------------------------------------------------------------------------|
+| Aux Load X Name      | aux_loadX_name:      |         | Set the display name for the AUX load                                                                                     |
+| Aux Load X Icon      | aux_loadX_icon:      |         | Set the AUX load image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| Aux Load X Color     | aux_loadX_color:     |         | Overrides color of load card object                                                                                       |
+| Aux Load X Off Color | aux_loadX_off_color: |         | Overrides off color of load card object                                                                                   |
+
+Note: `X` stands for item id/column, values `1` to `6`;
 
 ### Aux Load: Item Entities
 
 | Attribute         | Default | Description                                                                                                         |
 |-------------------|---------|---------------------------------------------------------------------------------------------------------------------|
-| aux_load1:        |         | Sensor that contains the power of your AUX load 1 (W)                                                               |
-| aux_load1_extra:  |         | Sensor that contains additional information you want displayed for your aux load 1 e.g. Daily kWh, Temperature etc. |
-| aux_load1_toggle: |         | Sensor that contains link to entity that will show up when aux load 1 icon clicked                                  |
-| aux_load2:        |         | Sensor that contains the power of your AUX load 2 (W)                                                               |
-| aux_load2_extra:  |         | Sensor that contains additional information you want displayed for your aux load 2 e.g. Daily kWh, Temperature etc  |
-| aux_load2_toggle: |         | Sensor that contains link to entity that will show up when aux load 2 icon clicked                                  |
-| aux_load3:        |         | Sensor that contains the power of your AUX load 3 (W)                                                               |
-| aux_load3_extra:  |         | Sensor that contains additional information you want displayed for your aux load 3 e.g. Daily kWh, Temperature etc  |
-| aux_load3_toggle: |         | Sensor that contains link to entity that will show up when aux load 3 icon clicked                                  |
-| aux_load4:        |         | Sensor that contains the power of your AUX load 4 (W)                                                               |
-| aux_load4_extra:  |         | Sensor that contains additional information you want displayed for your aux load 4 e.g. Daily kWh, Temperature etc  |
-| aux_load4_toggle: |         | Sensor that contains link to entity that will show up when aux load 4 icon clicked                                  |
-| aux_load5:        |         | Sensor that contains the power of your AUX load 5 (W)                                                               |
-| aux_load5_extra:  |         | Sensor that contains additional information you want displayed for your aux load 5 e.g. Daily kWh, Temperature etc  |
-| aux_load5_toggle: |         | Sensor that contains link to entity that will show up when aux load 5 icon clicked                                  |
-| aux_load6:        |         | Sensor that contains the power of your AUX load 6 (W)                                                               |
-| aux_load6_extra:  |         | Sensor that contains additional information you want displayed for your aux load 6 e.g. Daily kWh, Temperature etc  |
-| aux_load6_toggle: |         | Sensor that contains link to entity that will show up when aux load 6 icon clicked                                  |
+| aux_loadX:        |         | Sensor that contains the power of your AUX load X (W)                                                               |
+| aux_loadX_extra:  |         | Sensor that contains additional information you want displayed for your aux load X e.g. Daily kWh, Temperature etc. |
+| aux_loadX_toggle: |         | Sensor that contains link to entity that will show up when aux load X icon clicked                                  |
+
+Note: `X` stands for item id/column, values `1` to `6`;
 
 ## Grid
 
@@ -583,14 +566,23 @@ Note3: items `1-3` and `2-3` doesn't exist
 
 ### Grid Load: Row 1 Options
 
-| Editor name (en) | Attribute   | Default | Description                                                                     |
-|------------------|-------------|---------|---------------------------------------------------------------------------------|
-| Load 1 Name      | load1_name: |         | Set the display name for the non-essential load 1                               |
-| Load 1 Icon      | load1_icon: |         | Change the non-essential load 1 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 2 Name      | load2_name: |         | Set the display name for the non-essential load 2                               |
-| Load 2 Icon      | load2_icon: |         | Change the non-essential load 2 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 3 Name      | load3_name: |         | Set the display name for the non-essential load 3                               |
-| Load 3 Icon      | load3_icon: |         | Change the non-essential load 3 image using any mdi icon e.g. `mdi:ev-station`. |
+| Editor name (en)    | Attribute           | Default | Description                                                                     |
+|---------------------|---------------------|---------|---------------------------------------------------------------------------------|
+| Load 1 Name         | load1_name:         |         | Set the display name for the non-essential load 1                               |
+| Load 1 Icon         | load1_icon:         |         | Change the non-essential load 1 image using any mdi icon e.g. `mdi:ev-station`. |
+| Load 1 Import Color | load1_import_color: |         | Overrides import color of load card object                                      |
+| Load 1 Export Color | load1_export_color: |         | Overrides export color of load card object                                      |
+| Load 1 Off Color    | load1_off_color:    |         | Overrides off color of load card object                                         |
+| Load 2 Name         | load2_name:         |         | Set the display name for the non-essential load 2                               |
+| Load 2 Icon         | load2_icon:         |         | Change the non-essential load 2 image using any mdi icon e.g. `mdi:ev-station`. |
+| Load 1 Import Color | load2_import_color: |         | Overrides import color of load card object                                      |
+| Load 1 Export Color | load2_export_color: |         | Overrides export color of load card object                                      |
+| Load 1 Off Color    | load2_off_color:    |         | Overrides off color of load card object                                         |
+| Load 3 Name         | load3_name:         |         | Set the display name for the non-essential load 3                               |
+| Load 3 Icon         | load3_icon:         |         | Change the non-essential load 3 image using any mdi icon e.g. `mdi:ev-station`. |
+| Load 3 Import Color | load3_import_color: |         | Overrides import color of load card object                                      |
+| Load 3 Export Color | load3_export_color: |         | Overrides export color of load card object                                      |
+| Load 3 Off Color    | load3_off_color:    |         | Overrides off color of load card object                                         |
 
 ### Grid Load: Row 1 Entities
 
@@ -608,14 +600,23 @@ Note3: items `1-3` and `2-3` doesn't exist
 
 ### Grid Load: Row 2 Options
 
-| Editor name (en) | Attribute   | Default | Description                                                                     |
-|------------------|-------------|---------|---------------------------------------------------------------------------------|
-| Load 4 Name      | load4_name: |         | Set the display name for the non-essential load 4                               |
-| Load 4 Icon      | load4_icon: |         | Change the non-essential load 4 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 5 Name      | load5_name: |         | Set the display name for the non-essential load 5                               |
-| Load 5 Icon      | load5_icon: |         | Change the non-essential load 5 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 6 Name      | load6_name: |         | Set the display name for the non-essential load 6                               |
-| Load 6 Icon      | load6_icon: |         | Change the non-essential load 6 image using any mdi icon e.g. `mdi:ev-station`. |
+| Editor name (en)    | Attribute           | Default | Description                                                                     |
+|---------------------|---------------------|---------|---------------------------------------------------------------------------------|
+| Load 4 Name         | load4_name:         |         | Set the display name for the non-essential load 4                               |
+| Load 4 Icon         | load4_icon:         |         | Change the non-essential load 4 image using any mdi icon e.g. `mdi:ev-station`. |
+| Load 4 Import Color | load4_import_color: |         | Overrides import color of load card object                                      |
+| Load 4 Export Color | load4_export_color: |         | Overrides export color of load card object                                      |
+| Load 4 Off Color    | load4_off_color:    |         | Overrides off color of load card object                                         |
+| Load 5 Name         | load5_name:         |         | Set the display name for the non-essential load 5                               |
+| Load 5 Icon         | load5_icon:         |         | Change the non-essential load 5 image using any mdi icon e.g. `mdi:ev-station`. |
+| Load 5 Import Color | load5_import_color: |         | Overrides import color of load card object                                      |
+| Load 5 Export Color | load5_export_color: |         | Overrides export color of load card object                                      |
+| Load 5 Off Color    | load5_off_color:    |         | Overrides off color of load card object                                         |
+| Load 6 Name         | load6_name:         |         | Set the display name for the non-essential load 6                               |
+| Load 6 Icon         | load6_icon:         |         | Change the non-essential load 6 image using any mdi icon e.g. `mdi:ev-station`. |
+| Load 6 Import Color | load6_import_color: |         | Overrides import color of load card object                                      |
+| Load 6 Export Color | load6_export_color: |         | Overrides export color of load card object                                      |
+| Load 6 Off Color    | load6_off_color:    |         | Overrides off color of load card object                                         |
 
 ### Grid Load: Row 2 Entities
 
@@ -774,3 +775,15 @@ inverter_status_59 Entity expects a sensor that contains inverter status represe
 Sunsynk  `0, 1, 2, 3, 4` or `standby, selftest, normal, alarm, fault`. For Lux `0,1,2,4,5,7,8,9,10,11,12,16,17,20,32,40,64,136,192`. For Solis expects a numeric
 value `0-57`. For Goodwe `0,1,2,3,4,5` or `Wait mode, Normal (On-Grid), Normal (Off-Grid), Fault Mode, Flash Mode, Check Mode`. For Goodwe_gridmode `0,1,2` or
 `Idle, Exporting, Importing`
+
+
+## "Custom element doesn't exist: mlk-power-flow-card" handling
+
+### Android:
+
+Clear cache in App Info
+
+### iOS:
+
+1. Clear app cache
+2. Clear frontend cache: (Settings > Companion App > Debugging > Reset frontend cache)
