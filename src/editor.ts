@@ -154,6 +154,14 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 
 			fireEvent(this, 'config-changed', { config: this._config });
 		}
+		if (ConfigurationCardEditor.isUpgradeable(this._config, 4)) {
+			console.log('Updating version to schema 4');
+
+			this._config['low_resources'] = {refresh_interval: 500, animations: true};
+			this._config['schema_version'] = 4;
+
+			fireEvent(this, 'config-changed', { config: this._config });
+		}
 	}
 
 	private rewriteConfig(config: PowerFlowCardConfig, className: string, newName: string, oldName: string, clearOldValue: boolean = true) {
@@ -170,7 +178,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 	}
 
 	public static isConfigUpgradeable(config: PowerFlowCardConfig) {
-		return this.isUpgradeable(config, 3);
+		return this.isUpgradeable(config, 4);
 	}
 
 	protected render(): TemplateResult | void {
@@ -231,6 +239,20 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 													{ name: 'viewbox_min_y', selector: { number: {} } },
 													{ name: 'viewbox_width', selector: { number: {} } },
 													{ name: 'viewbox_height', selector: { number: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('low_resources'),
+										schema: [
+											{
+												name: 'low_resources',
+												type: 'grid',
+												schema: [
+													{ name: 'refresh_interval', selector: { number: { mode: 'box', min: 1, max: 10000 } } },
+													{ name: 'animations', selector: { boolean: {} } },
 												],
 											},
 										],

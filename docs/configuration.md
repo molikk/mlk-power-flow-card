@@ -32,23 +32,24 @@ The card can be configured through the following attributes:
 
 ## General
 
-| Editor name (en)              | Attribute                    | Default | Description                                                                                                                                                                                               |
-|-------------------------------|------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Large Font                    | large_font:                  | `false` | Increases font size of sensor data                                                                                                                                                                        |
-| Wide View                     | wide_view_mode:              | `false` | Toggles panel mode setting card width to `720px`. For use with Panel(1 card) view types or grid layouts                                                                                                   |
-| Card Height (px or %)         | card_height:                 | `100%`  | Sets the card height in pixels or percentage. Specify the value i.e. `400px` or provide a sensor i.e. `input.number_height`                                                                               |
-| Card Width (px or %)          | card_width:                  | `100%`  | Sets the card width in pixels or percentage. Specify the value i.e. `400px`, `80%` or provide a sensor i.e. `input.number_width`. For adjustments when using the Panel(1 card) view types or grid layouts |
-| Show Solar                    | show_solar:                  | `true`  | Toggle display of solar information                                                                                                                                                                       |
-| Show Battery                  | show_battery:                | `true`  | Toggle display of battery information                                                                                                                                                                     |
-| Show Grid                     | show_grid:                   | `true`  | Toggle display of grid information                                                                                                                                                                        |
-| Align grid to left            | align_grid:                  | `false` | Aligns grid group to left side of viewbox. Use with [Viewbox:min-x](#general-viewbox)                                                                                                                     |
-| Align load to right           | align_load:                  | `false` | Aligns load and AUX group to right side of viewbox. Use with `wide_view_mod` and [Viewbox:width](#general-viewbox)                                                                                        |
-| Dynamic Line Width            | dynamic_line_width:          | `false` | Adjusts the width of the lines and animated dot based on the ratio of current power to `max_power` (defined in each section below). Requires `max_power` to be explicitly defined                         |
-| Max Line Width                | max_line_width:              | `4`     | Sets the maximum line width when `dynamic_line_width: true`. If you prefer thick lines set a larger value. Reduce this value for a more subtle scaling affect. Values greater the `8` are ignored         |
-| Min Line Width                | min_line_width:              | `1`     | Sets the minimum or default line width on the card. Values greater the `8` are ignored                                                                                                                    |
-| Decimal Places                | decimal_places:              | `2`     | Sets the number of decimal places to display when using the `auto_scale` option.                                                                                                                          |
-| Decimal Places (Daily Energy) | decimal_places_energy:       | `1`     | Sets the number of decimal places to display for the daily energy values.                                                                                                                                 |
-| Adv. ViewBox Options          | [Sub-menu](#general-viewbox) |         | Shows sub-menu with Advanced ViewBox options details. **Use with cautious!** Check [link](https://svgwg.org/svg2-draft/coords.html#ViewBoxAttribute) for more information.                                |
+| Editor name (en)              | Attribute                          | Default | Description                                                                                                                                                                                               |
+|-------------------------------|------------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Large Font                    | large_font:                        | `false` | Increases font size of sensor data                                                                                                                                                                        |
+| Wide View                     | wide_view_mode:                    | `false` | Toggles panel mode setting card width to `720px`. For use with Panel(1 card) view types or grid layouts                                                                                                   |
+| Card Height (px or %)         | card_height:                       | `100%`  | Sets the card height in pixels or percentage. Specify the value i.e. `400px` or provide a sensor i.e. `input.number_height`                                                                               |
+| Card Width (px or %)          | card_width:                        | `100%`  | Sets the card width in pixels or percentage. Specify the value i.e. `400px`, `80%` or provide a sensor i.e. `input.number_width`. For adjustments when using the Panel(1 card) view types or grid layouts |
+| Show Solar                    | show_solar:                        | `true`  | Toggle display of solar information                                                                                                                                                                       |
+| Show Battery                  | show_battery:                      | `true`  | Toggle display of battery information                                                                                                                                                                     |
+| Show Grid                     | show_grid:                         | `true`  | Toggle display of grid information                                                                                                                                                                        |
+| Align grid to left            | align_grid:                        | `false` | Aligns grid group to left side of viewbox. Use with [Viewbox:min-x](#general-viewbox)                                                                                                                     |
+| Align load to right           | align_load:                        | `false` | Aligns load and AUX group to right side of viewbox. Use with `wide_view_mod` and [Viewbox:width](#general-viewbox)                                                                                        |
+| Dynamic Line Width            | dynamic_line_width:                | `false` | Adjusts the width of the lines and animated dot based on the ratio of current power to `max_power` (defined in each section below). Requires `max_power` to be explicitly defined                         |
+| Max Line Width                | max_line_width:                    | `4`     | Sets the maximum line width when `dynamic_line_width: true`. If you prefer thick lines set a larger value. Reduce this value for a more subtle scaling affect. Values greater the `8` are ignored         |
+| Min Line Width                | min_line_width:                    | `1`     | Sets the minimum or default line width on the card. Values greater the `8` are ignored                                                                                                                    |
+| Decimal Places                | decimal_places:                    | `2`     | Sets the number of decimal places to display when using the `auto_scale` option.                                                                                                                          |
+| Decimal Places (Daily Energy) | decimal_places_energy:             | `1`     | Sets the number of decimal places to display for the daily energy values.                                                                                                                                 |
+| Adv. ViewBox Options          | [Sub-menu](#general-viewbox)       |         | Shows sub-menu with Advanced ViewBox options details. **Use with cautious!** Check [link](https://svgwg.org/svg2-draft/coords.html#ViewBoxAttribute) for more information.                                |
+| Low resources Options         | [Sub-menu](#general-low-resources) |         | shows sub-menu with Low resource devices options details. **Use with cautious!**                                                                                                                          |
 
 ### General: ViewBox
 
@@ -58,6 +59,26 @@ The card can be configured through the following attributes:
 | min-y            | viewbox_min_y  |         | ViewBox min-y (if not given, value depends on show_solar, show_battery, additional_loads & aux_loads values)  |
 | width            | viewbox_width  |         | ViewBox width (if not given, value depends on number of aux and essential loads)                              |
 | height           | viewbox_height |         | ViewBox height (if not given, value depends on show_solar, show_battery, additional_loads & aux_loads values) |
+
+### General: Low Resources
+
+| Editor name (en) | Attribute        | Default | Description                                                                                            |
+|------------------|------------------|---------|--------------------------------------------------------------------------------------------------------|
+| Refresh Interval | refresh_interval | `500`   | Sets data and view refresh interval. Doesn't affect animations smoothness. See table below for meaning |
+| Animations       | animations       |         | If sets to `true` shows all animations like flow animation                                             |
+
+| Refresh Interval | Refresh Rate                                                                         |
+|------------------|--------------------------------------------------------------------------------------|
+| 1                | 1000Hz - fastest refresh, high CPU load                                              |
+| 10               | 100Hz - old default                                                                  |
+| 15               | 60Hz - screen refresh rate                                                           |
+| 100              | 10Hz                                                                                 |
+| 500              | 2Hz                                                                                  |
+| 1000             | 1Hz - Once per second, still should be visible as smooth, recommended for most usage |
+| 10000            | 0,1Hz once per 10 sec, user might see latency in data refresh, very low CPU Load     |
+
+Note: values of refresh rates aren't 100% accurate and depends on browser/app and device load. Value means highest Refresh Rate possible and might be lower when
+device is in high CPU load.
 
 ## Inverter
 
@@ -772,10 +793,11 @@ inverter_status_59 Entity expects a sensor that contains inverter status represe
 | **Victron**      |                                               |              |                                                                                                                        |                                                                                              | `2`, `fault`                                                                                                                          | **off**: `0`, `off`<br/> **lowpower**: `1`, `low power`<br/> **bulk**: `3`, `bulk`<br/> **absorption**: `4`, `absorption`<br/> **float**: `5`, `float`<br/> **storage**: `6`, `storage`<br/> **equalize**: `7`, `equalize`<br/> **passthru**: `8`, `passthru`<br/> **inverting**: `9`, `inverting`<br/> **powerassist**: `10`, `power assist`<br/> **powersupply**: `11`, `power supply`<br/> **sustain**: `244`, `sustain`<br/> **externalcontrol**: `252`, `external control` |
 | **Sungrow**      | `standby`,`initial standby`                   | `startup`    |                                                                                                                        | `warn running`                                                                               | `update failed`, `maintain mode`,`emergency stop`,<br/>`fault`,`unknown`,`un-initialized`,`open loop`,<br/>`safe mode`,`dispatch run` | **running**: `running`<br/> **offgrid**: `off-grid mode`<br/> **externalcontrol**: `external ems mode`,`forced mode`<br/> **shutdown**: `shutdown`,`restarting`,`afci self test shutdown`<br/> **normalstop**: `stop`<br/> **sustain**: `de-rating running`                                                                                                                                                                                                                     | 
 
-Sunsynk  `0, 1, 2, 3, 4` or `standby, selftest, normal, alarm, fault`. For Lux `0,1,2,4,5,7,8,9,10,11,12,16,17,20,32,40,64,136,192`. For Solis expects a numeric
-value `0-57`. For Goodwe `0,1,2,3,4,5` or `Wait mode, Normal (On-Grid), Normal (Off-Grid), Fault Mode, Flash Mode, Check Mode`. For Goodwe_gridmode `0,1,2` or
+Sunsynk  `0, 1, 2, 3, 4` or `standby, selftest, normal, alarm, fault`. For Lux `0,1,2,4,5,7,8,9,10,11,12,16,17,20,32,40,64,136,192`. For `Solis` expects a
+numeric
+value `0-57`. For `Goodwe` `0,1,2,3,4,5` or `Wait mode, Normal (On-Grid), Normal (Off-Grid), Fault Mode, Flash Mode, Check Mode`. For `Goodwe_gridmode` `0,1,2`
+or
 `Idle, Exporting, Importing`
-
 
 ## "Custom element doesn't exist: mlk-power-flow-card" handling
 

@@ -163,7 +163,7 @@ export class Battery {
 		let keyPoints = data.batteryPower > 0 ? '1;0' : '0;1';
 		keyPoints = config.battery.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
 
-		let circle = data.batteryPower != 0 ? svg`
+		let circle = data.batteryPower != 0 && config.low_resources.animations ? svg`
 			<circle id="power-dot" cx="0" cy="0"
 					r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 					fill="${Battery.batteryColour(data, config)}">
