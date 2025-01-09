@@ -42,7 +42,46 @@ export class PowerFlowCard extends LitElement {
 
 	private durationPrev: { [name: string]: number } = {};
 	private durationCur: { [name: string]: number } = {};
+	private lastRenderTime: number;
+	private renderInterval: number;
+	private rafId: number;
 
+	constructor() {
+		super();
+		this.rafId = 0;
+		this.lastRenderTime = 0;
+		this.renderInterval = this._config?.low_resources?.refresh_interval || 500; // 100ms for 10Hz
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.startRenderLoop();
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		cancelAnimationFrame(this.rafId);
+	}
+
+	startRenderLoop() {
+		const renderLoop = (timestamp: DOMHighResTimeStamp) => {
+			if (timestamp - this.lastRenderTime >= this.renderInterval) {
+				this.requestUpdate();
+				this.lastRenderTime = timestamp;
+			}
+			this.rafId = requestAnimationFrame(renderLoop);
+		};
+		this.rafId = requestAnimationFrame(renderLoop);
+	}
+
+	shouldUpdate() {
+		const now = performance.now();
+		if (now - this.lastRenderTime >= this.renderInterval) {
+			this.lastRenderTime = now;
+			return true;
+		}
+		return false;
+	}
 
 	static get styles(): CSSResultGroup {
 		return styles;
@@ -56,6 +95,10 @@ export class PowerFlowCard extends LitElement {
 	static getStubConfig() {
 		return {
 			show_solar: true,
+			low_resources: {
+				refresh_interval: 500,
+				animations: true,
+			},
 			battery: {
 				energy: 0,
 				shutdown_soc: 20,
@@ -723,7 +766,6 @@ export class PowerFlowCard extends LitElement {
 			charge: this.getEntity('entities.prog6_charge', { state: config.entities.prog6_charge ?? '' }),
 		};
 
-
 		const shutdownOffGrid = stateShutdownSOCOffGrid.toNum();
 		const batteryShutdown = stateShutdownSOC.toNum();
 
@@ -792,11 +834,6 @@ export class PowerFlowCard extends LitElement {
 				// Adjust times for the next day if necessary
 				adjustProgramTimes(progTimes, timer_now);
 
-				//console.log("Adjusted Program Times:");
-				//progTimes.forEach((progTime, index) => {
-				//    console.log(`Prog ${index + 1}: Start: ${progTime.start.toLocaleString()}, End: ${progTime.end.toLocaleString()}`);
-				//});
-
 				// Time comparison logic to determine the active program
 				for (let i = 0; i < progTimes.length; i++) {
 					const { start: currentProgStartTime, end: currentProgEndTime } = progTimes[i];
@@ -810,7 +847,6 @@ export class PowerFlowCard extends LitElement {
 					// Check for wrap-around case (start > end)
 					else if (currentProgStartTime > currentProgEndTime) {
 						if (timer_now >= currentProgStartTime || timer_now < currentProgEndTime) {
-							//console.log(`Assigning Program ${i + 1} (wrap-around)`);
 							assignInverterProgValues([prog1, prog2, prog3, prog4, prog5, prog6][i], config.entities[`prog${i + 1}_charge`]);
 							break; // Exit once the correct program is assigned
 						}
@@ -820,19 +856,16 @@ export class PowerFlowCard extends LitElement {
 
 			function adjustProgramTimes(progTimes: { start: Date; end: Date }[], timer_now: Date) {
 				const currentTime = timer_now.getTime();
-				// Adjust for times that roll over into the next day
 				progTimes.forEach((progTime) => {
-					// If the start time is before current time and the end time is after the current time, adjust to the next day
 					if (progTime.start.getTime() < currentTime && progTime.end.getTime() < currentTime) {
 						progTime.start.setDate(progTime.start.getDate() + 1);
 						progTime.end.setDate(progTime.end.getDate() + 1);
-						//console.log(`Adjusted Program ${index + 1} to next day: Start: ${progTime.start.toLocaleString()}, End: ${progTime.end.toLocaleString()}`);
 					}
 				});
 				return progTimes;
 			}
 
-			function assignInverterProgValues(prog, entityID) {
+			function assignInverterProgValues(prog: { time: CustomEntity; capacity: CustomEntity; charge: CustomEntity }, entityID: string) {
 				if (prog.charge.state === 'No Grid or Gen' || prog.charge.state === '0' || prog.charge.state === 'off') {
 					inverterProg.charge = 'none';
 				} else {
@@ -1939,6 +1972,7 @@ export class PowerFlowCard extends LitElement {
 		};
 
 		this._config = merge({}, defaultConfig, config, conf2);
+		this.renderInterval = this._config?.low_resources?.refresh_interval || 500;
 	}
 }
 

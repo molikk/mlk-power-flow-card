@@ -55,8 +55,8 @@ export class Load {
 		const line2 = `M ${start2} 218.5 L ${stop2} 218.5`;
 
 		const animationSpeed = (stop1 - (start1 - xTransform)) / (stop1 - start1) * data.durationCur['load'];
-		const circleMotion = this.getCircleMotion(data.essentialPower > 0, 'es-dot', '#es-line', data, config, animationSpeed);
-		const circle1Motion = this.getCircleMotion(data.essentialPower > 0, 'es-dot1', '#es-line1', data, config, animationSpeed);
+		const circleMotion = this.getCircleMotion(data.essentialPower > 0 && config.low_resources.animations, 'es-dot', '#es-line', data, config, animationSpeed);
+		const circle1Motion = this.getCircleMotion(data.essentialPower > 0 && config.low_resources.animations, 'es-dot1', '#es-line1', data, config, animationSpeed);
 
 		return svg`
 			 <svg id="load-flow" style="overflow: visible">

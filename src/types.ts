@@ -7,7 +7,6 @@ declare global {
 	}
 }
 
-
 export enum InverterModel {
 	Azzurro = 'azzurro',
 	CESBatteryBox = 'ces-battery-box',
@@ -82,6 +81,10 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		viewbox_min_y: number,
 		viewbox_width: number,
 		viewbox_height: number,
+	},
+	low_resources: {
+		refresh_interval: number,
+		animations: boolean,
 	},
 	inverter: {
 		modern: boolean;
@@ -557,8 +560,8 @@ export interface DataDto {
 	config: PowerFlowCardConfig,
 	refreshTime: String,
 	compactMode,
-	cardHeight,
-	cardWidth,
+	cardHeight: string,
+	cardWidth: string,
 	loadColour: string,
 	batteryColour: string,
 	gridColour: string,

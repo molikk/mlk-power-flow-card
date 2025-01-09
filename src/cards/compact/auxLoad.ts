@@ -37,10 +37,10 @@ export class AuxLoad {
 		const line1 = `M ${lineBegin} 190 L ${lineBegin} 180 Q ${lineBegin} 153 ${lineBegin + 27} 153 L ${lineEnd} 153`;
 		const line2 = `M ${lineEnd + 70} 153 L ${lineEnd + 70} 153 Q ${lineEnd + 70 + 27} 153 ${lineEnd + 70 + 27} 126 L ${lineEnd + 70 + 27} 46 Q ${lineEnd + 70 + 27} 39 ${lineEnd + 70 + 27 + 5} 39 L ${lineEnd - x + Load.column1 + Load.xGaps[1]} 39`;
 
-		const circle2 = this.getCircle(Math.round(data.auxPower) > 0, 'aux-dot2', '#aux-line2', lineWidth, data, duration, keyPoints);
+		const circle2 = this.getCircle(Math.round(data.auxPower) > 0 && config.low_resources.animations, 'aux-dot2', '#aux-line2', lineWidth, data, duration, keyPoints);
 		const path2 = this.getPath(config.load.aux_loads > 0, 'aux-flow2', 'aux-line2', line2, data, lineWidth, circle2);
 
-		const circle1 = this.getCircle(Math.round(data.auxPower) > 0, 'aux-dot1', '#aux-line1', lineWidth, data, animationSpeed, keyPoints);
+		const circle1 = this.getCircle(Math.round(data.auxPower) > 0 && config.low_resources.animations, 'aux-dot1', '#aux-line1', lineWidth, data, animationSpeed, keyPoints);
 		const path1 = this.getPath(true, 'aux-flow1', 'aux-line1', line1, data, lineWidth, circle1);
 
 		return svg`

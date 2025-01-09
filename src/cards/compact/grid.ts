@@ -87,8 +87,8 @@ export class Grid {
 		const lineEnd = 215 + xTransform;
 		const animationDuration = (lineEnd - 175) / (215 - 175) * data.durationCur['grid'];
 
-		let circle1 = this.getCircle(data.totalGridPower > 0, 'grid-dot1', data, animationDuration, keyPoints, '#grid-line1');
-		let circle2 = this.getCircle(data.totalGridPower > 0, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
+		let circle1 = this.getCircle(data.totalGridPower > 0 && config.low_resources.animations, 'grid-dot1', data, animationDuration, keyPoints, '#grid-line1');
+		let circle2 = this.getCircle(data.totalGridPower > 0 && config.low_resources.animations, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
 
 		return svg`
 			<svg id="grid-flow1" style="overflow: visible">

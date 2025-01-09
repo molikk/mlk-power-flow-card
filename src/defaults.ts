@@ -16,6 +16,10 @@ export default {
 	dynamic_line_width: true,
 	max_line_width: 4,
 	min_line_width: 1,
+	low_resources: {
+		refresh_interval: 500,
+		animations: true,
+	},
 	inverter: {
 		modern: true,
 		colour: 'grey',
