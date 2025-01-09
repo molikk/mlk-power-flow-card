@@ -121,6 +121,7 @@ export class Utils {
 
 	private static _handleClick(event: Event, actionConfig: any, entityId: string | null) {
 		if (!event || (!entityId && !actionConfig.navigation_path)) {
+			//console.warn("no Click action to handle", event, entityId, actionConfig);
 			return;
 		}
 
@@ -141,6 +142,7 @@ export class Utils {
 
 	private static _dispatchMoreInfoEvent(event: Event, entityId: string) {
 		if (Utils.isPopupOpen) {
+			//console.log("popUp is already opened: ", entityId, event);
 			return;
 		}
 
@@ -155,6 +157,8 @@ export class Utils {
 
 		if (event.target != null) {
 			event.target.dispatchEvent(moreInfoEvent);
+		} else {
+			console.log("Event.target is null: ", event);
 		}
 
 		const closePopup = () => {
@@ -167,7 +171,7 @@ export class Utils {
 				window.removeEventListener('popstate', closePopup);
 
 				// Optionally, if your popup close logic doesn't trigger history.back(), call it manually
-				history.back();
+				//history.back();
 			}
 		};
 
