@@ -68,6 +68,11 @@ export class PowerFlowCard extends LitElement {
 			if (timestamp - this.lastRenderTime >= this.renderInterval) {
 				this.requestUpdate();
 				this.lastRenderTime = timestamp;
+
+				/*const elem = this.shadowRoot?.getElementById('aux_load_power-1');
+				if (elem != null)
+					elem.style.fill = 'grey';
+				 */
 			}
 			this.rafId = requestAnimationFrame(renderLoop);
 		};

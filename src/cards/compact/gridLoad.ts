@@ -179,10 +179,9 @@ export class GridLoad {
 		const line1 = `M ${startX} 328 L 135 328 Q 140 328 140 323 L 140 320`;
 		const line2 = "M 140 290 L 140 234";
 
-		const circle1 = this.getCircle(config.grid.show_nonessential && data.nonessentialPower > 0 && config.low_resources.animations, 'nes-dot1', data, config, '#nes-line1');
 		const circle2 = this.getCircle(config.grid.show_nonessential && data.nonessentialPower > 0 && config.low_resources.animations, 'nes-dot2', data, config, '#nes-line2');
 
-		const flowLine1 = this.getFlowLine(config.grid.additional_loads > 0, 'nes-flow1', 'nes-line1', line1, data, circle1);
+		const flowLine1 = this.getFlowLine(config.grid.additional_loads > 0, 'nes-flow1', 'nes-line1', line1, data, svg``);
 		const flowLine2 =  this.getFlowLine(true, 'nes-flow2', 'nes-line2', line2, data, circle2);
 
 		return svg `
