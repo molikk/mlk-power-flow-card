@@ -64,14 +64,14 @@ export class Grid {
 	static generateEnergyCost(data: DataDto, config: PowerFlowCardConfig) {
 		return svg`
 			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
-				<text id="energy_cost" x="${this._col3X}" y="182" class="st3 left-align" 
+				<text id="energy_cost_buy" x="${this._col3X}" y="182" class="st3 left-align" 
 					  fill="${data.gridImportColour}" 
 					  display="${config.entities?.energy_cost_buy && data.stateEnergyCostBuy.isValid() ? '' : 'none'}" >
 					${data.stateEnergyCostBuy.toStr(config.grid?.energy_cost_decimals || 2)} ${data.stateEnergyCostBuy.getUOM()}
 				</text>
 			</a>
 			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.energy_cost_sell)}>
-				<text id="energy_cost" x="${this._col3X}" y="195"  class="st3 left-align" 
+				<text id="energy_cost_sell" x="${this._col3X}" y="195"  class="st3 left-align" 
 					  fill="${data.gridExportColour}" 
 					  display="${config.entities?.energy_cost_sell && data.stateEnergyCostSell.isValid() ? '' : 'none'}" >
 					${data.stateEnergyCostSell.toStr(config.grid?.energy_cost_decimals || 2)} ${data.stateEnergyCostSell.getUOM()}
@@ -87,8 +87,10 @@ export class Grid {
 		const lineEnd = 215 + xTransform;
 		const animationDuration = (lineEnd - 175) / (215 - 175) * data.durationCur['grid'];
 
-		let circle1 = this.getCircle(data.totalGridPower > 0 && config.low_resources.animations, 'grid-dot1', data, animationDuration, keyPoints, '#grid-line1');
-		let circle2 = this.getCircle(data.totalGridPower > 0 && config.low_resources.animations, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
+		const isEnergyFlowing = Math.abs(data.totalGridPower) >= Utils.toNum(config.grid?.off_threshold, 0)
+
+		let circle1 = this.getCircle(isEnergyFlowing && config.low_resources.animations, 'grid-dot1', data, animationDuration, keyPoints, '#grid-line1');
+		let circle2 = this.getCircle(isEnergyFlowing && config.low_resources.animations, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
 
 		return svg`
 			<svg id="grid-flow1" style="overflow: visible">
