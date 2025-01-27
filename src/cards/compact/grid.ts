@@ -87,7 +87,7 @@ export class Grid {
 		const lineEnd = 215 + xTransform;
 		const animationDuration = (lineEnd - 175) / (215 - 175) * data.durationCur['grid'];
 
-		const isEnergyFlowing = Math.abs(data.totalGridPower) >= Utils.toNum(config.grid?.off_threshold, 0)
+		const isEnergyFlowing = Math.abs(data.totalGridPower) > Utils.toNum(config.grid?.off_threshold, 0)
 
 		let circle1 = this.getCircle(isEnergyFlowing && config.low_resources.animations, 'grid-dot1', data, animationDuration, keyPoints, '#grid-line1');
 		let circle2 = this.getCircle(isEnergyFlowing && config.low_resources.animations, 'grid-dot2', data, data.durationCur['grid'], keyPoints, '#grid-line2');
