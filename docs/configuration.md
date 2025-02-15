@@ -438,12 +438,14 @@ Note: `X` is integer between `1` and `6`
 
 ### Additional Load: Column X Options
 
-| Editor name (en)   | Attribute           | Default | Description                                                                                                  |
-|--------------------|---------------------|---------|--------------------------------------------------------------------------------------------------------------|
-| Load X-Y Name      | load_X_Y_name:      |         | Set the display name for the essential load column X row Y                                                   |
-| Load X-Y Icon      | load_X_Y_icon:      |         | Set the essential load  column X row Y image using preset or any mdi icon. Check [icon](#icons) for details. |
-| Load X-Y Color     | load_X_Y_color:     |         | Overrides color of load card object                                                                          |
-| Load X-Y Off Color | load_X_Y_off_color: |         | Overrides off color of load card object                                                                      |
+| Editor name (en)       | Attribute               | Default | Description                                                                                                  |
+|------------------------|-------------------------|---------|--------------------------------------------------------------------------------------------------------------|
+| Load X-Y Name          | load_X_Y_name:          |         | Set the display name for the essential load column X row Y                                                   |
+| Load X-Y Icon          | load_X_Y_icon:          |         | Set the essential load  column X row Y image using preset or any mdi icon. Check [icon](#icons) for details. |
+| Load X-Y Color         | load_X_Y_color:         |         | Overrides color of load card object                                                                          |
+| Load X-Y Off Color     | load_X_Y_off_color:     |         | Overrides off color of load card object                                                                      |
+| Load X-Y Max Threshold | load_X_Y_max_threshold: |         | Set the upper threshold for the AUX load that will activate the `load_X_Y_max_color`.                        |
+| Load X-Y Max Color     | load_X_Y_max_color:     |         | Set the upper threshold color for AUX load card object                                                       |
 
 Note: `X` stands for column, values `1` to `6`;
 Note2: `Y` stands for row, values `1` to `6`
@@ -490,12 +492,14 @@ Note3: items `1-3` and `2-3` doesn't exist
 
 ### Aux Load: Item Options
 
-| Editor name (en)     | Attribute            | Default | Description                                                                                                               |
-|----------------------|----------------------|---------|---------------------------------------------------------------------------------------------------------------------------|
-| Aux Load X Name      | aux_loadX_name:      |         | Set the display name for the AUX load                                                                                     |
-| Aux Load X Icon      | aux_loadX_icon:      |         | Set the AUX load image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
-| Aux Load X Color     | aux_loadX_color:     |         | Overrides color of load card object                                                                                       |
-| Aux Load X Off Color | aux_loadX_off_color: |         | Overrides off color of load card object                                                                                   |
+| Editor name (en)         | Attribute                | Default | Description                                                                                                               |
+|--------------------------|--------------------------|---------|---------------------------------------------------------------------------------------------------------------------------|
+| Aux Load X Name          | aux_loadX_name:          |         | Set the display name for the AUX load                                                                                     |
+| Aux Load X Icon          | aux_loadX_icon:          |         | Set the AUX load image using any mdi icon e.g. `mdi:ev-station`. You can also provide a sensor that returns the mdi icon. |
+| Aux Load X Color         | aux_loadX_color:         |         | Overrides color of load card object                                                                                       |
+| Aux Load X Off Color     | aux_loadX_off_color:     |         | Overrides off color of AUX load card object                                                                               |
+| Aux Load X Max Threshold | aux_loadX_max_threshold: |         | Set the upper threshold for the AUX load that will activate the `aux_loadX_max_color`.                                    |
+| Aux Load X Max Color     | aux_loadX_max_color:     |         | Set the upper threshold color for AUX load card object                                                                    |
 
 Note: `X` stands for item id/column, values `1` to `6`;
 
@@ -587,71 +591,33 @@ Note: `X` stands for item id/column, values `1` to `6`;
 
 ### Grid Load: Row 1 Options
 
-| Editor name (en)    | Attribute           | Default | Description                                                                     |
-|---------------------|---------------------|---------|---------------------------------------------------------------------------------|
-| Load 1 Name         | load1_name:         |         | Set the display name for the non-essential load 1                               |
-| Load 1 Icon         | load1_icon:         |         | Change the non-essential load 1 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 1 Import Color | load1_import_color: |         | Overrides import color of load card object                                      |
-| Load 1 Export Color | load1_export_color: |         | Overrides export color of load card object                                      |
-| Load 1 Off Color    | load1_off_color:    |         | Overrides off color of load card object                                         |
-| Load 2 Name         | load2_name:         |         | Set the display name for the non-essential load 2                               |
-| Load 2 Icon         | load2_icon:         |         | Change the non-essential load 2 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 1 Import Color | load2_import_color: |         | Overrides import color of load card object                                      |
-| Load 1 Export Color | load2_export_color: |         | Overrides export color of load card object                                      |
-| Load 1 Off Color    | load2_off_color:    |         | Overrides off color of load card object                                         |
-| Load 3 Name         | load3_name:         |         | Set the display name for the non-essential load 3                               |
-| Load 3 Icon         | load3_icon:         |         | Change the non-essential load 3 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 3 Import Color | load3_import_color: |         | Overrides import color of load card object                                      |
-| Load 3 Export Color | load3_export_color: |         | Overrides export color of load card object                                      |
-| Load 3 Off Color    | load3_off_color:    |         | Overrides off color of load card object                                         |
-
-### Grid Load: Row 1 Entities
-
-| Attribute                   | Default | Description                                                                                                                 |
-|-----------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
-| non_essential_load1:        |         | Sensor that contains the power of your non-essential load 1 (W). If not present toggle state will be used instead.          |
-| non_essential_load1_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load 1 e.g. Daily kWh, Temperature etc |
-| non_essential_load1_toggle: |         | Sensor that contains link to entity that will show up when nonessential load 1 icon clicked                                 |
-| non_essential_load2:        |         | Sensor that contains the power of your non-essential load 2 (W). If not present toggle state will be used instead.          |
-| non_essential_load2_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load 2 e.g. Daily kWh, Temperature etc |
-| non_essential_load2_toggle: |         | Sensor that contains link to entity that will show up when nonessential load 2 icon clicked                                 |
-| non_essential_load3:        |         | Sensor that contains the power of your non-essential load 3 (W). If not present toggle state will be used instead.          |
-| non_essential_load3_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load 3 e.g. Daily kWh, Temperature etc |
-| non_essential_load3_toggle: |         | Sensor that contains link to entity that will show up when nonessential load 3 icon clicked                                 |
-
 ### Grid Load: Row 2 Options
 
-| Editor name (en)    | Attribute           | Default | Description                                                                     |
-|---------------------|---------------------|---------|---------------------------------------------------------------------------------|
-| Load 4 Name         | load4_name:         |         | Set the display name for the non-essential load 4                               |
-| Load 4 Icon         | load4_icon:         |         | Change the non-essential load 4 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 4 Import Color | load4_import_color: |         | Overrides import color of load card object                                      |
-| Load 4 Export Color | load4_export_color: |         | Overrides export color of load card object                                      |
-| Load 4 Off Color    | load4_off_color:    |         | Overrides off color of load card object                                         |
-| Load 5 Name         | load5_name:         |         | Set the display name for the non-essential load 5                               |
-| Load 5 Icon         | load5_icon:         |         | Change the non-essential load 5 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 5 Import Color | load5_import_color: |         | Overrides import color of load card object                                      |
-| Load 5 Export Color | load5_export_color: |         | Overrides export color of load card object                                      |
-| Load 5 Off Color    | load5_off_color:    |         | Overrides off color of load card object                                         |
-| Load 6 Name         | load6_name:         |         | Set the display name for the non-essential load 6                               |
-| Load 6 Icon         | load6_icon:         |         | Change the non-essential load 6 image using any mdi icon e.g. `mdi:ev-station`. |
-| Load 6 Import Color | load6_import_color: |         | Overrides import color of load card object                                      |
-| Load 6 Export Color | load6_export_color: |         | Overrides export color of load card object                                      |
-| Load 6 Off Color    | load6_off_color:    |         | Overrides off color of load card object                                         |
+| Editor name (en)     | Attribute            | Default | Description                                                                                           |
+|----------------------|----------------------|---------|-------------------------------------------------------------------------------------------------------|
+| Load X Name          | loadX_name:          |         | Set the display name for the non-essential/Grid load X                                                |
+| Load X Icon          | loadX_icon:          |         | Change the non-essential/Grid load X image using any mdi icon e.g. `mdi:ev-station`.                  |
+| Load X Import Color  | loadX_import_color:  |         | Overrides import color of non-essential/Grid load X card object                                       |
+| Load X Export Color  | loadX_export_color:  |         | Overrides export color of non-essential/Grid load X card object                                       |
+| Load X Off Color     | loadX_off_color:     |         | Overrides off color of non-essential/Grid load X card object                                          |
+| Load X Max Threshold | loadX_max_threshold: |         | Set the upper threshold for the non-essential/Grid load that will activate the `aux_loadX_max_color`. |
+| Load X Max Color     | loadX_max_color:     |         | Set the upper threshold color for non-essential/Grid load card object                                 |
+
+Note: for Row 1: `X` stands for item id/column, values `1` to `3`;
+Note2: for Row 2: `X` stands for item id/column, values `4` to `6`;
+
+### Grid Load: Row 1 Entities
 
 ### Grid Load: Row 2 Entities
 
 | Attribute                   | Default | Description                                                                                                                 |
 |-----------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
-| non_essential_load4:        |         | Sensor that contains the power of your non-essential load 4 (W). If not present toggle state will be used instead.          |
-| non_essential_load4_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load 4 e.g. Daily kWh, Temperature etc |
-| non_essential_load4_toggle: |         | Sensor that contains link to entity that will show up when nonessential load 4 icon clicked                                 |
-| non_essential_load5:        |         | Sensor that contains the power of your non-essential load 5 (W). If not present toggle state will be used instead.          |
-| non_essential_load5_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load 5 e.g. Daily kWh, Temperature etc |
-| non_essential_load5_toggle: |         | Sensor that contains link to entity that will show up when nonessential load 5 icon clicked                                 |
-| non_essential_load6:        |         | Sensor that contains the power of your non-essential load 6 (W). If not present toggle state will be used instead.          |
-| non_essential_load6_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load 6 e.g. Daily kWh, Temperature etc |
-| non_essential_load6_toggle: |         | Sensor that contains link to entity that will show up when nonessential load 6 icon clicked                                 |
+| non_essential_loadX:        |         | Sensor that contains the power of your non-essential load X (W). If not present toggle state will be used instead.          |
+| non_essential_loadX_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load X e.g. Daily kWh, Temperature etc |
+| non_essential_loadX_toggle: |         | Sensor that contains link to entity that will show up when nonessential load X icon clicked                                 |
+
+Note: for Row 1: `X` stands for item id/column, values `1` to `3`;
+Note2: for Row 2: `X` stands for item id/column, values `4` to `6`;
 
 ## Entities
 
