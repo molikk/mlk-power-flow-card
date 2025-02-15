@@ -72,11 +72,8 @@ export class Solar {
 			<svg id="pv-total" 
 					x="205" y="116.5" width="70" height="30"
 		 			viewBox="0 0 70 30" style="overflow: visible">
-				<rect width="70" height="30" rx="4.5" ry="4.5" fill="none"
-			        stroke="${config.solar.visualize_efficiency ? 'url(#SlG)' : data.solarColour}" pointer-events="all"
-			    />
-			    <defs>
-					<linearGradient id="SlG" x1="0%" x2="0%" y1="100%" y2="0%">
+				<defs>
+					<linearGradient id="SlG-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="0%">
 						<stop offset="0%"
 							stop-color="${data.totalPVEfficiency === 0 ? 'grey' : data.solarColour}"/>
 						<stop offset="${data.totalPVEfficiency}%"
@@ -87,6 +84,9 @@ export class Solar {
 							stop-color="${data.totalPVEfficiency < 100 ? 'grey' : data.solarColour}"/>
 					</linearGradient>
 			    </defs>
+			    <rect width="70" height="30" rx="4.5" ry="4.5" fill="none"
+			        stroke="${config.solar.visualize_efficiency ? `url(#SlG-${data.timestamp_id})` : data.solarColour}" pointer-events="all"
+			    />
 			</svg>
 			${path}
 			${efficiency}
@@ -309,7 +309,7 @@ export class Solar {
 
 		return svg`${config.show_solar ?
 			svg`
-                ${this.generateFrame(X, 'pv1', data.PV1Efficiency, config.solar.visualize_efficiency)}
+                ${this.generateFrame(X, 'pv1', data.PV1Efficiency, config.solar.visualize_efficiency, data.timestamp_id)}
                 ${this.generateFlowLine(X, 'pv1', data.statePV1Power, data.durationCur['pv1'], data.pv1LineWidth, data.minLineWidth, config.solar.invert_flow, config.low_resources.animations)}
                 ${this.generateName(X[0] as number, config.solar.pv1_name)}
                 ${this.generateEfficiency(X, data.PV1Efficiency, config.solar.show_mppt_efficiency)}
@@ -328,7 +328,7 @@ export class Solar {
 		const X = this.getPositions(2, config.solar.mppts);
 		return svg`${(config.show_solar && config.solar.mppts >= 2) ?
 			svg`
-                ${this.generateFrame(X, 'PV2', data.PV2Efficiency, config.solar.visualize_efficiency)}
+                ${this.generateFrame(X, 'PV2', data.PV2Efficiency, config.solar.visualize_efficiency, data.timestamp_id)}
                 ${this.generateFlowLine(X, 'pv2', data.statePV2Power, data.durationCur['pv2'], data.pv2LineWidth, data.minLineWidth, config.solar.invert_flow, config.low_resources.animations)}
                 ${this.generateName(X[0] as number, config.solar.pv2_name)}
                 ${this.generateEfficiency(X, data.PV2Efficiency, config.solar.show_mppt_efficiency)}
@@ -346,7 +346,7 @@ export class Solar {
 		const X = this.getPositions(3, config.solar.mppts);
 		return svg`${(config.show_solar && config.solar.mppts >= 3) ?
 			svg`
-                ${this.generateFrame(X, 'PV3', data.PV3Efficiency, config.solar.visualize_efficiency)}
+                ${this.generateFrame(X, 'PV3', data.PV3Efficiency, config.solar.visualize_efficiency, data.timestamp_id)}
                 ${this.generateFlowLine(X, 'pv3', data.statePV3Power, data.durationCur['pv3'], data.pv3LineWidth, data.minLineWidth, config.solar.invert_flow, config.low_resources.animations)}
                 ${this.generateName(X[0] as number, config.solar.pv3_name)}			
                 ${this.generateEfficiency(X, data.PV3Efficiency, config.solar.show_mppt_efficiency)}
@@ -363,7 +363,7 @@ export class Solar {
 		const X = this.getPositions(4, config.solar.mppts);
 		return svg`${(config.show_solar && config.solar.mppts >= 4) ?
 			svg`
-                ${this.generateFrame(X, 'PV4', data.PV4Efficiency, config.solar.visualize_efficiency)}
+                ${this.generateFrame(X, 'PV4', data.PV4Efficiency, config.solar.visualize_efficiency, data.timestamp_id)}
                 ${this.generateFlowLine(X, 'pv4', data.statePV4Power, data.durationCur['pv4'], data.pv4LineWidth, data.minLineWidth, config.solar.invert_flow, config.low_resources.animations)}
                 ${this.generateName(X[0] as number, config.solar.pv4_name)}
                 ${this.generateEfficiency(X, data.PV4Efficiency, config.solar.show_mppt_efficiency)}
@@ -380,7 +380,7 @@ export class Solar {
 		const X = this.getPositions(5, config.solar.mppts);
 		return svg`${(config.show_solar && config.solar.mppts >= 5) ?
 			svg`
-                ${this.generateFrame(X, 'PV5', data.PV5Efficiency, config.solar.visualize_efficiency)}
+                ${this.generateFrame(X, 'PV5', data.PV5Efficiency, config.solar.visualize_efficiency, data.timestamp_id)}
                 ${this.generateFlowLine(X, 'pv5', data.statePV5Power, data.durationCur['pv5'], data.pv5LineWidth, data.minLineWidth, config.solar.invert_flow, config.low_resources.animations)}
                 ${this.generateName(X[0] as number, config.solar.pv5_name)}
                 ${this.generateEfficiency(X, data.PV5Efficiency, config.solar.show_mppt_efficiency)}
@@ -409,21 +409,22 @@ export class Solar {
 		id: string,
 		efficiency: number,
 		efficiencyMode: boolean,
+		timestampId: number
 	) {
 		return svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="${id}" x="${X[0]}" y="54.5" width="70" height="30"
 				viewBox="0 0 70 30" style="overflow: visible">
-				<rect id="${id}" width="70" height="30" rx="4.5" ry="4.5" fill="none"
-				stroke="${efficiencyMode ? ('url(#' + id + 'LG)') : this.solarColour}" pointer-events="all"
-				/>
 				<defs>
-					<linearGradient id="${id}LG" x1="0%" x2="0%" y1="100%" y2="0%">
+					<linearGradient id="${id}LG-${timestampId}" x1="0%" x2="0%" y1="100%" y2="0%">
 						<stop offset="0%" stop-color="${efficiency === 0 ? 'grey' : this.solarColour}"/>
 						<stop offset="${efficiency}%" stop-color="${efficiency === 0 ? 'grey' : this.solarColour}"/>
 						<stop offset="${efficiency}%" stop-color="${efficiency < 100 ? 'grey' : this.solarColour}"/>
 						<stop offset="100%" stop-color="${efficiency < 100 ? 'grey' : this.solarColour}"/>
 					</linearGradient>
 				</defs>
+				<rect id="rect_${id}" width="70" height="30" rx="4.5" ry="4.5" fill="none"
+					stroke="${efficiencyMode ? ('url(#' + id + 'LG-' + timestampId + ')') : this.solarColour}" pointer-events="all"
+				/>
 			</svg>`;
 	}
 

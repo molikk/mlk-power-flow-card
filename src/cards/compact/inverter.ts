@@ -212,11 +212,11 @@ export class Inverter {
 			return svg`<svg xmlns="http://www.w3.org/2000/svg" id="inverter" x="214" y="185" width="52" height="67" 
 					preserveAspectRatio="none" >
 						<defs>
-							<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
+							<linearGradient id="invG-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="-2%">
 						      ${this.buildGradientSteps(data.stateInverterLoadPercentage.toNum(0))}
 							</linearGradient>
 						</defs>
-						<rect x="1" y="1" width="50" height="65" rx="5" ry="5" stroke="url(#invG)" fill="none" stroke-width="3" 
+						<rect x="1" y="1" width="50" height="65" rx="5" ry="5" stroke="url(#invG-${data.timestamp_id})" fill="none" stroke-width="3" 
 							pointer-events="stroke" />
 					</svg>`;
 		}
@@ -241,11 +241,12 @@ export class Inverter {
 			<svg xmlns="http://www.w3.org/2000/svg" id="inverter" x="${X[0]}" y="${X[1]}" width="${X[2]}" height="${X[3]}"
 				preserveAspectRatio="none" style="overflow: visible">
 				<defs>
-					<linearGradient id="invG" x1="0%" x2="0%" y1="100%" y2="-2%">
+					<linearGradient id="invG-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="-2%">
 				      ${this.buildGradientSteps(data.stateInverterLoadPercentage.toNum(0))}
 					</linearGradient>
 				</defs>
-				<rect x="1" y="1" width="${X[2] - 2}" height="${X[3] - 2}" rx="${X[4]}" ry="${X[4]}" stroke="url(#invG)" fill="none" stroke-width="3" 
+				<rect x="1" y="1" width="${X[2] - 2}" height="${X[3] - 2}" rx="${X[4]}" ry="${X[4]}" 
+					stroke="url(#invG-${data.timestamp_id})" fill="none" stroke-width="3" 
 					pointer-events="stroke" />
 			</svg>`;
 	}

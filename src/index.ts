@@ -1421,48 +1421,48 @@ export class PowerFlowCard extends LitElement {
 		let flowBatColour: string;
 		switch (true) {
 			case pvPercentageBat >= Utils.toNum(config.battery?.path_threshold, 0):
-				flowBatColour = solarColour;
+				flowBatColour = Utils.toHexColor(solarColour);
 				break;
 			case gridPercentageBat >= Utils.toNum(config.battery?.path_threshold, 0):
-				flowBatColour = gridColour;
+				flowBatColour = Utils.toHexColor(gridColour);
 				break;
 			default:
-				flowBatColour = batteryColour;
+				flowBatColour = Utils.toHexColor(batteryColour);
 				break;
 		}
 
 		let flowColour: string;
 		switch (true) {
 			case pvPercentage >= Utils.toNum(config.load?.path_threshold, 0):
-				flowColour = solarColour;
+				flowColour = Utils.toHexColor(solarColour);
 				break;
 			case batteryPercentage >= Utils.toNum(config.load?.path_threshold, 0):
-				flowColour = batteryColour;
+				flowColour = Utils.toHexColor(batteryColour);
 				break;
 			case gridPercentage >= Utils.toNum(config.load?.path_threshold, 0):
-				flowColour = gridColour;
+				flowColour = Utils.toHexColor(gridColour);
 				break;
 			default:
-				flowColour = loadColour;
+				flowColour = Utils.toHexColor(loadColour);
 				break;
 		}
 
 		let flowInvColour: string;
 		switch (true) {
 			case pvPercentage >= Utils.toNum(config.load?.path_threshold, 0):
-				flowInvColour = solarColour;
+				flowInvColour = Utils.toHexColor(solarColour);
 				break;
 			case batteryPercentage >= Utils.toNum(config.load?.path_threshold, 0):
-				flowInvColour = batteryColour;
+				flowInvColour = Utils.toHexColor(batteryColour);
 				break;
 			case gridPercentage >= Utils.toNum(config.load?.path_threshold, 0):
-				flowInvColour = gridColour;
+				flowInvColour = Utils.toHexColor(gridColour);
 				break;
 			case gridPercentageBat >= Utils.toNum(config.battery?.path_threshold, 0):
-				flowInvColour = gridColour;
+				flowInvColour = Utils.toHexColor(gridColour);
 				break;
 			default:
-				flowInvColour = inverterColour;
+				flowInvColour = Utils.toHexColor(inverterColour);
 				break;
 		}
 
@@ -1550,25 +1550,26 @@ export class PowerFlowCard extends LitElement {
 		switch (true) {
 			case totalGridPower < 0 && validGridConnected.includes(gridStatus.toLowerCase()):
 				customGridIcon = iconGridExport;
-				customGridIconColour = gridColour;
+				customGridIconColour = Utils.toHexColor(gridColour);
 				break;
 			case totalGridPower >= 0 && validGridConnected.includes(gridStatus.toLowerCase()):
 				customGridIcon = iconGridImport;
-				customGridIconColour = gridColour;
+				customGridIconColour = Utils.toHexColor(gridColour);
 				break;
 			case totalGridPower === 0 && validGridDisconnected.includes(gridStatus.toLowerCase()):
 				customGridIcon = iconGridDisconnected;
-				customGridIconColour = gridOffColour;
+				customGridIconColour = Utils.toHexColor(gridOffColour);
 				break;
 			default:
 				customGridIcon = iconGridImport;
-				customGridIconColour = gridColour;
+				customGridIconColour = Utils.toHexColor(gridColour);
 				break;
 		}
 
 
 		const data: DataDto = {
 			config,
+			timestamp_id: new Date().getTime(),
 			refreshTime,
 			compactMode,
 			cardHeight,
@@ -1876,7 +1877,7 @@ export class PowerFlowCard extends LitElement {
 	}
 
 	private colourConvert(colour: string) {
-		return colour && Array.isArray(colour) ? `rgb(${colour})` : colour;
+		return colour && Array.isArray(colour) ? Utils.toHexColor(`rgb(${colour})`) : Utils.toHexColor(colour);
 	}
 
 	private dynamicLineWidth(power: number, maxPower: number, width: number, defaultLineWidth: number = 1) {
@@ -2026,6 +2027,7 @@ export class PowerFlowCard extends LitElement {
 
 		this._config = merge({}, defaultConfig, config, conf2);
 		this.renderInterval = this._config?.low_resources?.refresh_interval || 500;
+		this.requestUpdate()
 	}
 }
 

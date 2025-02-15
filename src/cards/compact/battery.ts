@@ -270,12 +270,12 @@ export class Battery {
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 312.5 : 325.5;
 		let bat = svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="212.5"
+			<svg xmlns="http://www.w3.org/2000/svg" id="bat-frame" x="212.5"
 				 y="${y}" width="78.75"
 				 height="78.75" preserveAspectRatio="none"
 				 viewBox="0 0 24 24" >
 				<defs>
-					<linearGradient id="bLg" x1="0%" x2="0%" y1="100%" y2="0%">
+					<linearGradient id="bLg-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="0%">
 						<stop offset="0%"
 							  stop-color="${data.gridPercentageBat > 0 ? data.gridColour : data.pvPercentageBat > 0 ? data.solarColour : data.batteryColour}"/>
 						<stop offset="${data.gridPercentageBat < 2 ? 0 : data.gridPercentageBat}%"
@@ -290,15 +290,15 @@ export class Battery {
 							  stop-color="${data.batteryColour}"/>
 					</linearGradient>
 				</defs>
-				<path fill="${config.battery.dynamic_colour ? 'url(#bLg)' : data.batteryColour}"
+				<path fill="${config.battery.dynamic_colour ? `url(#bLg-${data.timestamp_id})` : data.batteryColour}"
 					  d="${config.battery.linear_gradient ? data.battery0 : data.batteryIcon}"/>
 			</svg>
-			<svg xmlns="http://www.w3.org/2000/svg" id="bat" x="212.5"
+			<svg xmlns="http://www.w3.org/2000/svg" id="bat-gradient" x="212.5"
 				 y="${y}" width="78.75"
 				 height="78.75" preserveAspectRatio="none"
 				 viewBox="0 0 24 24">
 				<defs>
-					<linearGradient id="sLg" x1="0%" x2="0%" y1="100%" y2="0%">
+					<linearGradient id="solar-gradient-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="0%">
 						<stop offset="0%"
 							  stop-color="red"/>
 						<stop offset="100%"
@@ -306,7 +306,7 @@ export class Battery {
 						<animate attributeName="${config.battery.animate ? 'y2' : 'none'}" dur="6s" values="100%; 0%" repeatCount="indefinite" />
 					</linearGradient>
 				</defs>
-				<path fill="${config.battery.linear_gradient ? 'url(#sLg)' : data.batteryColour}"
+				<path fill="${config.battery.linear_gradient ? `url(#solar-gradient-${data.timestamp_id})` : data.batteryColour}"
 					  display="${!config.battery.linear_gradient ? 'none' : ''}"
 					  d="${data.batteryCharge}"/>
 			</svg>		

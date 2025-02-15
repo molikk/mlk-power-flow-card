@@ -145,7 +145,7 @@ export class Load {
 				 height="${data.essIconSize === 1 ? '75' : '79'}"
 				 viewBox="0 0 24 24">
 				<defs>
-					<linearGradient id="Lg" x1="0%" x2="0%" y1="100%" y2="0%">
+					<linearGradient id="Lg-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="0%">
 						<stop offset="0%"
 							stop-color="${data.gridPercentage > 0 ? data.gridColour : (data.batteryPercentage > 0 ? data.batteryColour : data.solarColour)}"/>
 						<stop offset="${data.gridPercentage}%"
@@ -160,7 +160,7 @@ export class Load {
 							stop-color="${data.solarColour}"/>
 					</linearGradient>
 				</defs>
-				<path fill="${config.load.dynamic_colour ? 'url(#Lg)' : data.loadColour}" d="${data.essIcon}"/>
+				<path fill="${config.load.dynamic_colour ? `url(#Lg-${data.timestamp_id})` : data.loadColour}" d="${data.essIcon}"/>
 			</svg>
 		`;
 		return config.load?.navigate ?
