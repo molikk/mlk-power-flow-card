@@ -1318,12 +1318,30 @@ export class PowerFlowCard extends LitElement {
 		const pv4MaxPower = this.getEntity('solar.pv4_max_power', { state: config.solar.pv4_max_power?.toString() ?? '' });
 		const pv5MaxPower = this.getEntity('solar.pv5_max_power', { state: config.solar.pv5_max_power?.toString() ?? '' });
 
-		const totalPVEfficiency = (config.solar.max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV1Efficiency = (config.solar.pv1_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV2Efficiency = (config.solar.pv2_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV3Efficiency = (config.solar.pv3_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV4Efficiency = (config.solar.pv4_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 200), 0) : 100;
-		const PV5Efficiency = (config.solar.pv5_max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) ? Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 200), 0) : 100;
+		let totalPVEfficiency = 100;
+		let PV1Efficiency = 100;
+		let PV2Efficiency = 100;
+		let PV3Efficiency = 100;
+		let PV4Efficiency = 100;
+		let PV5Efficiency = 100;
+
+		if (config.solar.max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) {
+			totalPVEfficiency = Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 100), 0);
+			PV1Efficiency = Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 100), 0);
+			PV2Efficiency = Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 100), 0);
+			PV3Efficiency = Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 100), 0);
+			PV4Efficiency = Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 100), 0);
+			PV5Efficiency = Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 100), 0);
+
+		}
+		if (config.solar.max_power && config.solar.show_mppt_efficiency_kwhp) {
+			totalPVEfficiency = stateDailyPVEnergy?.isValidElectric()?Utils.toNum(stateDailyPVEnergy.toPower() / solarMaxPower.toNum(0), config.decimal_places): NaN;
+			PV1Efficiency = statePV1Energy?.isValidElectric() ? Utils.toNum(statePV1Energy.toPower() / pv1MaxPower.toNum(0), config.decimal_places): NaN;
+			PV2Efficiency = statePV2Energy?.isValidElectric() ? Utils.toNum(statePV2Energy.toPower() / pv2MaxPower.toNum(0), config.decimal_places): NaN;
+			PV3Efficiency = statePV3Energy?.isValidElectric() ? Utils.toNum(statePV3Energy.toPower() / pv3MaxPower.toNum(0), config.decimal_places): NaN;
+			PV4Efficiency = statePV4Energy?.isValidElectric() ? Utils.toNum(statePV4Energy.toPower() / pv4MaxPower.toNum(0), config.decimal_places): NaN;
+			PV5Efficiency = statePV5Energy?.isValidElectric() ? Utils.toNum(statePV5Energy.toPower() / pv5MaxPower.toNum(0), config.decimal_places) : NaN;
+		}
 
 		//colors
 		const loadColour = this.colourConvert(config.load?.colour);
@@ -2027,7 +2045,7 @@ export class PowerFlowCard extends LitElement {
 
 		this._config = merge({}, defaultConfig, config, conf2);
 		this.renderInterval = this._config?.low_resources?.refresh_interval || 500;
-		this.requestUpdate()
+		this.requestUpdate();
 	}
 }
 

@@ -156,6 +156,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		off_threshold: number;
 		show_mppt_production: boolean;
 		show_mppt_efficiency: boolean;
+		show_mppt_efficiency_kwhp: boolean;
 	}
 	load: {
 		colour: string;
@@ -853,11 +854,11 @@ export interface DataDto {
 	statePV5Energy: CustomEntity,
 	stateMaxSellPower: CustomEntity,
 	totalPVEfficiency,
-	PV1Efficiency,
-	PV2Efficiency,
-	PV3Efficiency,
-	PV4Efficiency,
-	PV5Efficiency,
+	PV1Efficiency: number,
+	PV2Efficiency: number,
+	PV3Efficiency: number,
+	PV4Efficiency: number,
+	PV5Efficiency: number,
 	gridPercentage,
 
 	auxType,
