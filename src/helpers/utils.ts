@@ -101,6 +101,22 @@ export class Utils {
 		return `${numberValue.toFixed(decimal)}`;
 	}
 
+	static toHexColor(color: string): string {
+		if (!color) {
+			return 'grey'
+		}
+		if (/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(color)) {
+			return color.toUpperCase();
+		}
+		const match = color.match(/^rgb\s*\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/);
+		if (match) {
+			const [r, g, b] = match.slice(1, 4).map(Number);
+			return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase()}`;
+		}
+		// probs a color name
+		return color
+	}
+
 	private static isPopupOpen = false;
 
 	static handlePopup(event: Event, entityId: string) {

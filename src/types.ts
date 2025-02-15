@@ -633,6 +633,7 @@ export interface InverterSettings {
 
 export interface DataDto {
 	config: PowerFlowCardConfig,
+	timestamp_id: number;
 	refreshTime: String,
 	compactMode,
 	cardHeight: string,
