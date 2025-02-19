@@ -36,12 +36,10 @@ See the project's [documentation](https://molikk.github.io/mlk-power-flow-card/i
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/3cfcff4b-a609-41b6-9da1-eea63ff44c2d)
 ### offgrid view (no grid view)
 ![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/a269a066-f8e1-41a7-af1f-1411d89cd438)
-### Detailed solar production up to 5 MPPTs with solar production & prediction
-![image](https://github.com/molikk/mlk-power-flow-card/assets/12862966/256c43de-4062-48f9-b0b4-f9cb0153d71f)
-### Fully detailed view with grid/non-essential, aux & essential Loads and battery bank details
-![image](https://github.com/user-attachments/assets/20c7f756-c307-4793-8a36-41f96b65efa7)
+### Fully detailed view with grid/non-essential, aux & essential Loads and battery bank details and with detailed solar production up to 5 MPPTs with solar production & prediction
+![image](https://github.com/user-attachments/assets/451e496e-402a-43cb-b583-bb795096016b)
 ### Wide view mode
-![image](https://github.com/user-attachments/assets/f44e14ac-84ec-4e0a-84d0-ef352f994064)
+![image](https://github.com/user-attachments/assets/b2ce7f06-f06e-48d2-99eb-b5edb0831db9)
 
 ## Installation
 
