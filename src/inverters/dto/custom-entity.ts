@@ -83,9 +83,9 @@ export interface CustomEntity extends HassEntity {
 }
 
 // Function to convert HassEntity to CustomEntity
-export function convertToCustomEntity(entity: any): CustomEntity {
-	let isValid = entity?.state !== null && entity.state !== 'unknown' && entity.state !== undefined && entity?.entity_id != null && entity.entity_id;
-	let notEmpty = entity?.state !== '' && isValid;
+export function convertToCustomEntity(entity): CustomEntity {
+	const isValid = entity?.state !== null && entity.state !== 'unknown' && entity.state !== undefined && entity?.entity_id != null && entity.entity_id;
+	const notEmpty = entity?.state !== '' && isValid;
 	return {
 		...entity,
 		toNum: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert),
@@ -102,8 +102,6 @@ export function convertToCustomEntity(entity: any): CustomEntity {
 				return Utils.toNum(((entity?.state || '0') * 1000), 0, invert);
 			} else if (unit === UnitOfPower.MEGA_WATT.toLowerCase() || unit === UnitOfEnergy.MEGA_WATT_HOUR.toLowerCase()) {
 				return Utils.toNum(((entity?.state || '0') * 1000000), 0, invert);
-			} else if (unit === UnitOfPower.WATT.toLowerCase() || unit === UnitOfEnergy.WATT_HOUR.toLowerCase()) {
-				return Utils.toNum(((entity?.state || '0')), 0, invert);
 			} else if (unit === UnitOfPower.WATT.toLowerCase() || unit === UnitOfEnergy.WATT_HOUR.toLowerCase()) {
 				return Utils.toNum(((entity?.state || '0')), 0, invert);
 			} else {

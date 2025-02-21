@@ -621,7 +621,6 @@ export class PowerFlowCard extends LitElement {
 				break;
 			default:
 				gridColour = gridImportColour;
-				``;
 				break;
 		}
 
@@ -679,9 +678,6 @@ export class PowerFlowCard extends LitElement {
 			inverterImg = inverterSettings.image;
 		}
 
-
-		let compactMode = true;
-
 		//totalSolar = pv1_power_186 + pv2_power_187 + pv3_power_188 + pv4_power_189 + pv5_power
 
 		const pv1PowerWatts = statePvPower[1-1].toPower();
@@ -707,7 +703,6 @@ export class PowerFlowCard extends LitElement {
 			threePhase = false;
 		}
 
-		let essentialPower: number;
 		let nonessentialPower: number;
 		const { essential_power, nonessential_power } = config.entities;
 
@@ -736,7 +731,7 @@ export class PowerFlowCard extends LitElement {
 
 		//console.log('ESS POWER', essential_power, threePhase, config.entities.load_power_L1, config.entities.inverter_power_175, "with_inv_power",  autoScaledInverterPower, autoScaledGridPower, auxPower, autoScaledInverterPower + autoScaledGridPower - auxPower, "without_inv_power", totalPV, batteryPower, autoScaledGridPower, auxPower, totalPV + batteryPower + autoScaledGridPower - auxPower);
 		//essentialPower = inverter_power_175 + grid_power_169 - aux_power_166 or  totalPV + battery_power_190 + grid_power_169 - aux_power_166
-		essentialPower =
+		const essentialPower:number =
 			essential_power === 'none' || !essential_power
 				? threePhase === true && config.entities.load_power_L1 && config.entities.load_power_L2 && config.entities.load_power_L3
 					? Number(loadPowerL1) + Number(loadPowerL2) + Number(loadPowerL3)
@@ -800,7 +795,7 @@ export class PowerFlowCard extends LitElement {
 			case !config.entities.prog6_time:
 				inverterProg.show = false;
 				break;
-			default:
+			default: {
 				inverterProg.show = true;
 
 				const timer_now = new Date(); // Create a new Date object representing the current time
@@ -889,7 +884,7 @@ export class PowerFlowCard extends LitElement {
 				inverterProg.entityID = entityID;
 			}
 
-				break;
+				break; }
 		}
 
 		if (gridVoltage != null && !Number.isNaN(gridVoltage) && inverterModel == InverterModel.Solis) {
@@ -994,7 +989,7 @@ export class PowerFlowCard extends LitElement {
 		//Set Inverter Status Message and dot
 		let inverterStateColour = '';
 		let inverterStateMsg = '';
-		let inverterState = stateInverterStatus.state as any;
+		let inverterState = stateInverterStatus.state;
 
 		let found = false;
 
@@ -1206,7 +1201,7 @@ export class PowerFlowCard extends LitElement {
 		}
 
 		//Calculate dynamic colour for load icon based on the contribution of the power source (battery, grid, solar) supplying the load
-		let allLoadPower = essentialPower + Math.max(auxPower, 0);
+		const allLoadPower = essentialPower + Math.max(auxPower, 0);
 
 		const getPvPercentageRaw = (): number => {
 			switch (true) {
@@ -1547,7 +1542,6 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('load.load_6_6_icon', { state: config.load?.load_6_6_icon?.toString() ?? '' }).state,
 		];
 
-
 		const auxLoadIcon = [
 			this.getEntity('load.aux_load1_icon', { state: config.load?.aux_load1_icon?.toString() ?? '' }).state,
 			this.getEntity('load.aux_load2_icon', { state: config.load?.aux_load2_icon?.toString() ?? '' }).state,
@@ -1597,7 +1591,7 @@ export class PowerFlowCard extends LitElement {
 			config,
 			timestamp_id: new Date().getTime(),
 			refreshTime,
-			compactMode,
+			compactMode: true,
 			cardHeight,
 			cardWidth,
 			loadColour,
@@ -1833,7 +1827,7 @@ export class PowerFlowCard extends LitElement {
 	private sumPowers(entities: CustomEntity[], abs: boolean = false) {
 		let result = 0;
 		for (let i = 0; i < entities.length; i++) {
-			let value = entities[i].toPower(false);
+			const value = entities[i].toPower(false);
 			result += abs ? Math.abs(value) : value;
 		}
 		return result;

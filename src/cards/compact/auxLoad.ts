@@ -110,7 +110,7 @@ export class AuxLoad {
 		return svg`
 			${data.stateAuxPower.isValid() ?
 			svg`
-				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.stateAuxPower.entity_id)}>
+				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.stateAuxPower.entity_id)}>
 					<text id="aux_power" x="${x}" y="155.5" class="${data.largeFont !== true ? 'st14' : 'st4'} st8" 
 						  fill="${data.auxLoadMainDynamicColour}">
 						  ${value}
@@ -126,21 +126,26 @@ export class AuxLoad {
 	}
 
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
-		return svg`
-			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
+		const dailyLoadValue = config.load?.show_daily_aux && data.stateDayAuxEnergy.isValid() ? svg`
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.day_aux_energy)}>
 				<text id="daily_load_value" x="${this.mainX + 10}" y="87"
-					  class="st10 left-align" display="${!config.load?.show_daily_aux || !data.stateDayAuxEnergy.isValid() ? 'none' : ''}"
-					  fill="${data.auxLoadMainDynamicColour}">
+						class="st10 left-align"
+					  	fill="${data.auxLoadMainDynamicColour}">
 					${data.stateDayAuxEnergy?.toPowerString(true, data.decimalPlacesEnergy)}
 				</text>
-			</a>
+			</a>`
+			: svg``;
+		const dailyLoadName = svg`
 			<text id="daily_load" 
 					x="${this.mainX + 10}" y="100"
 				    class="st3 left-align"
-				    fill="${!config.load?.show_daily_aux ? 'transparent' : `${data.auxLoadMainDynamicColour}`}">
+				    fill="${(config.load?.show_daily_aux ? `${data.auxLoadMainDynamicColour}` : 'transparent')}">
 				${config.load?.aux_daily_name ? config.load?.aux_daily_name : localize('common.daily_aux')}
-			</text>
-		`;
+			</text>`;
 
+		return svg`
+			${dailyLoadValue}
+			${dailyLoadName}
+		`;
 	}
 }

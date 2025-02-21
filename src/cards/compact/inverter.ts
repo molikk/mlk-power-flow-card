@@ -8,7 +8,7 @@ import { LoadUtils } from './loadUtils';
 export class Inverter {
 
 	static generateInverterImage(data: DataDto, config: PowerFlowCardConfig, inverterImg: string) {
-		let inverter = svg`
+		const inverter = svg`
 			${data.genericInverterImage ?
 			svg`<svg xmlns="http://www.w3.org/2000/svg" x="213.5" y="179.5" width="54"
 					 height="79" viewBox="0 0 74 91" preserveAspectRatio="xMidYMid meet"
@@ -129,14 +129,14 @@ export class Inverter {
 	}
 
 	static generateTemperatures(data: DataDto, config: PowerFlowCardConfig) {
-		let ac = config.inverter?.ac_icon
+		const ac = config.inverter?.ac_icon
 			? LoadUtils.getIconWithStyle(178, 218, config.inverter.ac_icon, data.inverterColour, 16, 10)
 			: svg`
 				<text id="ac_temp" x="190" y="229" class="st3 right-align" fill="${data.inverterColour}"
                       display="${config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid() ? '' : 'none'}">
                     AC:
                 </text>`;
-		let dc = config.inverter?.dc_icon
+		const dc = config.inverter?.dc_icon
 			? LoadUtils.getIconWithStyle(178, 230, config.inverter.dc_icon, data.inverterColour, 16, 10)
 			: svg`
 			<text id="dc_temp" x="190" y="241" class="st3 right-align" fill="${data.inverterColour}"

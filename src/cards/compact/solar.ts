@@ -105,7 +105,7 @@ export class Solar {
 
 		let daily = svg``, monthly = svg``, yearly = svg``, total = svg``, remaining = svg``, tomorrow = svg``;
 
-		let no: number = this.countGenerationElements(data);
+		const no: number = this.countGenerationElements(data);
 		if (no == 0) {
 			return svg``;
 		}

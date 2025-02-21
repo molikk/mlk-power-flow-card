@@ -82,15 +82,15 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 	Grid.gridColour = data.gridColour;
 	Grid.decimalPlaces = data.decimalPlaces;
 
-	let calculated_minX = calculateMinX(config);
-	let calculated_minY = calculateMinY(config);
-	let calculated_width = calculateWidth(config);
-	let calculated_height = calculateHeight(config);
+	const calculated_minX = calculateMinX(config);
+	const calculated_minY = calculateMinY(config);
+	const calculated_width = calculateWidth(config);
+	const calculated_height = calculateHeight(config);
 
-	let minX = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : config.wide_view_mode ? 0 : calculated_minX;
-	let minY = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : calculated_minY;
-	let width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 - minX : calculated_width - minX;
-	let height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : calculated_height - calculated_minY;
+	const minX = config.viewbox?.viewbox_min_x ? config.viewbox.viewbox_min_x : config.wide_view_mode ? 0 : calculated_minX;
+	const minY = config.viewbox?.viewbox_min_y ? config.viewbox.viewbox_min_y : calculated_minY;
+	const width = config.viewbox?.viewbox_width ? config.viewbox.viewbox_width : config.wide_view_mode ? 720 - minX : calculated_width - minX;
+	const height = config.viewbox?.viewbox_height ? config.viewbox.viewbox_height : calculated_height - calculated_minY;
 
 	function gridXTransform() {
 		return config.wide_view_mode ? calculated_minX - minX : 0;

@@ -82,7 +82,7 @@ export class EssentialLoad {
 							fill="${data.dynamicColourEssentialLoad1}">
 						${config.load?.load1_name ? `${config.load.load1_name}` : ''}
 					</text>
-					<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateEssentialLoad1.entity_id)}>
+					<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateEssentialLoad1.entity_id)}>
 						<text id="ess_load1" x="${powerColumn0}" y="${isAux ? '158' : '143'}"
 								display="${data.additionalLoads <= 3 && data.stateEssentialLoad1.isValid() ? '' : 'none'}"
 								class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
@@ -90,7 +90,7 @@ export class EssentialLoad {
 							${data.stateEssentialLoad1?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
 						</text>
 					</a>				
-					<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateEssentialLoad1Extra.entity_id)}>
+					<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateEssentialLoad1Extra.entity_id)}>
 						<text id="ess_load1_extra" x="${extraColumn2}" y="${isAux ? '182' : '167'}"
 									display="${(data.stateEssentialLoad1Extra.entity_id && data.additionalLoads <= 3) && data.stateEssentialLoad1Extra.isValid() ? '' : 'none'}"
 									class="st3 left-align" fill="${data.dynamicColourEssentialLoad1}">
@@ -147,7 +147,7 @@ export class EssentialLoad {
 							fill="${data.dynamicColourEssentialLoad2}">
 						${config.load?.load2_name ? `${config.load.load2_name}` : ''}
 					</text>
-					<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateEssentialLoad2.entity_id)}>
+					<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateEssentialLoad2.entity_id)}>
 						<text id="ess_load2" x="${powerColumn0}" y="302.5"
 									display="${data.stateEssentialLoad2.isValid() ? '' : 'none'}"
 									class="${data.largeFont !== true ? 'st14' : 'st4'} st8"
@@ -155,7 +155,7 @@ export class EssentialLoad {
 							${data.stateEssentialLoad2?.toPowerString(config.load.auto_scale, data.decimalPlaces)}
 						</text>
 					</a>
-					<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateEssentialLoad2Extra.entity_id)}>
+					<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateEssentialLoad2Extra.entity_id)}>
 						<text id="ess_load2_extra" x="${extraColumn2}" y="278"
 									display="${data.stateEssentialLoad2Extra.isValid() ? '' : 'none'}"
 									class="st3 left-align" fill="${data.dynamicColourEssentialLoad2}">
@@ -184,7 +184,7 @@ export class EssentialLoad {
 			)}`;
 		}
 
-		svg`
+		return svg`
 		${LoadUtils.generateEssentialLoadInternal(3, data.iconEssentialLoad3,
 			data.dynamicColourEssentialLoad3,
 			config.load?.load3_name,

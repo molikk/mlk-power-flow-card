@@ -163,7 +163,7 @@ export class Battery {
 		let keyPoints = data.batteryPower > 0 ? '1;0' : '0;1';
 		keyPoints = config.battery.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
 
-		let circle = data.batteryPower != 0 && config.low_resources.animations ? svg`
+		const circle = data.batteryPower != 0 && config.low_resources.animations ? svg`
 			<circle id="power-dot" cx="0" cy="0"
 					r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
 					fill="${Battery.batteryColour(data, config)}">
@@ -212,8 +212,8 @@ export class Battery {
 				</a>`;
 		}
 
-		let shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
-		let storage = config.battery.remaining_energy_to_shutdown
+		const shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
+		const storage = config.battery.remaining_energy_to_shutdown
 			? Utils.toNum((data.batteryEnergy * ((data.stateBatterySoc.toNum(2) - shutdown) / 100) / 1000), 2).toFixed(2)
 			: Utils.toNum((data.batteryEnergy * (data.stateBatterySoc.toNum(2) / 100) / 1000), 2).toFixed(2);
 
@@ -228,48 +228,54 @@ export class Battery {
 
 	static generateSOC(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
-		return svg`
-			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
-				<text id="battery_prog_soc_184" x="330" y="${y + 7}" fill=${data.batteryColour}
-						class="st13 st8 left-align"
-						display="${!data.inverterProg.show || config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
-					| ${data.inverterProg.capacity || 0}%
-				</text>
-			</a>
-			<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
-				<text id="battery_prog_soc_184" x="330" y="${y + 7}" fill=${data.batteryColour}
-				    	class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
-				    	display="${!data.inverterProg.show && config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
-			  		| ${data.batteryShutdown || 0}%
-				</text>
-			</a>
-        	<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
+		const batterySoc = svg`
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
           		<text id="battery_soc_184" x="270" y="${y + 7}" fill=${data.batteryColour} 
 	                class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
 	                display="${data.stateBatterySoc.isValid() ? '' : 'none'}" >
 	              ${data.stateBatterySoc.toStr(data.stateBatterySoc.toNum(1) === 100.0 ? 0 : 1)}%
           		</text>
-	      	</a>
-			<text id="battery_soc_184" x="331" y="${y + 7}" fill=${data.batteryColour}
+	      	</a>`;
+		const batterySocProg = data.inverterProg.show?svg`
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
+				<text id="battery_prog_soc_184_capacity" x="330" y="${y + 7}" fill=${data.batteryColour}
+						class="st13 st8 left-align"
+						display="${config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
+					| ${data.inverterProg.capacity || 0}%
+				</text>
+			</a>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
+				<text id="battery_prog_soc_184_soc_shutdown" x="330" y="${y + 7}" fill=${data.batteryColour}
+				    	class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
+				    	display="${config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
+			  		| ${data.batteryShutdown || 0}%
+				</text>
+			</a>
+			<text id="battery_prog_soc_184_line" x="331" y="${y + 7}" fill=${data.batteryColour}
               		class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
-              		display="${!data.inverterProg.show && config.battery.shutdown_soc_offgrid ? '' : 'none'}" >
+              		display="${config.battery.shutdown_soc_offgrid ? '' : 'none'}" >
                 |
         	</text>
-		    <text id="battery_prog_soc_184" x="343" y="${y}" fill=${data.batteryColour}
+		    <text id="battery_prog_soc_184_shutdown" x="343" y="${y}" fill=${data.batteryColour}
 		  			class="${config.battery.hide_soc ? 'st12' : 'st14 left-align'}"
-				  	display="${!data.inverterProg.show && config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
+				  	display="${config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.batteryShutdown}%
 			</text>
-			<text id="battery_prog_soc_184" x="343" y="${y + 13}" fill=${data.batteryColour}
+			<text id="battery_prog_soc_184_offgrid" x="343" y="${y + 13}" fill=${data.batteryColour}
 		  			class="${config.battery.hide_soc ? 'st12' : 'st14 left-align'}"
-				  	display="${!data.inverterProg.show && config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
+				  	display="${config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.shutdownOffGrid}%
-			</text>`;
+			</text>`
+			:svg``;
+		return svg `
+			${batterySoc}
+			${batterySocProg}
+        	`;
 	}
 
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 312.5 : 325.5;
-		let bat = svg`
+		const bat = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat-frame" x="212.5"
 				 y="${y}" width="78.75"
 				 height="78.75" preserveAspectRatio="none"
