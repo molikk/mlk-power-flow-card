@@ -156,6 +156,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		off_threshold: number;
 		show_mppt_production: boolean;
 		show_mppt_efficiency: boolean;
+		show_mppt_efficiency_kwhp: boolean;
 	}
 	load: {
 		colour: string;
@@ -830,34 +831,14 @@ export interface DataDto {
 	stateDCTransformerTemp: CustomEntity,
 	stateInverterLoadPercentage: CustomEntity,
 	stateSolarSell: CustomEntity,
-	statePV1Current: CustomEntity,
-	statePV2Current: CustomEntity,
-	statePV3Current: CustomEntity,
-	statePV4Current: CustomEntity,
-	statePV5Current: CustomEntity,
-	statePV1Voltage: CustomEntity,
-	statePV2Voltage: CustomEntity,
-	statePV3Voltage: CustomEntity,
-	statePV4Voltage: CustomEntity,
-	statePV5Voltage: CustomEntity,
-	statePV1Power: CustomEntity,
-	statePV2Power: CustomEntity,
-	statePV3Power: CustomEntity,
-	statePV4Power: CustomEntity,
-	statePV5Power: CustomEntity,
-	statePVTotal: CustomEntity,
-	statePV1Energy: CustomEntity,
-	statePV2Energy: CustomEntity,
-	statePV3Energy: CustomEntity,
-	statePV4Energy: CustomEntity,
-	statePV5Energy: CustomEntity,
 	stateMaxSellPower: CustomEntity,
-	totalPVEfficiency,
-	PV1Efficiency,
-	PV2Efficiency,
-	PV3Efficiency,
-	PV4Efficiency,
-	PV5Efficiency,
+	statePVTotal: CustomEntity,
+	statePvCurrent: CustomEntity[],
+	statePvVoltage: CustomEntity[],
+	statePvPower: CustomEntity[],
+	statePvEnergy: CustomEntity[],
+	pvEfficiencyPerc: number[],
+	pvEfficiencyKwhp: number[],
 	gridPercentage,
 
 	auxType,

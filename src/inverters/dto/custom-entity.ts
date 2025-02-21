@@ -44,7 +44,7 @@ export interface CustomEntity extends HassEntity {
 	isValidSwitch(): boolean;
 
 	/**
-	 * Checks that the state is valid and entity is energy or Power
+	 * Checks that the state is valid and entity is Energy or Power
 	 */
 	isValidElectric(): boolean;
 
