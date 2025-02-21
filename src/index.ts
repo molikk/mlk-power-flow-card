@@ -22,7 +22,7 @@ import { compactCard } from './cards/compact-card';
 import { globalData } from './helpers/globals';
 import { InverterFactory } from './inverters/inverter-factory';
 import { BatteryIconManager } from './helpers/battery-icon-manager';
-import { CustomEntity, getEntity } from './inverters/dto/custom-entity';
+import { convertToCustomEntity, CustomEntity, getEntity } from './inverters/dto/custom-entity';
 import { icons } from './helpers/icons';
 
 console.groupCollapsed(
@@ -515,8 +515,10 @@ export class PowerFlowCard extends LitElement {
 		const statePrepaidUnits = this.getEntity('entities.prepaid_units');
 		const stateMaxSellPower = this.getEntity('entities.max_sell_power');
 
+		const emptyEntity = convertToCustomEntity({ state: undefined });
 		//Solar
 		const statePvVoltage = [
+			emptyEntity,
 			this.getEntity('entities.pv1_voltage_109'),
 			this.getEntity('entities.pv2_voltage_111'),
 			this.getEntity('entities.pv3_voltage_113'),
@@ -524,6 +526,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.pv5_voltage'),
 		];
 		const statePvCurrent = [
+			emptyEntity,
 			this.getEntity('entities.pv1_current_110'),
 			this.getEntity('entities.pv2_current_112'),
 			this.getEntity('entities.pv3_current_114'),
@@ -531,6 +534,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.pv5_current'),
 		];
 		const statePvPower = [
+			emptyEntity,
 			this.getEntity('entities.pv1_power_186'),
 			this.getEntity('entities.pv2_power_187'),
 			this.getEntity('entities.pv3_power_188'),
@@ -538,6 +542,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.pv5_power'),
 		];
 		const statePvEnergy = [
+			emptyEntity,
 			this.getEntity('entities.pv1_production'),
 			this.getEntity('entities.pv2_production'),
 			this.getEntity('entities.pv3_production'),
@@ -1338,11 +1343,11 @@ export class PowerFlowCard extends LitElement {
 		if (config.solar.max_power && config.solar.show_mppt_efficiency_kwhp) {
 			pvEfficiencyKwhp = [
 				stateDailyPVEnergy?.isValidElectric() ? Utils.toNum(stateDailyPVEnergy.toPower() / solarMaxPower.toNum(0), config.decimal_places) : NaN,
-				statePvEnergy[1-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[1-1].toPower() / pv1MaxPower.toNum(0), config.decimal_places) : NaN,
-				statePvEnergy[2-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[2-1].toPower() / pv2MaxPower.toNum(0), config.decimal_places) : NaN,
-				statePvEnergy[3-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[3-1].toPower() / pv3MaxPower.toNum(0), config.decimal_places) : NaN,
-				statePvEnergy[4-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[4-1].toPower() / pv4MaxPower.toNum(0), config.decimal_places) : NaN,
-				statePvEnergy[5-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[5-1].toPower() / pv5MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[1]?.isValidElectric() ? Utils.toNum(statePvEnergy[1].toPower() / pv1MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[2]?.isValidElectric() ? Utils.toNum(statePvEnergy[2].toPower() / pv2MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[3]?.isValidElectric() ? Utils.toNum(statePvEnergy[3].toPower() / pv3MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[4]?.isValidElectric() ? Utils.toNum(statePvEnergy[4].toPower() / pv4MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[5]?.isValidElectric() ? Utils.toNum(statePvEnergy[5].toPower() / pv5MaxPower.toNum(0), config.decimal_places) : NaN,
 			];
 		}
 
