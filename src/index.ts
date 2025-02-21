@@ -516,26 +516,34 @@ export class PowerFlowCard extends LitElement {
 		const stateMaxSellPower = this.getEntity('entities.max_sell_power');
 
 		//Solar
-		const statePV1Voltage = this.getEntity('entities.pv1_voltage_109');
-		const statePV1Current = this.getEntity('entities.pv1_current_110');
-		const statePV2Voltage = this.getEntity('entities.pv2_voltage_111');
-		const statePV2Current = this.getEntity('entities.pv2_current_112');
-		const statePV3Voltage = this.getEntity('entities.pv3_voltage_113');
-		const statePV3Current = this.getEntity('entities.pv3_current_114');
-		const statePV4Voltage = this.getEntity('entities.pv4_voltage_115');
-		const statePV4Current = this.getEntity('entities.pv4_current_116');
-		const statePV5Voltage = this.getEntity('entities.pv5_voltage');
-		const statePV5Current = this.getEntity('entities.pv5_current');
-		const statePV1Power = this.getEntity('entities.pv1_power_186');
-		const statePV2Power = this.getEntity('entities.pv2_power_187');
-		const statePV3Power = this.getEntity('entities.pv3_power_188');
-		const statePV4Power = this.getEntity('entities.pv4_power_189');
-		const statePV5Power = this.getEntity('entities.pv5_power');
-		const statePV1Energy = this.getEntity('entities.pv1_production');
-		const statePV2Energy = this.getEntity('entities.pv2_production');
-		const statePV3Energy = this.getEntity('entities.pv3_production');
-		const statePV4Energy = this.getEntity('entities.pv4_production');
-		const statePV5Energy = this.getEntity('entities.pv5_production');
+		const statePvVoltage = [
+			this.getEntity('entities.pv1_voltage_109'),
+			this.getEntity('entities.pv2_voltage_111'),
+			this.getEntity('entities.pv3_voltage_113'),
+			this.getEntity('entities.pv4_voltage_115'),
+			this.getEntity('entities.pv5_voltage'),
+		];
+		const statePvCurrent = [
+			this.getEntity('entities.pv1_current_110'),
+			this.getEntity('entities.pv2_current_112'),
+			this.getEntity('entities.pv3_current_114'),
+			this.getEntity('entities.pv4_current_116'),
+			this.getEntity('entities.pv5_current'),
+		];
+		const statePvPower = [
+			this.getEntity('entities.pv1_power_186'),
+			this.getEntity('entities.pv2_power_187'),
+			this.getEntity('entities.pv3_power_188'),
+			this.getEntity('entities.pv4_power_189'),
+			this.getEntity('entities.pv5_power'),
+		];
+		const statePvEnergy = [
+			this.getEntity('entities.pv1_production'),
+			this.getEntity('entities.pv2_production'),
+			this.getEntity('entities.pv3_production'),
+			this.getEntity('entities.pv4_production'),
+			this.getEntity('entities.pv5_production'),
+		];
 		const stateSolarSell = this.getEntity('entities.solar_sell_247', { state: 'undefined' });
 		const statePVTotal = this.getEntity('entities.pv_total');
 		const stateDailyPVEnergy = this.getEntity('entities.day_pv_energy_108');
@@ -676,11 +684,11 @@ export class PowerFlowCard extends LitElement {
 
 		//totalSolar = pv1_power_186 + pv2_power_187 + pv3_power_188 + pv4_power_189 + pv5_power
 
-		const pv1PowerWatts = statePV1Power.toPower();
-		const pv2PowerWatts = statePV2Power.toPower();
-		const pv3PowerWatts = statePV3Power.toPower();
-		const pv4PowerWatts = statePV4Power.toPower();
-		const pv5PowerWatts = statePV5Power.toPower();
+		const pv1PowerWatts = statePvPower[1-1].toPower();
+		const pv2PowerWatts = statePvPower[2-1].toPower();
+		const pv3PowerWatts = statePvPower[3-1].toPower();
+		const pv4PowerWatts = statePvPower[4-1].toPower();
+		const pv5PowerWatts = statePvPower[5-1].toPower();
 
 		const totalSolar = pv1PowerWatts + pv2PowerWatts + pv3PowerWatts + pv4PowerWatts + pv5PowerWatts;
 		const totalPV = config.entities?.pv_total ? statePVTotal.toNum() : totalSolar;
@@ -1318,29 +1326,29 @@ export class PowerFlowCard extends LitElement {
 		const pv4MaxPower = this.getEntity('solar.pv4_max_power', { state: config.solar.pv4_max_power?.toString() ?? '' });
 		const pv5MaxPower = this.getEntity('solar.pv5_max_power', { state: config.solar.pv5_max_power?.toString() ?? '' });
 
-		let totalPVEfficiency = 100;
-		let PV1Efficiency = 100;
-		let PV2Efficiency = 100;
-		let PV3Efficiency = 100;
-		let PV4Efficiency = 100;
-		let PV5Efficiency = 100;
+		let pvEfficiencyPerc = [100, 100, 100, 100, 100, 100];
+		let pvEfficiencyKwhp = [NaN, NaN, NaN, NaN, NaN, NaN];
 
 		if (config.solar.max_power && (config.solar.show_mppt_efficiency || config.solar.visualize_efficiency)) {
-			totalPVEfficiency = Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 100), 0);
-			PV1Efficiency = Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 100), 0);
-			PV2Efficiency = Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 100), 0);
-			PV3Efficiency = Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 100), 0);
-			PV4Efficiency = Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 100), 0);
-			PV5Efficiency = Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 100), 0);
+			pvEfficiencyPerc = [
+				Utils.toNum(Math.min((totalPV / solarMaxPower.toNum()) * 100, 100), 0),
+				Utils.toNum(Math.min((pv1PowerWatts / pv1MaxPower.toNum()) * 100, 100), 0),
+				Utils.toNum(Math.min((pv2PowerWatts / pv2MaxPower.toNum()) * 100, 100), 0),
+				Utils.toNum(Math.min((pv3PowerWatts / pv3MaxPower.toNum()) * 100, 100), 0),
+				Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 100), 0),
+				Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 100), 0),
+			];
 
 		}
 		if (config.solar.max_power && config.solar.show_mppt_efficiency_kwhp) {
-			totalPVEfficiency = stateDailyPVEnergy?.isValidElectric()?Utils.toNum(stateDailyPVEnergy.toPower() / solarMaxPower.toNum(0), config.decimal_places): NaN;
-			PV1Efficiency = statePV1Energy?.isValidElectric() ? Utils.toNum(statePV1Energy.toPower() / pv1MaxPower.toNum(0), config.decimal_places): NaN;
-			PV2Efficiency = statePV2Energy?.isValidElectric() ? Utils.toNum(statePV2Energy.toPower() / pv2MaxPower.toNum(0), config.decimal_places): NaN;
-			PV3Efficiency = statePV3Energy?.isValidElectric() ? Utils.toNum(statePV3Energy.toPower() / pv3MaxPower.toNum(0), config.decimal_places): NaN;
-			PV4Efficiency = statePV4Energy?.isValidElectric() ? Utils.toNum(statePV4Energy.toPower() / pv4MaxPower.toNum(0), config.decimal_places): NaN;
-			PV5Efficiency = statePV5Energy?.isValidElectric() ? Utils.toNum(statePV5Energy.toPower() / pv5MaxPower.toNum(0), config.decimal_places) : NaN;
+			pvEfficiencyKwhp = [
+				stateDailyPVEnergy?.isValidElectric() ? Utils.toNum(stateDailyPVEnergy.toPower() / solarMaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[1-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[1-1].toPower() / pv1MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[2-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[2-1].toPower() / pv2MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[3-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[3-1].toPower() / pv3MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[4-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[4-1].toPower() / pv4MaxPower.toNum(0), config.decimal_places) : NaN,
+				statePvEnergy[5-1]?.isValidElectric() ? Utils.toNum(statePvEnergy[5-1].toPower() / pv5MaxPower.toNum(0), config.decimal_places) : NaN,
+			];
 		}
 
 		//colors
@@ -1711,11 +1719,6 @@ export class PowerFlowCard extends LitElement {
 			autarkyAuto,
 			autarkySelf,
 			shutdownOffGrid,
-			statePV1Current,
-			statePV2Current,
-			statePV3Current,
-			statePV4Current,
-			statePV5Current,
 			energyCost,
 			stateInverterCurrentL1,
 			stateInverterCurrentL2,
@@ -1743,11 +1746,6 @@ export class PowerFlowCard extends LitElement {
 			pv5LineWidth,
 			gridLineWidth,
 			stateEnvironmentTemp,
-			statePV1Voltage,
-			statePV2Voltage,
-			statePV3Voltage,
-			statePV4Voltage,
-			statePV5Voltage,
 			batteryStateColour,
 			inverterStateColour,
 			stateBatteryTemp,
@@ -1764,22 +1762,16 @@ export class PowerFlowCard extends LitElement {
 			stateTotalSolarGeneration,
 			stateRemainingSolar,
 			stateTomorrowSolar,
-			statePV2Power,
-			statePV3Power,
-			statePV4Power,
-			statePV5Power,
-			statePV1Energy,
-			statePV2Energy,
-			statePV3Energy,
-			statePV4Energy,
-			statePV5Energy,
+			statePVTotal,
+			statePvCurrent,
+			statePvVoltage,
+			statePvPower,
+			statePvEnergy,
 			stateDayLoadEnergy,
 			stateDayBatteryDischarge,
 			stateDayGridImport,
 			stateDayBatteryCharge,
 			stateDayGridExport,
-			statePVTotal,
-			statePV1Power,
 			minLineWidth,
 			stopColour,
 			gridStatus,
@@ -1820,12 +1812,8 @@ export class PowerFlowCard extends LitElement {
 			autoScaledInverterPower,
 			autoScaledGridPower,
 			stateMaxSellPower,
-			totalPVEfficiency,
-			PV1Efficiency,
-			PV2Efficiency,
-			PV3Efficiency,
-			PV4Efficiency,
-			PV5Efficiency,
+			pvEfficiencyPerc,
+			pvEfficiencyKwhp,
 			gridPercentage,
 			flowColour,
 			flowBatColour,
