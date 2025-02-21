@@ -50,7 +50,7 @@ export class BatteryBank {
 			return svg``;
 		}
 		const banks = config.battery.battery_banks;
-		let width = 40,
+		const width = 40,
 			startX = 195 - (width + 3) * (banks > 4 ? banks - 4 : 0);
 
 		let result = svg`${this.generateOuterTitle(config.battery.battery_banks, startX + 5, data.batteryColour)}`;
@@ -202,7 +202,7 @@ export class BatteryBank {
 	}
 
 	private static getStorage(storageEntity: CustomEntity, config: PowerFlowCardConfig, batteryEnergy: number, socEntity: CustomEntity) {
-		let shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
+		const shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
 		return storageEntity?.isValid()
 			? storageEntity.toStr(2)
 			: config.battery.remaining_energy_to_shutdown

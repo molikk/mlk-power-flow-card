@@ -23,7 +23,7 @@ export class Utils {
 		return keyPoints.split(';').reverse().join(';');
 	}
 
-	static convertValue(value: any, decimal: number = 2) {
+	static convertValue(value, decimal: number = 2) {
 		decimal = Number.isNaN(decimal) ? 2 : decimal;
 		if (Math.abs(value) >= 1000000) {
 			return `${(value / 1000000).toFixed(decimal)} MW`;
@@ -103,7 +103,7 @@ export class Utils {
 
 	static toHexColor(color: string): string {
 		if (!color) {
-			return 'grey'
+			return 'grey';
 		}
 		if (/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(color)) {
 			return color.toUpperCase();
@@ -114,7 +114,7 @@ export class Utils {
 			return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase()}`;
 		}
 		// probs a color name
-		return color
+		return color;
 	}
 
 	private static isPopupOpen = false;
@@ -135,7 +135,7 @@ export class Utils {
 		this._handleClick(event, { action: 'navigate', navigation_path: navigationPath }, null);
 	}
 
-	private static _handleClick(event: Event, actionConfig: any, entityId: string | null) {
+	private static _handleClick(event: Event, actionConfig, entityId: string | null) {
 		if (!event || (!entityId && !actionConfig.navigation_path)) {
 			//console.warn("no Click action to handle", event, entityId, actionConfig);
 			return;
@@ -174,7 +174,7 @@ export class Utils {
 		if (event.target != null) {
 			event.target.dispatchEvent(moreInfoEvent);
 		} else {
-			console.log("Event.target is null: ", event);
+			console.log('Event.target is null: ', event);
 		}
 
 		const closePopup = () => {

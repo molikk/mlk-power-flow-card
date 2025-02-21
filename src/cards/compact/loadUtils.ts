@@ -73,7 +73,7 @@ export class LoadUtils {
 					${localize('common.' + (toggle?.toOnOff() || 'off'))}
 				</text>
 			</a>`;
-		let powerStr = power?.isValidElectric()
+		const powerStr = power?.isValidElectric()
 			? power?.toPowerString(loadAutoScale, decimalPlaces)
 			: power?.isValidTime()
 				? power.toShortTime(true)
@@ -87,7 +87,7 @@ export class LoadUtils {
 				${powerStr}
 				</text>
 			</a>` : svg``;
-		let energyStr = energy?.isValidElectric()
+		const energyStr = energy?.isValidElectric()
 			? energy?.toPowerString(loadAutoScale, decimalPlaces)
 			: energy?.isValidTime()
 				? energy.toShortTime(true)

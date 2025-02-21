@@ -91,11 +91,11 @@ export class Load {
 			? svg`<text id="load-power-L1" x="${x}" y="241" class="st3 left-align" fill="${data.loadColour}">
 				${config.load.auto_scale ? `${Utils.convertValue(data.loadPowerL1, data.decimalPlaces) || 0}` : `${data.loadPowerL1 || 0} ${UnitOfPower.WATT}`}
 			</text>` : svg``;
-		let l2 = config.entities?.load_power_L2
+		const l2 = config.entities?.load_power_L2
 			? svg`<text id="load-power-L2" x="${x}" y="254" class="st3 left-align" fill="${data.loadColour}">
 				${config.load.auto_scale ? `${Utils.convertValue(data.loadPowerL2, data.decimalPlaces) || 0}` : `${data.loadPowerL2 || 0} ${UnitOfPower.WATT}`}
 			</text>` : svg``;
-		let l3 = config.entities?.load_power_L3
+		const l3 = config.entities?.load_power_L3
 			? svg`<text id="load-power-L3" x="${x}" y="267" class="st3 left-align" fill="${data.loadColour}">
 				${config.load.auto_scale ? `${Utils.convertValue(data.loadPowerL3, data.decimalPlaces) || 0}` : `${data.loadPowerL3 || 0} ${UnitOfPower.WATT}`}
 			</text>` : svg``;
@@ -139,7 +139,7 @@ export class Load {
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
 
-		let grid = svg`
+		const grid = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.LOAD_X + 5 : this.LOAD_X + 2}"
 				 y="${data.essIconSize === 1 ? '186' : '177.5'}" width="${data.essIconSize === 1 ? '75' : '79'}"
 				 height="${data.essIconSize === 1 ? '75' : '79'}"
