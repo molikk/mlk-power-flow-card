@@ -54,7 +54,7 @@ export class Solar {
 			</text>` : svg``;
 		const efficiencyKwhp = config.solar.show_mppt_efficiency_kwhp ? svg`
 			<text x="233" y="${config.solar.show_mppt_efficiency ? 168 : 156}" class="st3 st8 right-align"
-				  fill="${data.solarColour}">${data.pvEfficiencyKwhp[0]}<tspan font-size="0.8em" baseline-shift="super" dx="-2" dy="1">Wh</tspan><tspan font-size="0.8em" baseline-shift="sub" dx="-6" dy="-2">Wp</tspan>
+				  fill="${data.solarColour}">${data.pvEfficiencyKwhp[0]} <tspan font-size="0.8em" baseline-shift="super" dx="-2" dy="1">Wh</tspan><tspan font-size="0.8em" baseline-shift="sub" dx="-6" dy="-2">Wp</tspan>
 			</text>` : svg``;
 
 		const power = config.solar.auto_scale
@@ -99,7 +99,6 @@ export class Solar {
 			${totalPower}
 		` : svg``;
 	}
-
 
 	static generateSolarHeader(data: DataDto, config: PowerFlowCardConfig) {
 

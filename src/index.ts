@@ -534,7 +534,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.pv5_current'),
 		];
 		const statePvPower = [
-			emptyEntity,
+			this.getEntity('entities.pv_total'),
 			this.getEntity('entities.pv1_power_186'),
 			this.getEntity('entities.pv2_power_187'),
 			this.getEntity('entities.pv3_power_188'),
@@ -542,7 +542,7 @@ export class PowerFlowCard extends LitElement {
 			this.getEntity('entities.pv5_power'),
 		];
 		const statePvEnergy = [
-			emptyEntity,
+			this.getEntity('entities.day_pv_energy_108'),
 			this.getEntity('entities.pv1_production'),
 			this.getEntity('entities.pv2_production'),
 			this.getEntity('entities.pv3_production'),
@@ -685,11 +685,11 @@ export class PowerFlowCard extends LitElement {
 
 		//totalSolar = pv1_power_186 + pv2_power_187 + pv3_power_188 + pv4_power_189 + pv5_power
 
-		const pv1PowerWatts = statePvPower[1-1].toPower();
-		const pv2PowerWatts = statePvPower[2-1].toPower();
-		const pv3PowerWatts = statePvPower[3-1].toPower();
-		const pv4PowerWatts = statePvPower[4-1].toPower();
-		const pv5PowerWatts = statePvPower[5-1].toPower();
+		const pv1PowerWatts = statePvPower[1].toPower();
+		const pv2PowerWatts = statePvPower[2].toPower();
+		const pv3PowerWatts = statePvPower[3].toPower();
+		const pv4PowerWatts = statePvPower[4].toPower();
+		const pv5PowerWatts = statePvPower[5].toPower();
 
 		const totalSolar = pv1PowerWatts + pv2PowerWatts + pv3PowerWatts + pv4PowerWatts + pv5PowerWatts;
 		const totalPV = config.entities?.pv_total ? statePVTotal.toNum() : totalSolar;
@@ -1338,7 +1338,6 @@ export class PowerFlowCard extends LitElement {
 				Utils.toNum(Math.min((pv4PowerWatts / pv4MaxPower.toNum()) * 100, 100), 0),
 				Utils.toNum(Math.min((pv5PowerWatts / pv5MaxPower.toNum()) * 100, 100), 0),
 			];
-
 		}
 		if (config.solar.max_power && config.solar.show_mppt_efficiency_kwhp) {
 			pvEfficiencyKwhp = [
