@@ -10,7 +10,6 @@ export class BatteryIconManager {
 		switch (true) {
 			case batteryLevel >= 25: {
 				const lvl = Math.floor((batteryLevel + 5) / 10) * 10;
-				console.log(batteryLevel, lvl);
 				batteryIcon = this.batteryIcon(lvl);
 				batteryCharge = this.batteryCharge(lvl);
 				stopColour = 'orange';
