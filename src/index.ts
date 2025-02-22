@@ -685,11 +685,11 @@ export class PowerFlowCard extends LitElement {
 
 		//totalSolar = pv1_power_186 + pv2_power_187 + pv3_power_188 + pv4_power_189 + pv5_power
 
-		const pv1PowerWatts = statePvPower[1-1].toPower();
-		const pv2PowerWatts = statePvPower[2-1].toPower();
-		const pv3PowerWatts = statePvPower[3-1].toPower();
-		const pv4PowerWatts = statePvPower[4-1].toPower();
-		const pv5PowerWatts = statePvPower[5-1].toPower();
+		const pv1PowerWatts = statePvPower[1].toPower();
+		const pv2PowerWatts = statePvPower[2].toPower();
+		const pv3PowerWatts = statePvPower[3].toPower();
+		const pv4PowerWatts = statePvPower[4].toPower();
+		const pv5PowerWatts = statePvPower[5].toPower();
 
 		const totalSolar = pv1PowerWatts + pv2PowerWatts + pv3PowerWatts + pv4PowerWatts + pv5PowerWatts;
 		const totalPV = config.entities?.pv_total ? statePVTotal.toNum() : totalSolar;

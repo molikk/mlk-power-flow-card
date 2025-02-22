@@ -104,7 +104,7 @@ export class Battery {
 				  fill="${data.batteryEnergy === 0 || data.isFloating || data.batteryPower === 0 ? 'transparent' : `${data.batteryColour}`}">
 				${data.batteryDuration}
 			</text>
-			<text id="duration_text" x="270" y="${y}" class="st3 left-align"
+			<text id="duration_text_runtime" x="270" y="${y}" class="st3 left-align"
 				  fill="${data.batteryEnergy === 0 || (config.battery.invert_flow ? data.batteryPower >= 0 : data.batteryPower <= 0) || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.runtime_to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
@@ -113,7 +113,7 @@ export class Battery {
 				  fill="${data.batteryEnergy === 0 || (config.battery.invert_flow ? data.batteryPower <= 0 : data.batteryPower >= 0) || data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.to')} ${data.batteryCapacity}% @${data.formattedResultTime}
 			</text>
-			<text id="floating" x="270" y="${y}" class="st3 left-align"
+			<text id="duration_text_floating" x="270" y="${y}" class="st3 left-align"
 				  fill="${data.batteryEnergy === 0 || !data.isFloating ? 'transparent' : `${data.batteryColour}`}">
 				${localize('common.battery_floating')}
 			</text>		
