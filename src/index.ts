@@ -8,6 +8,7 @@ import {
 	CARD_VERSION,
 	EDITOR_NAME,
 	MAIN_NAME,
+	UnitOfEnergy,
 	valid3phase,
 	validAuxLoads,
 	validGridConnected,
@@ -587,7 +588,7 @@ export class PowerFlowCard extends LitElement {
 		const decimalPlacesEnergy = config.decimal_places_energy;
 
 		const loadShowDaily = config.load?.show_daily;
-		const showNonessential = config.grid?.show_nonessential;
+		const showNonessential = config.grid?.show_nonessential || false;
 		let gridStatus = config.entities?.grid_connected_status_194 ? stateGridConnectedStatus.state : 'on';
 		if (!validGridConnected.includes(gridStatus.toLowerCase()) && !validGridDisconnected.includes(gridStatus.toLowerCase())) {
 			gridStatus = 'on';
@@ -736,7 +737,7 @@ export class PowerFlowCard extends LitElement {
 
 		//console.log('ESS POWER', essential_power, threePhase, config.entities.load_power_L1, config.entities.inverter_power_175, "with_inv_power",  autoScaledInverterPower, autoScaledGridPower, auxPower, autoScaledInverterPower + autoScaledGridPower - auxPower, "without_inv_power", totalPV, batteryPower, autoScaledGridPower, auxPower, totalPV + batteryPower + autoScaledGridPower - auxPower);
 		//essentialPower = inverter_power_175 + grid_power_169 - aux_power_166 or  totalPV + battery_power_190 + grid_power_169 - aux_power_166
-		const essentialPower:number =
+		const essentialPower: number =
 			essential_power === 'none' || !essential_power
 				? threePhase === true && config.entities.load_power_L1 && config.entities.load_power_L2 && config.entities.load_power_L3
 					? Number(loadPowerL1) + Number(loadPowerL2) + Number(loadPowerL3)
@@ -808,88 +809,89 @@ export class PowerFlowCard extends LitElement {
 
 				assignInverterProgramBasedOnTime(timer_now);
 
-			function assignInverterProgramBasedOnTime(timer_now: Date) {
-				const progTimes: { start: Date; end: Date }[] = [];
+				function assignInverterProgramBasedOnTime(timer_now: Date) {
+					const progTimes: { start: Date; end: Date }[] = [];
 
-				// Populate the progTimes array with Date objects based on the current time
-				[prog1, prog2, prog3, prog4, prog5, prog6].forEach((prog, index) => {
-					if (!prog || !prog.time || !prog.time.state) {
-						console.error(`Program ${index + 1} is not defined or has no valid time.`);
-						return; // Skip this program
-					}
+					// Populate the progTimes array with Date objects based on the current time
+					[prog1, prog2, prog3, prog4, prog5, prog6].forEach((prog, index) => {
+						if (!prog || !prog.time || !prog.time.state) {
+							console.error(`Program ${index + 1} is not defined or has no valid time.`);
+							return; // Skip this program
+						}
 
-					const [hours, minutes] = prog.time.state.split(':').map(item => parseInt(item, 10));
-					const progStartTime = new Date(timer_now.getTime());
-					progStartTime.setHours(hours);
-					progStartTime.setMinutes(minutes);
+						const [hours, minutes] = prog.time.state.split(':').map(item => parseInt(item, 10));
+						const progStartTime = new Date(timer_now.getTime());
+						progStartTime.setHours(hours);
+						progStartTime.setMinutes(minutes);
 
-					// Determine the end time for each program (next program's start time)
-					const nextIndex = (index + 1) % [prog1, prog2, prog3, prog4, prog5, prog6].length;
-					const nextProg = [prog1, prog2, prog3, prog4, prog5, prog6][nextIndex];
-					const progEndTime = nextProg && nextProg.time && nextProg.time.state ?
-						new Date(timer_now.getTime()) :
-						new Date(timer_now.getTime());
+						// Determine the end time for each program (next program's start time)
+						const nextIndex = (index + 1) % [prog1, prog2, prog3, prog4, prog5, prog6].length;
+						const nextProg = [prog1, prog2, prog3, prog4, prog5, prog6][nextIndex];
+						const progEndTime = nextProg && nextProg.time && nextProg.time.state ?
+							new Date(timer_now.getTime()) :
+							new Date(timer_now.getTime());
 
-					if (nextProg && nextProg.time && nextProg.time.state) {
-						const [nextHours, nextMinutes] = nextProg.time.state.split(':').map(item => parseInt(item, 10));
-						progEndTime.setHours(nextHours);
-						progEndTime.setMinutes(nextMinutes);
-					} else {
-						console.warn(`Next program ${nextIndex + 1} is not defined or has no valid time.`);
-					}
+						if (nextProg && nextProg.time && nextProg.time.state) {
+							const [nextHours, nextMinutes] = nextProg.time.state.split(':').map(item => parseInt(item, 10));
+							progEndTime.setHours(nextHours);
+							progEndTime.setMinutes(nextMinutes);
+						} else {
+							console.warn(`Next program ${nextIndex + 1} is not defined or has no valid time.`);
+						}
 
-					//console.log(`Program ${index + 1} time (before adjustment): Start: ${progStartTime.toLocaleString()}, End: ${progEndTime.toLocaleString()}`);
+						//console.log(`Program ${index + 1} time (before adjustment): Start: ${progStartTime.toLocaleString()}, End: ${progEndTime.toLocaleString()}`);
 
-					// Add to the progTimes array
-					progTimes[index] = { start: progStartTime, end: progEndTime };
-				});
+						// Add to the progTimes array
+						progTimes[index] = { start: progStartTime, end: progEndTime };
+					});
 
-				// Adjust times for the next day if necessary
-				adjustProgramTimes(progTimes, timer_now);
+					// Adjust times for the next day if necessary
+					adjustProgramTimes(progTimes, timer_now);
 
-				// Time comparison logic to determine the active program
-				for (let i = 0; i < progTimes.length; i++) {
-					const { start: currentProgStartTime, end: currentProgEndTime } = progTimes[i];
+					// Time comparison logic to determine the active program
+					for (let i = 0; i < progTimes.length; i++) {
+						const { start: currentProgStartTime, end: currentProgEndTime } = progTimes[i];
 
-					// Check for normal case (start < end)
-					if (currentProgStartTime <= timer_now && timer_now < currentProgEndTime) {
-						//console.log(`Assigning Program ${i + 1}`);
-						assignInverterProgValues([prog1, prog2, prog3, prog4, prog5, prog6][i], config.entities[`prog${i + 1}_charge`]);
-						break; // Exit once the correct program is assigned
-					}
-					// Check for wrap-around case (start > end)
-					else if (currentProgStartTime > currentProgEndTime) {
-						if (timer_now >= currentProgStartTime || timer_now < currentProgEndTime) {
+						// Check for normal case (start < end)
+						if (currentProgStartTime <= timer_now && timer_now < currentProgEndTime) {
+							//console.log(`Assigning Program ${i + 1}`);
 							assignInverterProgValues([prog1, prog2, prog3, prog4, prog5, prog6][i], config.entities[`prog${i + 1}_charge`]);
 							break; // Exit once the correct program is assigned
 						}
+						// Check for wrap-around case (start > end)
+						else if (currentProgStartTime > currentProgEndTime) {
+							if (timer_now >= currentProgStartTime || timer_now < currentProgEndTime) {
+								assignInverterProgValues([prog1, prog2, prog3, prog4, prog5, prog6][i], config.entities[`prog${i + 1}_charge`]);
+								break; // Exit once the correct program is assigned
+							}
+						}
 					}
 				}
-			}
 
-			function adjustProgramTimes(progTimes: { start: Date; end: Date }[], timer_now: Date) {
-				const currentTime = timer_now.getTime();
-				progTimes.forEach((progTime) => {
-					if (progTime.start.getTime() < currentTime && progTime.end.getTime() < currentTime) {
-						progTime.start.setDate(progTime.start.getDate() + 1);
-						progTime.end.setDate(progTime.end.getDate() + 1);
-					}
-				});
-				return progTimes;
-			}
-
-			function assignInverterProgValues(prog: { time: CustomEntity; capacity: CustomEntity; charge: CustomEntity }, entityID: string) {
-				if (prog.charge.state === 'No Grid or Gen' || prog.charge.state === '0' || prog.charge.state === 'off') {
-					inverterProg.charge = 'none';
-				} else {
-					inverterProg.charge = 'both';
+				function adjustProgramTimes(progTimes: { start: Date; end: Date }[], timer_now: Date) {
+					const currentTime = timer_now.getTime();
+					progTimes.forEach((progTime) => {
+						if (progTime.start.getTime() < currentTime && progTime.end.getTime() < currentTime) {
+							progTime.start.setDate(progTime.start.getDate() + 1);
+							progTime.end.setDate(progTime.end.getDate() + 1);
+						}
+					});
+					return progTimes;
 				}
 
-				inverterProg.capacity = parseInt(prog.capacity.state);
-				inverterProg.entityID = entityID;
-			}
+				function assignInverterProgValues(prog: { time: CustomEntity; capacity: CustomEntity; charge: CustomEntity }, entityID: string) {
+					if (prog.charge.state === 'No Grid or Gen' || prog.charge.state === '0' || prog.charge.state === 'off') {
+						inverterProg.charge = 'none';
+					} else {
+						inverterProg.charge = 'both';
+					}
 
-				break; }
+					inverterProg.capacity = parseInt(prog.capacity.state);
+					inverterProg.entityID = entityID;
+				}
+
+				break;
+			}
 		}
 
 		if (gridVoltage != null && !Number.isNaN(gridVoltage) && inverterModel == InverterModel.Solis) {
@@ -939,24 +941,28 @@ export class PowerFlowCard extends LitElement {
 		//calculate remaining battery time to charge or discharge
 		let totalSeconds = 0;
 		let formattedResultTime = '';
+		let formattedResultCapacity = '';
 		let batteryDuration = '';
 
-		const battenergy = this.getEntity('battery.energy', { state: config.battery.energy?.toString() ?? '' });
-		let batteryEnergy = battenergy.toPower(false);
+		const batEnergy = this.getEntity('battery.energy', { state: config.battery.energy?.toString() ?? '' });
+		let batteryEnergy = batEnergy.toPower(false);
 		if (batteryVoltage && stateBatteryRatedCapacity.notEmpty()) {
 			batteryEnergy = Utils.toNum(batteryVoltage * stateBatteryRatedCapacity.toNum(0), 0);
 		}
 
 		if (config.show_battery || batteryEnergy !== 0) {
 			if (batteryPower === 0) {
-				totalSeconds = ((stateBatterySoc.toNum() - batteryShutdown) / 100) * batteryEnergy * 60 * 60;
+				totalSeconds = stateBatterySoc.toNum() - batteryShutdown;
 			} else if (config.battery.invert_flow ? batteryPower < 0 : batteryPower > 0) {
 				totalSeconds =
-					((((stateBatterySoc.toNum() - batteryCapacity) / 100) * batteryEnergy) / Math.abs(batteryPower)) * 60 * 60;
+					(stateBatterySoc.toNum() - batteryCapacity) / Math.abs(batteryPower);
 			} else if (config.battery.invert_flow ? batteryPower > 0 : batteryPower < 0) {
 				totalSeconds =
-					((((batteryCapacity - stateBatterySoc.toNum(0)) / 100) * batteryEnergy) / Math.abs(batteryPower)) * 60 * 60;
+					(batteryCapacity - stateBatterySoc.toNum(0)) / Math.abs(batteryPower);
 			}
+			totalSeconds = totalSeconds * batteryEnergy * 60 * 60 / 100;
+			formattedResultCapacity = Utils.convertValueNew(totalSeconds / 60 / 60 * Math.abs(batteryPower), UnitOfEnergy.WATT_HOUR, 2, true);
+
 			const currentTime = new Date(); // Create a new Date object representing the current time
 			const durationMilliseconds = totalSeconds * 1000; // Convert the duration to milliseconds
 			const resultTime = new Date(currentTime.getTime() + durationMilliseconds); // Add the duration in milliseconds
@@ -1777,6 +1783,7 @@ export class PowerFlowCard extends LitElement {
 			gridOffColour,
 			batteryIcon,
 			formattedResultTime,
+			formattedResultCapacity,
 
 			showNonessential,
 			nonessentialLoads,
