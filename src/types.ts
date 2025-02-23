@@ -99,10 +99,10 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		dc_icon: string;
 	}
 	battery: {
-		energy: any;
-		shutdown_soc: any;
-		shutdown_soc_offgrid: any;
-		soc_end_of_charge: any;
+		energy;
+		shutdown_soc;
+		shutdown_soc_offgrid;
+		soc_end_of_charge;
 		hide_soc: boolean;
 		invert_power: boolean;
 		colour: string;
@@ -111,13 +111,14 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		charge_colour: string;
 		show_daily: boolean;
 		animation_speed: number;
-		max_power: any;
+		max_power;
 		full_capacity: number;
 		empty_capacity: number;
 		show_absolute: boolean;
 		auto_scale: boolean;
 		show_remaining_energy: boolean;
 		remaining_energy_to_shutdown: boolean;
+		runtime_in_kwh: boolean;
 		dynamic_colour: boolean;
 		linear_gradient: boolean;
 		animate: boolean;
@@ -551,8 +552,8 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 }
 
 export interface ConfigCardEntities {
-	use_timer_248: any,
-	priority_load_243: any,
+	use_timer_248,
+	priority_load_243,
 	inverter_voltage_154: string,
 	grid_frequency: string,
 	load_frequency_192: string,
@@ -635,7 +636,7 @@ export interface InverterSettings {
 export interface DataDto {
 	config: PowerFlowCardConfig,
 	timestamp_id: number;
-	refreshTime: String,
+	refreshTime: string,
 	compactMode,
 	cardHeight: string,
 	cardWidth: string,
@@ -789,9 +790,10 @@ export interface DataDto {
 	batteryCharge,
 	gridOffColour: string,
 	batteryIcon: string,
-	formattedResultTime,
-	showNonessential,
-	nonessentialLoads,
+	formattedResultTime: string,
+	formattedResultCapacity: string,
+	showNonessential: boolean,
+	nonessentialLoads: number,
 	nonessentialIcon: string,
 	nonessentialLoadIcon: string[],
 	nonessentialLoadState: CustomEntity[],

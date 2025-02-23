@@ -468,6 +468,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'hide_soc', selector: { boolean: {} } },
 											{ name: 'show_remaining_energy', selector: { boolean: {} } },
 											{ name: 'remaining_energy_to_shutdown', selector: { boolean: {} } },
+											{ name: 'runtime_in_kwh', selector: { boolean: {} } },
 											{ name: 'max_power', selector: { number: {} } },
 											{ name: 'path_threshold', selector: { number: {} } },
 										],
@@ -1219,9 +1220,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		};
 	}
 
-	private _computeLabelCallback = (data: any) => data.name ? this.localizeOrChange(data) ?? data.name : data;
+	private _computeLabelCallback = (data) => data.name ? this.localizeOrChange(data) ?? data.name : data;
 
-	private localizeOrChange(opt: any) {
+	private localizeOrChange(opt) {
 		let result = localize(`config.${opt.name}`) ?? opt.name;
 		if (result === opt.name && opt?.selector?.entity === undefined) {
 			result = opt.name.replace(/(\d)_(\d)|_/g, (_match: string, p1: string, p2: string) => {
