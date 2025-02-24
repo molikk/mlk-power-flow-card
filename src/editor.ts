@@ -346,11 +346,13 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'show_mppt_efficiency', selector: { boolean: {} } },
 											{ name: 'show_mppt_efficiency_kwhp', selector: { boolean: {} } },
 											{ name: 'show_mppt_production', selector: { boolean: {} } },
+											{ name: 'hide_header_units', selector: { boolean: {} } },
+
 										],
 									},
 									{
 										type: 'expandable',
-										title: this._title('solar_production'),
+										title: this._title('solar_header'),
 										schema: [
 											{
 												name: 'solar',
@@ -368,7 +370,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 									},
 									{
 										type: 'expandable',
-										title: this._title('solar_production_ent'),
+										title: this._title('solar_header_ent'),
 										schema: [
 											{
 												name: 'entities',

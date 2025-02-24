@@ -211,15 +211,16 @@ export class Solar {
 		entity: CustomEntity,
 		startPosition: { x: number; gap: number },
 		config: PowerFlowCardConfig) {
+		const showUnits = config.solar?.hide_header_units === undefined ? true : !config.solar.hide_header_units;
 		const startX = startPosition.x;
-		const power = entity?.toPowerString(true, this.decimalPlacesEnergy) || '0';
+		const power = entity?.toPowerString(true, this.decimalPlacesEnergy, false, showUnits) || '0';
 		const name = config.solar[fieldId] ? config.solar[fieldId] : localize('common.' + fieldId);
 
 		const powerWidth = this.getTextWidth(power, '16px Roboto');
 		const nameWidth = this.getTextWidth(name, '9px Roboto');
 
 		startPosition.gap = Math.max(nameWidth, powerWidth);
-		startPosition.x -= startPosition.gap + 8;
+		startPosition.x -= (startPosition.gap + 8);
 
 		return svg`
             <a href="#" @click=${(e: Event) => Utils.handlePopup(e, entity.entity_id)}>

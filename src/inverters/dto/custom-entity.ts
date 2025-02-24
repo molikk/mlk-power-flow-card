@@ -76,8 +76,9 @@ export interface CustomEntity extends HassEntity {
 	 * @param invert
 	 * @param decimals
 	 * @param scale
+	 * @param withUnit
 	 */
-	toPowerString(scale?: boolean, decimals?: number, invert?: boolean): string;
+	toPowerString(scale: boolean, decimals?: number, invert?: boolean, withUnit?: boolean): string;
 
 	getUOM(): UnitOfPower | UnitOfEnergy | UnitOfElectricalCurrent | string
 }
@@ -108,10 +109,10 @@ export function convertToCustomEntity(entity): CustomEntity {
 				return Utils.toNum((entity?.state || '0'), 2, invert) || 0;
 			}
 		},
-		toPowerString: (scale?: boolean, decimals?: number, invert?: boolean) =>
+		toPowerString: (scale: boolean, decimals: number, invert: boolean, withUnit: boolean = true) =>
 			scale ?
-				Utils.convertValueNew(entity?.state, entity?.attributes?.unit_of_measurement, decimals) :
-				`${Utils.toNum(entity?.state, decimals, invert).toFixed(decimals)} ${entity?.attributes?.unit_of_measurement || ''}`,
+				Utils.convertValueNew(entity?.state, entity?.attributes?.unit_of_measurement, decimals, withUnit) :
+				`${Utils.toNum(entity?.state, decimals, invert).toFixed(decimals)} ${withUnit ? entity?.attributes?.unit_of_measurement || '' : ''}`,
 		toString: () => entity?.state?.toString() || '',
 		toShortTime: (withTrailingHourZero: boolean = true) =>
 			(withTrailingHourZero && entity?.attributes?.hour < 10 ? '0' : '') + entity?.attributes?.hour
