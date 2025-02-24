@@ -260,8 +260,8 @@
       "inv_prog": "Programs Entities",
 
       "solar": "Solar Options",
-      "solar_production": "Production Names",
-      "solar_production_ent": "Production Entities",
+      "solar_header": "Header Names",
+      "solar_header_ent": "Header Entities",
       "max_power": "PV Max Power",
       "mppt_options": "PV Names",
       "pv_1_ent": "PV1 Entities",
