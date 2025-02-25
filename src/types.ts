@@ -159,6 +159,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		show_mppt_efficiency_kwhp: boolean;
 		show_mppt_production: boolean;
 		hide_header_units: boolean;
+		fixed_header_item_width: number;
 	}
 	load: {
 		colour: string;

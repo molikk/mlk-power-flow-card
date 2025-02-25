@@ -219,7 +219,7 @@ export class Solar {
 		const powerWidth = this.getTextWidth(power, '16px Roboto');
 		const nameWidth = this.getTextWidth(name, '9px Roboto');
 
-		startPosition.gap = Math.max(nameWidth, powerWidth);
+		startPosition.gap = config.solar?.fixed_header_item_width > 0 ? config.solar.fixed_header_item_width : Math.max(nameWidth, powerWidth);
 		startPosition.x -= (startPosition.gap + 8);
 
 		return svg`

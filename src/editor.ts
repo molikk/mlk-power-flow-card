@@ -347,7 +347,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'show_mppt_efficiency_kwhp', selector: { boolean: {} } },
 											{ name: 'show_mppt_production', selector: { boolean: {} } },
 											{ name: 'hide_header_units', selector: { boolean: {} } },
-
+											{ name: 'fixed_header_item_width', selector: { number: {} } },
 										],
 									},
 									{
