@@ -3,6 +3,7 @@ import { svg } from 'lit';
 import { localize } from '../../localize/localize';
 import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfEnergy, UnitOfPower } from '../../const';
+import { CustomEntity } from '../../inverters/dto/custom-entity';
 
 export class Battery {
 
@@ -23,9 +24,9 @@ export class Battery {
 		const y = Battery.showOuterBatteryBanks(config) ? 302 : 307;
 		const value = config.battery.auto_scale
 			? `${config.battery.show_absolute
-				? Utils.convertValueNew(Math.abs(data.stateBatteryPower.toNum(data.decimalPlaces)), data.stateBatteryPower.getUOM(), data.decimalPlaces)
-				: Utils.convertValueNew(data.stateBatteryPower.toNum(data.decimalPlaces), data.stateBatteryPower.getUOM(), data.decimalPlaces) || '0'}`
-			: `${data.stateBatteryPower.toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute)} ${UnitOfPower.WATT}`
+				? Utils.convertValueNew(Math.abs(data.batteryBankPowerState[0].toNum(data.decimalPlaces)), data.batteryBankPowerState[0].getUOM(), data.decimalPlaces)
+				: Utils.convertValueNew(data.batteryBankPowerState[0].toNum(data.decimalPlaces), data.batteryBankPowerState[0].getUOM(), data.decimalPlaces) || '0'}`
+			: `${data.batteryBankPowerState[0].toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute)} ${UnitOfPower.WATT}`
 		;
 
 		return svg`
@@ -99,20 +100,19 @@ export class Battery {
 	static generateDuration(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 377.5 : 393.5;
 		const isCharging = config.battery.invert_flow ? data.batteryPower >= 0 : data.batteryPower <= 0;
-		const isNotCharging = config.battery.invert_flow ? data.batteryPower <= 0 : data.batteryPower >= 0;
-		const isFloating = data.isFloating;
-		const isNotFloating = !isFloating;
+		const isFloating = Battery.isFloating(data.stateBatteryCurrent, data.stateBatterySoc);
 		const formattedResult = config.battery?.runtime_in_kwh ? data.formattedResultCapacity : data.formattedResultTime;
+
 		let text = svg``;
 		let isVisible = true;
 		switch (true) {
 			case data.batteryEnergy === 0:
 				isVisible = false;
 				break;
-			case isNotCharging && isNotFloating:
+			case !isCharging && !isFloating:
 				text = svg`${localize('common.run')} ${data.batteryCapacity}% @${formattedResult}`;
 				break;
-			case isCharging && isNotFloating:
+			case isCharging && !isFloating:
 				text = svg`${localize('common.charge')} ${data.batteryCapacity}% @${formattedResult}`;
 				break;
 			case isFloating:
@@ -124,7 +124,7 @@ export class Battery {
 
 		return isVisible ? svg`
 			<text id="duration" x="270" y="${y - 16}" class="${data.largeFont !== true ? 'st14' : 'st4'} left-align"
-		  			fill="${isNotFloating && data.batteryPower !== 0 ? `${data.batteryColour}` : 'transparent'}">
+		  			fill="${!isFloating && data.batteryPower !== 0 ? `${data.batteryColour}` : 'transparent'}">
 				${data.batteryDuration}
 			</text>
 			<text id="duration_text" x="270" y="${y}" class="st3 left-align" fill="${data.batteryColour}">
@@ -335,5 +335,9 @@ export class Battery {
 				${bat}
 			</a>`
 			: bat;
+	}
+
+	static isFloating(stateBatteryCurrent: CustomEntity, stateBatterySoc: CustomEntity) {
+		return stateBatteryCurrent.toNum(2) >= -1.00 && stateBatteryCurrent.toNum(2) <= 1.00 || stateBatterySoc.toNum(0) > 99;
 	}
 }
