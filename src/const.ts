@@ -9,7 +9,7 @@ export const validAuxLoads = [0, 1, 2, 3, 4,5,6];
 export const validGridDisconnected = ['off', '0', 'off-grid', 'off grid', 'offgrid'];
 export const validGridConnected = ['on', '1', 'on-grid', 'on grid', 'ongrid'];
 
-export const EDITOR_NAME = 'mlk-content-card-editor';
+export const EDITOR_NAME = 'mlk-content-editor-card';
 export const MAIN_NAME = 'mlk-power-flow-card';
 
 export const enum SensorDeviceClass {
