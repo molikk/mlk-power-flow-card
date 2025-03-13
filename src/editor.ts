@@ -140,7 +140,12 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this.rewriteConfig(this._config, 'load', 'load_5_4_icon', 'load22_icon');
 			this.rewriteConfig(this._config, 'load', 'load_5_5_icon', 'load23_icon');
 
+			if (this._config['wide']) {
+				this._config['wide_view_mode'] = this._config['wide'];
+			}
 			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
+			console.log("additional_loads_view_mode changed to: " + this._config['load']['additional_loads_view_mode']);
+
 			this._config['schema_version'] = 2;
 
 			fireEvent(this, 'config-changed', { config: this._config });
@@ -149,6 +154,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			console.log('Updating version to schema 3');
 
 			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
+			console.log("additional_loads_view_mode changed to: " + this._config['load']['additional_loads_view_mode']);
 
 			this._config['schema_version'] = 3;
 
@@ -1255,64 +1261,65 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		if (!config.load.additional_loads_view_mode
 			|| config.load.additional_loads_view_mode != AdditionalLoadsViewMode.none
 		) {
-			if (getEntity(config, hass, 'entities.essential_load_6_1')
-				|| getEntity(config, hass, 'entities.essential_load_6_2')
-				|| getEntity(config, hass, 'entities.essential_load_6_3')
-				|| getEntity(config, hass, 'entities.essential_load_6_4')
-				|| getEntity(config, hass, 'entities.essential_load_6_5')
-				|| getEntity(config, hass, 'entities.essential_load_6_6')
+			if (getEntity(config, hass, 'entities.essential_load_6_1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_6_2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_6_3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_6_4')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_6_5')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_6_6')?.isValid()
 			) {
 				return AdditionalLoadsViewMode.col6;
 			}
-			if (getEntity(config, hass, 'entities.essential_load_5_1')
-				|| getEntity(config, hass, 'entities.essential_load_5_2')
-				|| getEntity(config, hass, 'entities.essential_load_5_3')
-				|| getEntity(config, hass, 'entities.essential_load_5_4')
-				|| getEntity(config, hass, 'entities.essential_load_5_5')
-				|| getEntity(config, hass, 'entities.essential_load_5_6')
+			if (getEntity(config, hass, 'entities.essential_load_5_1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_5_2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_5_3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_5_4')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_5_5')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_5_6')?.isValid()
 			) {
 				return AdditionalLoadsViewMode.col5;
 			}
-			if (getEntity(config, hass, 'entities.essential_load_4_1')
-				|| getEntity(config, hass, 'entities.essential_load_4_2')
-				|| getEntity(config, hass, 'entities.essential_load_4_3')
-				|| getEntity(config, hass, 'entities.essential_load_4_4')
-				|| getEntity(config, hass, 'entities.essential_load_4_5')
-				|| getEntity(config, hass, 'entities.essential_load_4_6')
+			if (getEntity(config, hass, 'entities.essential_load_4_1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_4_2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_4_3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_4_4')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_4_5')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_4_6')?.isValid()
 			) {
 				return AdditionalLoadsViewMode.col4;
 			}
-			if (getEntity(config, hass, 'entities.essential_load_3_1')
-				|| getEntity(config, hass, 'entities.essential_load_3_2')
-				|| getEntity(config, hass, 'entities.essential_load_3_3')
-				|| getEntity(config, hass, 'entities.essential_load_3_4')
-				|| getEntity(config, hass, 'entities.essential_load_3_5')
-				|| getEntity(config, hass, 'entities.essential_load_3_6')
+			if (getEntity(config, hass, 'entities.essential_load_3_1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_3_2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_3_3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_3_4')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_3_5')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_3_6')?.isValid()
 			) {
 				return AdditionalLoadsViewMode.col3;
 			}
-			if (getEntity(config, hass, 'entities.essential_load_1_1')
-				|| getEntity(config, hass, 'entities.essential_load_1_2')
-				|| getEntity(config, hass, 'entities.essential_load_1_3')
-				|| getEntity(config, hass, 'entities.essential_load_1_4')
-				|| getEntity(config, hass, 'entities.essential_load_1_5')
-				|| getEntity(config, hass, 'entities.essential_load_1_6')
-				|| getEntity(config, hass, 'entities.essential_load_2_1')
-				|| getEntity(config, hass, 'entities.essential_load_2_2')
-				|| getEntity(config, hass, 'entities.essential_load_2_3')
-				|| getEntity(config, hass, 'entities.essential_load_2_4')
-				|| getEntity(config, hass, 'entities.essential_load_2_5')
-				|| getEntity(config, hass, 'entities.essential_load_2_6')
+			if (getEntity(config, hass, 'entities.essential_load_1_1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_1_2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_1_3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_1_4')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_1_5')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_1_6')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_2_1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_2_2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_2_3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_2_4')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_2_5')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load_2_6')?.isValid()
 			) {
 				return AdditionalLoadsViewMode.col2;
 			}
-			if (getEntity(config, hass, 'entities.essential_load1')
-				|| getEntity(config, hass, 'entities.essential_load2')
-				|| getEntity(config, hass, 'entities.essential_load3')
-				|| getEntity(config, hass, 'entities.essential_load4')
+			if (getEntity(config, hass, 'entities.essential_load1')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load2')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load3')?.isValid()
+				|| getEntity(config, hass, 'entities.essential_load4')?.isValid()
 			) {
 				return AdditionalLoadsViewMode.old;
 			}
+			return AdditionalLoadsViewMode.none;
 		}
 		return config.load.additional_loads_view_mode;
 	}
