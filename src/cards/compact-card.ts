@@ -25,7 +25,7 @@ function calculateWidth(config: PowerFlowCardConfig) {
 			case  (config.load.show_aux && config.load.aux_loads >= 3 || EssentialLoad.isColumnDisplayable(config, 3)) :
 				return 552;
 			default:
-				return 495;
+				return 505;
 		}
 	};
 	return getWidth();
