@@ -31,7 +31,7 @@ export class BatteryBank {
 			${result}
 			${this.getInnerBatteryBankDetails(
 				i + 1, banks, config,
-				data.batteryBankPowerState[i],
+				data.batteryBankPowerState[i+1],
 				data.batteryBankVoltageState[i],
 				data.batteryBankCurrentState[i],
 				data.batteryBankDeltaState[i],
@@ -59,7 +59,7 @@ export class BatteryBank {
 			${result}
 			${this.getOuterBatteryBankDetails(
 				i + 1, banks, data, config,
-				data.batteryBankPowerState[i],
+				data.batteryBankPowerState[i+1],
 				data.batteryBankVoltageState[i],
 				data.batteryBankCurrentState[i],
 				data.batteryBankTempState[i],
