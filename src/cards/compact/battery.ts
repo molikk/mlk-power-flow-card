@@ -110,10 +110,10 @@ export class Battery {
 				isVisible = false;
 				break;
 			case !isCharging && !isFloating:
-				text = svg`${localize('common.run')} ${data.batteryCapacity}% @${formattedResult}`;
+				text = svg`${localize('common.run')} ${data.batteryCapacity}% <a href="#" @click=${() => Battery.handleCapacityClick( config, config.battery?.runtime_in_kwh)}>@${formattedResult}</a>`;
 				break;
 			case isCharging && !isFloating:
-				text = svg`${localize('common.charge')} ${data.batteryCapacity}% @${formattedResult}`;
+				text = svg`${localize('common.charge')} ${data.batteryCapacity}% <a href="#" @click=${() => Battery.handleCapacityClick( config, config.battery?.runtime_in_kwh)}>@${formattedResult}</a>`;
 				break;
 			case isFloating:
 				text = svg`${localize('common.battery_floating')}`;
@@ -131,6 +131,10 @@ export class Battery {
 				${text}
 			</text>
 		` : svg``;
+	}
+
+	static handleCapacityClick(config, state: boolean) {
+		config.battery.runtime_in_kwh = !state;
 	}
 
 	static generateDailyCharge(data: DataDto, config: PowerFlowCardConfig) {
