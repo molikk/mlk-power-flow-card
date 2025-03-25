@@ -174,7 +174,7 @@ export class Utils {
 		if (event.target != null) {
 			event.target.dispatchEvent(moreInfoEvent);
 		} else {
-			console.log('Event.target is null: ', event);
+			console.warn('Event.target is null: ', event);
 		}
 
 		const closePopup = () => {
