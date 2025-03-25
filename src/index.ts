@@ -45,6 +45,7 @@ export class PowerFlowCard extends LitElement {
 	private durationPrev: { [name: string]: number } = {};
 	private durationCur: { [name: string]: number } = {};
 	private lastRenderTime: number;
+	private lastRenderLoopTime: number;
 	private renderInterval: number;
 	private rafId: number;
 
@@ -52,6 +53,7 @@ export class PowerFlowCard extends LitElement {
 		super();
 		this.rafId = 0;
 		this.lastRenderTime = 0;
+		this.lastRenderLoopTime = 0;
 		this.renderInterval = this._config?.low_resources?.refresh_interval || 500; // 100ms for 10Hz
 	}
 
@@ -67,9 +69,9 @@ export class PowerFlowCard extends LitElement {
 
 	startRenderLoop() {
 		const renderLoop = (timestamp: DOMHighResTimeStamp) => {
-			if (timestamp - this.lastRenderTime >= this.renderInterval) {
+			if (timestamp - this.lastRenderLoopTime >= this.renderInterval) {
 				this.requestUpdate();
-				this.lastRenderTime = timestamp;
+				this.lastRenderLoopTime = timestamp;
 
 				/*const elem = this.shadowRoot?.getElementById('aux_load_power-1');
 				if (elem != null)
