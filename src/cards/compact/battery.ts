@@ -104,16 +104,19 @@ export class Battery {
 		const formattedResult = config.battery?.runtime_in_kwh ? data.formattedResultCapacity : data.formattedResultTime;
 
 		let text = svg``;
+		let link = svg``;
 		let isVisible = true;
 		switch (true) {
 			case data.batteryEnergy === 0:
 				isVisible = false;
 				break;
 			case !isCharging && !isFloating:
-				text = svg`${localize('common.run')} ${data.batteryCapacity}% <a href="#" @click=${() => Battery.handleCapacityClick( config, config.battery?.runtime_in_kwh)}>@${formattedResult}</a>`;
+				text = svg`${localize('common.run')} ${data.batteryCapacity}%`;
+				link =  svg `@${formattedResult}`
 				break;
 			case isCharging && !isFloating:
-				text = svg`${localize('common.charge')} ${data.batteryCapacity}% <a href="#" @click=${() => Battery.handleCapacityClick( config, config.battery?.runtime_in_kwh)}>@${formattedResult}</a>`;
+				text = svg`${localize('common.charge')} ${data.batteryCapacity}%`;
+				link =  svg `@${formattedResult}`
 				break;
 			case isFloating:
 				text = svg`${localize('common.battery_floating')}`;
@@ -129,6 +132,11 @@ export class Battery {
 			</text>
 			<text id="duration_text" x="270" y="${y}" class="st3 left-align" fill="${data.batteryColour}">
 				${text}
+				<tspan id="duration_link" class="st3 left-align" fill="${data.batteryColour}">
+				 	<a href="#" @click=${() => Battery.handleCapacityClick(config, config.battery?.runtime_in_kwh)} fill="${data.batteryColour}">
+						${link}
+					</a>
+				</tspan>
 			</text>
 		` : svg``;
 	}
