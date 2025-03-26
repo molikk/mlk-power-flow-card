@@ -253,12 +253,12 @@ These attributes are only needed if `show_solar` is set to `true`
 
 ### Solar: PV5 Entities
 
-| Attribute        | Default | Description                    |
-|------------------|---------|--------------------------------|
-| pv5_power:       |         | PV string 5 power (W)          |
-| pv5_production:  |         | PV string 5 daily energy (kWh) |
-| pv5_voltage_115: |         | PV string 5 voltage (V)        |
-| pv5_current_116: |         | PV string 5 current (A)        |
+| Attribute       | Default | Description                    |
+|-----------------|---------|--------------------------------|
+| pv5_power:      |         | PV string 5 power (W)          |
+| pv5_production: |         | PV string 5 daily energy (kWh) |
+| pv5_voltage:    |         | PV string 5 voltage (V)        |
+| pv5_current:    |         | PV string 5 current (A)        |
 
 ### Solar: Optional entities
 
