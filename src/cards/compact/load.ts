@@ -138,11 +138,9 @@ export class Load {
 	}
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {
-
 		const grid = svg`
-			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${data.essIconSize === 1 ? this.LOAD_X + 5 : this.LOAD_X + 2}"
-				 y="${data.essIconSize === 1 ? '186' : '177.5'}" width="${data.essIconSize === 1 ? '75' : '79'}"
-				 height="${data.essIconSize === 1 ? '75' : '79'}"
+			<svg xmlns="http://www.w3.org/2000/svg" id="essen" x="${this.LOAD_X + 2}"
+				 y="177.5" width="79" height="79"
 				 viewBox="0 0 24 24">
 				<defs>
 					<linearGradient id="Lg-${data.timestamp_id}" x1="0%" x2="0%" y1="100%" y2="0%">
@@ -163,10 +161,31 @@ export class Load {
 				<path fill="${config.load.dynamic_colour ? `url(#Lg-${data.timestamp_id})` : data.loadColour}" d="${data.essIcon}"/>
 			</svg>
 		`;
+
+		let extra2Indicator = svg``;
+		if (config.adv_options?.loads_extra_2_enabled) {
+			let x = this.LOAD_X + 2 + 14;
+			let y = 177.5 + 13.5;
+			let circle = data.essIconSize !== 1 && config.adv_options?.loads_extra_2_circle ? svg`	<circle cx="${x}" cy="${y}" r="7" fill="none" stroke-width="1" stroke="${data.loadColour}" /` : svg``;
+			let color = data.essIconSize === 1 ? 'black' : data.loadColour;
+
+			extra2Indicator = svg`
+				<a href="#" @click=${() => Utils.handleModeSwitch(config, 'load_extra_2', config.adv_options?.loads_extra_2)}>
+				${circle}>
+					<text x="${x}" y="${y + 1}" text-anchor="middle" alignment-baseline="middle" stroke="${color}" class="st15">${config.adv_options.loads_extra_2 ? 'I I' : 'I'}</text>
+				</a>
+			`;
+		}
+
 		return config.load?.navigate ?
 			svg`<a href="#" @click=${(e: Event) => Utils.handleNavigation(e, config.load.navigate)}>
 					${grid}
-				</a>`
-			: grid;
+				</a>
+				${extra2Indicator}
+				`
+			: svg`
+				${grid}
+				${extra2Indicator}
+			`;
 	}
 }

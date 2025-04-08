@@ -1,5 +1,6 @@
 import { UnitOfEnergy, unitOfEnergyConversionRules, UnitOfEnergyOrPower, UnitOfPower } from '../const';
 import { navigate } from 'custom-card-helpers';
+import { PowerFlowCardConfig } from '../types';
 
 export class Utils {
 	static toNum(val: string | number, decimals: number = -1, invert: boolean = false, abs: boolean = false): number {
@@ -200,6 +201,18 @@ export class Utils {
 			navigate(event.target, navigationPath); // Assuming 'navigate' is a function available in your environment
 		} else {
 			console.warn('Navigation path is not provided.');
+		}
+	}
+
+	static handleModeSwitch(config: PowerFlowCardConfig, mode: string, state: boolean) {
+		switch (mode) {
+			case 'load_extra_2':
+				config.adv_options.loads_extra_2 = !state;
+
+				console.warn('Changing load_extra_2 state mode to: ' + !state);
+				break;
+			default:
+				console.warn('Unknown mode switch');
 		}
 	}
 }

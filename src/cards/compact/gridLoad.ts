@@ -11,13 +11,13 @@ export class GridLoad {
 	private static getPositions(no: number, max: number): number {
 		switch (max) {
 			case 1:
-				return 86;
+				return 92;
 			case 2:
 				switch (no) {
 					case 1:
-						return 43;
+						return 46;
 					case 2:
-						return 86;
+						return 92;
 				}
 				break;
 			case 3:
@@ -25,9 +25,9 @@ export class GridLoad {
 					case 1:
 						return 0;
 					case 2:
-						return 43;
+						return 46;
 					case 3:
-						return 86;
+						return 92;
 				}
 				break;
 			case 4:
@@ -36,9 +36,9 @@ export class GridLoad {
 						return 0;
 					case 2:
 					case 4:
-						return 43;
+						return 46;
 					case 3:
-						return 86;
+						return 92;
 				}
 				break;
 			case 5:
@@ -49,10 +49,10 @@ export class GridLoad {
 						return 0;
 					case 2:
 					case 5:
-						return 43;
+						return 46;
 					case 3:
 					case 6:
-						return 86;
+						return 92;
 				}
 				break;
 		}
@@ -70,7 +70,7 @@ export class GridLoad {
 				data.nonEssentialLoadDynamicColour[id],
 				GridLoad.nonessentialLoadName(config)[id],
 				data.nonessentialLoadState[id],
-				data.nonEssentialLoadExtraState[id],
+				LoadUtils.extraMode2(config) ? data.nonEssentialLoadExtra2State[id] : data.nonEssentialLoadExtraState[id],
 				data.nonEssentialLoadToggleState[id],
 				config.grid.auto_scale, data.decimalPlaces,
 				X, row, [11, 0, 20.5],
@@ -94,9 +94,9 @@ export class GridLoad {
 			case 1:
 				switch (max) {
 					case 1:
-						return `M 109 328L 109 333`;
+						return `M 112 328L 112 333`;
 					case 2:
-						return `M 66 328 L 66 333`;
+						return `M 67 328 L 67 333`;
 					case 3:
 					case 4:
 					case 5:
@@ -107,16 +107,16 @@ export class GridLoad {
 			case 2:
 				switch (max) {
 					case 2:
-						return `M 109 328L 109 333`;
+						return `M 112 328L 112 333`;
 					case 3:
 					case 4:
 					case 5:
 					case 6:
-						return `M 66 328 L 66 333`;
+						return `M 67 328 L 67 333`;
 				}
 				break;
 			case 3:
-				return `M 109 328L 109 333`;
+				return `M 112 328L 112 333`;
 		}
 		return ``;
 	}
@@ -163,9 +163,9 @@ export class GridLoad {
 		const startX: number = (() => {
 			switch (config.grid.additional_loads) {
 				case 1:
-					return 109;
+					return 112;
 				case 2:
-					return 66;
+					return 67;
 				case 3:
 				case 4:
 				case 5:
@@ -177,14 +177,14 @@ export class GridLoad {
 		})();
 
 		const line1 = `M ${startX} 328 L 135 328 Q 140 328 140 323 L 140 320`;
-		const line2 = "M 140 290 L 140 234";
+		const line2 = 'M 140 290 L 140 234';
 
 		const circle2 = this.getCircle(config.grid.show_nonessential && data.nonessentialPower > 0 && config.low_resources.animations, 'nes-dot2', data, config, '#nes-line2');
 
 		const flowLine1 = this.getFlowLine(config.grid.additional_loads > 0, 'nes-flow1', 'nes-line1', line1, data, svg``);
-		const flowLine2 =  this.getFlowLine(true, 'nes-flow2', 'nes-line2', line2, data, circle2);
+		const flowLine2 = this.getFlowLine(true, 'nes-flow2', 'nes-line2', line2, data, circle2);
 
-		return svg `
+		return svg`
 			${flowLine1}
 			${flowLine2}
 			`;
@@ -203,7 +203,7 @@ export class GridLoad {
 			</circle>` : svg``;
 	}
 
-	private static getFlowLine(condition: boolean, flowId: string, lineId:string,line: string, data: DataDto, circle: TemplateResult<2>) {
+	private static getFlowLine(condition: boolean, flowId: string, lineId: string, line: string, data: DataDto, circle: TemplateResult<2>) {
 		return condition ? svg`
 			<svg id="${flowId}" style="overflow: visible">
 				<path id="${lineId}" d="${line}" fill="none" stroke="${data.nonEssentialLoadMainDynamicColour}"
@@ -243,7 +243,7 @@ export class GridLoad {
 	static generateDailyLoad(data: DataDto, config: PowerFlowCardConfig) {
 		if (config.grid?.show_nonessential_daily) {
 			return svg`
-				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, data.stateNonessentialDailyEnergy?.entity_id)}>
+				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateNonessentialDailyEnergy?.entity_id)}>
 				    <text id="nes_daily_load_value" class="st10 right-align" 
 				        x="85" y="302" 
 				        display="${data.stateNonessentialDailyEnergy.isValid() ? '' : 'none'}"

@@ -51,7 +51,7 @@ export class BatteryBank {
 		}
 		const banks = config.battery.battery_banks;
 		const width = 40,
-			startX = 195 - (width + 3) * (banks > 4 ? banks - 4 : 0);
+			startX = 198 - (width + 3) * (banks > 4 ? banks - 4 : 0);
 
 		let result = svg`${this.generateOuterTitle(config.battery.battery_banks, startX + 5, data.batteryColour)}`;
 		for (let i = 0; i < config.battery.battery_banks; i++)

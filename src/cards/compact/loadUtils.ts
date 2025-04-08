@@ -4,6 +4,7 @@ import { Utils } from '../../helpers/utils';
 import { localize } from '../../localize/localize';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfFrequency, UnitOfPower } from '../../const';
 import { Load } from './load';
+import { PowerFlowCardConfig } from '../../types';
 
 export class LoadUtils {
 
@@ -145,6 +146,10 @@ export class LoadUtils {
 			loadAutoScale, decimalPlaces,
 			column, mainY, xGaps, yGaps,
 		);
+	}
+
+	static extraMode2(config: PowerFlowCardConfig){
+		return config.adv_options?.loads_extra_2_enabled && config.adv_options?.loads_extra_2
 	}
 
 	static generateGridLoad(

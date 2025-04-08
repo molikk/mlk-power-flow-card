@@ -32,24 +32,25 @@ The card can be configured through the following attributes:
 
 ## General
 
-| Editor name (en)              | Attribute                          | Default | Description                                                                                                                                                                                               |
-|-------------------------------|------------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Large Font                    | large_font:                        | `false` | Increases font size of sensor data                                                                                                                                                                        |
-| Wide View                     | wide_view_mode:                    | `false` | Toggles panel mode setting card width to `720px`. For use with Panel(1 card) view types or grid layouts                                                                                                   |
-| Card Height (px or %)         | card_height:                       | `100%`  | Sets the card height in pixels or percentage. Specify the value i.e. `400px` or provide a sensor i.e. `input.number_height`                                                                               |
-| Card Width (px or %)          | card_width:                        | `100%`  | Sets the card width in pixels or percentage. Specify the value i.e. `400px`, `80%` or provide a sensor i.e. `input.number_width`. For adjustments when using the Panel(1 card) view types or grid layouts |
-| Show Solar                    | show_solar:                        | `true`  | Toggle display of solar information                                                                                                                                                                       |
-| Show Battery                  | show_battery:                      | `true`  | Toggle display of battery information                                                                                                                                                                     |
-| Show Grid                     | show_grid:                         | `true`  | Toggle display of grid information                                                                                                                                                                        |
-| Align grid to left            | align_grid:                        | `false` | Aligns grid group to left side of viewbox. Use with [Viewbox:min-x](#general-viewbox)                                                                                                                     |
-| Align load to right           | align_load:                        | `false` | Aligns load and AUX group to right side of viewbox. Use with `wide_view_mod` and [Viewbox:width](#general-viewbox)                                                                                        |
-| Dynamic Line Width            | dynamic_line_width:                | `false` | Adjusts the width of the lines and animated dot based on the ratio of current power to `max_power` (defined in each section below). Requires `max_power` to be explicitly defined                         |
-| Max Line Width                | max_line_width:                    | `4`     | Sets the maximum line width when `dynamic_line_width: true`. If you prefer thick lines set a larger value. Reduce this value for a more subtle scaling affect. Values greater the `8` are ignored         |
-| Min Line Width                | min_line_width:                    | `1`     | Sets the minimum or default line width on the card. Values greater the `8` are ignored                                                                                                                    |
-| Decimal Places                | decimal_places:                    | `2`     | Sets the number of decimal places to display when using the `auto_scale` option.                                                                                                                          |
-| Decimal Places (Daily Energy) | decimal_places_energy:             | `1`     | Sets the number of decimal places to display for the daily energy values.                                                                                                                                 |
-| Adv. ViewBox Options          | [Sub-menu](#general-viewbox)       |         | Shows sub-menu with Advanced ViewBox options details. **Use with cautious!** Check [link](https://svgwg.org/svg2-draft/coords.html#ViewBoxAttribute) for more information.                                |
-| Low resources Options         | [Sub-menu](#general-low-resources) |         | shows sub-menu with Low resource devices options details. **Use with cautious!**                                                                                                                          |
+| Editor name (en)              | Attribute                             | Default | Description                                                                                                                                                                                               |
+|-------------------------------|---------------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Large Font                    | large_font:                           | `false` | Increases font size of sensor data                                                                                                                                                                        |
+| Wide View                     | wide_view_mode:                       | `false` | Toggles panel mode setting card width to `720px`. For use with Panel(1 card) view types or grid layouts                                                                                                   |
+| Card Height (px or %)         | card_height:                          | `100%`  | Sets the card height in pixels or percentage. Specify the value i.e. `400px` or provide a sensor i.e. `input.number_height`                                                                               |
+| Card Width (px or %)          | card_width:                           | `100%`  | Sets the card width in pixels or percentage. Specify the value i.e. `400px`, `80%` or provide a sensor i.e. `input.number_width`. For adjustments when using the Panel(1 card) view types or grid layouts |
+| Show Solar                    | show_solar:                           | `true`  | Toggle display of solar information                                                                                                                                                                       |
+| Show Battery                  | show_battery:                         | `true`  | Toggle display of battery information                                                                                                                                                                     |
+| Show Grid                     | show_grid:                            | `true`  | Toggle display of grid information                                                                                                                                                                        |
+| Align grid to left            | align_grid:                           | `false` | Aligns grid group to left side of viewbox. Use with [Viewbox:min-x](#general-viewbox)                                                                                                                     |
+| Align load to right           | align_load:                           | `false` | Aligns load and AUX group to right side of viewbox. Use with `wide_view_mod` and [Viewbox:width](#general-viewbox)                                                                                        |
+| Dynamic Line Width            | dynamic_line_width:                   | `false` | Adjusts the width of the lines and animated dot based on the ratio of current power to `max_power` (defined in each section below). Requires `max_power` to be explicitly defined                         |
+| Max Line Width                | max_line_width:                       | `4`     | Sets the maximum line width when `dynamic_line_width: true`. If you prefer thick lines set a larger value. Reduce this value for a more subtle scaling affect. Values greater the `8` are ignored         |
+| Min Line Width                | min_line_width:                       | `1`     | Sets the minimum or default line width on the card. Values greater the `8` are ignored                                                                                                                    |
+| Decimal Places                | decimal_places:                       | `2`     | Sets the number of decimal places to display when using the `auto_scale` option.                                                                                                                          |
+| Decimal Places (Daily Energy) | decimal_places_energy:                | `1`     | Sets the number of decimal places to display for the daily energy values.                                                                                                                                 |
+| Adv. ViewBox Options          | [Sub-menu](#general-viewbox)          |         | Shows sub-menu with Advanced ViewBox options details. **Use with cautious!** Check [link](https://svgwg.org/svg2-draft/coords.html#ViewBoxAttribute) for more information.                                |
+| Low resources Options         | [Sub-menu](#general-low-resources)    |         | shows sub-menu with Low resource devices options details. **Use with cautious!**                                                                                                                          |
+| Advanced Options              | [Sub-menu](#general-advanced-options) |         | shows sub-menu with Advanced options details. **Use with cautious!**                                                                                                                                      |
 
 ### General: ViewBox
 
@@ -79,6 +80,14 @@ The card can be configured through the following attributes:
 
 Note: values of refresh rates aren't 100% accurate and depends on browser/app and device load. Value means highest Refresh Rate possible and might be lower when
 device is in high CPU load.
+
+### General: Advanced Options
+
+| Editor name (en)         | Attribute             | Default | Description                                             |
+|--------------------------|-----------------------|---------|---------------------------------------------------------|
+| Enable Loads Extra 2     | loads_extra_2_enabled |         | Enables switch to Extra 2 mode                          |
+| Extra 2 as Default       | loads_extra_2         |         | If sets to `true` sets Extra 2 mode as default          |
+| Show Extra Switch Circle | loads_extra_2_circle  |         | If sets to `true` shows circle around Extra mode switch |
 
 ## Inverter
 
@@ -457,11 +466,12 @@ Note3: items `1-3` and `2-3` doesn't exist
 
 ### Additional Load: Column X Entities
 
-| Attribute                  | Default | Description                                                                                                                                                                                                           |
-|----------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| essential_load_X_Y:        |         | Sensor that contains the power of your essential load column X row Y (W). Can also be used to display any sensor data i.e. temp, energy etc if `auto_scale: false`. If not present toggle state will be used instead. |
-| essential_load_X_Y_extra:  |         | Sensor that contains additional information you want displayed for your essential load column X row Y e.g. Daily kWh, Temperature etc                                                                                 |
-| essential_load_X_Y_toggle: |         | Sensor that contains link to entity that will show up when essential load column X row Y icon clicked                                                                                                                 |
+| Attribute                  | Default | Description                                                                                                                                                                                                               |
+|----------------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| essential_load_X_Y:        |         | Sensor that contains the power of your essential load column X row Y (W). Can also be used to display any sensor data i.e. temp, energy etc if `auto_scale: false`. If not present toggle state will be used instead.     |
+| essential_load_X_Y_extra:  |         | Sensor that contains additional information you want displayed for your essential load column X row Y e.g. Daily kWh, Temperature etc                                                                                     |
+| essential_load_X_Y_extra2: |         | Sensor that contains additional information you want displayed for your essential load column X row Y e.g. Daily kWh, Temperature etc. Visible only when `Advanced Options` -> `Enable Loads Extra Mode Switch` is `true` |
+| essential_load_X_Y_toggle: |         | Sensor that contains link to entity that will show up when essential load column X row Y icon clicked                                                                                                                     |
 
 Note: `X` stands for column, values `1` to `6`;
 Note2: `Y` stands for row, values `1` to `6`
@@ -509,11 +519,12 @@ Note: `X` stands for item id/column, values `1` to `6`;
 
 ### Aux Load: Item Entities
 
-| Attribute         | Default | Description                                                                                                         |
-|-------------------|---------|---------------------------------------------------------------------------------------------------------------------|
-| aux_loadX:        |         | Sensor that contains the power of your AUX load X (W)                                                               |
-| aux_loadX_extra:  |         | Sensor that contains additional information you want displayed for your aux load X e.g. Daily kWh, Temperature etc. |
-| aux_loadX_toggle: |         | Sensor that contains link to entity that will show up when aux load X icon clicked                                  |
+| Attribute         | Default | Description                                                                                                                                                                                            |
+|-------------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| aux_loadX:        |         | Sensor that contains the power of your AUX load X (W)                                                                                                                                                  |
+| aux_loadX_extra:  |         | Sensor that contains additional information you want displayed for your aux load X e.g. Daily kWh, Temperature etc.                                                                                    |
+| aux_loadX_extra2: |         | Sensor that contains additional information you want displayed for your aux load X e.g. Daily kWh, Temperature etc. Visible only when `Advanced Options` -> `Enable Loads Extra Mode Switch` is `true` |
+| aux_loadX_toggle: |         | Sensor that contains link to entity that will show up when aux load X icon clicked                                                                                                                     |
 
 Note: `X` stands for item id/column, values `1` to `6`;
 
@@ -614,11 +625,12 @@ Note2: for Row 2: `X` stands for item id/column, values `4` to `6`;
 
 ### Grid Load: Row 2 Entities
 
-| Attribute                   | Default | Description                                                                                                                 |
-|-----------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
-| non_essential_loadX:        |         | Sensor that contains the power of your non-essential load X (W). If not present toggle state will be used instead.          |
-| non_essential_loadX_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load X e.g. Daily kWh, Temperature etc |
-| non_essential_loadX_toggle: |         | Sensor that contains link to entity that will show up when nonessential load X icon clicked                                 |
+| Attribute                   | Default | Description                                                                                                                                                                                                     |
+|-----------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| non_essential_loadX:        |         | Sensor that contains the power of your non-essential load X (W). If not present toggle state will be used instead.                                                                                              |
+| non_essential_loadX_extra:  |         | Sensor that contains additional information you want displayed for your nonessential load X e.g. Daily kWh, Temperature etc                                                                                     |
+| non_essential_loadX_extra2: |         | Sensor that contains additional information you want displayed for your nonessential load X e.g. Daily kWh, Temperature etc. Visible only when `Advanced Options` -> `Enable Loads Extra Mode Switch` is `true` |
+| non_essential_loadX_toggle: |         | Sensor that contains link to entity that will show up when nonessential load X icon clicked                                                                                                                     |
 
 Note: for Row 1: `X` stands for item id/column, values `1` to `3`;
 Note2: for Row 2: `X` stands for item id/column, values `4` to `6`;
