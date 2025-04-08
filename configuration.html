@@ -1,0 +1,2861 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; mlk-power-flow-card  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sunsynk Inverter" href="examples/sunsynk.html" />
+    <link rel="prev" title="Power FlowCard by Molikk" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Configuration</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/sunsynk.html">Sunsynk Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/foxess.html">FoxESS Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/goodwe.html">Goodwe Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/huawei.html">Huawei Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/lux.html">Lux Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/powmr.html">PowMr Inverters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/solax.html">SolaX Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/solis.html">Solis Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/victron.html">Victron Inverters</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribute</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute/bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/devcontainer.html">VS Code - DevContainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/devcycle.html">Development Cycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/docs.html">Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mlk-power-flow-card</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<p>The card can be configured through the following attributes:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p></p></td>
+<td><p>type:</p></td>
+<td><p><strong>Required</strong> <code class="docutils literal notranslate"><span class="pre">custom:mlk-power-flow-card</span></code></p></td>
+<td><p>The custom card</p></td>
+</tr>
+<tr class="row-odd"><td><p>Title Options</p></td>
+<td><p>title:</p></td>
+<td><p>See <a class="reference internal" href="#title"><span class="std std-ref">Title</span></a> attributes below</p></td>
+<td><p>List of title attributes.</p></td>
+</tr>
+<tr class="row-even"><td><p>General Options</p></td>
+<td><p>general:</p></td>
+<td><p>See <a class="reference internal" href="#general"><span class="std std-ref">General</span></a> attributes below</p></td>
+<td><p>List of general attributes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Inverter Options</p></td>
+<td><p>inverter:</p></td>
+<td><p>See <a class="reference internal" href="#inverter"><span class="std std-ref">Inverter</span></a> attributes below</p></td>
+<td><p>List of inverter attributes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Solar Options</p></td>
+<td><p>solar:</p></td>
+<td><p>See <a class="reference internal" href="#solar"><span class="std std-ref">Solar</span></a> attributes below</p></td>
+<td><p>List of solar attributes. Required if <code class="docutils literal notranslate"><span class="pre">show_solar:</span> <span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery Options</p></td>
+<td><p>battery:</p></td>
+<td><p>See <a class="reference internal" href="#battery"><span class="std std-ref">Battery</span></a> attributes below</p></td>
+<td><p>List of battery attributes. Required if <code class="docutils literal notranslate"><span class="pre">show_battery:</span> <span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Battery Bank Options</p></td>
+<td><p>(part of battery:)</p></td>
+<td><p>See <a class="reference internal" href="#battery-banks"><span class="xref myst">Battery Banks</span></a> attributes below</p></td>
+<td><p>List of battery bank attributes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load Options</p></td>
+<td><p>load:</p></td>
+<td><p>See <a class="reference internal" href="#load"><span class="std std-ref">Load</span></a> attributes below</p></td>
+<td><p>List of load attributes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Additional Load Options</p></td>
+<td><p>(part of load:)</p></td>
+<td><p>See <a class="reference internal" href="#additional-load"><span class="xref myst">Additional Load</span></a> attributes below</p></td>
+<td><p>List of auxiliary load attributes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aux Load Options</p></td>
+<td><p>(part of load:)</p></td>
+<td><p>See <a class="reference internal" href="#aux-load"><span class="xref myst">Aux Load</span></a> attributes below</p></td>
+<td><p>List of auxiliary load attributes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Grid Options</p></td>
+<td><p>grid:</p></td>
+<td><p>See <a class="reference internal" href="#grid"><span class="std std-ref">Grid</span></a> attributes below</p></td>
+<td><p>List of grid attributes. Required if <code class="docutils literal notranslate"><span class="pre">show_grid:</span> <span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Grid Load Options</p></td>
+<td><p>(part of grid:)</p></td>
+<td><p>See <a class="reference internal" href="#grid-load"><span class="xref myst">Grid Load</span></a> attributes below</p></td>
+<td><p>List of grid loads attributes.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="title">
+<h2>Title<a class="headerlink" href="#title" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Title</p></td>
+<td><p>title:</p></td>
+<td><p></p></td>
+<td><p>Set the card title i.e. Inverter One</p></td>
+</tr>
+<tr class="row-odd"><td><p>Title Colour</p></td>
+<td><p>title_colour:</p></td>
+<td><p></p></td>
+<td><p>Sets the colour of the card title. (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-even"><td><p>Title Size (px)</p></td>
+<td><p>title_size:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">32px</span></code></p></td>
+<td><p>Set the font size for the card title i.e. <code class="docutils literal notranslate"><span class="pre">16px</span></code>, <code class="docutils literal notranslate"><span class="pre">24px</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="general">
+<h2>General<a class="headerlink" href="#general" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Large Font</p></td>
+<td><p>large_font:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Increases font size of sensor data</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wide View</p></td>
+<td><p>wide_view_mode:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles panel mode setting card width to <code class="docutils literal notranslate"><span class="pre">720px</span></code>. For use with Panel(1 card) view types or grid layouts</p></td>
+</tr>
+<tr class="row-even"><td><p>Card Height (px or %)</p></td>
+<td><p>card_height:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100%</span></code></p></td>
+<td><p>Sets the card height in pixels or percentage. Specify the value i.e. <code class="docutils literal notranslate"><span class="pre">400px</span></code> or provide a sensor i.e. <code class="docutils literal notranslate"><span class="pre">input.number_height</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Card Width (px or %)</p></td>
+<td><p>card_width:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100%</span></code></p></td>
+<td><p>Sets the card width in pixels or percentage. Specify the value i.e. <code class="docutils literal notranslate"><span class="pre">400px</span></code>, <code class="docutils literal notranslate"><span class="pre">80%</span></code> or provide a sensor i.e. <code class="docutils literal notranslate"><span class="pre">input.number_width</span></code>. For adjustments when using the Panel(1 card) view types or grid layouts</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Solar</p></td>
+<td><p>show_solar:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Toggle display of solar information</p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Battery</p></td>
+<td><p>show_battery:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Toggle display of battery information</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Grid</p></td>
+<td><p>show_grid:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Toggle display of grid information</p></td>
+</tr>
+<tr class="row-odd"><td><p>Align grid to left</p></td>
+<td><p>align_grid:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Aligns grid group to left side of viewbox. Use with <a class="reference internal" href="#general-viewbox"><span class="xref myst">Viewbox:min-x</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Align load to right</p></td>
+<td><p>align_load:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Aligns load and AUX group to right side of viewbox. Use with <code class="docutils literal notranslate"><span class="pre">wide_view_mod</span></code> and <a class="reference internal" href="#general-viewbox"><span class="xref myst">Viewbox:width</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Dynamic Line Width</p></td>
+<td><p>dynamic_line_width:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Adjusts the width of the lines and animated dot based on the ratio of current power to <code class="docutils literal notranslate"><span class="pre">max_power</span></code> (defined in each section below). Requires <code class="docutils literal notranslate"><span class="pre">max_power</span></code> to be explicitly defined</p></td>
+</tr>
+<tr class="row-even"><td><p>Max Line Width</p></td>
+<td><p>max_line_width:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code></p></td>
+<td><p>Sets the maximum line width when <code class="docutils literal notranslate"><span class="pre">dynamic_line_width:</span> <span class="pre">true</span></code>. If you prefer thick lines set a larger value. Reduce this value for a more subtle scaling affect. Values greater the <code class="docutils literal notranslate"><span class="pre">8</span></code> are ignored</p></td>
+</tr>
+<tr class="row-odd"><td><p>Min Line Width</p></td>
+<td><p>min_line_width:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Sets the minimum or default line width on the card. Values greater the <code class="docutils literal notranslate"><span class="pre">8</span></code> are ignored</p></td>
+</tr>
+<tr class="row-even"><td><p>Decimal Places</p></td>
+<td><p>decimal_places:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Sets the number of decimal places to display when using the <code class="docutils literal notranslate"><span class="pre">auto_scale</span></code> option.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Decimal Places (Daily Energy)</p></td>
+<td><p>decimal_places_energy:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Sets the number of decimal places to display for the daily energy values.</p></td>
+</tr>
+<tr class="row-even"><td><p>Adv. ViewBox Options</p></td>
+<td><p><a class="reference internal" href="#general-viewbox"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Advanced ViewBox options details. <strong>Use with cautious!</strong> Check <a class="reference external" href="https://svgwg.org/svg2-draft/coords.html#ViewBoxAttribute">link</a> for more information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Low resources Options</p></td>
+<td><p><a class="reference internal" href="#general-low-resources"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>shows sub-menu with Low resource devices options details. <strong>Use with cautious!</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Advanced Options</p></td>
+<td><p><a class="reference internal" href="#general-advanced-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>shows sub-menu with Advanced options details. <strong>Use with cautious!</strong></p></td>
+</tr>
+</tbody>
+</table>
+<section id="general-viewbox">
+<h3>General: ViewBox<a class="headerlink" href="#general-viewbox" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>min-x</p></td>
+<td><p>viewbox_min_x</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>ViewBox min-x.</p></td>
+</tr>
+<tr class="row-odd"><td><p>min-y</p></td>
+<td><p>viewbox_min_y</p></td>
+<td><p></p></td>
+<td><p>ViewBox min-y (if not given, value depends on show_solar, show_battery, additional_loads &amp; aux_loads values)</p></td>
+</tr>
+<tr class="row-even"><td><p>width</p></td>
+<td><p>viewbox_width</p></td>
+<td><p></p></td>
+<td><p>ViewBox width (if not given, value depends on number of aux and essential loads)</p></td>
+</tr>
+<tr class="row-odd"><td><p>height</p></td>
+<td><p>viewbox_height</p></td>
+<td><p></p></td>
+<td><p>ViewBox height (if not given, value depends on show_solar, show_battery, additional_loads &amp; aux_loads values)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="general-low-resources">
+<h3>General: Low Resources<a class="headerlink" href="#general-low-resources" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Refresh Interval</p></td>
+<td><p>refresh_interval</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">500</span></code></p></td>
+<td><p>Sets data and view refresh interval. Doesn’t affect animations smoothness. See table below for meaning</p></td>
+</tr>
+<tr class="row-odd"><td><p>Animations</p></td>
+<td><p>animations</p></td>
+<td><p></p></td>
+<td><p>If sets to <code class="docutils literal notranslate"><span class="pre">true</span></code> shows all animations like flow animation</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Refresh Interval</p></th>
+<th class="head"><p>Refresh Rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1000Hz - fastest refresh, high CPU load</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>100Hz - old default</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>60Hz - screen refresh rate</p></td>
+</tr>
+<tr class="row-odd"><td><p>100</p></td>
+<td><p>10Hz</p></td>
+</tr>
+<tr class="row-even"><td><p>500</p></td>
+<td><p>2Hz</p></td>
+</tr>
+<tr class="row-odd"><td><p>1000</p></td>
+<td><p>1Hz - Once per second, still should be visible as smooth, recommended for most usage</p></td>
+</tr>
+<tr class="row-even"><td><p>10000</p></td>
+<td><p>0,1Hz once per 10 sec, user might see latency in data refresh, very low CPU Load</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: values of refresh rates aren’t 100% accurate and depends on browser/app and device load. Value means highest Refresh Rate possible and might be lower when
+device is in high CPU load.</p>
+</section>
+<section id="general-advanced-options">
+<h3>General: Advanced Options<a class="headerlink" href="#general-advanced-options" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Enable Loads Extra 2</p></td>
+<td><p>loads_extra_2_enabled</p></td>
+<td><p></p></td>
+<td><p>Enables switch to Extra 2 mode</p></td>
+</tr>
+<tr class="row-odd"><td><p>Extra 2 as Default</p></td>
+<td><p>loads_extra_2</p></td>
+<td><p></p></td>
+<td><p>If sets to <code class="docutils literal notranslate"><span class="pre">true</span></code> sets Extra 2 mode as default</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Extra Switch Circle</p></td>
+<td><p>loads_extra_2_circle</p></td>
+<td><p></p></td>
+<td><p>If sets to <code class="docutils literal notranslate"><span class="pre">true</span></code> shows circle around Extra mode switch</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="inverter">
+<h2>Inverter<a class="headerlink" href="#inverter" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Three Phase</p></td>
+<td><p>three_phase:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> additional 3 phase sensors will be displayed. Requires entity attributes to be defined i.e. <code class="docutils literal notranslate"><span class="pre">inverter_current_L2</span></code>, <code class="docutils literal notranslate"><span class="pre">inverter_current_L3</span></code>, <code class="docutils literal notranslate"><span class="pre">inverter_voltage_L2</span></code>, <code class="docutils literal notranslate"><span class="pre">inverter_voltage_L3</span></code> , <code class="docutils literal notranslate"><span class="pre">grid_ct_power_L2</span></code>, <code class="docutils literal notranslate"><span class="pre">grid_ct_power_L3</span></code>, <code class="docutils literal notranslate"><span class="pre">load_power_L1</span></code>, <code class="docutils literal notranslate"><span class="pre">load_power_L2</span></code>, <code class="docutils literal notranslate"><span class="pre">load_power_L3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Auto Scale</p></td>
+<td><p>auto_scale:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the card will use the entities <code class="docutils literal notranslate"><span class="pre">unit_of_measurement</span></code> attribute to perform the correct scaling (i,e, power values greater than 999W will be displayed as kW e.g. 1.23kW) and display the correct unit. The number of decimal places can be changed using the <code class="docutils literal notranslate"><span class="pre">decimal_places</span></code> card attribute apart from the daily energy values which are set using the <code class="docutils literal notranslate"><span class="pre">decimal_places_energy</span></code> attribute</p></td>
+</tr>
+<tr class="row-even"><td><p>Model</p></td>
+<td><p>model:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sunsynk</span></code></p></td>
+<td><p>Selects which inverter image and status codes to use. Options are <code class="docutils literal notranslate"><span class="pre">lux</span></code>, <code class="docutils literal notranslate"><span class="pre">solis</span></code>, <code class="docutils literal notranslate"><span class="pre">goodwe</span></code>, <code class="docutils literal notranslate"><span class="pre">goodwe_gridmode</span></code>, <code class="docutils literal notranslate"><span class="pre">foxess</span></code>, <code class="docutils literal notranslate"><span class="pre">solax</span></code>, <code class="docutils literal notranslate"><span class="pre">sunsynk</span></code>, <code class="docutils literal notranslate"><span class="pre">victron</span></code>, <code class="docutils literal notranslate"><span class="pre">fronius</span></code>, <code class="docutils literal notranslate"><span class="pre">solaredge</span></code>, <code class="docutils literal notranslate"><span class="pre">growatt</span></code>, <code class="docutils literal notranslate"><span class="pre">sofar</span></code>, <code class="docutils literal notranslate"><span class="pre">ces-battery-box</span></code>, <code class="docutils literal notranslate"><span class="pre">deye</span></code>, <code class="docutils literal notranslate"><span class="pre">azzurro</span></code>, <code class="docutils literal notranslate"><span class="pre">powmr</span></code>, <code class="docutils literal notranslate"><span class="pre">mppsolar</span></code>, <code class="docutils literal notranslate"><span class="pre">smasolar</span></code>, <code class="docutils literal notranslate"><span class="pre">huawei</span></code>, , <code class="docutils literal notranslate"><span class="pre">Easun</span> <span class="pre">SMW8kW</span> <span class="pre">SA</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Modern</p></td>
+<td><p>modern:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Display the inverter using the modern image. Set to <code class="docutils literal notranslate"><span class="pre">false</span></code> to display an image of the inverter based on the <code class="docutils literal notranslate"><span class="pre">model</span></code> attribute below.</p></td>
+</tr>
+<tr class="row-even"><td><p>Autarky</p></td>
+<td><p>autarky:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">power</span></code></p></td>
+<td><p>Display autarky and ratio as a percentage using either realtime power or daily energy values. Set to <code class="docutils literal notranslate"><span class="pre">no</span></code> to hide (<code class="docutils literal notranslate"><span class="pre">energy/power/Auto$Self/no</span></code>). Check <a class="reference internal" href="#autarky"><span class="std std-ref">Autarky</span></a> for details</p></td>
+</tr>
+<tr class="row-odd"><td><p>Colour</p></td>
+<td><p>colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">grey</span></code></p></td>
+<td><p>Sets the colour of the inverter and data. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-even"><td><p>Navigation Path</p></td>
+<td><p>navigate:</p></td>
+<td><p></p></td>
+<td><p>Sets the navigation path when clicking on the inverter image. Can be used to link to other dashboards and views e.g. <code class="docutils literal notranslate"><span class="pre">/lovelace/1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Flow</p></td>
+<td><p>invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow.</p></td>
+</tr>
+<tr class="row-even"><td><p>AC Icon</p></td>
+<td><p>ac_icon:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AC</span></code></p></td>
+<td><p>Set the AC temperature icon. If not present “AC” will be displayed</p></td>
+</tr>
+<tr class="row-odd"><td><p>DC Icon</p></td>
+<td><p>dc_icon:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DC</span></code></p></td>
+<td><p>Set the DC temperature icon. If not present “DC” will be displayed</p></td>
+</tr>
+<tr class="row-even"><td><p>Inverter Entities</p></td>
+<td><p><a class="reference internal" href="#inverter-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p>Shows sub-menu with Inverter Entities</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Programs Entities:</p></td>
+<td><p><a class="reference internal" href="#programs-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p>Shows sub-menu with Programs Entities</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<section id="inverter-entities">
+<h3>Inverter Entities<a class="headerlink" href="#inverter-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>inverter_status_59:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_overall_state</span></code></p></td>
+<td><p>Expects a sensor that contains inverter status represented as a string or number.  See <a class="reference internal" href="#inverter-status"><span class="xref myst">Inverter status</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>inverter_voltage_154:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_inverter_voltage</span></code></p></td>
+<td><p>Inverter L1 voltage (V)</p></td>
+</tr>
+<tr class="row-even"><td><p>inverter_voltage_L2:</p></td>
+<td><p></p></td>
+<td><p>Inverter L2 voltage (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>inverter_voltage_L3:</p></td>
+<td><p></p></td>
+<td><p>Inverter L3 voltage (V)</p></td>
+</tr>
+<tr class="row-even"><td><p>load_frequency_192:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_load_frequency</span></code></p></td>
+<td><p>Load frequency (Hz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>inverter_current_164:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_inverter_current</span></code></p></td>
+<td><p>Inverter L1 current (A)</p></td>
+</tr>
+<tr class="row-even"><td><p>inverter_current_L2:</p></td>
+<td><p></p></td>
+<td><p>Inverter L2 current (A)</p></td>
+</tr>
+<tr class="row-odd"><td><p>inverter_current_L3:</p></td>
+<td><p></p></td>
+<td><p>Inverter L3 current (A)</p></td>
+</tr>
+<tr class="row-even"><td><p>inverter_power_175:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_inverter_power</span></code></p></td>
+<td><p>Inverter power (W).</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_power_169:</p></td>
+<td><p></p></td>
+<td><p>Inverters grid power</p></td>
+</tr>
+<tr class="row-even"><td><p>dc_transformer_temp_90:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_dc_transformer_temperature</span></code></p></td>
+<td><p>Inverter DC temperature (℃)</p></td>
+</tr>
+<tr class="row-odd"><td><p>radiator_temp_91:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_radiator_temperature</span></code></p></td>
+<td><p>Inverter AC temperature (℃)</p></td>
+</tr>
+<tr class="row-even"><td><p>inverter_load_percentage:</p></td>
+<td><p></p></td>
+<td><p>Inverter Load in Percents (0-100 range). If enabled visualize load on Inverter image</p></td>
+</tr>
+<tr class="row-odd"><td><p>use_timer_248:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_toggle_system_timer</span></code></p></td>
+<td><p>Displays “Use timer” status as an icon next to the inverter. Set to <code class="docutils literal notranslate"><span class="pre">no</span></code> to hide</p></td>
+</tr>
+<tr class="row-even"><td><p>priority_load_243:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_toggle_priority_load</span></code></p></td>
+<td><p>Shows if energy pattern is set to priority load or priority battery as an icon next to the inverter. Set to <code class="docutils literal notranslate"><span class="pre">no</span></code> to hide</p></td>
+</tr>
+</tbody>
+</table>
+<section id="programs-entities">
+<h4>Programs Entities<a class="headerlink" href="#programs-entities" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>prog1_time:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_time_slot_1</span></code></p></td>
+<td><p>Program 1 start time (<code class="docutils literal notranslate"><span class="pre">HH:MM</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog1_capacity:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_system_mode_soc_time1</span></code></p></td>
+<td><p>Program 1 capacity (SOC) setting</p></td>
+</tr>
+<tr class="row-even"><td><p>prog1_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_system_mode_grid_charge_time1</span></code></p></td>
+<td><p>Program 1 charge options (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Grid</span> <span class="pre">or</span> <span class="pre">Gen</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog2_time:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_time_slot_2</span></code></p></td>
+<td><p>Program 2 start time (<code class="docutils literal notranslate"><span class="pre">HH:MM</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>prog2_capacity:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_system_mode_soc_time2</span></code></p></td>
+<td><p>Program 2 capacity (SOC) setting</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog2_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_system_mode_grid_charge_time2</span></code></p></td>
+<td><p>Program 2 charge options (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Grid</span> <span class="pre">or</span> <span class="pre">Gen</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>prog3_time:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_time_slot_3</span></code></p></td>
+<td><p>Program 3 start time (<code class="docutils literal notranslate"><span class="pre">HH:MM</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog3_capacity:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_system_mode_soc_time3</span></code></p></td>
+<td><p>Program 3 capacity (SOC) setting</p></td>
+</tr>
+<tr class="row-even"><td><p>prog3_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_system_mode_grid_charge_time3</span></code></p></td>
+<td><p>Program 3 charge options (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Grid</span> <span class="pre">or</span> <span class="pre">Gen</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog4_time:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_time_slot_4</span></code></p></td>
+<td><p>Program 4 start time (<code class="docutils literal notranslate"><span class="pre">HH:MM</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>prog4_capacity:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_system_mode_soc_time4</span></code></p></td>
+<td><p>Program 4 capacity (SOC) setting</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog4_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_system_mode_grid_charge_time4</span></code></p></td>
+<td><p>Program 4 charge options (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Grid</span> <span class="pre">or</span> <span class="pre">Gen</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>prog5_time:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_time_slot_5</span></code></p></td>
+<td><p>Program 5 start time (<code class="docutils literal notranslate"><span class="pre">HH:MM</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog5_capacity:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_system_mode_soc_time5</span></code></p></td>
+<td><p>Program 5 capacity (SOC) setting</p></td>
+</tr>
+<tr class="row-even"><td><p>prog5_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_system_mode_grid_charge_time5</span></code></p></td>
+<td><p>Program 5 charge options (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Grid</span> <span class="pre">or</span> <span class="pre">Gen</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog6_time:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_time_slot_6</span></code></p></td>
+<td><p>Program 6 start time (<code class="docutils literal notranslate"><span class="pre">HH:MM</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>prog6_capacity:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_system_mode_soc_time6</span></code></p></td>
+<td><p>Program 6 capacity (SOC) setting</p></td>
+</tr>
+<tr class="row-odd"><td><p>prog6_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">switch.sunsynk_system_mode_grid_charge_time6</span></code></p></td>
+<td><p>Program 6 charge options (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Grid</span> <span class="pre">or</span> <span class="pre">Gen</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="solar">
+<h2>Solar<a class="headerlink" href="#solar" title="Link to this heading"></a></h2>
+<p>These attributes are only needed if <code class="docutils literal notranslate"><span class="pre">show_solar</span></code> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MPPTs</p></td>
+<td><p>mppts:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Specify the number of MPPT’s in use <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code> or <code class="docutils literal notranslate"><span class="pre">5</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Auto Scale</p></td>
+<td><p>auto_scale:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the card will use the entities <code class="docutils literal notranslate"><span class="pre">unit_of_measurement</span></code> attribute to perform the correct scaling (i,e, power values greater than 999W will be displayed as kW e.g. 1.23kW) and display the correct unit. The number of decimal places can be changed using the <code class="docutils literal notranslate"><span class="pre">decimal_places</span></code> card attribute apart from the daily energy values which are set using the <code class="docutils literal notranslate"><span class="pre">decimal_places_energy</span></code> attribute</p></td>
+</tr>
+<tr class="row-even"><td><p>Colour</p></td>
+<td><p>colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">orange</span></code></p></td>
+<td><p>Sets the colour of all the solar card objects. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Navigation Path</p></td>
+<td><p>navigate:</p></td>
+<td><p></p></td>
+<td><p>Sets the navigation path when clicking on the solar icon. Can be used to link to other dashboards and views e.g. <code class="docutils literal notranslate"><span class="pre">/lovelace/1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Invert Flow</p></td>
+<td><p>invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dynamic Colour</p></td>
+<td><p>dynamic_colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>The solar elements on the card will be greyed out if total solar power &lt; 10W.</p></td>
+</tr>
+<tr class="row-even"><td><p>Anim. Speed</p></td>
+<td><p>animation_speed:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">9</span></code></p></td>
+<td><p>Set slowest animation speed in seconds, depending on Power produced</p></td>
+</tr>
+<tr class="row-odd"><td><p>Off Threshold</p></td>
+<td><p>off_threshold:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10</span></code></p></td>
+<td><p>When total PV power falls belows this threshold colour will change to grey. Requires <code class="docutils literal notranslate"><span class="pre">dynamic_colour</span></code> to be enabled</p></td>
+</tr>
+<tr class="row-even"><td><p>Visualize Efficiency</p></td>
+<td><p>visualize_efficiency:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code> - Disabled, <code class="docutils literal notranslate"><span class="pre">true</span></code> - Graphic display of Efficiency</p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Efficiency in %</p></td>
+<td><p>show_mppt_efficiency:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Show % of each MPPT efficiency</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Efficiency in kWh/kWp</p></td>
+<td><p>show_mppt_efficiency_kwhp:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Show kWh/kWp of each MPPT efficiency.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Production</p></td>
+<td><p>show_mppt_production:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Show each MPPT energy production</p></td>
+</tr>
+<tr class="row-even"><td><p>Hide Header units</p></td>
+<td><p>hide_header_units:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Hides UoM (Units of Measurement) from Header values</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fixed Header Item Width</p></td>
+<td><p>fixed_header_item_width:</p></td>
+<td><p></p></td>
+<td><p>If set overrides calculated header item width</p></td>
+</tr>
+<tr class="row-even"><td><p>Header Names</p></td>
+<td><p><a class="reference internal" href="#solar-header-names"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with solar header names.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Header Entities</p></td>
+<td><p><a class="reference internal" href="#solar-header-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with solar header entities.</p></td>
+</tr>
+<tr class="row-even"><td><p>PV Max Power</p></td>
+<td><p><a class="reference internal" href="#solar-pv-max-power"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Max Power values required to calculate and visualize efficiency</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV Names</p></td>
+<td><p><a class="reference internal" href="#solar-pv-names"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with MPPTs Options to set</p></td>
+</tr>
+<tr class="row-even"><td><p>PV1 Entities</p></td>
+<td><p><a class="reference internal" href="#solar-pv1-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with PV1 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV2 Entities</p></td>
+<td><p><a class="reference internal" href="#solar-pv2-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with PV2 Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>PV3 Entities</p></td>
+<td><p><a class="reference internal" href="#solar-pv3-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with PV3 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV4 Entities</p></td>
+<td><p><a class="reference internal" href="#solar-pv4-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with PV4 Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>PV5 Entities</p></td>
+<td><p><a class="reference internal" href="#solar-pv5-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with PV5 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Optional Entities</p></td>
+<td><p><a class="reference internal" href="#solar-optional-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Other Solar Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="solar-header-names">
+<h3>Solar: header names<a class="headerlink" href="#solar-header-names" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Daily Solar Production Name</p></td>
+<td><p>daily_solar_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DAILY</span> <span class="pre">SOLAR</span></code></p></td>
+<td><p>Set the name for daily_solar entity</p></td>
+</tr>
+<tr class="row-odd"><td><p>Monthly Solar Production Name</p></td>
+<td><p>monthly_solar_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MONTHLY</span> <span class="pre">SOLAR</span></code></p></td>
+<td><p>Set the name for monthly_solar entity</p></td>
+</tr>
+<tr class="row-even"><td><p>Yearly Solar Production Name</p></td>
+<td><p>yearly_solar_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">YEARLY</span> <span class="pre">SOLAR</span></code></p></td>
+<td><p>Set the name for yearly_solar entity</p></td>
+</tr>
+<tr class="row-odd"><td><p>Total Solar Generation Name</p></td>
+<td><p>total_solar_generation_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TOTAL</span> <span class="pre">SOLAR</span></code></p></td>
+<td><p>Set the name for total_solar_generation entity</p></td>
+</tr>
+<tr class="row-even"><td><p>Today’S Left Solar Production Name</p></td>
+<td><p>remaining_solar_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LEFT</span> <span class="pre">SOLAR</span></code></p></td>
+<td><p>Set the name for remaining_solar entity</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tomorrow Solar Production Name</p></td>
+<td><p>tomorrow_solar_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TOMORROW</span></code></p></td>
+<td><p>Set the name for tomorrow_solar entity</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-header-entities">
+<h3>Solar: header entities<a class="headerlink" href="#solar-header-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pv_total:</p></td>
+<td><p></p></td>
+<td><p>Provide a sensor for total pv power. If omitted the card uses internal logic to calculate this based on the pv1-5 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>day_pv_energy_108:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_day_pv_energy</span></code></p></td>
+<td><p>Daily solar generation (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>monthly_pv_generation:</p></td>
+<td><p></p></td>
+<td><p>Monthly solar generation (kWh)</p></td>
+</tr>
+<tr class="row-odd"><td><p>yearly_pv_generation:</p></td>
+<td><p></p></td>
+<td><p>Yearly solar generation (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>total_pv_generation:</p></td>
+<td><p></p></td>
+<td><p>Total Solar generation</p></td>
+</tr>
+<tr class="row-odd"><td><p>remaining_solar:</p></td>
+<td><p></p></td>
+<td><p>The remaining solar forecast for the day (kWh).</p></td>
+</tr>
+<tr class="row-even"><td><p>tomorrow_solar:</p></td>
+<td><p></p></td>
+<td><p>Solar forecast for tomorrow (kWh).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv-max-power">
+<h3>Solar: PV Max Power<a class="headerlink" href="#solar-pv-max-power" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Max Power</p></td>
+<td><p>max_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8000</span></code></p></td>
+<td><p>Maximum power draw to calculate animation speed. This value is also used to calculate the solar efficiency for the total PV power and should equal the total size of your PV array. Numeric value or sensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV1 Max Power</p></td>
+<td><p>pv1_max_power:</p></td>
+<td><p></p></td>
+<td><p>Maximum power of MPPT1 based on the number and size of panels. Used to calculate solar efficiency of the string (W). Numeric value or sensor.</p></td>
+</tr>
+<tr class="row-even"><td><p>PV2 Max Power</p></td>
+<td><p>pv2_max_power:</p></td>
+<td><p></p></td>
+<td><p>Maximum power of MPPT2 based on the number and size of panels. Used to calculate solar efficiency of the string (W). Numeric value or sensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV3 Max Power</p></td>
+<td><p>pv3_max_power:</p></td>
+<td><p></p></td>
+<td><p>Maximum power of MPPT3 based on the number and size of panels. Used to calculate solar efficiency of the string (W). Numeric value or sensor.</p></td>
+</tr>
+<tr class="row-even"><td><p>PV4 Max Power</p></td>
+<td><p>pv4_max_power:</p></td>
+<td><p></p></td>
+<td><p>Maximum power of MPPT4 based on the number and size of panels. Used to calculate solar efficiency of the string (W). Numeric value or sensor</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV5 Max Power</p></td>
+<td><p>pv5_max_power:</p></td>
+<td><p></p></td>
+<td><p>Maximum power of MPPT5 based on the number and size of panels. Used to calculate solar efficiency of the string (W). Numeric value or sensor</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv-names">
+<h3>Solar: PV Names<a class="headerlink" href="#solar-pv-names" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PV1 Name</p></td>
+<td><p>pv1_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PV1</span></code></p></td>
+<td><p>Set the display name for MPPT1</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV2 Name</p></td>
+<td><p>pv2_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PV2</span></code></p></td>
+<td><p>Set the display name for MPPT2</p></td>
+</tr>
+<tr class="row-even"><td><p>PV3 Name</p></td>
+<td><p>pv3_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PV3</span></code></p></td>
+<td><p>Set the display name for MPPT3</p></td>
+</tr>
+<tr class="row-odd"><td><p>PV4 Name</p></td>
+<td><p>pv4_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PV4</span></code></p></td>
+<td><p>Set the display name for MPPT4</p></td>
+</tr>
+<tr class="row-even"><td><p>PV5 Name</p></td>
+<td><p>pv5_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PV5</span></code></p></td>
+<td><p>Set the display name for MPPT5</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv1-entities">
+<h3>Solar: PV1 Entities<a class="headerlink" href="#solar-pv1-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pv1_power_186:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_pv1_power</span></code></p></td>
+<td><p>PV string 1 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv1_production:</p></td>
+<td><p></p></td>
+<td><p>PV string 1 daily energy (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>pv1_voltage_109:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_pv1_voltage</span></code></p></td>
+<td><p>PV string 1 voltage (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv1_current_110:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_pv1_current</span></code></p></td>
+<td><p>PV string 1 current (A)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv2-entities">
+<h3>Solar: PV2 Entities<a class="headerlink" href="#solar-pv2-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pv2_power_187:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_pv2_power</span></code></p></td>
+<td><p>PV string 2 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv2_production:</p></td>
+<td><p></p></td>
+<td><p>PV string 2 daily energy (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>pv2_voltage_111:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_pv2_voltage</span></code></p></td>
+<td><p>PV string 2 voltage (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv2_current_112:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_pv2_current</span></code></p></td>
+<td><p>PV string 2 current (A)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv3-entities">
+<h3>Solar: PV3 Entities<a class="headerlink" href="#solar-pv3-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pv3_power_188:</p></td>
+<td><p></p></td>
+<td><p>PV string 3 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv3_production:</p></td>
+<td><p></p></td>
+<td><p>PV string 3 daily energy (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>pv3_voltage_113:</p></td>
+<td><p></p></td>
+<td><p>PV string 3 voltage (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv3_current_114:</p></td>
+<td><p></p></td>
+<td><p>PV string 3 current (A)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv4-entities">
+<h3>Solar: PV4 Entities<a class="headerlink" href="#solar-pv4-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pv4_power_189:</p></td>
+<td><p></p></td>
+<td><p>PV string 4 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv4_production:</p></td>
+<td><p></p></td>
+<td><p>PV string 4 daily energy (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>pv4_voltage_115:</p></td>
+<td><p></p></td>
+<td><p>PV string 4 voltage (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv4_current_116:</p></td>
+<td><p></p></td>
+<td><p>PV string 4 current (A)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-pv5-entities">
+<h3>Solar: PV5 Entities<a class="headerlink" href="#solar-pv5-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pv5_power:</p></td>
+<td><p></p></td>
+<td><p>PV string 5 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv5_production:</p></td>
+<td><p></p></td>
+<td><p>PV string 5 daily energy (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>pv5_voltage:</p></td>
+<td><p></p></td>
+<td><p>PV string 5 voltage (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>pv5_current:</p></td>
+<td><p></p></td>
+<td><p>PV string 5 current (A)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="solar-optional-entities">
+<h3>Solar: Optional entities<a class="headerlink" href="#solar-optional-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>solar_sell_247:</p></td>
+<td><p></p></td>
+<td><p>Displays icons to indicate if sell solar is active or not. The switch can be toggled by clicking on the icon (<code class="docutils literal notranslate"><span class="pre">on/off</span></code>, <code class="docutils literal notranslate"><span class="pre">1/0</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>environment_temp:</p></td>
+<td><p></p></td>
+<td><p>Display outside temperature or other environment temperature below the sun icon</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="battery">
+<h2>Battery<a class="headerlink" href="#battery" title="Link to this heading"></a></h2>
+<p>To display battery power and current as absolute values set <code class="docutils literal notranslate"><span class="pre">show_absolute:</span> <span class="pre">true</span></code>. This is set to false by default and
+will return your sensor value. The animated dot will change direction depending on the charging or discharging state.
+The <code class="docutils literal notranslate"><span class="pre">invert_power</span></code> attribute can be used to reverse direction if needed by your sensor.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Energy</p></td>
+<td><p>energy:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p><strong>Required</strong> Total battery energy in Wh (e.g. 3 x 5.32kWh = 15960). If set to <code class="docutils literal notranslate"><span class="pre">0</span></code> the remaining battery runtime will be hidden. Numeric value or sensor i.e. <code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_energy</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Shutdown SOC</p></td>
+<td><p>shutdown_soc:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">20</span></code></p></td>
+<td><p><strong>Required</strong> The battery shutdown percentage used to calculate remaining runtime. Numeric value or sensor i.e. <code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_capacity_shutdown</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Shutdown SOC (Off Grid)</p></td>
+<td><p>shutdown_soc_offgrid:</p></td>
+<td><p></p></td>
+<td><p>The offgrid battery shutdown percentage used to calculate remaining runtime. Numeric value or sensor i.e. <code class="docutils literal notranslate"><span class="pre">sensor.offgrid_battery_capacity_shutdown</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Soc End Of Charge</p></td>
+<td><p>soc_end_of_charge:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p>Set the charge cut-off capacity. The minimum value is <code class="docutils literal notranslate"><span class="pre">50</span></code>. The maximum value is <code class="docutils literal notranslate"><span class="pre">100</span></code>. Numeric value or sensor i.e. <code class="docutils literal notranslate"><span class="pre">sensor.soc_end_of_charge</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Show Daily</p></td>
+<td><p>show_daily:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the daily total</p></td>
+</tr>
+<tr class="row-odd"><td><p>Auto Scale</p></td>
+<td><p>auto_scale:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the card will use the entities <code class="docutils literal notranslate"><span class="pre">unit_of_measurement</span></code> attribute to perform the correct scaling (i,e, power values greater than 999W will be displayed as kW e.g. 1.23kW) and display the correct unit. The number of decimal places can be changed using the <code class="docutils literal notranslate"><span class="pre">decimal_places</span></code> card attribute apart from the daily energy values which are set using the <code class="docutils literal notranslate"><span class="pre">decimal_places_energy</span></code> attribute</p></td>
+</tr>
+<tr class="row-even"><td><p>Invert Power</p></td>
+<td><p>invert_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> if your sensor provides a positive number for battery charge and negative number for battery discharge. See also <code class="docutils literal notranslate"><span class="pre">invert_flow:</span></code> below.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Absolute</p></td>
+<td><p>show_absolute:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to display power and current as absolute values</p></td>
+</tr>
+<tr class="row-even"><td><p>Colour</p></td>
+<td><p>colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pink</span></code></p></td>
+<td><p>Sets the colour of all the battery card objects. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Navigation Path</p></td>
+<td><p>navigate:</p></td>
+<td><p></p></td>
+<td><p>Sets the navigation path when clicking on the battery icon. Can be used to link to other dashboards and views e.g. <code class="docutils literal notranslate"><span class="pre">/lovelace/1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Invert Flow</p></td>
+<td><p>invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow. Expects a positive number for battery charging and a negative number for battery discharging</p></td>
+</tr>
+<tr class="row-odd"><td><p>Charge Colour</p></td>
+<td><p>charge_colour:</p></td>
+<td><p></p></td>
+<td><p>Sets the colour of all the battery card objects when charging. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-even"><td><p>Dynamic Colour</p></td>
+<td><p>dynamic_colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>The battery icon colour will change based on the % contribution of the power source (grid, solar) supplying the battery. Set to <code class="docutils literal notranslate"><span class="pre">false</span></code>  to disable. If <code class="docutils literal notranslate"><span class="pre">priority_load_243:</span> <span class="pre">on</span></code> solar will prioritise the essential load. If <code class="docutils literal notranslate"><span class="pre">false</span></code> or omitted solar will prioritise the battery.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Linear Gradient</p></td>
+<td><p>linear_gradient:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>The blocks inside the battery icon that represent SOC will be coloured using a linear gradient that ranges from red to green</p></td>
+</tr>
+<tr class="row-even"><td><p>Animate Linear Gradient</p></td>
+<td><p>animate:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Animates the linear gradient inside the battery icon</p></td>
+</tr>
+<tr class="row-odd"><td><p>Anim. Speed</p></td>
+<td><p>animation_speed:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">6</span></code></p></td>
+<td><p>Set slowest animation speed in seconds, depending on power draw</p></td>
+</tr>
+<tr class="row-even"><td><p>Hide SOC</p></td>
+<td><p>hide_soc:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the current program capacity (soc), or for <code class="docutils literal notranslate"><span class="pre">Goodwe</span></code> inverters the shutdown soc and offgrid shutdown soc that is shown to the left of the current battery SOC will be hidden.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Remaining Energy</p></td>
+<td><p>show_remaining_energy:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to display the remaining battery energy in kWh based on the current SOC.</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Remaining Energy to Shutdown</p></td>
+<td><p>remaining_energy_to_shutdown:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the displayed remaining battery energy will be the available energy to the shutdown SOC and not to 0%. For battery requires <code class="docutils literal notranslate"><span class="pre">show_remaining_energy:</span> <span class="pre">true</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Run to/Charge To in kWh</p></td>
+<td><p>runtime_in_kwh:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the displayed RUN TO or CHARGE TO wil be displayed in kWh instead of remaining time.</p></td>
+</tr>
+<tr class="row-even"><td><p>Max Power</p></td>
+<td><p>max_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4500</span></code></p></td>
+<td><p>Maximum power draw to calculate animation speed. Numeric value or sensor i.e. <code class="docutils literal notranslate"><span class="pre">number.battery_maximum_discharging_power</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Path Threshold</p></td>
+<td><p>path_threshold:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p>Specify threshold to apply dynamic colour to the battery path element. The colour of the path will change to the source colour if the percentage supply by a single source equals or exceeds this value</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery Entities</p></td>
+<td><p><a class="reference internal" href="#battery-battery-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Optional Entities</p></td>
+<td><p><a class="reference internal" href="#battery-optional-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="battery-battery-entities">
+<h3>Battery: Battery Entities<a class="headerlink" href="#battery-battery-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>battery_power_190:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_power</span></code></p></td>
+<td><p><strong>Required</strong> Battery power (W). Requires a negative number for battery charging and a positive number for battery discharging. Set the <code class="docutils literal notranslate"><span class="pre">invert_power:</span></code> battery attribute to <code class="docutils literal notranslate"><span class="pre">yes</span></code> if your sensor reports this the other way around</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_soc_184:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_soc</span></code></p></td>
+<td><p><strong>Required</strong> Battery state of charge (%)</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_current_191:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_current</span></code></p></td>
+<td><p><strong>Required</strong> Battery current (A)</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_voltage_183:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_voltage</span></code></p></td>
+<td><p>Battery voltage (V)</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_temp_182:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_battery_temperature</span></code></p></td>
+<td><p>Battery temperature (°). Note do not define this sensor if you want to display battery SOH. See below.</p></td>
+</tr>
+<tr class="row-odd"><td><p>day_battery_charge_70:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_day_battery_charge</span></code></p></td>
+<td><p>Daily battery charge (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>day_battery_discharge_71:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_day_battery_discharge</span></code></p></td>
+<td><p>Daily battery usage (kWh)</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_remaining_storage</p></td>
+<td><p></p></td>
+<td><p>Battery remaining capacity. If set it is displayed instead of calculated value</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_rated_capacity:</p></td>
+<td><p></p></td>
+<td><p>Battery rated capacity (Ah). If provided this sensor will be used to calculate battery energy. The<code class="docutils literal notranslate"><span class="pre">energy</span></code> attribute under the battery card configuration will be ignored.</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_soh:</p></td>
+<td><p></p></td>
+<td><p>Battery State of Health (SOH) (%). You can chose to display either battery temperature or battery SOH but not both. They are displayed in the same place on the card. If <code class="docutils literal notranslate"><span class="pre">battery_temp_182:</span></code> is defined it will take priority and this sensor will not be displayed.</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_current_direction:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.solis_battery_current_direction</span></code></p></td>
+<td><p>Used only when inverter model is set to <code class="docutils literal notranslate"><span class="pre">solis</span></code> (<code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_status:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.battery_mode_code</span></code></p></td>
+<td><p>Used only when inverter model is set to  <code class="docutils literal notranslate"><span class="pre">goodwe</span></code>, <code class="docutils literal notranslate"><span class="pre">goodwe_gridmode</span></code> or <code class="docutils literal notranslate"><span class="pre">huawei</span></code>. Battery status <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="battery-optional-entities">
+<h3>Battery: Optional Entities<a class="headerlink" href="#battery-optional-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>energy:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p><strong>Required</strong> Total battery energy in Wh (e.g. 3 x 5.32kWh = 15960) entity.</p></td>
+</tr>
+<tr class="row-odd"><td><p>shutdown_soc:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">20</span></code></p></td>
+<td><p><strong>Required</strong> The battery shutdown percentage used to calculate remaining runtime.</p></td>
+</tr>
+<tr class="row-even"><td><p>shutdown_soc_offgrid:</p></td>
+<td><p></p></td>
+<td><p>The offgrid battery shutdown percentage used to calculate remaining runtime.</p></td>
+</tr>
+<tr class="row-odd"><td><p>max_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4500</span></code></p></td>
+<td><p>Maximum power draw to calculate animation speed.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="battery-banks">
+<h2>Battery Banks<a class="headerlink" href="#battery-banks" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Show Battery Banks</p></td>
+<td><p>show_battery_banks:</p></td>
+<td><p></p></td>
+<td><p>Toggle display battery banks details</p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery Banks View Mode</p></td>
+<td><p>battery_banks_view_mode:</p></td>
+<td><p></p></td>
+<td><p>Choose battery bank view mode: none, inner</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery Banks</p></td>
+<td><p>battery_banks:</p></td>
+<td><p></p></td>
+<td><p>Specify the number of Battery Banks’s in use <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code> or <code class="docutils literal notranslate"><span class="pre">6</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery 1 Max Energy</p></td>
+<td><p>battery_bank_1_energy:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank 1 Max Available Energy</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery 2 Max Energy</p></td>
+<td><p>battery_bank_2_energy:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank 2 Max Available Energy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery 3 Max Energy</p></td>
+<td><p>battery_bank_3_energy:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank 3 Max Available Energy</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery 4 Max Energy</p></td>
+<td><p>battery_bank_4_energy:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank 4 Max Available Energy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery 5 Max Energy</p></td>
+<td><p>battery_bank_5_energy:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank 5 Max Available Energy</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery 6 Max Energy</p></td>
+<td><p>battery_bank_6_energy:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank 6 Max Available Energy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery Bank 1 Entities</p></td>
+<td><p><a class="reference internal" href="#battery-bank-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Bank 1 Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery Bank 2 Entities</p></td>
+<td><p><a class="reference internal" href="#battery-bank-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Bank 2 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery Bank 3 Entities</p></td>
+<td><p><a class="reference internal" href="#battery-bank-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Bank 3 Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery Bank 4 Entities</p></td>
+<td><p><a class="reference internal" href="#battery-bank-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Bank 4 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Battery Bank 5 Entities</p></td>
+<td><p><a class="reference internal" href="#battery-bank-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Bank 5 Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>Battery Bank 6 Entities</p></td>
+<td><p><a class="reference internal" href="#battery-bank-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Battery Bank 6 Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="battery-bank-entities">
+<h3>Battery Bank Entities<a class="headerlink" href="#battery-bank-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>battery_bank_X_power:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X Power</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_bank_X_voltage:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X Voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_bank_X_current:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X Current</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_bank_X_delta:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X Delta</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_bank_X_temp:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X Temperature</p></td>
+</tr>
+<tr class="row-odd"><td><p>battery_bank_X_remaining_storage:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X Remaining Storage</p></td>
+</tr>
+<tr class="row-even"><td><p>battery_bank_X_soc:</p></td>
+<td><p></p></td>
+<td><p>Specify Battery Bank X SOC</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">X</span></code> is integer between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">6</span></code></p>
+</section>
+</section>
+<section id="load">
+<h2>Load<a class="headerlink" href="#load" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Show Daily</p></td>
+<td><p>show_daily:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the daily total.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Daily Load Label</p></td>
+<td><p>label_daily_load:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the daily total.</p></td>
+</tr>
+<tr class="row-even"><td><p>Auto Scale</p></td>
+<td><p>auto_scale:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the card will use the entities <code class="docutils literal notranslate"><span class="pre">unit_of_measurement</span></code> attribute to perform the correct scaling (i,e, power values greater than 999W will be displayed as kW e.g. 1.23kW) and display the correct unit. The number of decimal places can be changed using the <code class="docutils literal notranslate"><span class="pre">decimal_places</span></code> card attribute apart from the daily energy values which are set using the <code class="docutils literal notranslate"><span class="pre">decimal_places_energy</span></code> attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p>Colour</p></td>
+<td><p>colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'#5fb6ad'</span></code></p></td>
+<td><p>Sets the colour of all the load card objects. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-even"><td><p>Navigation Path</p></td>
+<td><p>navigate:</p></td>
+<td><p></p></td>
+<td><p>Sets the navigation path when clicking on the house icon. Can be used to link to other dashboards and views e.g. <code class="docutils literal notranslate"><span class="pre">/lovelace/1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Flow</p></td>
+<td><p>invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow.</p></td>
+</tr>
+<tr class="row-even"><td><p>Dynamic Colour</p></td>
+<td><p>dynamic_colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>The essential icon colour will change based on the % contribution of the power source (battery, grid, solar) supplying the load. Set to <code class="docutils literal notranslate"><span class="pre">false</span></code>  to disable</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dynamic Icon</p></td>
+<td><p>dynamic_icon:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>The essential icon will change when there is 100% contribution from a single power source (battery, grid, solar). Set to <code class="docutils literal notranslate"><span class="pre">false</span></code>  to disable</p></td>
+</tr>
+<tr class="row-even"><td><p>Invert Values</p></td>
+<td><p>invert_load:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> if your sensor provides a negative number when the load is drawing power</p></td>
+</tr>
+<tr class="row-odd"><td><p>Essential Name</p></td>
+<td><p>essential_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Essential</span></code></p></td>
+<td><p>Set the display name for the essential load</p></td>
+</tr>
+<tr class="row-even"><td><p>Anim. Speed</p></td>
+<td><p>animation_speed:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8</span></code></p></td>
+<td><p>Set slowest animation speed in seconds, depending on Power draw</p></td>
+</tr>
+<tr class="row-odd"><td><p>Max Power</p></td>
+<td><p>max_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8000</span></code></p></td>
+<td><p>Maximum power draw to calculate animation speed. Numeric value or sensor</p></td>
+</tr>
+<tr class="row-even"><td><p>Off Threshold</p></td>
+<td><p>off_threshold:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>When power falls below this value the load will be considered off and colour will change to grey. Requires <code class="docutils literal notranslate"><span class="pre">dynamic_colour</span></code> to be enabled. Can also be set to <code class="docutils literal notranslate"><span class="pre">-1</span></code> to disable.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Path Threshold</p></td>
+<td><p>path_threshold:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p>Specify threshold to apply dynamic colour to the load path element. The colour of the path will change to the source colour if the percentage supply by a single source equals or exceeds this value</p></td>
+</tr>
+<tr class="row-even"><td><p>Load Entities</p></td>
+<td><p><a class="reference internal" href="#load-load-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Load Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="load-load-entities">
+<h3>Load: Load Entities<a class="headerlink" href="#load-load-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>day_load_energy_84:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_day_load_energy</span></code></p></td>
+<td><p>Daily load (kWh)</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+<td><p>Sensor that provides Essential Load power (W). Check <a class="reference internal" href="#essential-power-calculation"><span class="xref myst">Essential Power Calculation</span></a> if entity not provided or <code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>load_power_L1:</p></td>
+<td><p></p></td>
+<td><p>Load L1 Power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>load_power_L2:</p></td>
+<td><p></p></td>
+<td><p>Load L2 Power (W)</p></td>
+</tr>
+<tr class="row-even"><td><p>load_power_L3:</p></td>
+<td><p></p></td>
+<td><p>Load L3 Power (W)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="additional-load">
+<h2>Additional Load<a class="headerlink" href="#additional-load" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Additional Loads View Mode</p></td>
+<td><p>additional_loads_view_mode:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+<td><p>Sets Additional Loads View Mode. Check <a class="reference internal" href="#additional-loads-view-mode"><span class="xref myst">Additional Loads View Mode</span></a> for details</p></td>
+</tr>
+<tr class="row-odd"><td><p>Items 1-4 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-items-1-4-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load 1-4 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Items 1-4 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Items-1-4-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load 1-4 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Column 1 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load Column 1 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Column 1 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load Column 1 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Column 2 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load Column 2 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Column 2 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load Column 2 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Column 3 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load Column 3 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Column 3 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load Column 3 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Column 4 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load Column 4 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Column 4 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load Column 4 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Column 5 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load Column 5 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Column 5 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load Column 5 Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Column 6 Options</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Additional Load Column 6 Options</p></td>
+</tr>
+<tr class="row-even"><td><p>Column 6 Entities</p></td>
+<td><p><a class="reference internal" href="#additional-load-Column-X-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Essential Load Column 6 Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="additional-load-items-1-4-options">
+<h3>Additional Load: Items 1-4 Options<a class="headerlink" href="#additional-load-items-1-4-options" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Load 1 Name</p></td>
+<td><p>load1_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the essential load 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load 1 Icon</p></td>
+<td><p>load1_icon:</p></td>
+<td><p>none</p></td>
+<td><p>Set the essential load 1 image using preset or any mdi icon. Check <a class="reference internal" href="#icons"><span class="std std-ref">icon</span></a> for details.</p></td>
+</tr>
+<tr class="row-even"><td><p>Load 2 Name</p></td>
+<td><p>load2_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the essential load 2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load 2 Icon</p></td>
+<td><p>load2_icon:</p></td>
+<td><p>none</p></td>
+<td><p>Set the essential load 2 image using preset or any mdi icon. Check <a class="reference internal" href="#icons"><span class="std std-ref">icon</span></a> for details.</p></td>
+</tr>
+<tr class="row-even"><td><p>Load 3 Name</p></td>
+<td><p>load3_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the essential load 3</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load 3 Icon</p></td>
+<td><p>load3_icon:</p></td>
+<td><p>none</p></td>
+<td><p>Set the essential load 3 image using preset or any mdi icon. Check <a class="reference internal" href="#icons"><span class="std std-ref">icon</span></a> for details.</p></td>
+</tr>
+<tr class="row-even"><td><p>Load 4 Name</p></td>
+<td><p>load4_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the essential load 4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load 4 Icon</p></td>
+<td><p>load4_icon:</p></td>
+<td><p>none</p></td>
+<td><p>Set the essential load 4 image using preset or any mdi icon. Check <a class="reference internal" href="#icons"><span class="std std-ref">icon</span></a> for details.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="additional-load-items-1-4-entities">
+<h3>Additional Load: Items 1-4 Entities<a class="headerlink" href="#additional-load-items-1-4-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>essential_load1:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your essential load 1 (W). Can also be used to display any sensor data i.e. temp, energy etc if <code class="docutils literal notranslate"><span class="pre">auto_scale:</span> <span class="pre">false</span></code>. If not present toggle state will be used instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load1_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your essential load 1 e.g. Daily kWh, Temperature etc</p></td>
+</tr>
+<tr class="row-even"><td><p>essential_load1_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when essential load 1 icon clicked</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load2:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your essential load 2 (W). Can also be used to display any sensor data i.e. temp, energy etc if <code class="docutils literal notranslate"><span class="pre">auto_scale:</span> <span class="pre">false</span></code>. If not present toggle state will be used instead.</p></td>
+</tr>
+<tr class="row-even"><td><p>essential_load2_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your essential load 2 e.g. Daily kWh, Temperature etc</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load2_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when essential load 2 icon clicked</p></td>
+</tr>
+<tr class="row-even"><td><p>essential_load3:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your essential load 3 (W). Can also be used to display any sensor data i.e. temp, energy etc if <code class="docutils literal notranslate"><span class="pre">auto_scale:</span> <span class="pre">false</span></code>. If not present toggle state will be used instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load3_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your essential load 3 e.g. Daily kWh, Temperature etc</p></td>
+</tr>
+<tr class="row-even"><td><p>essential_load3_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when essential load 3 icon clicked</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load4:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your essential load 4 (W). Can also be used to display any sensor data i.e. temp, energy etc if <code class="docutils literal notranslate"><span class="pre">auto_scale:</span> <span class="pre">false</span></code>. If not present toggle state will be used instead.</p></td>
+</tr>
+<tr class="row-even"><td><p>essential_load4_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your essential load 4 e.g. Daily kWh, Temperature etc</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load4_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when essential load 4 icon clicked</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="additional-load-column-x-options">
+<h3>Additional Load: Column X Options<a class="headerlink" href="#additional-load-column-x-options" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Load X-Y Name</p></td>
+<td><p>load_X_Y_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the essential load column X row Y</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load X-Y Icon</p></td>
+<td><p>load_X_Y_icon:</p></td>
+<td><p></p></td>
+<td><p>Set the essential load  column X row Y image using preset or any mdi icon. Check <a class="reference internal" href="#icons"><span class="std std-ref">icon</span></a> for details.</p></td>
+</tr>
+<tr class="row-even"><td><p>Load X-Y Color</p></td>
+<td><p>load_X_Y_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides color of load card object</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load X-Y Off Color</p></td>
+<td><p>load_X_Y_off_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides off color of load card object</p></td>
+</tr>
+<tr class="row-even"><td><p>Load X-Y Max Threshold</p></td>
+<td><p>load_X_Y_max_threshold:</p></td>
+<td><p></p></td>
+<td><p>Set the upper threshold for the AUX load that will activate the <code class="docutils literal notranslate"><span class="pre">load_X_Y_max_color</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load X-Y Max Color</p></td>
+<td><p>load_X_Y_max_color:</p></td>
+<td><p></p></td>
+<td><p>Set the upper threshold color for AUX load card object</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for column, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>;
+Note2: <code class="docutils literal notranslate"><span class="pre">Y</span></code> stands for row, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>
+Note3: items <code class="docutils literal notranslate"><span class="pre">1-3</span></code> and <code class="docutils literal notranslate"><span class="pre">2-3</span></code> doesn’t exist</p>
+</section>
+<section id="additional-load-column-x-entities">
+<h3>Additional Load: Column X Entities<a class="headerlink" href="#additional-load-column-x-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>essential_load_X_Y:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your essential load column X row Y (W). Can also be used to display any sensor data i.e. temp, energy etc if <code class="docutils literal notranslate"><span class="pre">auto_scale:</span> <span class="pre">false</span></code>. If not present toggle state will be used instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load_X_Y_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your essential load column X row Y e.g. Daily kWh, Temperature etc</p></td>
+</tr>
+<tr class="row-even"><td><p>essential_load_X_Y_extra2:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your essential load column X row Y e.g. Daily kWh, Temperature etc. Visible only when <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">Options</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">Loads</span> <span class="pre">Extra</span> <span class="pre">Mode</span> <span class="pre">Switch</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>essential_load_X_Y_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when essential load column X row Y icon clicked</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for column, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>;
+Note2: <code class="docutils literal notranslate"><span class="pre">Y</span></code> stands for row, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>
+Note3: items <code class="docutils literal notranslate"><span class="pre">1-3</span></code> and <code class="docutils literal notranslate"><span class="pre">2-3</span></code> doesn’t exist</p>
+</section>
+</section>
+<section id="aux-load">
+<h2>AUX Load<a class="headerlink" href="#aux-load" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Show Aux</p></td>
+<td><p>show_aux:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the display of AUX</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aux Loads</p></td>
+<td><p>aux_loads:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Display additional loads on the AUX side (<code class="docutils literal notranslate"><span class="pre">0/1/2/3/4/5</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Aux Name</p></td>
+<td><p>aux_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Auxilary</span></code></p></td>
+<td><p>Set the display name for the AUX Load</p></td>
+</tr>
+<tr class="row-odd"><td><p>Daily Aux Name</p></td>
+<td><p>aux_daily_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DAILY</span> <span class="pre">AUX</span></code></p></td>
+<td><p>Set the display name for the DAILY AUX label</p></td>
+</tr>
+<tr class="row-even"><td><p>Aux Icon</p></td>
+<td><p>aux_type:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">default</span></code></p></td>
+<td><p>Sets the AUX image using preset or any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:ev-station</span></code>. Presets are: <code class="docutils literal notranslate"><span class="pre">gen</span></code>, <code class="docutils literal notranslate"><span class="pre">inverter</span></code> <code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">oven</span></code>, <code class="docutils literal notranslate"><span class="pre">pump</span></code>, <code class="docutils literal notranslate"><span class="pre">aircon</span></code> and <code class="docutils literal notranslate"><span class="pre">boiler</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Aux</p></td>
+<td><p>invert_aux:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> if your sensor provides a positive number for AUX input and negative number for AUX output</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Absolute</p></td>
+<td><p>show_absolute_aux:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to display power as an absolute value</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aux Dynamic Colour</p></td>
+<td><p>aux_dynamic_colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>The respective aux elements on the card will be greyed out if aux power = 0W.</p></td>
+</tr>
+<tr class="row-even"><td><p>Colour</p></td>
+<td><p>aux_colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">load</span> <span class="pre">colour</span></code></p></td>
+<td><p>Sets the colour of all the AUX card objects. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Off Colour</p></td>
+<td><p>aux_off_colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">load</span> <span class="pre">colour</span></code></p></td>
+<td><p>Sets the colour of the AUX icon and label when disconnected. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc)</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Daily Aux</p></td>
+<td><p>show_daily_aux:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the daily AUX total. Only displayed if <code class="docutils literal notranslate"><span class="pre">show_aux</span></code> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Flow</p></td>
+<td><p>aux_invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow.</p></td>
+</tr>
+<tr class="row-even"><td><p>Main Entities</p></td>
+<td><p><a class="reference internal" href="#aux-load-main-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Auxiliary Load Entities</p></td>
+</tr>
+<tr class="row-odd"><td><p>Item Options</p></td>
+<td><p><a class="reference internal" href="#aux-load-item-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Auxiliary Load details</p></td>
+</tr>
+<tr class="row-even"><td><p>Items Entities</p></td>
+<td><p><a class="reference internal" href="#aux-load-item-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Auxiliary Load Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="aux-load-main-entities">
+<h3>Aux Load: Main Entities<a class="headerlink" href="#aux-load-main-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Requirement</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>day_aux_energy:</p></td>
+<td><p>Optional</p></td>
+<td><p></p></td>
+<td><p>Sensor that provides the daily AUX energy (kWh)</p></td>
+</tr>
+<tr class="row-odd"><td><p>aux_power_166:</p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_aux_power</span></code></p></td>
+<td><p>Auxiliary power (W)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="aux-load-item-options">
+<h3>Aux Load: Item Options<a class="headerlink" href="#aux-load-item-options" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aux Load X Name</p></td>
+<td><p>aux_loadX_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the AUX load</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aux Load X Icon</p></td>
+<td><p>aux_loadX_icon:</p></td>
+<td><p></p></td>
+<td><p>Set the AUX load image using any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:ev-station</span></code>. You can also provide a sensor that returns the mdi icon.</p></td>
+</tr>
+<tr class="row-even"><td><p>Aux Load X Color</p></td>
+<td><p>aux_loadX_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides color of load card object</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aux Load X Off Color</p></td>
+<td><p>aux_loadX_off_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides off color of AUX load card object</p></td>
+</tr>
+<tr class="row-even"><td><p>Aux Load X Max Threshold</p></td>
+<td><p>aux_loadX_max_threshold:</p></td>
+<td><p></p></td>
+<td><p>Set the upper threshold for the AUX load that will activate the <code class="docutils literal notranslate"><span class="pre">aux_loadX_max_color</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aux Load X Max Color</p></td>
+<td><p>aux_loadX_max_color:</p></td>
+<td><p></p></td>
+<td><p>Set the upper threshold color for AUX load card object</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for item id/column, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>;</p>
+</section>
+<section id="aux-load-item-entities">
+<h3>Aux Load: Item Entities<a class="headerlink" href="#aux-load-item-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aux_loadX:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your AUX load X (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>aux_loadX_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your aux load X e.g. Daily kWh, Temperature etc.</p></td>
+</tr>
+<tr class="row-even"><td><p>aux_loadX_extra2:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your aux load X e.g. Daily kWh, Temperature etc. Visible only when <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">Options</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">Loads</span> <span class="pre">Extra</span> <span class="pre">Mode</span> <span class="pre">Switch</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>aux_loadX_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when aux load X icon clicked</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for item id/column, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>;</p>
+</section>
+</section>
+<section id="grid">
+<h2>Grid<a class="headerlink" href="#grid" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Grid Name</p></td>
+<td><p>grid_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the grid</p></td>
+</tr>
+<tr class="row-odd"><td><p>Max Power</p></td>
+<td><p>max_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8000</span></code></p></td>
+<td><p>Maximum power draw to calculate animation speed. Numeric value or sensor</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Daily Buy</p></td>
+<td><p>show_daily_buy:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the daily buy total</p></td>
+</tr>
+<tr class="row-odd"><td><p>Daily Grid Buy Label</p></td>
+<td><p>label_daily_grid_buy:</p></td>
+<td><p></p></td>
+<td><p>Set custom text for the “DAILY GRID BUY” label that is displayed.</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Daily Sell</p></td>
+<td><p>show_daily_sell:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Toggles the daily sell total</p></td>
+</tr>
+<tr class="row-odd"><td><p>Daily Grid Sell Label</p></td>
+<td><p>label_daily_grid_sell:</p></td>
+<td><p></p></td>
+<td><p>Set custom test for the “DAILY GRID SELL” label that is displayed.</p></td>
+</tr>
+<tr class="row-even"><td><p>Auto Scale</p></td>
+<td><p>auto_scale:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the card will use the entities <code class="docutils literal notranslate"><span class="pre">unit_of_measurement</span></code> attribute to perform the correct scaling (i,e, power values greater than 999W will be displayed as kW e.g. 1.23kW) and display the correct unit. The number of decimal places can be changed using the <code class="docutils literal notranslate"><span class="pre">decimal_places</span></code> card attribute apart from the daily energy values which are set using the <code class="docutils literal notranslate"><span class="pre">decimal_places_energy</span></code> attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Values</p></td>
+<td><p>invert_grid:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> if your sensor provides a negative number for grid import and a positive number for grid export</p></td>
+</tr>
+<tr class="row-even"><td><p>Show Absolute</p></td>
+<td><p>show_absolute:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to display power as absolute</p></td>
+</tr>
+<tr class="row-odd"><td><p>Colour</p></td>
+<td><p>colour:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'#5490c2'</span></code></p></td>
+<td><p>Sets the colour of all the grid card objects. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc).</p></td>
+</tr>
+<tr class="row-even"><td><p>Navigation Path</p></td>
+<td><p>navigate:</p></td>
+<td><p></p></td>
+<td><p>Sets the navigation path when clicking on the Grid icon. Can be used to link to other dashboards and views e.g. <code class="docutils literal notranslate"><span class="pre">/lovelace/1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Flow</p></td>
+<td><p>invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow.</p></td>
+</tr>
+<tr class="row-even"><td><p>No Grid Colour</p></td>
+<td><p>no_grid_colour:</p></td>
+<td><p></p></td>
+<td><p>Sets the colour of all the grid card objects when there is no grid power. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc). If not set will use the <code class="docutils literal notranslate"><span class="pre">colour:</span></code> value defined above total</p></td>
+</tr>
+<tr class="row-odd"><td><p>Export Colour</p></td>
+<td><p>export_colour:</p></td>
+<td><p></p></td>
+<td><p>Sets the colour of all the grid card objects when exporting (selling) energy. Hex codes (<code class="docutils literal notranslate"><span class="pre">'#66ff00'</span></code> etc) or names (<code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">green</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> etc). If not set will use the <code class="docutils literal notranslate"><span class="pre">colour:</span></code> value defined above.</p></td>
+</tr>
+<tr class="row-even"><td><p>Grid Off Colour</p></td>
+<td><p>grid_off_colour:</p></td>
+<td><p></p></td>
+<td><p>Sets the colour of the grid icon when the grid is disconnected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy Cost Decimals</p></td>
+<td><p>energy_cost_decimals:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Sets the number of decimal places to display the buy and sell energy costs</p></td>
+</tr>
+<tr class="row-even"><td><p>Anim. Speed</p></td>
+<td><p>animation_speed:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8</span></code></p></td>
+<td><p>Set slowest animation speed in seconds, depending on power draw</p></td>
+</tr>
+<tr class="row-odd"><td><p>Off Threshold</p></td>
+<td><p>off_threshold:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>When power falls below this value the load will be considered off and colour will change to grey. Requires <code class="docutils literal notranslate"><span class="pre">dynamic_colour</span></code> to be enabled. Can also be set to <code class="docutils literal notranslate"><span class="pre">-1</span></code> to disable.</p></td>
+</tr>
+<tr class="row-even"><td><p>Import Icon</p></td>
+<td><p>import_icon:</p></td>
+<td><p></p></td>
+<td><p>Set the grid connected/import image using any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:transmission-tower-import</span></code>. You can also provide a sensor that returns the mdi icon. If defined overrides the card default icon.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Export Icon</p></td>
+<td><p>export_icon:</p></td>
+<td><p></p></td>
+<td><p>Set the grid export image using any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:transmission-tower-export</span></code>. You can also provide a sensor that returns the mdi icon. If defined overrides the card default icon.</p></td>
+</tr>
+<tr class="row-even"><td><p>Disconnected Icon</p></td>
+<td><p>disconnected_icon:</p></td>
+<td><p></p></td>
+<td><p>Set the grid disconnected image using any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:transmission-tower-off</span></code>. You can also provide a sensor that returns the mdi icon. If defined overrides the card default icon.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pre-paid Unit Name</p></td>
+<td><p>prepaid_unit_name:</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Grid Entities</p></td>
+<td><p><a class="reference internal" href="#grid-grid-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Grid Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="grid-grid-entities">
+<h3>Grid: Grid Entities<a class="headerlink" href="#grid-grid-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>day_grid_import_76:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_day_grid_import</span></code></p></td>
+<td><p>Daily grid import (kWh)</p></td>
+</tr>
+<tr class="row-odd"><td><p>day_grid_export_77:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_day_grid_export</span></code></p></td>
+<td><p>Daily grid export (kWh)</p></td>
+</tr>
+<tr class="row-even"><td><p>grid_frequency:</p></td>
+<td><p></p></td>
+<td><p>Grid frequency (Hz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_ct_power_172:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.sunsynk_grid_ct_power</span></code></p></td>
+<td><p><strong>Required</strong> Grid CT L1 power (W)</p></td>
+</tr>
+<tr class="row-even"><td><p>grid_ct_power_L2:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+<td><p>Grid CT L2 power (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_ct_power_L3:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+<td><p>Grid CT L3 power (W)</p></td>
+</tr>
+<tr class="row-even"><td><p>grid_voltage_L1:</p></td>
+<td><p></p></td>
+<td><p>Grid Voltage L1 (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_voltage_L2:</p></td>
+<td><p></p></td>
+<td><p>Grid Voltage L2 (V)</p></td>
+</tr>
+<tr class="row-even"><td><p>grid_voltage_L3:</p></td>
+<td><p></p></td>
+<td><p>Grid Voltage L3 (V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_current_L1:</p></td>
+<td><p></p></td>
+<td><p>Grid Current L1 (A)</p></td>
+</tr>
+<tr class="row-even"><td><p>grid_current_L2:</p></td>
+<td><p></p></td>
+<td><p>Grid Current L2 (A)</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_current_L3:</p></td>
+<td><p></p></td>
+<td><p>Grid Current L3 (A)</p></td>
+</tr>
+<tr class="row-even"><td><p>grid_ct_power_total:</p></td>
+<td><p></p></td>
+<td><p>For three phase systems. The card will automatically calculate this based on (Grid CT L1 power + Grid CT L2 power + Grid CT L3 power)  You can optionally provide your own sensor for total grid power. (W)</p></td>
+</tr>
+<tr class="row-odd"><td><p>grid_voltage:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor.solis_grid_voltage</span></code></p></td>
+<td><p>Sensor providing grid voltage (v). Used only when inverter model is set to <code class="docutils literal notranslate"><span class="pre">solis</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>grid_connected_status_194:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">binary_sensor.sunsynk_grid_connected_status</span></code></p></td>
+<td><p>Grid connected status (case insensitive) <code class="docutils literal notranslate"><span class="pre">on/off</span></code>,<code class="docutils literal notranslate"><span class="pre">1/0</span></code>, <code class="docutils literal notranslate"><span class="pre">On-Grid/Off-Grid</span></code>, or <code class="docutils literal notranslate"><span class="pre">On</span> <span class="pre">Grid/Off</span> <span class="pre">Grid</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>energy_cost_buy:</p></td>
+<td><p></p></td>
+<td><p>Sensor that provides current buy energy cost per kWh</p></td>
+</tr>
+<tr class="row-even"><td><p>energy_cost_sell:</p></td>
+<td><p></p></td>
+<td><p>Sensor that provides current sell energy cost per kWh</p></td>
+</tr>
+<tr class="row-odd"><td><p>prepaid_units:</p></td>
+<td><p></p></td>
+<td><p>Account balance of prepaid electricity units</p></td>
+</tr>
+<tr class="row-even"><td><p>max_sell_power:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number.sunsynk_max_sell_power</span></code></p></td>
+<td><p>Sets the maximum allowed output power to flow to the grid. Also known as “Export Control User Limit” (W)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="grid-load">
+<h2>Grid Load<a class="headerlink" href="#grid-load" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Show Non Essential</p></td>
+<td><p>show_nonessential:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Toggles the display of non-essential</p></td>
+</tr>
+<tr class="row-odd"><td><p>Invert Flow</p></td>
+<td><p>ness_invert_flow:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Inverts the animated flow.</p></td>
+</tr>
+<tr class="row-even"><td><p>Additional Loads</p></td>
+<td><p>additional_loads:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Toggle the display of additional loads on the non-essential side (<code class="docutils literal notranslate"><span class="pre">0/1/2/3/4/5/6</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p>nonessential_name:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Non</span> <span class="pre">Essential</span></code></p></td>
+<td><p>Set the display name for the non-essential load</p></td>
+</tr>
+<tr class="row-even"><td><p>Icon</p></td>
+<td><p>nonessential_icon:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">default</span></code></p></td>
+<td><p>Change the non-essential image using presets or any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:ev-station</span></code>. Presets are: <br /> <img height="25px" src="https://api.iconify.design/mdi/house-import-outline.svg"> <code class="docutils literal notranslate"><span class="pre">default</span></code>  <img height="25px" src="https://api.iconify.design/fluent/oven-32-regular.svg"> <code class="docutils literal notranslate"><span class="pre">oven</span></code>, <img height="25px" src="https://api.iconify.design/material-symbols/water-heater.svg"> <code class="docutils literal notranslate"><span class="pre">boiler</span></code> </br> <br/> <img height="25px" src="https://api.iconify.design/material-symbols/water-pump-outline.svg"> <code class="docutils literal notranslate"><span class="pre">pump</span></code>,  <img height="25px" src="https://api.iconify.design/mdi/air-conditioner.svg"> <code class="docutils literal notranslate"><span class="pre">aircon</span></code> </br></p></td>
+</tr>
+<tr class="row-odd"><td><p>Show Daily</p></td>
+<td><p>show_nonessential_daily:</p></td>
+<td><p></p></td>
+<td><p>Toggles the display of non-essential daily energy</p></td>
+</tr>
+<tr class="row-even"><td><p>Daily Name</p></td>
+<td><p>nonessential_daily_name:</p></td>
+<td><p></p></td>
+<td><p>‘Set the display name for the non-essential daily energy</p></td>
+</tr>
+<tr class="row-odd"><td><p>Main Entities</p></td>
+<td><p><a class="reference internal" href="#grid-load-main-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Non-Essential Load Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>Row 1 Options</p></td>
+<td><p><a class="reference internal" href="#grid-load-row-1-options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Non-Essential Load Row 1 Options</p></td>
+</tr>
+<tr class="row-odd"><td><p>Row 1 Entities</p></td>
+<td><p><a class="reference internal" href="#grid-load-row-1-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Non-Essential Load Row 1 Entities</p></td>
+</tr>
+<tr class="row-even"><td><p>Row 2 Options</p></td>
+<td><p><a class="reference internal" href="#grid-load-row-2-Options"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Non-Essential Load Row 2 Options</p></td>
+</tr>
+<tr class="row-odd"><td><p>Row 2 Entities</p></td>
+<td><p><a class="reference internal" href="#grid-load-row-2-entities"><span class="xref myst">Sub-menu</span></a></p></td>
+<td><p></p></td>
+<td><p>Shows sub-menu with Non-Essential Load Row 2 Entities</p></td>
+</tr>
+</tbody>
+</table>
+<section id="grid-load-main-entities">
+<h3>Grid Load: Main Entities<a class="headerlink" href="#grid-load-main-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>nonessential_power</p></td>
+<td><p></p></td>
+<td><p>Sensor that provides Essential Load power (W). Check <a class="reference internal" href="#nonessential-power-calculation"><span class="xref myst">Nonessential Power Calculation</span></a> if entity not provided or <code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>nonessential_energy</p></td>
+<td><p></p></td>
+<td><p>Sensor that provides Essential Daily energy (kWh).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="grid-load-row-1-options">
+<h3>Grid Load: Row 1 Options<a class="headerlink" href="#grid-load-row-1-options" title="Link to this heading"></a></h3>
+</section>
+<section id="grid-load-row-2-options">
+<h3>Grid Load: Row 2 Options<a class="headerlink" href="#grid-load-row-2-options" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Editor name (en)</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Load X Name</p></td>
+<td><p>loadX_name:</p></td>
+<td><p></p></td>
+<td><p>Set the display name for the non-essential/Grid load X</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load X Icon</p></td>
+<td><p>loadX_icon:</p></td>
+<td><p></p></td>
+<td><p>Change the non-essential/Grid load X image using any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:ev-station</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Load X Import Color</p></td>
+<td><p>loadX_import_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides import color of non-essential/Grid load X card object</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load X Export Color</p></td>
+<td><p>loadX_export_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides export color of non-essential/Grid load X card object</p></td>
+</tr>
+<tr class="row-even"><td><p>Load X Off Color</p></td>
+<td><p>loadX_off_color:</p></td>
+<td><p></p></td>
+<td><p>Overrides off color of non-essential/Grid load X card object</p></td>
+</tr>
+<tr class="row-odd"><td><p>Load X Max Threshold</p></td>
+<td><p>loadX_max_threshold:</p></td>
+<td><p></p></td>
+<td><p>Set the upper threshold for the non-essential/Grid load that will activate the <code class="docutils literal notranslate"><span class="pre">aux_loadX_max_color</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Load X Max Color</p></td>
+<td><p>loadX_max_color:</p></td>
+<td><p></p></td>
+<td><p>Set the upper threshold color for non-essential/Grid load card object</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: for Row 1: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for item id/column, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">3</span></code>;
+Note2: for Row 2: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for item id/column, values <code class="docutils literal notranslate"><span class="pre">4</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>;</p>
+</section>
+<section id="grid-load-row-1-entities">
+<h3>Grid Load: Row 1 Entities<a class="headerlink" href="#grid-load-row-1-entities" title="Link to this heading"></a></h3>
+</section>
+<section id="grid-load-row-2-entities">
+<h3>Grid Load: Row 2 Entities<a class="headerlink" href="#grid-load-row-2-entities" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>non_essential_loadX:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains the power of your non-essential load X (W). If not present toggle state will be used instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p>non_essential_loadX_extra:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your nonessential load X e.g. Daily kWh, Temperature etc</p></td>
+</tr>
+<tr class="row-even"><td><p>non_essential_loadX_extra2:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains additional information you want displayed for your nonessential load X e.g. Daily kWh, Temperature etc. Visible only when <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">Options</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">Loads</span> <span class="pre">Extra</span> <span class="pre">Mode</span> <span class="pre">Switch</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>non_essential_loadX_toggle:</p></td>
+<td><p></p></td>
+<td><p>Sensor that contains link to entity that will show up when nonessential load X icon clicked</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: for Row 1: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for item id/column, values <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">3</span></code>;
+Note2: for Row 2: <code class="docutils literal notranslate"><span class="pre">X</span></code> stands for item id/column, values <code class="docutils literal notranslate"><span class="pre">4</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>;</p>
+</section>
+</section>
+<section id="entities">
+<h2>Entities<a class="headerlink" href="#entities" title="Link to this heading"></a></h2>
+<p>Entity attributes below have been appended with the modbus register # e.g. <code class="docutils literal notranslate"><span class="pre">pv2_power_187</span></code> to indicate which Sunsynk
+register should be read when configuring your sensors. Replace the default sensors with your own specific sensor names.
+It is important that your sensors read the expected modbus register value. If you have missing sensors for any attribute
+set it to none i.e. <code class="docutils literal notranslate"><span class="pre">day_pv_energy_108:</span> <span class="pre">none</span></code>. This will hide the sensor data from the card. To display a placeholder
+with a default value of 0 set it to <code class="docutils literal notranslate"><span class="pre">zero</span></code> or any other value i.e. <code class="docutils literal notranslate"><span class="pre">solarday_108:</span> <span class="pre">zero</span></code>.</p>
+<p>See the <a class="reference external" href="https://github.com/molikk/mlk-power-flow-card/wiki/Sensor-Mappings">WIKI</a> for more information on sensor
+mappings if using other integration methods.</p>
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h3>
+<p>The card calculates the sensors below based on supplied attributes in the config so you don’t need to define them in Home
+Assistant. NOTE if your essential and non-essential readings are inaccurate replace sensor 169 with 167. Alternatively
+provide the card with sensors that calculate this data i.e. essential_power: and nonessential_power:</p>
+</section>
+<section id="icons">
+<h3>Icons<a class="headerlink" href="#icons" title="Link to this heading"></a></h3>
+<p>In every icon field you can use preset or any mdi icon e.g. <code class="docutils literal notranslate"><span class="pre">mdi:ev-station</span></code> Presets are: <code class="docutils literal notranslate"><span class="pre">boiler</span></code>, <code class="docutils literal notranslate"><span class="pre">pump</span></code>, <code class="docutils literal notranslate"><span class="pre">aircon</span></code>, <code class="docutils literal notranslate"><span class="pre">oven</span></code>. You can also provide a sensor that
+returns the mdi icon.</p>
+</section>
+</section>
+<section id="calculations">
+<h2>Calculations<a class="headerlink" href="#calculations" title="Link to this heading"></a></h2>
+<section id="total-pv">
+<h3>Total PV<a class="headerlink" href="#total-pv" title="Link to this heading"></a></h3>
+<p>Total PV is provided through <code class="docutils literal notranslate"><span class="pre">total_pv</span></code> entity.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">total_pv</span></code> entity is not provided value will be calculated as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_pv</span> <span class="o">=</span> <span class="n">pv1_power_186</span> <span class="o">+</span> <span class="n">pv2_power_187</span> <span class="o">+</span> <span class="n">pv3_power_188</span> <span class="o">+</span> <span class="n">pv4_power_189</span> <span class="o">+</span> <span class="n">pv5_power</span>
+</pre></div>
+</div>
+</section>
+<section id="essential-power-calculation">
+<h3>Essential Power Calculation<a class="headerlink" href="#essential-power-calculation" title="Link to this heading"></a></h3>
+<p>Essential Load is provided through <code class="docutils literal notranslate"><span class="pre">essential_power</span></code> entity.</p>
+<ul class="simple">
+<li><p>For 3 phases mode (<code class="docutils literal notranslate"><span class="pre">three_phase:true</span></code>) when <code class="docutils literal notranslate"><span class="pre">essential_power</span></code> is not provided it will be calculated as:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load_power_L1</span> <span class="o">+</span>  <span class="n">load_power_L2</span> <span class="o">+</span>  <span class="n">load_power_L3</span>
+</pre></div>
+</div>
+<ul>
+<li><p>For non 3 phase mode (<code class="docutils literal notranslate"><span class="pre">three_phase:false</span></code>)  when <code class="docutils literal notranslate"><span class="pre">essential_power</span></code> is not provided one of 2 calculations mode will be used:</p>
+<ul>
+<li><p>when <code class="docutils literal notranslate"><span class="pre">inverter_power_175</span></code> is provided:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">essential_power</span> <span class="o">=</span> <span class="n">inverter_power_175</span> <span class="o">+</span> <span class="n">grid_power_169</span> <span class="o">-</span> <span class="n">aux_power_166</span>
+</pre></div>
+</div>
+</li>
+<li><p>otherwise</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">essential_power</span> <span class="o">=</span> <span class="n">totalPV</span> <span class="o">+</span> <span class="n">battery_power_190</span> <span class="o">+</span> <span class="n">grid_power_169</span> <span class="o">-</span> <span class="n">aux_power_166</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="nonessential-power-calculation">
+<h3>Nonessential Power Calculation<a class="headerlink" href="#nonessential-power-calculation" title="Link to this heading"></a></h3>
+<p>Nonessential Load is provided through <code class="docutils literal notranslate"><span class="pre">nonessential_power</span></code> entity.</p>
+<ul class="simple">
+<li><p>If there is no  <code class="docutils literal notranslate"><span class="pre">nonessential_power</span></code> entity and there is no <code class="docutils literal notranslate"><span class="pre">grid_power_169</span></code> entity then</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nonessentialPower</span> <span class="o">=</span> <span class="n">non_essential_load1</span> <span class="o">+</span> <span class="n">non_essential_load2</span> <span class="o">+</span> <span class="n">non_essential_load3</span>
+</pre></div>
+</div>
+<ul>
+<li><p>otherwise If there is no  <code class="docutils literal notranslate"><span class="pre">nonessential_power</span></code> entity</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">three_phase:false</span></code></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nonessential</span> <span class="o">=</span> <span class="n">grid_ct_power_172</span> <span class="o">-</span> <span class="n">grid_power_169</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">three_phase:true</span></code></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nonessential</span> <span class="o">=</span> <span class="n">grid_ct_power_172</span> <span class="o">+</span> <span class="n">grid_ct_power_L2</span> <span class="o">+</span> <span class="n">grid_ct_power_L3</span> <span class="o">-</span> <span class="n">grid_power_169</span>
+</pre></div>
+</div>
+</li>
+<li><p>otherwise</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">essential</span><span class="o">=</span>  <span class="n">nonessential_power</span> <span class="n">entity</span>
+
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="autarky">
+<h3>Autarky<a class="headerlink" href="#autarky" title="Link to this heading"></a></h3>
+<p>Autarky is the percentage of self-sufficiency through Home Production. <br />
+Ratio is the percentage of produced electricity used by the home. <br />
+It is calculated based on the formula below and borrowed from the <a class="reference external" href="https://github.com/JonahKr/power-distribution-card">Power Distribution Card</a>  <br /></p>
+<ul><li>Autarky in Percent = Home Production / Home Consumption </li>
+<li>Ratio in Percent = Home Consumption / Home Production</li></ul> 
+<p>Home Production = Solar + Battery (discharge) + Aux (in), Home Consumption = Essential power + Nonessential power + Aux (out) + Battery (charge) <br /></p>
+<p>Auto&amp;Self mode represents Auto consumption &amp; Self usage. Auto consumption is similar to Power Ratio, Self consumption is ratio between produced energy to all
+energy (produced energy + imported energy)</p>
+</section>
+<section id="additional-loads-view-mode">
+<h3>Additional Loads View Mode<a class="headerlink" href="#additional-loads-view-mode" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode Name</p></th>
+<th class="head"><p>Attribute</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>none</p></td>
+<td><p>none</p></td>
+<td><p>Hide all Additional Loads</p></td>
+</tr>
+<tr class="row-odd"><td><p>Minimal view (4 loads)</p></td>
+<td><p>old</p></td>
+<td><p>Displays up to 4 main Additional Loads. If set less then 4 some of them has bigger icons and values</p></td>
+</tr>
+<tr class="row-even"><td><p>2 Columns</p></td>
+<td><p>col2</p></td>
+<td><p>Displays first 2 columns</p></td>
+</tr>
+<tr class="row-odd"><td><p>3 Columns</p></td>
+<td><p>col3</p></td>
+<td><p>Displays first 3 columns</p></td>
+</tr>
+<tr class="row-even"><td><p>4 Columns</p></td>
+<td><p>col4</p></td>
+<td><p>Displays first 4 columns</p></td>
+</tr>
+<tr class="row-odd"><td><p>5 Columns</p></td>
+<td><p>col5</p></td>
+<td><p>Displays first 5 columns</p></td>
+</tr>
+<tr class="row-even"><td><p>6 Columns</p></td>
+<td><p>col6</p></td>
+<td><p>Displays first 6 columns</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: Chosen Mode affects panel width (if not set separately)</p>
+</section>
+<section id="inverter-status">
+<h3>Inverter status<a class="headerlink" href="#inverter-status" title="Link to this heading"></a></h3>
+<p>inverter_status_59 Entity expects a sensor that contains inverter status represented as a string or number.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Inverter</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">standby</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">selftest</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">fault</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Azzuro</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Deye</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Fronius</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8</span></code>, <code class="docutils literal notranslate"><span class="pre">11</span></code>, <code class="docutils literal notranslate"><span class="pre">13</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">6</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">12</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">255</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Growatt</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Lux</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">8</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">11</span></code>, <code class="docutils literal notranslate"><span class="pre">12</span></code>, <code class="docutils literal notranslate"><span class="pre">16</span></code>, <code class="docutils literal notranslate"><span class="pre">20</span></code>, <code class="docutils literal notranslate"><span class="pre">32</span></code>, <code class="docutils literal notranslate"><span class="pre">40</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">17</span></code>, <code class="docutils literal notranslate"><span class="pre">64</span></code>, <code class="docutils literal notranslate"><span class="pre">136</span></code>, <code class="docutils literal notranslate"><span class="pre">192</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>MPPSolar</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>PowMr</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SMA Solar</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">307:</span> <span class="pre">Ok</span> <span class="pre">(Ok)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">455:</span> <span class="pre">Warning</span> <span class="pre">(Wrn)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">35:</span> <span class="pre">Fault</span> <span class="pre">(Alm)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Sofar</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SolarEdge</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">6</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Solis</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4139</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4100</span></code>, <code class="docutils literal notranslate"><span class="pre">4112</span></code>, <code class="docutils literal notranslate"><span class="pre">4113</span></code>, <code class="docutils literal notranslate"><span class="pre">4114</span></code>, <code class="docutils literal notranslate"><span class="pre">4115</span></code>, <code class="docutils literal notranslate"><span class="pre">4116</span></code>, <br/><code class="docutils literal notranslate"><span class="pre">4120</span></code>, <code class="docutils literal notranslate"><span class="pre">4122</span></code>, <code class="docutils literal notranslate"><span class="pre">4123</span></code>, <code class="docutils literal notranslate"><span class="pre">4124</span></code>, <code class="docutils literal notranslate"><span class="pre">4125</span></code>, <code class="docutils literal notranslate"><span class="pre">4127</span></code>, <code class="docutils literal notranslate"><span class="pre">4128</span></code>, <code class="docutils literal notranslate"><span class="pre">4129</span></code>,<br/> <code class="docutils literal notranslate"><span class="pre">4130</span></code>, <code class="docutils literal notranslate"><span class="pre">4132</span></code>, <code class="docutils literal notranslate"><span class="pre">4133</span></code>, <code class="docutils literal notranslate"><span class="pre">4134</span></code>, <code class="docutils literal notranslate"><span class="pre">4135</span></code>, <code class="docutils literal notranslate"><span class="pre">4136</span></code>, <code class="docutils literal notranslate"><span class="pre">4137</span></code>, <code class="docutils literal notranslate"><span class="pre">4138</span></code>,<br/> <code class="docutils literal notranslate"><span class="pre">4140</span></code>, <code class="docutils literal notranslate"><span class="pre">4144</span></code>, <code class="docutils literal notranslate"><span class="pre">4145</span></code>, <code class="docutils literal notranslate"><span class="pre">4146</span></code>, <code class="docutils literal notranslate"><span class="pre">4147</span></code>, <code class="docutils literal notranslate"><span class="pre">4148</span></code>, <br/><code class="docutils literal notranslate"><span class="pre">4150</span></code>, <code class="docutils literal notranslate"><span class="pre">4151</span></code>, <code class="docutils literal notranslate"><span class="pre">4152</span></code>,<br/> <code class="docutils literal notranslate"><span class="pre">8123</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4117</span></code>, <code class="docutils literal notranslate"><span class="pre">4118</span></code>, <code class="docutils literal notranslate"><span class="pre">4119</span></code>, <br/><code class="docutils literal notranslate"><span class="pre">4121</span></code>,<br/> <code class="docutils literal notranslate"><span class="pre">4131</span></code>, <code class="docutils literal notranslate"><span class="pre">4134</span></code>, <code class="docutils literal notranslate"><span class="pre">4135</span></code>, <br/><code class="docutils literal notranslate"><span class="pre">4144</span></code>, <br/><code class="docutils literal notranslate"><span class="pre">4164</span></code>, <code class="docutils literal notranslate"><span class="pre">4167</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sunsynk</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">stand-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self-checking</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Inverter</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">standby</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">selftest</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">alarm</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">fault</span></code></p></th>
+<th class="head"><p>custom states</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>EasunSMW8_SA</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+<td><p><strong>solar_battery</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">solar/battery</span></code><br /> <strong>grid</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">grid</span></code><br /> <strong>power_saving</strong>: <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">saving</span></code><br /> <strong>power_on</strong>: <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">on</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>FoxESS</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">waiting</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">self</span> <span class="pre">test</span></code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">recoverable</span> <span class="pre">fault</span></code>, <code class="docutils literal notranslate"><span class="pre">unrecoverable</span> <span class="pre">fault</span></code></p></td>
+<td><p><strong>ongrid</strong>: <code class="docutils literal notranslate"><span class="pre">on</span> <span class="pre">grid</span></code><br /> <strong>offgrid</strong>: <code class="docutils literal notranslate"><span class="pre">off</span> <span class="pre">grid</span> <span class="pre">/</span> <span class="pre">eps</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Goodwe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">wait</span> <span class="pre">mode</span></code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span> <span class="pre">mode</span></code></p></td>
+<td><p><strong>ongrid</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span> <span class="pre">(on-grid)</span></code><br /> <strong>offgrid</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span> <span class="pre">(off-grid)</span></code><br /> <strong>flash</strong>: <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">flash</span> <span class="pre">mode</span></code><br /> <strong>check</strong>: <code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span> <span class="pre">mode</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GoodweGrid</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><strong>idle</strong>: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">idle</span></code><br /> <strong>exporting</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">exporting</span></code><br /> <strong>importing</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">importing</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Huawei</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">standby</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">spot</span> <span class="pre">check</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">grid-connected,</span> <span class="pre">grid-connected</span> <span class="pre">normally</span></code>, <br/><code class="docutils literal notranslate"><span class="pre">grid-connected,</span> <span class="pre">grid</span> <span class="pre">connection</span> <span class="pre">with</span> <span class="pre">derating</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">power</span> <span class="pre">rationing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">grid-connected,</span> <span class="pre">grid</span> <span class="pre">connection</span> <span class="pre">with</span> <span class="pre">derating</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">internal</span> <span class="pre">causes</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">solar</span> <span class="pre">inverter</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stop</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">faults</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">power</span> <span class="pre">rationing</span></code></p></td>
+<td><p><strong>shutdown</strong>: <code class="docutils literal notranslate"><span class="pre">shutdown</span></code><br />  <strong>normalstop</strong>: <code class="docutils literal notranslate"><span class="pre">normal</span> <span class="pre">stop</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Solax</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">waiting</span></code>, <code class="docutils literal notranslate"><span class="pre">waitmode</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code>, <code class="docutils literal notranslate"><span class="pre">idle</span></code>, <code class="docutils literal notranslate"><span class="pre">idlemode</span></code>, <code class="docutils literal notranslate"><span class="pre">idle</span> <span class="pre">mode</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">standby</span></code>, <code class="docutils literal notranslate"><span class="pre">standbymode</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8</span></code>, <code class="docutils literal notranslate"><span class="pre">self</span> <span class="pre">testing</span></code>, <code class="docutils literal notranslate"><span class="pre">selftest</span></code>, <code class="docutils literal notranslate"><span class="pre">self</span> <span class="pre">test</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">normalmode</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span> <span class="pre">mode</span></code></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">permanent</span> <span class="pre">fault</span></code>, <code class="docutils literal notranslate"><span class="pre">permanentfaultmode</span></code>, <code class="docutils literal notranslate"><span class="pre">permanent</span> <span class="pre">fault</span> <span class="pre">mode</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code>, <code class="docutils literal notranslate"><span class="pre">faultmode</span></code></p></td>
+<td><p><strong>offgrid</strong>: <code class="docutils literal notranslate"><span class="pre">6</span></code>, <code class="docutils literal notranslate"><span class="pre">off-grid</span> <span class="pre">waiting</span></code>, <code class="docutils literal notranslate"><span class="pre">epscheckmode</span></code>, <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">off-grid</span></code>, <code class="docutils literal notranslate"><span class="pre">epsmode</span></code>, <code class="docutils literal notranslate"><span class="pre">eps</span> <span class="pre">mode</span></code><br /> <strong>check</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">checking</span></code>, <code class="docutils literal notranslate"><span class="pre">checkmode</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span></code>, <code class="docutils literal notranslate"><span class="pre">updatemode</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span> <span class="pre">mode</span></code>, <code class="docutils literal notranslate"><span class="pre">eps</span> <span class="pre">check</span> <span class="pre">mode</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Victron</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">fault</span></code></p></td>
+<td><p><strong>off</strong>: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">off</span></code><br/> <strong>lowpower</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">power</span></code><br/> <strong>bulk</strong>: <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">bulk</span></code><br/> <strong>absorption</strong>: <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">absorption</span></code><br/> <strong>float</strong>: <code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code><br/> <strong>storage</strong>: <code class="docutils literal notranslate"><span class="pre">6</span></code>, <code class="docutils literal notranslate"><span class="pre">storage</span></code><br/> <strong>equalize</strong>: <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">equalize</span></code><br/> <strong>passthru</strong>: <code class="docutils literal notranslate"><span class="pre">8</span></code>, <code class="docutils literal notranslate"><span class="pre">passthru</span></code><br/> <strong>inverting</strong>: <code class="docutils literal notranslate"><span class="pre">9</span></code>, <code class="docutils literal notranslate"><span class="pre">inverting</span></code><br/> <strong>powerassist</strong>: <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">assist</span></code><br/> <strong>powersupply</strong>: <code class="docutils literal notranslate"><span class="pre">11</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">supply</span></code><br/> <strong>sustain</strong>: <code class="docutils literal notranslate"><span class="pre">244</span></code>, <code class="docutils literal notranslate"><span class="pre">sustain</span></code><br/> <strong>externalcontrol</strong>: <code class="docutils literal notranslate"><span class="pre">252</span></code>, <code class="docutils literal notranslate"><span class="pre">external</span> <span class="pre">control</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sungrow</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">standby</span></code>,<code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">standby</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">startup</span></code></p></td>
+<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">warn</span> <span class="pre">running</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">update</span> <span class="pre">failed</span></code>, <code class="docutils literal notranslate"><span class="pre">maintain</span> <span class="pre">mode</span></code>,<code class="docutils literal notranslate"><span class="pre">emergency</span> <span class="pre">stop</span></code>,<br/><code class="docutils literal notranslate"><span class="pre">fault</span></code>,<code class="docutils literal notranslate"><span class="pre">unknown</span></code>,<code class="docutils literal notranslate"><span class="pre">un-initialized</span></code>,<code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">loop</span></code>,<br/><code class="docutils literal notranslate"><span class="pre">safe</span> <span class="pre">mode</span></code>,<code class="docutils literal notranslate"><span class="pre">dispatch</span> <span class="pre">run</span></code></p></td>
+<td><p><strong>running</strong>: <code class="docutils literal notranslate"><span class="pre">running</span></code><br/> <strong>offgrid</strong>: <code class="docutils literal notranslate"><span class="pre">off-grid</span> <span class="pre">mode</span></code><br/> <strong>externalcontrol</strong>: <code class="docutils literal notranslate"><span class="pre">external</span> <span class="pre">ems</span> <span class="pre">mode</span></code>,<code class="docutils literal notranslate"><span class="pre">forced</span> <span class="pre">mode</span></code><br/> <strong>shutdown</strong>: <code class="docutils literal notranslate"><span class="pre">shutdown</span></code>,<code class="docutils literal notranslate"><span class="pre">restarting</span></code>,<code class="docutils literal notranslate"><span class="pre">afci</span> <span class="pre">self</span> <span class="pre">test</span> <span class="pre">shutdown</span></code><br/> <strong>normalstop</strong>: <code class="docutils literal notranslate"><span class="pre">stop</span></code><br/> <strong>sustain</strong>: <code class="docutils literal notranslate"><span class="pre">de-rating</span> <span class="pre">running</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Sunsynk  <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code> or <code class="docutils literal notranslate"><span class="pre">standby,</span> <span class="pre">selftest,</span> <span class="pre">normal,</span> <span class="pre">alarm,</span> <span class="pre">fault</span></code>. For Lux <code class="docutils literal notranslate"><span class="pre">0,1,2,4,5,7,8,9,10,11,12,16,17,20,32,40,64,136,192</span></code>. For <code class="docutils literal notranslate"><span class="pre">Solis</span></code> expects a
+numeric
+value <code class="docutils literal notranslate"><span class="pre">0-57</span></code>. For <code class="docutils literal notranslate"><span class="pre">Goodwe</span></code> <code class="docutils literal notranslate"><span class="pre">0,1,2,3,4,5</span></code> or <code class="docutils literal notranslate"><span class="pre">Wait</span> <span class="pre">mode,</span> <span class="pre">Normal</span> <span class="pre">(On-Grid),</span> <span class="pre">Normal</span> <span class="pre">(Off-Grid),</span> <span class="pre">Fault</span> <span class="pre">Mode,</span> <span class="pre">Flash</span> <span class="pre">Mode,</span> <span class="pre">Check</span> <span class="pre">Mode</span></code>. For <code class="docutils literal notranslate"><span class="pre">Goodwe_gridmode</span></code> <code class="docutils literal notranslate"><span class="pre">0,1,2</span></code>
+or
+<code class="docutils literal notranslate"><span class="pre">Idle,</span> <span class="pre">Exporting,</span> <span class="pre">Importing</span></code></p>
+</section>
+</section>
+<section id="custom-element-doesn-t-exist-mlk-power-flow-card-handling">
+<h2>“Custom element doesn’t exist: mlk-power-flow-card” handling<a class="headerlink" href="#custom-element-doesn-t-exist-mlk-power-flow-card-handling" title="Link to this heading"></a></h2>
+<section id="android">
+<h3>Android:<a class="headerlink" href="#android" title="Link to this heading"></a></h3>
+<p>Clear cache in App Info</p>
+</section>
+<section id="ios">
+<h3>iOS:<a class="headerlink" href="#ios" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Clear app cache</p></li>
+<li><p>Clear frontend cache: (Settings &gt; Companion App &gt; Debugging &gt; Reset frontend cache)</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Power FlowCard by Molikk" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples/sunsynk.html" class="btn btn-neutral float-right" title="Sunsynk Inverter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, molikk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    .wy-nav-content {
+        max-width: 1000px !important;
+    }
+
+
+    /* and fix wrap bug per https://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html */
+    .wy-table-responsive table td {
+        /* !important prevents the common CSS stylesheets from overriding
+        this as on RTD they are loaded after this stylesheet */
+        white-space: normal !important;
+    }
+
+    .wy-table-responsive {
+        overflow: visible !important;
+    }
+  </style>
+
+
+
+</body>
+</html>
