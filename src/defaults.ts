@@ -5,6 +5,10 @@ import { AdditionalLoadsViewMode, BatteryBanksViewMode, InverterModel } from './
 export default {
 	schema_version: 1,
 	dev_mode: false,
+	adv_options: {
+		loads_extra_2: false,
+		loads_extra_2_circle: false,
+	},
 	large_font: false,
 	show_solar: true,
 	show_battery: true,

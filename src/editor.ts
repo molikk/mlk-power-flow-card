@@ -144,7 +144,6 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 				this._config['wide_view_mode'] = this._config['wide'];
 			}
 			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
-			console.log("additional_loads_view_mode changed to: " + this._config['load']['additional_loads_view_mode']);
 
 			this._config['schema_version'] = 2;
 
@@ -154,7 +153,6 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			console.log('Updating version to schema 3');
 
 			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
-			console.log("additional_loads_view_mode changed to: " + this._config['load']['additional_loads_view_mode']);
 
 			this._config['schema_version'] = 3;
 
@@ -191,6 +189,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		if (!this._config || !this.hass) {
 			return html``;
 		}
+		const load_extra2_enabled = this._config?.adv_options?.loads_extra_2_enabled || false;
 
 		return html`
 					<ha-form
@@ -259,6 +258,21 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												schema: [
 													{ name: 'refresh_interval', selector: { number: { mode: 'box', min: 1, max: 10000 } } },
 													{ name: 'animations', selector: { boolean: {} } },
+												],
+											},
+										],
+									},
+									{
+										type: 'expandable',
+										title: this._title('adv_options'),
+										schema: [
+											{
+												name: 'adv_options',
+												type: 'grid',
+												schema: [
+													{ name: 'loads_extra_2_enabled', selector: { boolean: {} } },
+													{ name: 'loads_extra_2', selector: { boolean: {} } },
+													{ name: 'loads_extra_2_circle', selector: { boolean: {} } },
 												],
 											},
 										],
@@ -650,10 +664,10 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '1', ''),
-													...this.generateLoadEntities('essential_load', '2', ''),
-													...this.generateLoadEntities('essential_load', '3', ''),
-													...this.generateLoadEntities('essential_load', '4', ''),
+													...this.generateLoadEntities('essential_load', '1', false, ''),
+													...this.generateLoadEntities('essential_load', '2', false, ''),
+													...this.generateLoadEntities('essential_load', '3', false, ''),
+													...this.generateLoadEntities('essential_load', '4', false, ''),
 												],
 											},
 										],
@@ -683,11 +697,11 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '1_1'),
-													...this.generateLoadEntities('essential_load', '1_2'),
-													...this.generateLoadEntities('essential_load', '1_4'),
-													...this.generateLoadEntities('essential_load', '1_5'),
-													...this.generateLoadEntities('essential_load', '1_6'),
+													...this.generateLoadEntities('essential_load', '1_1', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '1_2', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '1_4', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '1_5', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '1_6', load_extra2_enabled),
 												],
 											},
 										],
@@ -717,11 +731,11 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '2_1'),
-													...this.generateLoadEntities('essential_load', '2_2'),
-													...this.generateLoadEntities('essential_load', '2_4'),
-													...this.generateLoadEntities('essential_load', '2_5'),
-													...this.generateLoadEntities('essential_load', '2_6'),
+													...this.generateLoadEntities('essential_load', '2_1', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '2_2', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '2_4', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '2_5', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '2_6', load_extra2_enabled),
 												],
 											},
 										],
@@ -752,12 +766,12 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '3_1'),
-													...this.generateLoadEntities('essential_load', '3_2'),
-													...this.generateLoadEntities('essential_load', '3_3'),
-													...this.generateLoadEntities('essential_load', '3_4'),
-													...this.generateLoadEntities('essential_load', '3_5'),
-													...this.generateLoadEntities('essential_load', '3_6'),
+													...this.generateLoadEntities('essential_load', '3_1', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '3_2', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '3_3', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '3_4', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '3_5', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '3_6', load_extra2_enabled),
 												],
 											},
 										],
@@ -788,12 +802,12 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '4_1'),
-													...this.generateLoadEntities('essential_load', '4_2'),
-													...this.generateLoadEntities('essential_load', '4_3'),
-													...this.generateLoadEntities('essential_load', '4_4'),
-													...this.generateLoadEntities('essential_load', '4_5'),
-													...this.generateLoadEntities('essential_load', '4_6'),
+													...this.generateLoadEntities('essential_load', '4_1', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '4_2', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '4_3', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '4_4', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '4_5', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '4_6', load_extra2_enabled),
 												],
 											},
 										],
@@ -824,12 +838,12 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '5_1'),
-													...this.generateLoadEntities('essential_load', '5_2'),
-													...this.generateLoadEntities('essential_load', '5_3'),
-													...this.generateLoadEntities('essential_load', '5_4'),
-													...this.generateLoadEntities('essential_load', '5_5'),
-													...this.generateLoadEntities('essential_load', '5_6'),
+													...this.generateLoadEntities('essential_load', '5_1', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '5_2', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '5_3', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '5_4', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '5_5', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '5_6', load_extra2_enabled),
 												],
 											},
 										],
@@ -860,12 +874,12 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('essential_load', '6_1'),
-													...this.generateLoadEntities('essential_load', '6_2'),
-													...this.generateLoadEntities('essential_load', '6_3'),
-													...this.generateLoadEntities('essential_load', '6_4'),
-													...this.generateLoadEntities('essential_load', '6_5'),
-													...this.generateLoadEntities('essential_load', '6_6'),
+													...this.generateLoadEntities('essential_load', '6_1', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '6_2', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '6_3', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '6_4', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '6_5', load_extra2_enabled),
+													...this.generateLoadEntities('essential_load', '6_6', load_extra2_enabled),
 												],
 											},
 										],
@@ -935,12 +949,12 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('non_essential_load', '1', ''),
-													...this.generateLoadEntities('non_essential_load', '2', ''),
-													...this.generateLoadEntities('non_essential_load', '3', ''),
-													...this.generateLoadEntities('non_essential_load', '4', ''),
-													...this.generateLoadEntities('non_essential_load', '5', ''),
-													...this.generateLoadEntities('non_essential_load', '6', ''),
+													...this.generateLoadEntities('non_essential_load', '1', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '2', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '3', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '4', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '5', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '6', load_extra2_enabled, ''),
 												],
 											},
 										],
@@ -1066,9 +1080,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('non_essential_load', '1', ''),
-													...this.generateLoadEntities('non_essential_load', '2', ''),
-													...this.generateLoadEntities('non_essential_load', '3', ''),
+													...this.generateLoadEntities('non_essential_load', '1', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '2', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '3', load_extra2_enabled, ''),
 												],
 											},
 										],
@@ -1096,9 +1110,9 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 												name: 'entities',
 												type: 'grid',
 												schema: [
-													...this.generateLoadEntities('non_essential_load', '4', ''),
-													...this.generateLoadEntities('non_essential_load', '5', ''),
-													...this.generateLoadEntities('non_essential_load', '6', ''),
+													...this.generateLoadEntities('non_essential_load', '4', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '5', load_extra2_enabled, ''),
+													...this.generateLoadEntities('non_essential_load', '6', load_extra2_enabled, ''),
 												],
 											},
 										],
@@ -1148,7 +1162,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		];
 	}
 
-	private generatePVEntitiesGroup(id: number, powerName: string = 'power', voltageName: string = 'voltage', currentName: string = 'current_110', productionName: string = 'production') {
+	private generatePVEntitiesGroup(id: number, powerName: string = 'power', voltageName: string = 'voltage', currentName: string = 'current', productionName: string = 'production') {
 		return {
 			type: 'expandable',
 			title: this._title('pv_' + id + '_ent'),
@@ -1167,12 +1181,19 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		};
 	}
 
-	private generateLoadEntities(name: string, id: string, separator: string = '_') {
-		return [
-			{ name: name + separator + id + '', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-			{ name: name + separator + id + '_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-			{ name: name + separator + id + '_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
-		];
+	private generateLoadEntities(name: string, id: string, extra2_enabled: boolean, separator: string = '_') {
+		return extra2_enabled ?
+			[
+				{ name: name + separator + id + '', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+				{ name: name + separator + id + '_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+				{ name: name + separator + id + '_extra2', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+				{ name: name + separator + id + '_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+			]
+			: [
+				{ name: name + separator + id + '', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+				{ name: name + separator + id + '_extra', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+				{ name: name + separator + id + '_toggle', selector: { entity: { domain: ['input_boolean', 'switch'] } } },
+			];
 	}
 
 	private generateOldLoadOptions(name: string, id: string, separator: string = '_') {
@@ -1323,5 +1344,4 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		}
 		return config.load.additional_loads_view_mode;
 	}
-
 }

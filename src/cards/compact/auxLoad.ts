@@ -81,7 +81,7 @@ export class AuxLoad {
 				data.auxLoadDynamicColour,
 				AuxLoad.auxLoadName(config),
 				data.auxLoadState,
-				data.auxLoadExtraState,
+				LoadUtils.extraMode2(config) ? data.auxLoadExtra2State : data.auxLoadExtraState,
 				data.auxLoadToggleState,
 				config.load.auto_scale, data.decimalPlaces,
 				Load.columns, Load.rowAux,
