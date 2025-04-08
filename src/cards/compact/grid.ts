@@ -234,7 +234,7 @@ export class Grid {
 				: `${data.totalGridPower || 0} ${UnitOfPower.WATT}`
 			}`;
 		return svg`
-			${config.inverter.three_phase && config.entities?.grid_ct_power_total
+			${config.entities?.grid_ct_power_total
 			? svg`
 				<a href="#" @click=${(e:Event) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
 					<text id="grid_total_power" x="140" y="220"
