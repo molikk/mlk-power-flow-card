@@ -7,27 +7,40 @@ export class BatteryIconManager {
 
 		let batteryIcon: string, batteryCharge: string, stopColour: string;
 
+		stopColour = this.batteryGradientColor(batteryLevel);
+
 		switch (true) {
 			case batteryLevel >= 25: {
 				const lvl = Math.floor((batteryLevel + 5) / 10) * 10;
 				batteryIcon = this.batteryIcon(lvl);
 				batteryCharge = this.batteryCharge(lvl);
-				stopColour = 'orange';
 				break;
 			}
 			case 10 <= batteryLevel && batteryLevel < 25:
 				batteryIcon = this.batteryIcon(20);
 				batteryCharge = this.batteryCharge(20);
-				stopColour = 'orange';
 				break;
-			case 0 <= batteryLevel && batteryLevel < 10:
 			default:
 				batteryIcon = this.batteryIcon(0);
 				batteryCharge = this.batteryCharge(0);
-				stopColour = 'red';
 				break;
 		}
 		return { batteryIcon, batteryCharge, stopColour, battery0 };
+	}
+
+	private static batteryGradientColor(batteryLevel: number) {
+		switch (true) {
+			case batteryLevel >= 85:
+				return 'green';
+			case 75 <= batteryLevel && batteryLevel < 85:
+				return '#9ACD32';
+			case 45 <= batteryLevel && batteryLevel < 75:
+				return 'gold';
+			case 10 <= batteryLevel && batteryLevel < 45:
+				return 'orange';
+			default:
+				return 'red';
+		}
 	}
 
 	private static batteryIcon(lvl: number) {
