@@ -100,7 +100,7 @@ export class Battery {
 	static generateDuration(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 377.5 : 393.5;
 		const isCharging = config.battery.invert_flow ? data.batteryPower >= 0 : data.batteryPower <= 0;
-		const isFloating = Battery.isFloating(data.stateBatteryCurrent, data.stateBatterySoc);
+		const isFloating = Battery.isFloating(data.stateBatteryCurrent);
 		const formattedResult = config.battery?.runtime_in_kwh ? data.formattedResultCapacity : data.formattedResultTime;
 
 		let text = svg``;
@@ -349,7 +349,7 @@ export class Battery {
 			: bat;
 	}
 
-	static isFloating(stateBatteryCurrent: CustomEntity, stateBatterySoc: CustomEntity) {
-		return stateBatteryCurrent.toNum(2) >= -1.00 && stateBatteryCurrent.toNum(2) <= 1.00 || stateBatterySoc.toNum(0) > 99;
+	static isFloating(stateBatteryCurrent: CustomEntity) {
+		return stateBatteryCurrent.toNum(2) >= -1.00 && stateBatteryCurrent.toNum(2) <= 1.00;
 	}
 }

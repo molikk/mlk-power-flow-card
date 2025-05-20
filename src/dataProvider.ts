@@ -601,14 +601,14 @@ export class DataProvider {
 		}
 
 		// Determine battery colours
-		const batteryColour = this.batteryColour(config.battery.invert_flow, batteryBankPowerState[0].toPower(config.battery?.invert_power), Battery.isFloating(stateBatteryCurrent, stateBatterySoc), batteryChargeColour, batteryColourConfig);
+		const batteryColour = this.batteryColour(config.battery.invert_flow, batteryBankPowerState[0].toPower(config.battery?.invert_power), Battery.isFloating(stateBatteryCurrent), batteryChargeColour, batteryColourConfig);
 		const batteryBatteryBankColour = [
-			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[1].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[1 - 1], batteryBankSocState[1 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[2].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[2 - 1], batteryBankSocState[2 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[3].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[3 - 1], batteryBankSocState[3 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[4].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[4 - 1], batteryBankSocState[4 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[5].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[5 - 1], batteryBankSocState[5 - 1]), batteryChargeColour, batteryColourConfig),
-			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[6].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[6 - 1], batteryBankSocState[6 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[1].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[1 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[2].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[2 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[3].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[3 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[4].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[4 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[5].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[5 - 1]), batteryChargeColour, batteryColourConfig),
+			this.batteryColour(config.battery.invert_flow, batteryBankPowerState[6].toPower(config.battery?.invert_power), Battery.isFloating(batteryBankCurrentState[6 - 1]), batteryChargeColour, batteryColourConfig),
 		];
 		//Set Inverter Status Message and dot
 		let inverterStateColour = '';
