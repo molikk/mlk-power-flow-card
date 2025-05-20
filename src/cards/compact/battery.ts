@@ -112,11 +112,11 @@ export class Battery {
 				break;
 			case !isCharging && !isFloating:
 				text = svg`${localize('common.run')} ${data.batteryCapacity}%`;
-				link =  svg `@${formattedResult}`
+				link = svg`@${formattedResult}`;
 				break;
 			case isCharging && !isFloating:
 				text = svg`${localize('common.charge')} ${data.batteryCapacity}%`;
-				link =  svg `@${formattedResult}`
+				link = svg`@${formattedResult}`;
 				break;
 			case isFloating:
 				text = svg`${localize('common.battery_floating')}`;
@@ -300,6 +300,9 @@ export class Battery {
 
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 312.5 : 325.5;
+		let keyPoints = data.batteryPower > 0 ? '0%; 100%' : '100%; 0%';
+		keyPoints = config.battery.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
+
 		const bat = svg`
 			<svg xmlns="http://www.w3.org/2000/svg" id="bat-frame" x="212.5"
 				 y="${y}" width="78.75"
@@ -334,7 +337,7 @@ export class Battery {
 							  stop-color="red"/>
 						<stop offset="100%"
 							  stop-color="${data.stopColour}"/>
-						<animate attributeName="${config.battery.animate ? 'y2' : 'none'}" dur="6s" values="100%; 0%" repeatCount="indefinite" />
+						<animate attributeName="${config.battery.animate ? 'y2' : 'none'}" dur="6s" values="${keyPoints}" repeatCount="indefinite" />
 					</linearGradient>
 				</defs>
 				<path fill="${config.battery.linear_gradient ? `url(#solar-gradient-${data.timestamp_id})` : data.batteryColour}"
