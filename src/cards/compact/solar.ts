@@ -5,6 +5,7 @@ import { icons } from '../../helpers/icons';
 import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfPower } from '../../const';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
+import { renderCircle } from '../../helpers/circle';
 
 export class Solar {
 
@@ -465,17 +466,17 @@ export class Solar {
 	}
 
 	private static getCircle(condition: boolean, id: string, lineWidth: number, minLineWidth: number, duration: number, invertFlow: boolean) {
-		return condition ? svg`
-				<circle id="${id}-dot" cx="0" cy="0"
-						r="${Math.min(2 + lineWidth + Math.max(minLineWidth - 2, 0), 8)}"
-						fill="${this.solarColour}">
-					<animateMotion dur="${duration}s" repeatCount="indefinite"
-								   keyPoints=${invertFlow ? Utils.invertKeyPoints('0;1') : '0;1'}
-								   keyTimes="0;1" 
-								   calcMode="linear">
-						<mpath href='${this.pvLineMap[id]}'/>
-					</animateMotion>
-				</circle>` : svg``;
+		return renderCircle(
+			condition,
+			id,
+			lineWidth,
+			minLineWidth,
+			this.solarColour,
+			duration,
+			'0;1',
+			invertFlow,
+			this.pvLineMap[id],
+		);
 	}
 
 	private static generateName(X: number, name: string) {

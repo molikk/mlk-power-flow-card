@@ -5,6 +5,7 @@ import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
 import { Load } from './load';
 import { localize } from '../../localize/localize';
+import { renderCircle } from '../../helpers/circle';
 
 export class GridLoad {
 
@@ -191,16 +192,17 @@ export class GridLoad {
 	}
 
 	private static getCircle(condition: boolean, circleId: string, data: DataDto, config: PowerFlowCardConfig, lineId: string) {
-		return condition ? svg`
-			<circle id="${circleId}" cx="0" cy="0"
-					r="${Math.min(2 + data.nonessLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-					fill="${data.nonEssentialLoadMainDynamicColour}">
-				<animateMotion dur="${data.durationCur['ne']}s" repeatCount="indefinite"
-							   keyPoints=${config.grid.ness_invert_flow ? Utils.invertKeyPoints('1;0') : '1;0'}
-							   keyTimes="0;1" calcMode="linear">
-					<mpath href='${lineId}'/>
-				</animateMotion>
-			</circle>` : svg``;
+		return renderCircle(
+			condition,
+			circleId,
+			data.nonessLineWidth,
+			data.minLineWidth,
+			data.nonEssentialLoadMainDynamicColour,
+			data.durationCur['ne'],
+			'1;0',
+			config.grid.ness_invert_flow,
+			lineId,
+		);
 	}
 
 	private static getFlowLine(condition: boolean, flowId: string, lineId: string, line: string, data: DataDto, circle: TemplateResult<2>) {

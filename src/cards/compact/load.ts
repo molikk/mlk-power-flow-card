@@ -3,6 +3,7 @@ import { DataDto, PowerFlowCardConfig } from '../../types';
 import { localize } from '../../localize/localize';
 import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
+import { renderCircle } from '../../helpers/circle';
 
 export class Load {
 	public static readonly LOAD_X = 418;
@@ -73,16 +74,16 @@ export class Load {
 	}
 
 	private static getCircleMotion(condition: boolean, circleId: string, lineId: string, data: DataDto, config: PowerFlowCardConfig, animationSpeed: number) {
-		return condition ? svg`
-			<circle id="${circleId}" cx="0" cy="0"
-					r="${Math.min(2 + data.loadLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-					fill="${config.load.dynamic_colour ? data.flowColour : data.loadColour}">
-				<animateMotion dur="${animationSpeed}s" repeatCount="indefinite"
-							   keyPoints=${config.load.invert_flow ? Utils.invertKeyPoints('0;1') : '0;1'}
-							   keyTimes="0;1" calcMode="linear">
-					<mpath href='${lineId}'/>
-				</animateMotion>
-			</circle>` : svg``;
+		return renderCircle(condition,
+			circleId,
+			data.loadLineWidth,
+			data.minLineWidth,
+			config.load.dynamic_colour ? data.flowColour : data.loadColour,
+			animationSpeed,
+			'0;1',
+			config.load.invert_flow,
+			lineId
+		);
 	}
 
 	static generatePowers(data: DataDto, config: PowerFlowCardConfig) {
@@ -166,12 +167,12 @@ export class Load {
 		if (config.adv_options?.loads_extra_2_enabled) {
 			let x = this.LOAD_X + 2 + 14;
 			let y = 177.5 + 13.5;
-			let circle = data.essIconSize !== 1 && config.adv_options?.loads_extra_2_circle ? svg`	<circle cx="${x}" cy="${y}" r="7" fill="none" stroke-width="1" stroke="${data.loadColour}" /` : svg``;
+			let circle = data.essIconSize !== 1 && config.adv_options?.loads_extra_2_circle ? svg`	<circle cx="${x}" cy="${y}" r="7" fill="none" stroke-width="1" stroke="${data.loadColour}" />` : svg``;
 			let color = data.essIconSize === 1 ? 'black' : data.loadColour;
 
 			extra2Indicator = svg`
 				<a href="#" @click=${() => Utils.handleModeSwitch(config, 'load_extra_2', config.adv_options?.loads_extra_2)}>
-				${circle}>
+				${circle}
 					<text x="${x}" y="${y + 1}" text-anchor="middle" alignment-baseline="middle" stroke="${color}" class="st15">${config.adv_options.loads_extra_2 ? 'I I' : 'I'}</text>
 				</a>
 			`;

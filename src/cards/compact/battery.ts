@@ -4,6 +4,7 @@ import { localize } from '../../localize/localize';
 import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfEnergy, UnitOfPower } from '../../const';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
+import { renderCircle } from '../../helpers/circle';
 
 export class Battery {
 
@@ -112,11 +113,11 @@ export class Battery {
 				break;
 			case !isCharging && !isFloating:
 				text = svg`${localize('common.run')} ${data.batteryCapacity}%`;
-				link =  svg `@${formattedResult}`
+				link = svg`@${formattedResult}`;
 				break;
 			case isCharging && !isFloating:
 				text = svg`${localize('common.charge')} ${data.batteryCapacity}%`;
-				link =  svg `@${formattedResult}`
+				link = svg`@${formattedResult}`;
 				break;
 			case isFloating:
 				text = svg`${localize('common.battery_floating')}`;
@@ -185,20 +186,19 @@ export class Battery {
 
 	static generateFlowLines(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 285 : 290;
-		let keyPoints = data.batteryPower > 0 ? '1;0' : '0;1';
-		keyPoints = config.battery.invert_flow ? Utils.invertKeyPoints(keyPoints) : keyPoints;
 
-		const circle = data.batteryPower != 0 && config.low_resources.animations ? svg`
-			<circle id="power-dot" cx="0" cy="0"
-					r="${Math.min(2 + data.batLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-					fill="${Battery.batteryColour(data, config)}">
-				<animateMotion dur="${data.durationCur['battery']}s" repeatCount="indefinite"
-							   keyPoints=${keyPoints}
-								 keyTimes="0;1" 
-								 calcMode="linear">
-					<mpath href='#bat-line'/>
-				</animateMotion>
-			</circle>` : svg``;
+		const circle = renderCircle(
+			data.batteryPower != 0 && config.low_resources.animations,
+			'bat-power-dot',
+			data.batLineWidth,
+			data.minLineWidth,
+			Battery.batteryColour(data, config),
+			data.durationCur['battery'],
+			data.batteryPower > 0 ? '1;0' : '0;1',
+			config.battery.invert_flow,
+			'#bat-line',
+		);
+
 		return svg`
  			<svg id="battery-flow" style="overflow: visible">
 				<path id="bat-line"
@@ -228,7 +228,7 @@ export class Battery {
 		if (data.stateBatteryRemainingStorage?.isValid()) {
 			return svg`
 				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryRemainingStorage.entity_id)}>
-					<text x="${x}" y="${y}" 
+					<text id="battery_remainig_storage" x="${x}" y="${y}"
 						class="st3 ${align}"
 						  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
 						  fill="${data.batteryColour}">
@@ -243,7 +243,7 @@ export class Battery {
 			: Utils.toNum((data.batteryEnergy * (data.stateBatterySoc.toNum(2) / 100) / 1000), 2).toFixed(2);
 
 		return svg`
-			<text x="${x}" y="${y}" class="st3 ${align}"
+			<text id="battery_remainig_storage_calc" x="${x}" y="${y}" class="st3 ${align}"
 				  display="${!config.battery.show_remaining_energy ? 'none' : ''}"
 				  fill="${data.batteryColour}">
 				${storage}
