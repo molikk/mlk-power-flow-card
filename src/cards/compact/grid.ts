@@ -5,6 +5,7 @@ import { UnitOfPower, validGridConnected, validGridDisconnected } from '../../co
 import { icons } from '../../helpers/icons';
 import { localize } from '../../localize/localize';
 import { LoadUtils } from './loadUtils';
+import { renderCircle } from '../../helpers/circle';
 
 export class Grid {
 
@@ -106,16 +107,17 @@ export class Grid {
 	}
 
 	private static getCircle(condition: boolean, circleId: string, data: DataDto, animationDuration: number, keyPoints: string, lineId: string) {
-		return condition ? svg`
-				<circle id="${circleId}" cx="0" cy="0"
-						r="${Math.min(2 + data.gridLineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.gridColour}">
-					<animateMotion dur="${animationDuration}s" repeatCount="indefinite"
-								   keyPoints="${keyPoints}"
-								   keyTimes="0;1" calcMode="linear">
-						<mpath href='${lineId}'/>
-					</animateMotion>
-				</circle>` : svg``;
+		return renderCircle(
+			condition,
+			circleId,
+			data.gridLineWidth,
+			data.minLineWidth,
+			data.gridColour,
+			animationDuration,
+			keyPoints,
+			false,
+			lineId
+		);
 	}
 
 	static generateIcon(data: DataDto, config: PowerFlowCardConfig) {

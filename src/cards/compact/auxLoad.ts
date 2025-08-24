@@ -5,6 +5,7 @@ import { LoadUtils } from './loadUtils';
 import { Utils } from '../../helpers/utils';
 import { UnitOfPower } from '../../const';
 import { localize } from '../../localize/localize';
+import { renderCircle } from '../../helpers/circle';
 
 export class AuxLoad {
 
@@ -61,17 +62,16 @@ export class AuxLoad {
 	}
 
 	private static getCircle(condition: boolean, circleId: string, lineId: string, lineWidth: number, data: DataDto, duration: number, keyPoints: string) {
-		return condition ? svg`
-				<circle id="${circleId}" cx="0" cy="0"
-						r="${Math.min(2 + lineWidth + Math.max(data.minLineWidth - 2, 0), 8)}"
-						fill="${data.auxLoadMainDynamicColour}">
-					<animateMotion dur="${duration}s" repeatCount="indefinite"
-								   keyPoints=${keyPoints}
-								   keyTimes="0;1" 
-								   calcMode="linear">
-						<mpath href='${lineId}'/>
-					</animateMotion>
-				</circle>` : svg``;
+		return renderCircle(
+			condition,
+			circleId,
+			lineWidth,
+			data.minLineWidth,
+			data.auxLoadMainDynamicColour,
+			duration,
+			keyPoints,
+			false,
+			lineId);
 	}
 
 	static generateLoad(data: DataDto, config: PowerFlowCardConfig, id: number) {
