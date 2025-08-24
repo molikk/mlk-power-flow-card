@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power FlowCard by Molikk &mdash; mlk-power-flow-card  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuration" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/sunsynk.html">Sunsynk Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/foxess.html">FoxESS Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/goodwe.html">Goodwe Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/huawei.html">Huawei Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/lux.html">Lux Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/powmr.html">PowMr Inverters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/solax.html">SolaX Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/solis.html">Solis Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/victron.html">Victron Inverters</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribute</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute/bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/devcontainer.html">VS Code - DevContainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/devcycle.html">Development Cycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/docs.html">Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">mlk-power-flow-card</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Power FlowCard by Molikk</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="power-flowcard-by-molikk">
+<h1>Power FlowCard by Molikk<a class="headerlink" href="#power-flowcard-by-molikk" title="Link to this heading"></a></h1>
+<p>An animated Home Assistant card to emulate the power flow that’s shown on the Sunsynk Inverter screen.
+You can use this to display data from many inverters e.g. Sunsynk, Deye, Solis, Lux, FoxESS, Goodwe, Huawei etc. as long as you have the required sensor data.
+This project was based and heavily influenced by <a class="reference external" href="https://github.com/slipx06/sunsynk-power-flow-card">sunsynk-power-flow-card</a></p>
+<p>See the project’s <a class="reference external" href="https://molikk.github.io/mlk-power-flow-card/index.html">documentation</a> for integration methods and examples.</p>
+<p><a class="reference external" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=molikk&amp;amp;repository=mlk-power-flow-card&amp;amp;category=plugin"><img alt="Open your Home Assistant instance and open a repository inside the Home Assistant Community Store." src="https://my.home-assistant.io/badges/hacs_repository.svg" /></a>
+<img alt="GitHub latest version" src="https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?include_prereleases&amp;style=for-the-badge&amp;label=Latest%20version" />
+<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/molikk/mlk-power-flow-card?style=for-the-badge" />
+<a target="_blank" href="https://www.buymeacoffee.com/molikk"><img src="https://img.buymeacoffee.com/button-api/?text=&nbsp;&slug=molikk&button_colour=5F7FFF&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" height="28" width="60" /></a></p>
+<!-- [![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge)](https://community.home-assistant.io/t/sunsynk-deye-inverter-power-flow-card/562933/1) -->
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Animated power flow based on positive/negative/zero sensor values with configurable dynamic speed.</p></li>
+<li><p>Grid connected status.</p></li>
+<li><p>Dynamic battery image based on SOC with battery banks detailed info</p></li>
+<li><p>Configurable battery size and shutdown SOC to calculate and display remaining battery runtime based on current battery usage and system time slot setting i.e. SOC, Grid Charge. Can be toggled off.</p></li>
+<li><p>Daily Totals that can be toggled on or off.</p></li>
+<li><p>Hide all solar data if not installed or specify number of mppts in use (up to 5 MPPTs). Set custom MPPT labels.</p></li>
+<li><p>Custom card scaling by turning on Wide View Mode or setting Card height and width.</p></li>
+<li><p>AUX and Non-essential can be hidden from the full card or assigned configurable labels.</p></li>
+<li><p>Customisable - Change colours and images.</p></li>
+<li><p>Most entities can be clicked to show more-info dialog.</p></li>
+<li><p>Optional data points include self-sufficiency and ratio percentages, battery temperature, AC and DC temperature.</p></li>
+<li><p>Display additional grid/non-essential (up to 6 items), essential (up to 23 items) and AUX loads (up to 5 items).</p></li>
+<li><p>Display energy cost per kWh and solar sell status.</p></li>
+<li><p>Select your inverter model for custom inverter status and battery status messages i.e. Sunsynk, Lux, Goodwe, Solis, Easun.</p></li>
+<li><p>“Use Timer” setting and “Energy Pattern” setting (Priority Load or Priority Battery) shown as dynamic icons, with the ability to hide if not required. If setup as switches can be toggled by clicking on the card.</p></li>
+</ul>
+</section>
+<section id="screenshots">
+<h2>Screenshots<a class="headerlink" href="#screenshots" title="Link to this heading"></a></h2>
+<section id="non-solar-view">
+<h3>non solar view<a class="headerlink" href="#non-solar-view" title="Link to this heading"></a></h3>
+<p><img alt="image" src="https://github.com/molikk/mlk-power-flow-card/assets/12862966/25d458f7-9137-442e-a2c0-85e179ee07d0" /></p>
+</section>
+<section id="non-battery-view">
+<h3>non battery view<a class="headerlink" href="#non-battery-view" title="Link to this heading"></a></h3>
+<p><img alt="image" src="https://github.com/molikk/mlk-power-flow-card/assets/12862966/3cfcff4b-a609-41b6-9da1-eea63ff44c2d" /></p>
+</section>
+<section id="offgrid-view-no-grid-view">
+<h3>offgrid view (no grid view)<a class="headerlink" href="#offgrid-view-no-grid-view" title="Link to this heading"></a></h3>
+<p><img alt="image" src="https://github.com/molikk/mlk-power-flow-card/assets/12862966/a269a066-f8e1-41a7-af1f-1411d89cd438" /></p>
+</section>
+<section id="fully-detailed-view-with-grid-non-essential-aux-essential-loads-and-battery-bank-details-and-with-detailed-solar-production-up-to-5-mppts-with-solar-production-prediction">
+<h3>Fully detailed view with grid/non-essential, aux &amp; essential Loads and battery bank details and with detailed solar production up to 5 MPPTs with solar production &amp; prediction<a class="headerlink" href="#fully-detailed-view-with-grid-non-essential-aux-essential-loads-and-battery-bank-details-and-with-detailed-solar-production-up-to-5-mppts-with-solar-production-prediction" title="Link to this heading"></a></h3>
+<p><img alt="image" src="https://github.com/user-attachments/assets/451e496e-402a-43cb-b583-bb795096016b" /></p>
+</section>
+<section id="wide-view-mode">
+<h3>Wide view mode<a class="headerlink" href="#wide-view-mode" title="Link to this heading"></a></h3>
+<p><img alt="image" src="https://github.com/user-attachments/assets/b2ce7f06-f06e-48d2-99eb-b5edb0831db9" /></p>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>The card can be installed via HACS (recommended) or manually.</p>
+<section id="installation-using-hacs">
+<h3>Installation using HACS<a class="headerlink" href="#installation-using-hacs" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://github.com/custom-components/hacs"><img alt="hacs_badge" src="https://img.shields.io/badge/HACS-Default-blue.svg" /></a></p>
+<ol class="arabic simple">
+<li><p>Install HACS.</p></li>
+<li><p>Search &amp; Install mlk-power-flow-card or click the button below.</p></li>
+</ol>
+<p><a class="reference external" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=molikk&amp;amp;repository=mlk-power-flow-card&amp;amp;category=plugin"><img alt="Open your Home Assistant instance and open a repository inside the Home Assistant Community Store." src="https://my.home-assistant.io/badges/hacs_repository.svg" /></a></p>
+</section>
+<section id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Create a new directory under <code class="docutils literal notranslate"><span class="pre">www</span></code> and name it <code class="docutils literal notranslate"><span class="pre">mlk-power-flow-card</span></code> e.g <code class="docutils literal notranslate"><span class="pre">www/mlk-power-flow-card/</span></code>.</p></li>
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">mlk-power-flow-card.js</span></code> into the directory.</p></li>
+<li><p>Add the resource to your Dashboard. You can append the filename with a <code class="docutils literal notranslate"><span class="pre">?ver=x</span></code> and increment x each time you download a new version to force a reload and avoid using a cached version. It is also a good idea to clear your browser cache.</p></li>
+</ol>
+<p><img alt="image" src="https://github.com/molikk/mlk-power-flow-card/assets/12862966/e5d0618e-b4f8-4534-8e68-130cd220b618" /></p>
+</section>
+<section id="credits">
+<h3>Credits<a class="headerlink" href="#credits" title="Link to this heading"></a></h3>
+<p>This project was based and heavily influenced by <a class="reference external" href="https://github.com/slipx06/sunsynk-power-flow-card">sunsynk-power-flow-card</a>. Thanks for such a great starting point!</p>
+</section>
+</section>
+</section>
+<section id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/sunsynk.html">Sunsynk Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/foxess.html">FoxESS Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/goodwe.html">Goodwe Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/huawei.html">Huawei Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/lux.html">Lux Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/powmr.html">PowMr Inverters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/solax.html">SolaX Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/solis.html">Solis Inverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/victron.html">Victron Inverters</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contribute</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute/bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/devcontainer.html">VS Code - DevContainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/devcycle.html">Development Cycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute/docs.html">Documentation</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, molikk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    .wy-nav-content {
+        max-width: 1000px !important;
+    }
+
+
+    /* and fix wrap bug per https://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html */
+    .wy-table-responsive table td {
+        /* !important prevents the common CSS stylesheets from overriding
+        this as on RTD they are loaded after this stylesheet */
+        white-space: normal !important;
+    }
+
+    .wy-table-responsive {
+        overflow: visible !important;
+    }
+  </style>
+
+
+
+</body>
+</html>
