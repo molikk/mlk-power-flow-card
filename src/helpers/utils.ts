@@ -20,6 +20,11 @@ export class Utils {
 		return numberValue;
 	}
 
+	static toStr(val: string | number, decimals?: number, invert?: boolean, abs?: boolean): string {
+		return Utils.toNum(val, decimals, invert, abs).toFixed(decimals);
+	}
+
+
 	static invertKeyPoints(keyPoints: string) {
 		return keyPoints.split(';').reverse().join(';');
 	}

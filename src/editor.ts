@@ -493,6 +493,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'runtime_in_kwh', selector: { boolean: {} } },
 											{ name: 'max_power', selector: { number: {} } },
 											{ name: 'path_threshold', selector: { number: {} } },
+											{ name: 'use_battery_banks_values', selector: { boolean: {} } },
 										],
 									},
 									{
