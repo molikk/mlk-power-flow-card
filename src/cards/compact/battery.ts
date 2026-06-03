@@ -331,21 +331,19 @@ export class Battery {
 
 	static generateSOCinProg(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
+
 		return data.inverterProg.show ? svg`
-			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
-				<text id="battery_prog_soc_184_capacity" x="330" y="${y + 7}" fill=${data.batteryColour}
+			<text id="battery_prog_soc_184_capacity" x="330" y="${y + 7}" fill=${data.batteryColour}
 					class="st13 st8 left-align"
 					display="${config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
 				| ${data.inverterProg.capacity || 0}%
-				</text>
-			</a>
-			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
-				<text id="battery_prog_soc_184_soc_shutdown" x="330" y="${y + 7}" fill=${data.batteryColour}
+			</text>`
+			: svg`
+			<text id="battery_prog_soc_184_soc_shutdown" x="330" y="${y + 7}" fill=${data.batteryColour}
 					class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
 					display="${config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				| ${data.batteryShutdown || 0}%
-				</text>
-			</a>
+			</text>
 			<text id="battery_prog_soc_184_line" x="331" y="${y + 7}" fill=${data.batteryColour}
               		class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
               		display="${config.battery.shutdown_soc_offgrid ? '' : 'none'}" >
@@ -361,7 +359,7 @@ export class Battery {
 				  	display="${config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
 				${data.shutdownOffGrid}%
 			</text>`
-			: svg``;
+			;
 	}
 
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
