@@ -180,6 +180,7 @@ export const compactCard = (config: PowerFlowCardConfig, inverterImg: string, da
 		                            ${Battery.generateDailyCharge(data, config)}
 		                            ${Battery.generateDailyDischarge(data, config)}
 		                            ${Battery.generateSOC(data, config)}
+		                            ${Battery.generateSOCinProg(data, config)}
 		                            ${Battery.generateSOH(data)}
 		                            ${Battery.generateCapacity(data, config)}
 		                            ${Battery.generateFlowLines(data, config)}

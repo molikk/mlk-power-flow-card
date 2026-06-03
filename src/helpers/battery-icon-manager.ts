@@ -1,8 +1,7 @@
 import { CustomEntity } from '../inverters/dto/custom-entity';
 
 export class BatteryIconManager {
-	static convert(state_battery_soc: CustomEntity) {
-		const batteryLevel = parseInt(state_battery_soc.state);
+	static convert(batteryLevel: number) {
 		const battery0 = this.batteryCharge(0);
 
 		let batteryIcon: string, batteryCharge: string, stopColour: string;

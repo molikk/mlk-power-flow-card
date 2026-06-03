@@ -90,7 +90,7 @@ export function convertToCustomEntity(entity): CustomEntity {
 	return {
 		...entity,
 		toNum: (decimals?: number, invert?: boolean) => Utils.toNum(entity?.state, decimals, invert),
-		toStr: (decimals?: number, invert?: boolean, abs?: boolean) => Utils.toNum(entity?.state, decimals, invert, abs).toFixed(decimals),
+		toStr: (decimals?: number, invert?: boolean, abs?: boolean) => Utils.toStr(entity?.state, decimals, invert, abs),
 		isValid: () => isValid || false,
 		isValidSwitch: () => isValid && ['on', 'off', 'On', 'Off', 'ON', 'OFF', 0, 1, true, false].includes(entity?.state) || false,
 		isValidElectric: () => isValid && ['W', 'Wh', 'kW', 'kWh', 'MW', 'MWh', 'J', 'kJ', 'MJ', 'GJ', 'A', 'mA', 'V', 'mV', 'Hz', 'BTU/h'].includes(entity?.attributes?.unit_of_measurement) || false,

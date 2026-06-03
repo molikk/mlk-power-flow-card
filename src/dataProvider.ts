@@ -8,6 +8,7 @@ import { InverterFactory } from './inverters/inverter-factory';
 import { BatteryIconManager } from './helpers/battery-icon-manager';
 import { icons } from './helpers/icons';
 import { Battery } from './cards/compact/battery';
+import { BatteryUtils } from './cards/compact/batteryUtils';
 
 export class DataProvider {
 	private readonly _config!: PowerFlowCardConfig;
@@ -55,6 +56,7 @@ export class DataProvider {
 		//Battery
 		const stateBatteryVoltage = this.getEntity('entities.battery_voltage_183');
 		const stateBatterySoc = this.getEntity('entities.battery_soc_184');
+
 		const stateBatteryCurrent = this.getEntity('entities.battery_current_191');
 		const stateBatteryTemp = this.getEntity('entities.battery_temp_182', { state: '' });
 		const stateBatteryStatus = this.getEntity('entities.battery_status', { state: '' });
@@ -77,6 +79,8 @@ export class DataProvider {
 			batteryBankEnergy,
 		} = this.getBatteryBankEntities(this._config);
 
+
+		const batterySocValue = BatteryUtils.getBatterySocValue(config.battery?.use_battery_banks_values, stateBatterySoc, config.battery?.battery_banks, batteryBankSocState);
 
 		//Load
 		const stateEssentialPower = this.getEntity('entities.essential_power');
@@ -281,7 +285,7 @@ export class DataProvider {
 		const enableAutarky = config.inverter?.autarky;
 		const enableTimer = !config.entities.use_timer_248 ? false : stateUseTimer.state;
 		const priorityLoad = !config.entities.priority_load_243 ? false : statePriorityLoad.state;
-		const batteryPower = batteryBankPowerState[0].toPower(config.battery?.invert_power);
+		const batteryPower = BatteryUtils.getBatteryPowerValue(config.battery.use_battery_banks_values, batteryBankPowerState, config.battery.battery_banks, config.battery?.invert_power);
 
 		const cardHeight = this.getEntity('card_height', { state: config.card_height?.toString() ?? '' }).state;
 		const cardWidth = this.getEntity('card_width', { state: config.card_width?.toString() ?? '' }).state;
@@ -522,35 +526,10 @@ export class DataProvider {
 
 		let maximumSOC = stateSOCEndOfCharge.toNum();
 		maximumSOC = Math.max(50, Math.min(maximumSOC, 100));
-
 		//calculate battery capacity
 		let batteryCapacity: number = 0;
 		if (config.show_battery) {
-			switch (true) {
-				case !inverterProg.show:
-					if (config.battery.invert_flow ? batteryPower < 0 : batteryPower > 0) {
-						if (
-							(gridStatus === 'on' || gridStatus === '1' || gridStatus.toLowerCase() === 'on-grid') &&
-							!inverterProg.show
-						) {
-							batteryCapacity = batteryShutdown;
-						} else if (
-							(gridStatus === 'off' || gridStatus === '0' || gridStatus.toLowerCase() === 'off-grid') &&
-							stateShutdownSOCOffGrid.notEmpty() &&
-							!inverterProg.show
-						) {
-							batteryCapacity = shutdownOffGrid;
-						} else {
-							batteryCapacity = batteryShutdown;
-						}
-					} else if (config.battery.invert_flow ? batteryPower > 0 : batteryPower < 0) {
-						batteryCapacity = maximumSOC;
-					}
-					break;
-
-				default:
-					batteryCapacity = inverterSettings.getBatteryCapacity(batteryPower, gridStatus, batteryShutdown, inverterProg, stateBatterySoc, maximumSOC, config.battery.invert_flow);
-			}
+			batteryCapacity = inverterSettings.getBatteryCapacityTarget(batteryPower, gridStatus, shutdownOffGrid || batteryShutdown || 0, inverterProg, batterySocValue, maximumSOC, config.battery.invert_flow);
 		}
 
 		//calculate remaining battery time to charge or discharge
@@ -567,13 +546,11 @@ export class DataProvider {
 
 		if (config.show_battery || batteryEnergy !== 0) {
 			if (batteryPower === 0) {
-				totalSeconds = stateBatterySoc.toNum() - batteryShutdown;
+				totalSeconds = batterySocValue - batteryShutdown;
 			} else if (config.battery.invert_flow ? batteryPower < 0 : batteryPower > 0) {
-				totalSeconds =
-					(stateBatterySoc.toNum() - batteryCapacity) / Math.abs(batteryPower);
+				totalSeconds = (batterySocValue - batteryCapacity) / Math.abs(batteryPower);
 			} else if (config.battery.invert_flow ? batteryPower > 0 : batteryPower < 0) {
-				totalSeconds =
-					(batteryCapacity - stateBatterySoc.toNum(0)) / Math.abs(batteryPower);
+				totalSeconds = (batteryCapacity - batterySocValue) / Math.abs(batteryPower);
 			}
 			totalSeconds = totalSeconds * batteryEnergy * 60 * 60 / 100;
 			formattedResultCapacity = Utils.convertValueNew(totalSeconds / 60 / 60 * Math.abs(batteryPower), UnitOfEnergy.WATT_HOUR, 2, true);
@@ -935,7 +912,7 @@ export class DataProvider {
 				break;
 		}
 
-		const { batteryIcon, batteryCharge, stopColour, battery0 } = BatteryIconManager.convert(stateBatterySoc);
+		const { batteryIcon, batteryCharge, stopColour, battery0 } = BatteryIconManager.convert(batterySocValue);
 
 		//Calculate pv efficiency
 		const pv1MaxPower = this.getEntity('solar.pv1_max_power', { state: config.solar.pv1_max_power?.toString() ?? '' });
@@ -1162,6 +1139,7 @@ export class DataProvider {
 			stateUseTimer,
 			batteryStateMsg,
 			stateBatterySoc,
+			batterySocValue,
 			inverterProg,
 
 			batteryPercentage,
@@ -2008,9 +1986,9 @@ export class DataProvider {
 	 * @param defaultValue
 	 */
 	private getEntity(entity: keyof PowerFlowCardConfig,
-	                  defaultValue: Partial<CustomEntity> | null = {
-		                  state: '0', attributes: { unit_of_measurement: '' },
-	                  }): CustomEntity {
+					  defaultValue: Partial<CustomEntity> | null = {
+						  state: '0', attributes: { unit_of_measurement: '' },
+					  }): CustomEntity {
 		return getEntity(this._config, this.hass, entity, defaultValue);
 	}
 

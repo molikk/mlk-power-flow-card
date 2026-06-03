@@ -233,6 +233,7 @@
     "remaining_energy_to_shutdown": "Show Remaining Energy to Shutdown",
     "runtime_in_kwh": "Show Run to/Charge To in kWh",
     "path_threshold": "Path Threshold",
+    "use_battery_banks_values": "Use Battery Banks Values",
     "label_daily_grid_buy": "Daily Grid Buy Label",
     "label_daily_grid_sell": "Daily Grid Sell Label",
     "invert_flow": "Invert Flow",

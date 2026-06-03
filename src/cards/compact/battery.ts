@@ -5,6 +5,7 @@ import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfElectricPotential, UnitOfEnergy, UnitOfPower } from '../../const';
 import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { renderCircle } from '../../helpers/circle';
+import { BatteryUtils } from './batteryUtils';
 
 export class Battery {
 
@@ -23,21 +24,31 @@ export class Battery {
 
 	static generatePower(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 302 : 307;
+		const power = BatteryUtils.getBatteryPowerValue(
+			config.battery.use_battery_banks_values,
+			data.batteryBankPowerState,
+			config.battery.battery_banks,
+			config.battery.invert_power,
+		);
 		const value = config.battery.auto_scale
 			? `${config.battery.show_absolute
-				? Utils.convertValueNew(Math.abs(data.batteryBankPowerState[0].toNum(data.decimalPlaces)), data.batteryBankPowerState[0].getUOM(), data.decimalPlaces)
-				: Utils.convertValueNew(data.batteryBankPowerState[0].toNum(data.decimalPlaces), data.batteryBankPowerState[0].getUOM(), data.decimalPlaces) || '0'}`
-			: `${data.batteryBankPowerState[0].toStr(config.decimal_places, config.battery?.invert_power, config.battery.show_absolute)} ${UnitOfPower.WATT}`
-		;
+				? Utils.convertValueNew(Math.abs(power), UnitOfPower.WATT, data.decimalPlaces)
+				: Utils.convertValueNew(power, UnitOfPower.WATT, data.decimalPlaces) || '0'}`
+			: `${Utils.toStr(power, config.decimal_places, config.battery?.invert_power, config.battery.show_absolute)} ${UnitOfPower.WATT}`
+			;
 
-		return svg`
-				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.battery_power_190)}>
-            <text id="data.batteryPower_190" x="239"
+		const text = svg`
+			<text id="batteryPower_190" x="239"
                   y="${y}"
-                  display="${config.entities.battery_power_190 === 'none' ? 'none' : ''}"
+                  display="${BatteryUtils.isPowerValid(data, config) ? '' : 'none'}"
                   fill=${Battery.batteryColour(data, config)} class="${data.largeFont !== true ? 'st14' : 'st4'} st8">
                 ${value}
-            </text>
+            </text>`;
+
+
+		return config.battery.use_battery_banks_values ? text : svg`
+		<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.battery_power_190)}>
+            ${text}
         </a>
 		`;
 	}
@@ -53,14 +64,24 @@ export class Battery {
 	static generateVoltage(data: DataDto, config: PowerFlowCardConfig) {
 		const x = Battery.showInnerBatteryBanks(config) ? 202 : 281;
 		const y = Battery.showOuterBatteryBanks(config) ? 294 : 299;
+		const voltage = BatteryUtils.getBatteryVoltageValue(
+			config.battery.use_battery_banks_values,
+			data.stateBatteryVoltage,
+			config.battery.battery_banks,
+			data.batteryBankVoltageState,
+			config.decimal_places);
 
-		return svg`
-				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryVoltage.entity_id)}>
-            <text id="battery_voltage_183" x="${x}" y="${y}"
-                  display="${data.stateBatteryVoltage.isValid() ? '' : 'none'}"
+		const text = svg`
+			<text id="battery_voltage_183" x="${x}" y="${y}"
+                  display="${BatteryUtils.isVoltageValid(data, config) ? '' : 'none'}"
                   fill=${data.batteryColour} class="st3 ${Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align'}">
-                ${data.stateBatteryVoltage.toStr(data.decimalPlaces)} ${UnitOfElectricPotential.VOLT}
+                ${Utils.toStr(voltage, data.decimalPlaces)} ${UnitOfElectricPotential.VOLT}
             </text>
+		`;
+
+		return config.battery.use_battery_banks_values ? text : svg`
+		<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryVoltage.entity_id)}>
+        	${text}
         </a>
 		`;
 	}
@@ -68,14 +89,26 @@ export class Battery {
 	static generateCurrent(data: DataDto, config: PowerFlowCardConfig) {
 		const x = Battery.showInnerBatteryBanks(config) ? 202 : 281;
 		const y = Battery.showOuterBatteryBanks(config) ? 307 : 312;
+		const align = Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align';
+		const current = BatteryUtils.getBatteryCurrentValue(
+			config.battery.use_battery_banks_values,
+			data.stateBatteryCurrent,
+			config.battery.battery_banks,
+			data.batteryBankCurrentState,
+			config.decimal_places,
+		);
 
-		return svg`
-				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
-            <text id="battery_current_191" x="${x}" y="${y}"
-                  display="${data.stateBatteryCurrent.isValid() ? '' : 'none'}"
-                  fill=${data.batteryColour} class="st3 ${Battery.showInnerBatteryBanks(config) ? 'right-align' : 'left-align'}">
-                ${data.stateBatteryCurrent.toStr(data.decimalPlaces, false, config.battery.show_absolute)} ${UnitOfElectricalCurrent.AMPERE}
-            </text>
+		const text = svg`
+			<text id="battery_current_191" x="${x}" y="${y}"
+                  display="${BatteryUtils.isCurrentValid(data, config) ? '' : 'none'}"
+                  fill=${data.batteryColour} class="st3 ${align}">
+                ${Utils.toStr(current, data.decimalPlaces, false, config.battery.show_absolute)} ${UnitOfElectricalCurrent.AMPERE}
+            </text>  
+		`;
+
+		return config.battery.use_battery_banks_values ? text : svg`
+		<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
+            {text}
         </a>       
 		`;
 	}
@@ -84,24 +117,46 @@ export class Battery {
 		const x = Battery.showOuterBatteryBanks(config) ? 322 : 227;
 		const y = Battery.showOuterBatteryBanks(config) ? 294 : 334;
 		const align = Battery.showOuterBatteryBanks(config) ? 'left-align' : 'right-align';
+		const temperature = BatteryUtils.getBatteryTemperatureValue(
+			config.battery.use_battery_banks_values,
+			data.stateBatteryTemp,
+			config.battery.battery_banks,
+			data.batteryBankTempState,
+			config.decimal_places,
+		);
 
-		return svg`
-				<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
-                <text id="battery_temp_182" x="${x}" y="${y}"
-                      class="st3 ${align}"
-                      fill="${data.batteryColour}"
-                      display="${data.stateBatteryTemp.isValid() ? '' : 'none'}">
-                    ${data.stateBatteryTemp.toNum(1)}${data.stateBatteryTemp.getUOM()}
+		let text = svg
+			`<text id="battery_temp_182" x="${x}" y="${y}"
+                      display="${BatteryUtils.isTemperatureValid(data, config) ? '' : 'none'}"
+                      fill="${data.batteryColour}" class="st3 ${align}" >
+                    ${Utils.toStr(temperature, data.decimalPlaces)}${data.stateBatteryTemp.getUOM()}
                 </text>
-            </a>
-                    
+		`;
+		return config.battery.use_battery_banks_values ? text : svg`
+		<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
+		   ${text}
+		</a>         
 		`;
 	}
 
 	static generateDuration(data: DataDto, config: PowerFlowCardConfig) {
+		const power = BatteryUtils.getBatteryPowerValue(
+			config.battery.use_battery_banks_values,
+			data.batteryBankPowerState,
+			config.battery.battery_banks,
+			config.battery.invert_power,
+		);
+		let current = BatteryUtils.getBatteryCurrentValue(
+			config.battery.use_battery_banks_values,
+			data.stateBatteryCurrent,
+			config.battery.battery_banks,
+			data.batteryBankCurrentState,
+			config.decimal_places,
+		);
+
 		const y = Battery.showOuterBatteryBanks(config) ? 377.5 : 393.5;
-		const isCharging = config.battery.invert_flow ? data.batteryPower >= 0 : data.batteryPower <= 0;
-		const isFloating = Battery.isFloating(data.stateBatteryCurrent);
+		const isCharging = config.battery.invert_flow ? power >= 0 : power <= 0;
+		const isFloating = Battery.isFloating2(current);
 		const formattedResult = config.battery?.runtime_in_kwh ? data.formattedResultCapacity : data.formattedResultTime;
 
 		let text = svg``;
@@ -239,8 +294,8 @@ export class Battery {
 
 		const shutdown = config.battery.shutdown_soc_offgrid || config.battery.shutdown_soc || 0;
 		const storage = config.battery.remaining_energy_to_shutdown
-			? Utils.toNum((data.batteryEnergy * ((data.stateBatterySoc.toNum(2) - shutdown) / 100) / 1000), 2).toFixed(2)
-			: Utils.toNum((data.batteryEnergy * (data.stateBatterySoc.toNum(2) / 100) / 1000), 2).toFixed(2);
+			? Utils.toNum((data.batteryEnergy * ((data.batterySocValue - shutdown) / 100) / 1000), 2).toFixed(2)
+			: Utils.toNum((data.batteryEnergy * (data.batterySocValue / 100) / 1000), 2).toFixed(2);
 
 		return svg`
 			<text id="battery_remainig_storage_calc" x="${x}" y="${y}" class="st3 ${align}"
@@ -253,27 +308,42 @@ export class Battery {
 
 	static generateSOC(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
-		const batterySoc = svg`
+
+		let soc = BatteryUtils.getBatterySocValue(
+			config.battery.use_battery_banks_values,
+			data.stateBatterySoc,
+			config.battery.battery_banks,
+			data.batteryBankSocState
+		);
+
+		const text = svg`
+			<text id="battery_soc_184" x="270" y="${y + 7}" fill=${data.batteryColour} 
+				class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}">
+			  ${Utils.toStr(soc, soc === 100.0 ? 0 : 1)}%
+			</text>`;
+
+		return config.battery?.use_battery_banks_values ? text
+			: svg`
 			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
-          		<text id="battery_soc_184" x="270" y="${y + 7}" fill=${data.batteryColour} 
-	                class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
-	                display="${data.stateBatterySoc.isValid() ? '' : 'none'}" >
-	              ${data.stateBatterySoc.toStr(data.stateBatterySoc.toNum(1) === 100.0 ? 0 : 1)}%
-          		</text>
+          		${text}
 	      	</a>`;
-		const batterySocProg = data.inverterProg.show ? svg`
-			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
+	}
+
+	static generateSOCinProg(data: DataDto, config: PowerFlowCardConfig) {
+		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
+		return data.inverterProg.show ? svg`
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
 				<text id="battery_prog_soc_184_capacity" x="330" y="${y + 7}" fill=${data.batteryColour}
-						class="st13 st8 left-align"
-						display="${config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
-					| ${data.inverterProg.capacity || 0}%
+					class="st13 st8 left-align"
+					display="${config.entities.battery_soc_184 === 'none' || config.battery.hide_soc ? 'none' : ''}">
+				| ${data.inverterProg.capacity || 0}%
 				</text>
 			</a>
-			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, config.entities.battery_soc_184)}>
+			<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatterySoc.entity_id)}>
 				<text id="battery_prog_soc_184_soc_shutdown" x="330" y="${y + 7}" fill=${data.batteryColour}
-				    	class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
-				    	display="${config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
-			  		| ${data.batteryShutdown || 0}%
+					class="${config.battery.hide_soc ? 'st12' : 'st13 st8 left-align'}"
+					display="${config.battery?.shutdown_soc && !config.battery?.shutdown_soc_offgrid ? '' : 'none'}">
+				| ${data.batteryShutdown || 0}%
 				</text>
 			</a>
 			<text id="battery_prog_soc_184_line" x="331" y="${y + 7}" fill=${data.batteryColour}
@@ -292,10 +362,6 @@ export class Battery {
 				${data.shutdownOffGrid}%
 			</text>`
 			: svg``;
-		return svg`
-			${batterySoc}
-			${batterySocProg}
-        	`;
 	}
 
 	static generateBatteryGradient(data: DataDto, config: PowerFlowCardConfig) {
@@ -350,6 +416,10 @@ export class Battery {
 	}
 
 	static isFloating(stateBatteryCurrent: CustomEntity) {
-		return stateBatteryCurrent.toNum(2) >= -1.00 && stateBatteryCurrent.toNum(2) <= 1.00;
+		return this.isFloating2(stateBatteryCurrent.toNum(2));
+	}
+
+	static isFloating2(current: number) { //FIXME rename
+		return Math.abs(current) <= 1.00;
 	}
 }

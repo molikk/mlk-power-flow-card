@@ -129,6 +129,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		animate: boolean;
 		path_threshold: number;
 		show_battery_banks: boolean;
+		use_battery_banks_values: boolean;
 		battery_banks_view_mode: BatteryBanksViewMode;
 		battery_banks: number;
 		battery_bank_1_energy: number;
@@ -659,7 +660,7 @@ export interface DataDto {
 	largeFont,
 	batteryPower,
 	batteryDuration,
-	batteryCapacity,
+	batteryCapacity: number,
 	batteryBankPowerState: CustomEntity[],
 	batteryBankVoltageState: CustomEntity[],
 	batteryBankCurrentState: CustomEntity[],
@@ -835,6 +836,7 @@ export interface DataDto {
 	inverterProg,
 	stateUseTimer: CustomEntity,
 	stateBatterySoc: CustomEntity,
+	batterySocValue: number,
 	stateEnergyCostSell: CustomEntity,
 	stateEnergyCostBuy: CustomEntity,
 	stateRadiatorTemp: CustomEntity,

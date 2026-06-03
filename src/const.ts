@@ -92,6 +92,7 @@ export const unitOfEnergyConversionRules: Record<UnitOfEnergyOrPower, Conversion
 		threshold: 1e3,
 		divisor: 1e3,
 		targetUnit: UnitOfPower.KILO_WATT,
+		decimal: 0
 	}],
 	[UnitOfPower.KILO_WATT]: [{
 		threshold: 1e3,
