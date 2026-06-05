@@ -488,6 +488,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 											{ name: 'animate', selector: { boolean: {} } },
 											{ name: 'animation_speed', selector: { number: {} } },
 											{ name: 'hide_soc', selector: { boolean: {} } },
+											{ name: 'hide_soc_shutdown', selector: { boolean: {} } },
 											{ name: 'show_remaining_energy', selector: { boolean: {} } },
 											{ name: 'remaining_energy_to_shutdown', selector: { boolean: {} } },
 											{ name: 'runtime_in_kwh', selector: { boolean: {} } },
