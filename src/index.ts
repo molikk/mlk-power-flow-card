@@ -147,7 +147,7 @@ export class PowerFlowCard extends LitElement {
 		globalData.hass = this.hass;
 		const config = this._config;
 
-		let { inverterImg, data } = new DataProvider(this.hass, config).calculateData();
+		const { inverterImg, data } = new DataProvider(this.hass, config).calculateData();
 
 		return compactCard(config, inverterImg, data);
 	}
@@ -220,6 +220,7 @@ export class PowerFlowCard extends LitElement {
 
 }
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 (window as any).customCards.push({
 	type: 'mlk-power-flow-card',
 	name: 'Power Flow Card by Molikk',

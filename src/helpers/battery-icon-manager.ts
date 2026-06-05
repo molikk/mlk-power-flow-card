@@ -1,12 +1,10 @@
-import { CustomEntity } from '../inverters/dto/custom-entity';
-
 export class BatteryIconManager {
 	static convert(batteryLevel: number) {
 		const battery0 = this.batteryCharge(0);
 
-		let batteryIcon: string, batteryCharge: string, stopColour: string;
+		let batteryIcon: string, batteryCharge: string;
 
-		stopColour = this.batteryGradientColor(batteryLevel);
+		const stopColour: string = this.batteryGradientColor(batteryLevel);
 
 		switch (true) {
 			case batteryLevel >= 25: {

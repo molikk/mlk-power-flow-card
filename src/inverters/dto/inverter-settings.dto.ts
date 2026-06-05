@@ -1,5 +1,4 @@
 import { InverterModel, InverterSettings } from '../../types';
-import { CustomEntity } from './custom-entity';
 
 export class InverterSettingsDto {
 	brand!: InverterModel;
