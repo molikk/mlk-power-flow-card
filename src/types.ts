@@ -109,6 +109,7 @@ export interface PowerFlowCardConfig extends LovelaceCardConfig {
 		shutdown_soc_offgrid;
 		soc_end_of_charge;
 		hide_soc: boolean;
+		hide_soc_shutdown: boolean;
 		invert_power: boolean;
 		colour: string;
 		navigate: string;
