@@ -125,12 +125,12 @@ export class Battery {
 			config.decimal_places,
 		);
 
-		let text = svg
-			`<text id="battery_temp_182" x="${x}" y="${y}"
-                      display="${BatteryUtils.isTemperatureValid(data, config) ? '' : 'none'}"
-                      fill="${data.batteryColour}" class="st3 ${align}" >
-                    ${Utils.toStr(temperature, data.decimalPlaces)}${data.stateBatteryTemp.getUOM()}
-                </text>
+		const text = svg`
+			<text id="battery_temp_182" x="${x}" y="${y}"
+					display="${BatteryUtils.isTemperatureValid(data, config) ? '' : 'none'}"
+					fill="${data.batteryColour}" class="st3 ${align}" >
+				${Utils.toStr(temperature, data.decimalPlaces)}${data.stateBatteryTemp.getUOM()}
+			</text>
 		`;
 		return config.battery.use_battery_banks_values ? text : svg`
 		<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryTemp.entity_id)}>
@@ -146,7 +146,7 @@ export class Battery {
 			config.battery.battery_banks,
 			config.battery.invert_power,
 		);
-		let current = BatteryUtils.getBatteryCurrentValue(
+		const current = BatteryUtils.getBatteryCurrentValue(
 			config.battery.use_battery_banks_values,
 			data.stateBatteryCurrent,
 			config.battery.battery_banks,
@@ -309,7 +309,7 @@ export class Battery {
 	static generateSOC(data: DataDto, config: PowerFlowCardConfig) {
 		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
 
-		let soc = BatteryUtils.getBatterySocValue(
+		const soc = BatteryUtils.getBatterySocValue(
 			config.battery.use_battery_banks_values,
 			data.stateBatterySoc,
 			config.battery.battery_banks,
@@ -330,6 +330,10 @@ export class Battery {
 	}
 
 	static generateSOCinProg(data: DataDto, config: PowerFlowCardConfig) {
+		if (config.battery.hide_soc_shutdown) {
+			return svg``;
+		}
+
 		const y = Battery.showOuterBatteryBanks(config) ? 335 : 351;
 
 		return data.inverterProg.show ? svg`

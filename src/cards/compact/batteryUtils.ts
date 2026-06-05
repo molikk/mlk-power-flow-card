@@ -1,6 +1,5 @@
-import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { Utils } from '../../helpers/utils';
-import { UnitOfPower } from '../../const';
+import { CustomEntity } from '../../inverters/dto/custom-entity';
 import { DataDto, PowerFlowCardConfig } from '../../types';
 
 export class BatteryUtils {

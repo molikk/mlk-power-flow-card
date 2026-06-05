@@ -165,10 +165,10 @@ export class Load {
 
 		let extra2Indicator = svg``;
 		if (config.adv_options?.loads_extra_2_enabled) {
-			let x = this.LOAD_X + 2 + 14;
-			let y = 177.5 + 13.5;
-			let circle = data.essIconSize !== 1 && config.adv_options?.loads_extra_2_circle ? svg`	<circle cx="${x}" cy="${y}" r="7" fill="none" stroke-width="1" stroke="${data.loadColour}" />` : svg``;
-			let color = data.essIconSize === 1 ? 'black' : data.loadColour;
+			const x = this.LOAD_X + 2 + 14;
+			const y = 177.5 + 13.5;
+			const circle = data.essIconSize !== 1 && config.adv_options?.loads_extra_2_circle ? svg`	<circle cx="${x}" cy="${y}" r="7" fill="none" stroke-width="1" stroke="${data.loadColour}" />` : svg``;
+			const color = data.essIconSize === 1 ? 'black' : data.loadColour;
 
 			extra2Indicator = svg`
 				<a href="#" @click=${() => Utils.handleModeSwitch(config, 'load_extra_2', config.adv_options?.loads_extra_2)}>

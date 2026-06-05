@@ -1,4 +1,4 @@
-import { HassEntity } from 'home-assistant-js-websocket/dist/types';
+import type { HassEntity } from 'home-assistant-js-websocket/dist/types';
 import { Utils } from '../../helpers/utils';
 import { UnitOfElectricalCurrent, UnitOfEnergy, UnitOfPower } from '../../const';
 import { PowerFlowCardConfig } from '../../types';
