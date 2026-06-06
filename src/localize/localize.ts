@@ -12,9 +12,7 @@ export function localize(string: string, search = '', replace = '') {
         .replace('-', '_');
 
     let lang = `${globalData.hass?.selectedLanguage || globalData.hass?.locale?.language || globalData.hass?.language || langFromLocalStorage || 'en'}`;
-    if (lang === "null" || lang == null || lang === null) {
-        lang = "en";
-    }
+    lang = "en";
     let translated: string;
 
     try {
