@@ -54,7 +54,7 @@
     "globals": "17.6.0",
     "npm": "11.16.0",
     "prettier": "3.8.3",
-    "rollup": "4.61.0",
+    "rollup": "4.61.1",
     "rollup-plugin-serve": "3.0.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.39.1",
