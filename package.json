@@ -1,6 +1,6 @@
 {
   "name": "mlk-power-flow-card",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "description": "A customizable Home Assistant card to emulate power flow based on Sunsynk's Inverter screen with load devices controls.",
   "main": "mlk-power-flow-card.js",
   "scripts": {
@@ -30,10 +30,10 @@
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.29.7",
+    "@babel/cli": "^8.0.4",
     "@babel/core": "^7.29.7",
-    "@babel/plugin-transform-class-properties": "^7.29.7",
     "@babel/plugin-proposal-decorators": "^7.29.7",
+    "@babel/plugin-transform-class-properties": "^7.29.7",
     "@babel/plugin-transform-template-literals": "^7.29.7",
     "@babel/preset-env": "^7.29.7",
     "@eslint/js": "^9.33.0",
@@ -48,7 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",
     "babel-preset-minify": "^0.5.2",
-    "eslint": "^9.33.0",
+    "eslint": "^10.8.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
     "globals": "17.6.0",
@@ -56,9 +56,9 @@
     "prettier": "3.8.3",
     "rollup": "4.61.0",
     "rollup-plugin-serve": "3.0.0",
+    "tslib": "^2.8.1",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.1",
-    "tslib": "^2.8.1"
+    "typescript-eslint": "^8.39.1"
   },
   "resolutions": {
     "rollup": "^4.46.2"

@@ -1,4 +1,4 @@
-import { html, LitElement, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { fireEvent, HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 
 import { AdditionalLoadsViewMode, AutarkyType, BatteryBanksViewMode, InverterModel, PowerFlowCardConfig } from './types';
@@ -17,6 +17,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 
 	public setConfig(config: PowerFlowCardConfig): void {
 		this._config = { ...this._config, ...config };
+		let upgraded = false;
 		if (ConfigurationCardEditor.isUpgradeable(this._config, 2)) {
 			console.log('Updating version to schema 2');
 
@@ -146,8 +147,7 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
 
 			this._config['schema_version'] = 2;
-
-			fireEvent(this, 'config-changed', { config: this._config });
+			upgraded = true;
 		}
 		if (ConfigurationCardEditor.isUpgradeable(this._config, 3)) {
 			console.log('Updating version to schema 3');
@@ -155,15 +155,16 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 			this._config['load']['additional_loads_view_mode'] = this.getAdditionalLoadsViewMode(this._config, this.hass);
 
 			this._config['schema_version'] = 3;
-
-			fireEvent(this, 'config-changed', { config: this._config });
+			upgraded = true;
 		}
 		if (ConfigurationCardEditor.isUpgradeable(this._config, 4)) {
 			console.log('Updating version to schema 4');
 
 			this._config['low_resources'] = { refresh_interval: 500, animations: true };
 			this._config['schema_version'] = 4;
-
+			upgraded = true;
+		}
+		if (upgraded) {
 			fireEvent(this, 'config-changed', { config: this._config });
 		}
 	}
@@ -177,12 +178,22 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 		}
 	}
 
-	public static isUpgradeable(config: PowerFlowCardConfig, version: number) {
+	static isUpgradeable(config: PowerFlowCardConfig, version: number) {
 		return !config.schema_version || config.schema_version < version;
 	}
 
 	public static isConfigUpgradeable(config: PowerFlowCardConfig) {
 		return this.isUpgradeable(config, 4);
+	}
+
+	protected shouldUpdate(changedProperties: PropertyValues<this>): boolean {
+		const changed = changedProperties as Map<PropertyKey, unknown>;
+		const hasHassChange = changed.has('hass');
+		const shouldRender = changed.has('_config')
+			|| changed.has('lovelace')
+			|| changed.has('_schemaReady')
+			|| (hasHassChange && !this.hass);
+		return shouldRender;
 	}
 
 	protected render(): TemplateResult | void {
@@ -197,931 +208,931 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 						.data=${this._config}
 						.computeLabel=${this._computeLabelCallback.bind(this)}
 						.schema=${[
+			{
+				type: 'expandable',
+				title: this._title('title'),
+				schema: [
+					{
+						type: 'grid',
+						schema: [
+							{ name: 'title', selector: { text: {} } },
+							{ name: 'title_colour', selector: { color_rgb: {} } },
+							{ name: 'title_size', selector: { text: {} } },
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('general'),
+				schema: [
+					{
+						type: 'grid',
+						schema: [
+							{ name: 'large_font', selector: { boolean: {} } },
+							{ name: 'wide_view_mode', selector: { boolean: {} } },
+							{ name: 'card_height', selector: { text: {} } },
+							{ name: 'card_width', selector: { text: {} } },
+							{ name: 'show_solar', selector: { boolean: {} } },
+							{ name: 'show_battery', selector: { boolean: {} } },
+							{ name: 'show_grid', selector: { boolean: {} } },
+							{ name: 'dynamic_line_width', selector: { boolean: {} } },
+							{ name: 'max_line_width', selector: { number: {} } },
+							{ name: 'min_line_width', selector: { number: {} } },
+							{ name: 'decimal_places', selector: { number: {} } },
+							{ name: 'decimal_places_energy', selector: { number: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('adv_viewbox'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('title'),
+								name: 'viewbox',
+								type: 'grid',
 								schema: [
-									{
-										type: 'grid',
-										schema: [
-											{ name: 'title', selector: { text: {} } },
-											{ name: 'title_colour', selector: { color_rgb: {} } },
-											{ name: 'title_size', selector: { text: {} } },
-										],
-									},
+									{ name: 'viewbox_min_x', selector: { number: {} } },
+									{ name: 'viewbox_min_y', selector: { number: {} } },
+									{ name: 'viewbox_width', selector: { number: {} } },
+									{ name: 'viewbox_height', selector: { number: {} } },
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('low_resources'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('general'),
+								name: 'low_resources',
+								type: 'grid',
 								schema: [
-									{
-										type: 'grid',
-										schema: [
-											{ name: 'large_font', selector: { boolean: {} } },
-											{ name: 'wide_view_mode', selector: { boolean: {} } },
-											{ name: 'card_height', selector: { text: {} } },
-											{ name: 'card_width', selector: { text: {} } },
-											{ name: 'show_solar', selector: { boolean: {} } },
-											{ name: 'show_battery', selector: { boolean: {} } },
-											{ name: 'show_grid', selector: { boolean: {} } },
-											{ name: 'dynamic_line_width', selector: { boolean: {} } },
-											{ name: 'max_line_width', selector: { number: {} } },
-											{ name: 'min_line_width', selector: { number: {} } },
-											{ name: 'decimal_places', selector: { number: {} } },
-											{ name: 'decimal_places_energy', selector: { number: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('adv_viewbox'),
-										schema: [
-											{
-												name: 'viewbox',
-												type: 'grid',
-												schema: [
-													{ name: 'viewbox_min_x', selector: { number: {} } },
-													{ name: 'viewbox_min_y', selector: { number: {} } },
-													{ name: 'viewbox_width', selector: { number: {} } },
-													{ name: 'viewbox_height', selector: { number: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('low_resources'),
-										schema: [
-											{
-												name: 'low_resources',
-												type: 'grid',
-												schema: [
-													{ name: 'refresh_interval', selector: { number: { mode: 'box', min: 1, max: 10000 } } },
-													{ name: 'animations', selector: { boolean: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('adv_options'),
-										schema: [
-											{
-												name: 'adv_options',
-												type: 'grid',
-												schema: [
-													{ name: 'loads_extra_2_enabled', selector: { boolean: {} } },
-													{ name: 'loads_extra_2', selector: { boolean: {} } },
-													{ name: 'loads_extra_2_circle', selector: { boolean: {} } },
-												],
-											},
-										],
-									},
+									{ name: 'refresh_interval', selector: { number: { mode: 'box', min: 1, max: 10000 } } },
+									{ name: 'animations', selector: { boolean: {} } },
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('adv_options'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('inverter'),
+								name: 'adv_options',
+								type: 'grid',
 								schema: [
-									{
-										name: 'inverter',
-										type: 'grid',
-										schema: [
-											{ name: 'three_phase', selector: { boolean: {} } },
-											{ name: 'auto_scale', selector: { boolean: {} } },
-											this.generateInverterModelItem(),
-											{ name: 'modern', selector: { boolean: {} } },
-											this.generateInverterAutarkyItem(),
-											{ name: 'colour', selector: { color_rgb: {} } },
-											{ name: 'navigate', selector: { text: {} } },
-											{ name: 'invert_flow', selector: { boolean: {} } },
-											{ name: 'ac_icon', selector: { icon: {} } },
-											{ name: 'dc_icon', selector: { icon: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('inv'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'inverter_status_59', selector: { entity: {} } },
-													{ name: 'inverter_voltage_154', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'inverter_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'inverter_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'load_frequency_192', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
-													{ name: 'inverter_current_164', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'inverter_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'inverter_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'inverter_power_175', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_power_169', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'dc_transformer_temp_90', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-													{ name: 'radiator_temp_91', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-													{ name: 'inverter_load_percentage', selector: { entity: { domain: 'sensor', unit_of_measurement: '%' } } },
-													{ name: 'use_timer_248', selector: { entity: {} } },
-													{ name: 'priority_load_243', selector: { entity: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('inv_prog'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateInverterProg(1),
-													...this.generateInverterProg(2),
-													...this.generateInverterProg(3),
-													...this.generateInverterProg(4),
-													...this.generateInverterProg(5),
-													...this.generateInverterProg(6),
-												],
-											},
-										],
-									},
+									{ name: 'loads_extra_2_enabled', selector: { boolean: {} } },
+									{ name: 'loads_extra_2', selector: { boolean: {} } },
+									{ name: 'loads_extra_2_circle', selector: { boolean: {} } },
 								],
 							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('inverter'),
+				schema: [
+					{
+						name: 'inverter',
+						type: 'grid',
+						schema: [
+							{ name: 'three_phase', selector: { boolean: {} } },
+							{ name: 'auto_scale', selector: { boolean: {} } },
+							this.generateInverterModelItem(),
+							{ name: 'modern', selector: { boolean: {} } },
+							this.generateInverterAutarkyItem(),
+							{ name: 'colour', selector: { color_rgb: {} } },
+							{ name: 'navigate', selector: { text: {} } },
+							{ name: 'invert_flow', selector: { boolean: {} } },
+							{ name: 'ac_icon', selector: { icon: {} } },
+							{ name: 'dc_icon', selector: { icon: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('inv'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('solar'),
+								name: 'entities',
+								type: 'grid',
 								schema: [
-									{
-										name: 'solar',
-										type: 'grid',
-										schema: [
-											{ name: 'mppts', selector: { number: { min: 1, max: 5 } } },
-											{ name: 'auto_scale', selector: { boolean: {} } },
-											{ name: 'colour', selector: { color_rgb: {} } },
-											{ name: 'navigate', selector: { text: {} } },
-											{ name: 'invert_flow', selector: { boolean: {} } },
-											{ name: 'dynamic_colour', selector: { boolean: {} } },
-											{ name: 'animation_speed', selector: { number: {} } },
-											{ name: 'off_threshold', selector: { number: {} } },
-											{ name: 'visualize_efficiency', selector: { boolean: {} } },
-											{ name: 'show_mppt_efficiency', selector: { boolean: {} } },
-											{ name: 'show_mppt_efficiency_kwhp', selector: { boolean: {} } },
-											{ name: 'show_mppt_production', selector: { boolean: {} } },
-											{ name: 'hide_header_units', selector: { boolean: {} } },
-											{ name: 'fixed_header_item_width', selector: { number: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('solar_header'),
-										schema: [
-											{
-												name: 'solar',
-												type: 'grid',
-												schema: [
-													{ name: 'daily_solar_name', selector: { text: {} } },
-													{ name: 'monthly_solar_name', selector: { text: {} } },
-													{ name: 'yearly_solar_name', selector: { text: {} } },
-													{ name: 'total_solar_generation_name', selector: { text: {} } },
-													{ name: 'remaining_solar_name', selector: { text: {} } },
-													{ name: 'tomorrow_solar_name', selector: { text: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('solar_header_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'pv_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'day_pv_energy_108', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'monthly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'yearly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'total_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'remaining_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'tomorrow_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('max_power'),
-										schema: [
-											{
-												name: 'solar',
-												type: 'grid',
-												schema: [
-													{ name: 'max_power', selector: { number: {} } },
-													{ name: 'pv1_max_power', selector: { number: {} } },
-													{ name: 'pv2_max_power', selector: { number: {} } },
-													{ name: 'pv3_max_power', selector: { number: {} } },
-													{ name: 'pv4_max_power', selector: { number: {} } },
-													{ name: 'pv5_max_power', selector: { number: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('mppt_options'),
-										schema: [
-											{
-												name: 'solar',
-												type: 'grid',
-												schema: [
-													{ name: 'pv1_name', selector: { text: {} } },
-													{ name: 'pv2_name', selector: { text: {} } },
-													{ name: 'pv3_name', selector: { text: {} } },
-													{ name: 'pv4_name', selector: { text: {} } },
-													{ name: 'pv5_name', selector: { text: {} } },
-												],
-											},
-										],
-									},
-									this.generatePVEntitiesGroup(1, 'power_186', 'voltage_109', 'current_110'),
-									this.generatePVEntitiesGroup(2, 'power_187', 'voltage_111', 'current_112'),
-									this.generatePVEntitiesGroup(3, 'power_188', 'voltage_113', 'current_114'),
-									this.generatePVEntitiesGroup(4, 'power_189', 'voltage_115', 'current_116'),
-									this.generatePVEntitiesGroup(5),
-									{
-										type: 'expandable',
-										title: this._title('optional_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'solar_sell_247', selector: { entity: {} } },
-													{ name: 'environment_temp', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-												],
-											},
-										],
-									},
+									{ name: 'inverter_status_59', selector: { entity: {} } },
+									{ name: 'inverter_voltage_154', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'inverter_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'inverter_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'load_frequency_192', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
+									{ name: 'inverter_current_164', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'inverter_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'inverter_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'inverter_power_175', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'grid_power_169', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'dc_transformer_temp_90', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+									{ name: 'radiator_temp_91', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+									{ name: 'inverter_load_percentage', selector: { entity: { domain: 'sensor', unit_of_measurement: '%' } } },
+									{ name: 'use_timer_248', selector: { entity: {} } },
+									{ name: 'priority_load_243', selector: { entity: {} } },
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('inv_prog'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('battery'),
+								name: 'entities',
+								type: 'grid',
 								schema: [
-									{
-										name: 'battery',
-										type: 'grid',
-										schema: [
-											{ name: 'energy', selector: { number: { min: 0 } } },
-											{ name: 'shutdown_soc', selector: { number: { mode: 'box', min: 0, max: 100 } } },
-											{ name: 'shutdown_soc_offgrid', selector: { number: { mode: 'box', min: 0, max: 100 } } },
-											{ name: 'soc_end_of_charge', selector: { number: { mode: 'box', min: 50, max: 100 } } },
-											{ name: 'show_daily', selector: { boolean: {} } },
-											{ name: 'auto_scale', selector: { boolean: {} } },
-											{ name: 'invert_power', selector: { boolean: {} } },
-											{ name: 'show_absolute', selector: { boolean: {} } },
-											{ name: 'colour', selector: { color_rgb: {} } },
-											{ name: 'navigate', selector: { text: {} } },
-											{ name: 'invert_flow', selector: { boolean: {} } },
-											{ name: 'charge_colour', selector: { color_rgb: {} } },
-											{ name: 'dynamic_colour', selector: { boolean: {} } },
-											{ name: 'linear_gradient', selector: { boolean: {} } },
-											{ name: 'animate', selector: { boolean: {} } },
-											{ name: 'animation_speed', selector: { number: {} } },
-											{ name: 'hide_soc', selector: { boolean: {} } },
-											{ name: 'hide_soc_shutdown', selector: { boolean: {} } },
-											{ name: 'show_remaining_energy', selector: { boolean: {} } },
-											{ name: 'remaining_energy_to_shutdown', selector: { boolean: {} } },
-											{ name: 'runtime_in_kwh', selector: { boolean: {} } },
-											{ name: 'max_power', selector: { number: {} } },
-											{ name: 'path_threshold', selector: { number: {} } },
-											{ name: 'use_battery_banks_values', selector: { boolean: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('battery_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'battery_power_190', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'battery_soc_184', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
-													{ name: 'battery_current_191', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'battery_voltage_183', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'battery_temp_182', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
-													{ name: 'day_battery_charge_70', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'day_battery_discharge_71', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'battery_remaining_storage', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'battery_rated_capacity', selector: { entity: {} } },
-													{ name: 'battery_soh', selector: { entity: {} } },
-													{ name: 'battery_current_direction', selector: { entity: {} } },
-													{ name: 'battery_status', selector: { entity: {} } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('optional_ent'),
-										schema: [
-											{
-												name: 'battery',
-												type: 'grid',
-												schema: [
-													{ name: 'energy', selector: { entity: {} } },
-													{ name: 'shutdown_soc', selector: { entity: {} } },
-													{ name: 'shutdown_soc_offgrid', selector: { entity: {} } },
-													{ name: 'max_power', selector: { entity: {} } },
-												],
-											},
-										],
-									},
+									...this.generateInverterProg(1),
+									...this.generateInverterProg(2),
+									...this.generateInverterProg(3),
+									...this.generateInverterProg(4),
+									...this.generateInverterProg(5),
+									...this.generateInverterProg(6),
 								],
 							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('solar'),
+				schema: [
+					{
+						name: 'solar',
+						type: 'grid',
+						schema: [
+							{ name: 'mppts', selector: { number: { min: 1, max: 5 } } },
+							{ name: 'auto_scale', selector: { boolean: {} } },
+							{ name: 'colour', selector: { color_rgb: {} } },
+							{ name: 'navigate', selector: { text: {} } },
+							{ name: 'invert_flow', selector: { boolean: {} } },
+							{ name: 'dynamic_colour', selector: { boolean: {} } },
+							{ name: 'animation_speed', selector: { number: {} } },
+							{ name: 'off_threshold', selector: { number: {} } },
+							{ name: 'visualize_efficiency', selector: { boolean: {} } },
+							{ name: 'show_mppt_efficiency', selector: { boolean: {} } },
+							{ name: 'show_mppt_efficiency_kwhp', selector: { boolean: {} } },
+							{ name: 'show_mppt_production', selector: { boolean: {} } },
+							{ name: 'hide_header_units', selector: { boolean: {} } },
+							{ name: 'fixed_header_item_width', selector: { number: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('solar_header'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('battery_bank'),
+								name: 'solar',
+								type: 'grid',
 								schema: [
-									{
-										name: 'battery',
-										type: 'grid',
-										schema: [
-											{ name: 'show_battery_banks', selector: { boolean: {} } },
-											{
-												name: 'battery_banks_view_mode',
-												selector: {
-													select: {
-														options: Object.values(BatteryBanksViewMode).map(x => ({
-															label: capitalize(x),
-															value: x,
-														})),
-													},
-												},
-											},
-											{ name: 'battery_banks', selector: { number: { mode: 'box', min: 0, max: 6 } } },
-											{ name: 'battery_bank_1_energy', selector: { number: { min: 0 } } },
-											{ name: 'battery_bank_2_energy', selector: { number: { min: 0 } } },
-											{ name: 'battery_bank_3_energy', selector: { number: { min: 0 } } },
-											{ name: 'battery_bank_4_energy', selector: { number: { min: 0 } } },
-											{ name: 'battery_bank_5_energy', selector: { number: { min: 0 } } },
-											{ name: 'battery_bank_6_energy', selector: { number: { min: 0 } } },
+									{ name: 'daily_solar_name', selector: { text: {} } },
+									{ name: 'monthly_solar_name', selector: { text: {} } },
+									{ name: 'yearly_solar_name', selector: { text: {} } },
+									{ name: 'total_solar_generation_name', selector: { text: {} } },
+									{ name: 'remaining_solar_name', selector: { text: {} } },
+									{ name: 'tomorrow_solar_name', selector: { text: {} } },
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('solar_header_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'pv_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'day_pv_energy_108', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'monthly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'yearly_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'total_pv_generation', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'remaining_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'tomorrow_solar', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('max_power'),
+						schema: [
+							{
+								name: 'solar',
+								type: 'grid',
+								schema: [
+									{ name: 'max_power', selector: { number: {} } },
+									{ name: 'pv1_max_power', selector: { number: {} } },
+									{ name: 'pv2_max_power', selector: { number: {} } },
+									{ name: 'pv3_max_power', selector: { number: {} } },
+									{ name: 'pv4_max_power', selector: { number: {} } },
+									{ name: 'pv5_max_power', selector: { number: {} } },
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('mppt_options'),
+						schema: [
+							{
+								name: 'solar',
+								type: 'grid',
+								schema: [
+									{ name: 'pv1_name', selector: { text: {} } },
+									{ name: 'pv2_name', selector: { text: {} } },
+									{ name: 'pv3_name', selector: { text: {} } },
+									{ name: 'pv4_name', selector: { text: {} } },
+									{ name: 'pv5_name', selector: { text: {} } },
+								],
+							},
+						],
+					},
+					this.generatePVEntitiesGroup(1, 'power_186', 'voltage_109', 'current_110'),
+					this.generatePVEntitiesGroup(2, 'power_187', 'voltage_111', 'current_112'),
+					this.generatePVEntitiesGroup(3, 'power_188', 'voltage_113', 'current_114'),
+					this.generatePVEntitiesGroup(4, 'power_189', 'voltage_115', 'current_116'),
+					this.generatePVEntitiesGroup(5),
+					{
+						type: 'expandable',
+						title: this._title('optional_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'solar_sell_247', selector: { entity: {} } },
+									{ name: 'environment_temp', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('battery'),
+				schema: [
+					{
+						name: 'battery',
+						type: 'grid',
+						schema: [
+							{ name: 'energy', selector: { number: { min: 0 } } },
+							{ name: 'shutdown_soc', selector: { number: { mode: 'box', min: 0, max: 100 } } },
+							{ name: 'shutdown_soc_offgrid', selector: { number: { mode: 'box', min: 0, max: 100 } } },
+							{ name: 'soc_end_of_charge', selector: { number: { mode: 'box', min: 50, max: 100 } } },
+							{ name: 'show_daily', selector: { boolean: {} } },
+							{ name: 'auto_scale', selector: { boolean: {} } },
+							{ name: 'invert_power', selector: { boolean: {} } },
+							{ name: 'show_absolute', selector: { boolean: {} } },
+							{ name: 'colour', selector: { color_rgb: {} } },
+							{ name: 'navigate', selector: { text: {} } },
+							{ name: 'invert_flow', selector: { boolean: {} } },
+							{ name: 'charge_colour', selector: { color_rgb: {} } },
+							{ name: 'dynamic_colour', selector: { boolean: {} } },
+							{ name: 'linear_gradient', selector: { boolean: {} } },
+							{ name: 'animate', selector: { boolean: {} } },
+							{ name: 'animation_speed', selector: { number: {} } },
+							{ name: 'hide_soc', selector: { boolean: {} } },
+							{ name: 'hide_soc_shutdown', selector: { boolean: {} } },
+							{ name: 'show_remaining_energy', selector: { boolean: {} } },
+							{ name: 'remaining_energy_to_shutdown', selector: { boolean: {} } },
+							{ name: 'runtime_in_kwh', selector: { boolean: {} } },
+							{ name: 'max_power', selector: { number: {} } },
+							{ name: 'path_threshold', selector: { number: {} } },
+							{ name: 'use_battery_banks_values', selector: { boolean: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('battery_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'battery_power_190', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'battery_soc_184', selector: { entity: { device_class: SensorDeviceClass.BATTERY } } },
+									{ name: 'battery_current_191', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'battery_voltage_183', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'battery_temp_182', selector: { entity: { device_class: SensorDeviceClass.TEMPERATURE } } },
+									{ name: 'day_battery_charge_70', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'day_battery_discharge_71', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'battery_remaining_storage', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'battery_rated_capacity', selector: { entity: {} } },
+									{ name: 'battery_soh', selector: { entity: {} } },
+									{ name: 'battery_current_direction', selector: { entity: {} } },
+									{ name: 'battery_status', selector: { entity: {} } },
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('optional_ent'),
+						schema: [
+							{
+								name: 'battery',
+								type: 'grid',
+								schema: [
+									{ name: 'energy', selector: { entity: {} } },
+									{ name: 'shutdown_soc', selector: { entity: {} } },
+									{ name: 'shutdown_soc_offgrid', selector: { entity: {} } },
+									{ name: 'max_power', selector: { entity: {} } },
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('battery_bank'),
+				schema: [
+					{
+						name: 'battery',
+						type: 'grid',
+						schema: [
+							{ name: 'show_battery_banks', selector: { boolean: {} } },
+							{
+								name: 'battery_banks_view_mode',
+								selector: {
+									select: {
+										options: Object.values(BatteryBanksViewMode).map(x => ({
+											label: capitalize(x),
+											value: x,
+										})),
+									},
+								},
+							},
+							{ name: 'battery_banks', selector: { number: { mode: 'box', min: 0, max: 6 } } },
+							{ name: 'battery_bank_1_energy', selector: { number: { min: 0 } } },
+							{ name: 'battery_bank_2_energy', selector: { number: { min: 0 } } },
+							{ name: 'battery_bank_3_energy', selector: { number: { min: 0 } } },
+							{ name: 'battery_bank_4_energy', selector: { number: { min: 0 } } },
+							{ name: 'battery_bank_5_energy', selector: { number: { min: 0 } } },
+							{ name: 'battery_bank_6_energy', selector: { number: { min: 0 } } },
 
-										],
-									},
-									this.generateBatteryBankEntities(1),
-									this.generateBatteryBankEntities(2),
-									this.generateBatteryBankEntities(3),
-									this.generateBatteryBankEntities(4),
-									this.generateBatteryBankEntities(5),
-									this.generateBatteryBankEntities(6),
+						],
+					},
+					this.generateBatteryBankEntities(1),
+					this.generateBatteryBankEntities(2),
+					this.generateBatteryBankEntities(3),
+					this.generateBatteryBankEntities(4),
+					this.generateBatteryBankEntities(5),
+					this.generateBatteryBankEntities(6),
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('load'),
+				schema: [
+					{
+						name: 'load',
+						type: 'grid',
+						schema: [
+							{ name: 'show_daily', selector: { boolean: {} } },
+							{ name: 'label_daily_load', selector: { text: {} } },
+							{ name: 'auto_scale', selector: { boolean: {} } },
+							{ name: 'colour', selector: { color_rgb: {} } },
+							{ name: 'navigate', selector: { text: {} } },
+							{ name: 'invert_flow', selector: { boolean: {} } },
+							{ name: 'dynamic_colour', selector: { boolean: {} } },
+							{ name: 'dynamic_icon', selector: { boolean: {} } },
+							{ name: 'invert_load', selector: { boolean: {} } },
+							{ name: 'essential_name', selector: { text: {} } },
+							{ name: 'animation_speed', selector: { number: {} } },
+							{ name: 'max_power', selector: { number: {} } },
+							{ name: 'off_threshold', selector: { number: {} } },
+							{ name: 'path_threshold', selector: { number: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('load_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'day_load_energy_84', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'essential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'load_power_L1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'load_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'load_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 								],
 							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('additional_loads'),
+				schema: [
+					{
+						name: 'load',
+						type: 'grid',
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('load'),
+								name: 'additional_loads_view_mode',
+								selector: {
+									select: {
+										options: Object.values(AdditionalLoadsViewMode).map(x => ({
+											label: capitalize(x),
+											value: x,
+										})),
+									},
+								},
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_0'),
+						schema: [
+							{
+								name: 'load',
+								type: 'grid',
 								schema: [
-									{
-										name: 'load',
-										type: 'grid',
-										schema: [
-											{ name: 'show_daily', selector: { boolean: {} } },
-											{ name: 'label_daily_load', selector: { text: {} } },
-											{ name: 'auto_scale', selector: { boolean: {} } },
-											{ name: 'colour', selector: { color_rgb: {} } },
-											{ name: 'navigate', selector: { text: {} } },
-											{ name: 'invert_flow', selector: { boolean: {} } },
-											{ name: 'dynamic_colour', selector: { boolean: {} } },
-											{ name: 'dynamic_icon', selector: { boolean: {} } },
-											{ name: 'invert_load', selector: { boolean: {} } },
-											{ name: 'essential_name', selector: { text: {} } },
-											{ name: 'animation_speed', selector: { number: {} } },
-											{ name: 'max_power', selector: { number: {} } },
-											{ name: 'off_threshold', selector: { number: {} } },
-											{ name: 'path_threshold', selector: { number: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('load_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'day_load_energy_84', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'essential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'load_power_L1', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'load_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'load_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-												],
-											},
-										],
-									},
+									{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 4 } } },
+									...this.generateOldLoadOptions('load', '1', ''),
+									...this.generateOldLoadOptions('load', '2', ''),
+									...this.generateOldLoadOptions('load', '3', ''),
+									...this.generateOldLoadOptions('load', '4', ''),
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_0'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('additional_loads'),
+								name: 'entities',
+								type: 'grid',
 								schema: [
-									{
-										name: 'load',
-										type: 'grid',
-										schema: [
-											{
-												name: 'additional_loads_view_mode',
-												selector: {
-													select: {
-														options: Object.values(AdditionalLoadsViewMode).map(x => ({
-															label: capitalize(x),
-															value: x,
-														})),
-													},
-												},
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_0'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 4 } } },
-													...this.generateOldLoadOptions('load', '1', ''),
-													...this.generateOldLoadOptions('load', '2', ''),
-													...this.generateOldLoadOptions('load', '3', ''),
-													...this.generateOldLoadOptions('load', '4', ''),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_0'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '1', false, ''),
-													...this.generateLoadEntities('essential_load', '2', false, ''),
-													...this.generateLoadEntities('essential_load', '3', false, ''),
-													...this.generateLoadEntities('essential_load', '4', false, ''),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_1'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '1_1'),
-													...this.generateLoadOptions('load', '1_2'),
-													...this.generateLoadOptions('load', '1_4'),
-													...this.generateLoadOptions('load', '1_5'),
-													...this.generateLoadOptions('load', '1_6'),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_1'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '1_1', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '1_2', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '1_4', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '1_5', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '1_6', load_extra2_enabled),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_2'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '2_1'),
-													...this.generateLoadOptions('load', '2_2'),
-													...this.generateLoadOptions('load', '2_4'),
-													...this.generateLoadOptions('load', '2_5'),
-													...this.generateLoadOptions('load', '2_6'),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_2'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '2_1', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '2_2', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '2_4', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '2_5', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '2_6', load_extra2_enabled),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_3'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '3_1'),
-													...this.generateLoadOptions('load', '3_2'),
-													...this.generateLoadOptions('load', '3_3'),
-													...this.generateLoadOptions('load', '3_4'),
-													...this.generateLoadOptions('load', '3_5'),
-													...this.generateLoadOptions('load', '3_6'),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_3'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '3_1', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '3_2', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '3_3', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '3_4', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '3_5', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '3_6', load_extra2_enabled),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_4'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '4_1'),
-													...this.generateLoadOptions('load', '4_2'),
-													...this.generateLoadOptions('load', '4_3'),
-													...this.generateLoadOptions('load', '4_4'),
-													...this.generateLoadOptions('load', '4_5'),
-													...this.generateLoadOptions('load', '4_6'),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_4'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '4_1', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '4_2', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '4_3', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '4_4', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '4_5', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '4_6', load_extra2_enabled),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_5'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '5_1'),
-													...this.generateLoadOptions('load', '5_2'),
-													...this.generateLoadOptions('load', '5_3'),
-													...this.generateLoadOptions('load', '5_4'),
-													...this.generateLoadOptions('load', '5_5'),
-													...this.generateLoadOptions('load', '5_6'),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_5'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '5_1', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '5_2', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '5_3', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '5_4', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '5_5', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '5_6', load_extra2_enabled),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('additional_loads_6'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '6_1'),
-													...this.generateLoadOptions('load', '6_2'),
-													...this.generateLoadOptions('load', '6_3'),
-													...this.generateLoadOptions('load', '6_4'),
-													...this.generateLoadOptions('load', '6_5'),
-													...this.generateLoadOptions('load', '6_6'),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('ess_ld_6'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('essential_load', '6_1', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '6_2', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '6_3', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '6_4', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '6_5', load_extra2_enabled),
-													...this.generateLoadEntities('essential_load', '6_6', load_extra2_enabled),
-												],
-											},
-										],
-									},
+									...this.generateLoadEntities('essential_load', '1', false, ''),
+									...this.generateLoadEntities('essential_load', '2', false, ''),
+									...this.generateLoadEntities('essential_load', '3', false, ''),
+									...this.generateLoadEntities('essential_load', '4', false, ''),
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_1'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('aux_load'),
+								name: 'load',
+								type: 'grid',
 								schema: [
-									{
-										name: 'load',
-										type: 'grid',
-										schema: [
-											{ name: 'show_aux', selector: { boolean: {} } },
-											{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
-											{ name: 'aux_name', selector: { text: {} } },
-											{ name: 'aux_daily_name', selector: { text: {} } },
-											{ name: 'aux_type', selector: { icon: {} } },
-											{ name: 'invert_aux', selector: { boolean: {} } },
-											{ name: 'show_absolute_aux', selector: { boolean: {} } },
-											{ name: 'aux_dynamic_colour', selector: { boolean: {} } },
-											{ name: 'aux_colour', selector: { color_rgb: {} } },
-											{ name: 'aux_off_colour', selector: { color_rgb: {} } },
-											{ name: 'show_daily_aux', selector: { boolean: {} } },
-											{ name: 'aux_invert_flow', selector: { boolean: {} } },
-										],
+									...this.generateLoadOptions('load', '1_1'),
+									...this.generateLoadOptions('load', '1_2'),
+									...this.generateLoadOptions('load', '1_4'),
+									...this.generateLoadOptions('load', '1_5'),
+									...this.generateLoadOptions('load', '1_6'),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_1'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('essential_load', '1_1', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '1_2', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '1_4', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '1_5', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '1_6', load_extra2_enabled),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_2'),
+						schema: [
+							{
+								name: 'load',
+								type: 'grid',
+								schema: [
+									...this.generateLoadOptions('load', '2_1'),
+									...this.generateLoadOptions('load', '2_2'),
+									...this.generateLoadOptions('load', '2_4'),
+									...this.generateLoadOptions('load', '2_5'),
+									...this.generateLoadOptions('load', '2_6'),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_2'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('essential_load', '2_1', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '2_2', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '2_4', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '2_5', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '2_6', load_extra2_enabled),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_3'),
+						schema: [
+							{
+								name: 'load',
+								type: 'grid',
+								schema: [
+									...this.generateLoadOptions('load', '3_1'),
+									...this.generateLoadOptions('load', '3_2'),
+									...this.generateLoadOptions('load', '3_3'),
+									...this.generateLoadOptions('load', '3_4'),
+									...this.generateLoadOptions('load', '3_5'),
+									...this.generateLoadOptions('load', '3_6'),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_3'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('essential_load', '3_1', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '3_2', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '3_3', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '3_4', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '3_5', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '3_6', load_extra2_enabled),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_4'),
+						schema: [
+							{
+								name: 'load',
+								type: 'grid',
+								schema: [
+									...this.generateLoadOptions('load', '4_1'),
+									...this.generateLoadOptions('load', '4_2'),
+									...this.generateLoadOptions('load', '4_3'),
+									...this.generateLoadOptions('load', '4_4'),
+									...this.generateLoadOptions('load', '4_5'),
+									...this.generateLoadOptions('load', '4_6'),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_4'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('essential_load', '4_1', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '4_2', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '4_3', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '4_4', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '4_5', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '4_6', load_extra2_enabled),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_5'),
+						schema: [
+							{
+								name: 'load',
+								type: 'grid',
+								schema: [
+									...this.generateLoadOptions('load', '5_1'),
+									...this.generateLoadOptions('load', '5_2'),
+									...this.generateLoadOptions('load', '5_3'),
+									...this.generateLoadOptions('load', '5_4'),
+									...this.generateLoadOptions('load', '5_5'),
+									...this.generateLoadOptions('load', '5_6'),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_5'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('essential_load', '5_1', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '5_2', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '5_3', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '5_4', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '5_5', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '5_6', load_extra2_enabled),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('additional_loads_6'),
+						schema: [
+							{
+								name: 'load',
+								type: 'grid',
+								schema: [
+									...this.generateLoadOptions('load', '6_1'),
+									...this.generateLoadOptions('load', '6_2'),
+									...this.generateLoadOptions('load', '6_3'),
+									...this.generateLoadOptions('load', '6_4'),
+									...this.generateLoadOptions('load', '6_5'),
+									...this.generateLoadOptions('load', '6_6'),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('ess_ld_6'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('essential_load', '6_1', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '6_2', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '6_3', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '6_4', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '6_5', load_extra2_enabled),
+									...this.generateLoadEntities('essential_load', '6_6', load_extra2_enabled),
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('aux_load'),
+				schema: [
+					{
+						name: 'load',
+						type: 'grid',
+						schema: [
+							{ name: 'show_aux', selector: { boolean: {} } },
+							{ name: 'aux_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
+							{ name: 'aux_name', selector: { text: {} } },
+							{ name: 'aux_daily_name', selector: { text: {} } },
+							{ name: 'aux_type', selector: { icon: {} } },
+							{ name: 'invert_aux', selector: { boolean: {} } },
+							{ name: 'show_absolute_aux', selector: { boolean: {} } },
+							{ name: 'aux_dynamic_colour', selector: { boolean: {} } },
+							{ name: 'aux_colour', selector: { color_rgb: {} } },
+							{ name: 'aux_off_colour', selector: { color_rgb: {} } },
+							{ name: 'show_daily_aux', selector: { boolean: {} } },
+							{ name: 'aux_invert_flow', selector: { boolean: {} } },
+						],
 
-									},
-									{
-										type: 'expandable',
-										title: this._title('aux_load_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'day_aux_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'aux_power_166', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('aux_load_row_1'),
-										schema: [
-											{
-												name: 'load',
-												type: 'grid',
-												schema: [
-													...this.generateLoadOptions('load', '1', ''),
-													...this.generateLoadOptions('load', '2', ''),
-													...this.generateLoadOptions('load', '3', ''),
-													...this.generateLoadOptions('load', '4', ''),
-													...this.generateLoadOptions('load', '5', ''),
-													...this.generateLoadOptions('load', '6', ''),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('aux_load_row_1_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('non_essential_load', '1', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '2', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '3', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '4', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '5', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '6', load_extra2_enabled, ''),
-												],
-											},
-										],
-									},
+					},
+					{
+						type: 'expandable',
+						title: this._title('aux_load_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'day_aux_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'aux_power_166', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('aux_load_row_1'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('grid'),
+								name: 'load',
+								type: 'grid',
 								schema: [
-									{
-										name: 'grid',
-										type: 'grid',
-										schema: [
-											{ name: 'grid_name', selector: { text: {} } },
-											{ name: 'max_power', selector: { number: {} } },
-											{ name: 'show_daily_buy', selector: { boolean: {} } },
-											{ name: 'label_daily_grid_buy', selector: { text: {} } },
-											{ name: 'show_daily_sell', selector: { boolean: {} } },
-											{ name: 'label_daily_grid_sell', selector: { text: {} } },
-											{ name: 'auto_scale', selector: { boolean: {} } },
-											{ name: 'invert_grid', selector: { boolean: {} } },
-											{ name: 'show_absolute', selector: { boolean: {} } },
-											{ name: 'colour', selector: { color_rgb: {} } },
-											{ name: 'navigate', selector: { text: {} } },
-											{ name: 'invert_flow', selector: { boolean: {} } },
-											{ name: 'no_grid_colour', selector: { color_rgb: {} } },
-											{ name: 'export_colour', selector: { color_rgb: {} } },
-											{ name: 'grid_off_colour', selector: { color_rgb: {} } },
-											{ name: 'energy_cost_decimals', selector: { number: { mode: 'box', min: 0, max: 3 } } },
-											{ name: 'animation_speed', selector: { number: {} } },
-											{ name: 'off_threshold', selector: { number: {} } },
-											{ name: 'import_icon', selector: { icon: {} } },
-											{ name: 'export_icon', selector: { icon: {} } },
-											{ name: 'disconnected_icon', selector: { icon: {} } },
-											{ name: 'prepaid_unit_name', selector: { text: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('gri_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'day_grid_import_76', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'day_grid_export_77', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-													{ name: 'grid_frequency', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
-													{ name: 'grid_ct_power_172', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_ct_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_ct_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_voltage_L1', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_current_L1', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'grid_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'grid_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
-													{ name: 'grid_ct_power_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'grid_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
-													{ name: 'grid_connected_status_194', selector: { entity: {} } },
-													{ name: 'energy_cost_buy', selector: { entity: {} } },
-													{ name: 'energy_cost_sell', selector: { entity: {} } },
-													{ name: 'prepaid_units', selector: { entity: {} } },
-													{ name: 'max_sell_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-												],
-											},
-										],
-									},
+									...this.generateLoadOptions('load', '1', ''),
+									...this.generateLoadOptions('load', '2', ''),
+									...this.generateLoadOptions('load', '3', ''),
+									...this.generateLoadOptions('load', '4', ''),
+									...this.generateLoadOptions('load', '5', ''),
+									...this.generateLoadOptions('load', '6', ''),
 								],
 							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('aux_load_row_1_ent'),
+						schema: [
 							{
-								type: 'expandable',
-								title: this._title('grid_load'),
+								name: 'entities',
+								type: 'grid',
 								schema: [
-									{
-										name: 'grid',
-										type: 'grid',
-										schema: [
-											{ name: 'show_nonessential', selector: { boolean: {} } },
-											{ name: 'ness_invert_flow', selector: { boolean: {} } },
-											{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
-											{ name: 'nonessential_name', selector: { text: {} } },
-											{ name: 'nonessential_icon', selector: { icon: {} } },
-											{ name: 'show_nonessential_daily', selector: { boolean: {} } },
-											{ name: 'nonessential_daily_name', selector: { text: {} } },
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('grid_load_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													{ name: 'nonessential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
-													{ name: 'nonessential_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('grid_load_row_1'),
-										schema: [
-											{
-												name: 'grid',
-												type: 'grid',
-												schema: [
-													...this.generateGridLoadOptions('load', '1', ''),
-													...this.generateGridLoadOptions('load', '2', ''),
-													...this.generateGridLoadOptions('load', '3', ''),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('grid_load_row_1_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('non_essential_load', '1', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '2', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '3', load_extra2_enabled, ''),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('grid_load_row_2'),
-										schema: [
-											{
-												name: 'grid',
-												type: 'grid',
-												schema: [
-													...this.generateGridLoadOptions('load', '4', ''),
-													...this.generateGridLoadOptions('load', '5', ''),
-													...this.generateGridLoadOptions('load', '6', ''),
-												],
-											},
-										],
-									},
-									{
-										type: 'expandable',
-										title: this._title('grid_load_row_2_ent'),
-										schema: [
-											{
-												name: 'entities',
-												type: 'grid',
-												schema: [
-													...this.generateLoadEntities('non_essential_load', '4', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '5', load_extra2_enabled, ''),
-													...this.generateLoadEntities('non_essential_load', '6', load_extra2_enabled, ''),
-												],
-											},
-										],
-									},
+									...this.generateLoadEntities('non_essential_load', '1', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '2', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '3', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '4', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '5', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '6', load_extra2_enabled, ''),
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('grid'),
+				schema: [
+					{
+						name: 'grid',
+						type: 'grid',
+						schema: [
+							{ name: 'grid_name', selector: { text: {} } },
+							{ name: 'max_power', selector: { number: {} } },
+							{ name: 'show_daily_buy', selector: { boolean: {} } },
+							{ name: 'label_daily_grid_buy', selector: { text: {} } },
+							{ name: 'show_daily_sell', selector: { boolean: {} } },
+							{ name: 'label_daily_grid_sell', selector: { text: {} } },
+							{ name: 'auto_scale', selector: { boolean: {} } },
+							{ name: 'invert_grid', selector: { boolean: {} } },
+							{ name: 'show_absolute', selector: { boolean: {} } },
+							{ name: 'colour', selector: { color_rgb: {} } },
+							{ name: 'navigate', selector: { text: {} } },
+							{ name: 'invert_flow', selector: { boolean: {} } },
+							{ name: 'no_grid_colour', selector: { color_rgb: {} } },
+							{ name: 'export_colour', selector: { color_rgb: {} } },
+							{ name: 'grid_off_colour', selector: { color_rgb: {} } },
+							{ name: 'energy_cost_decimals', selector: { number: { mode: 'box', min: 0, max: 3 } } },
+							{ name: 'animation_speed', selector: { number: {} } },
+							{ name: 'off_threshold', selector: { number: {} } },
+							{ name: 'import_icon', selector: { icon: {} } },
+							{ name: 'export_icon', selector: { icon: {} } },
+							{ name: 'disconnected_icon', selector: { icon: {} } },
+							{ name: 'prepaid_unit_name', selector: { text: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('gri_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'day_grid_import_76', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'day_grid_export_77', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+									{ name: 'grid_frequency', selector: { entity: { device_class: SensorDeviceClass.FREQUENCY } } },
+									{ name: 'grid_ct_power_172', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'grid_ct_power_L2', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'grid_ct_power_L3', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'grid_voltage_L1', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'grid_voltage_L2', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'grid_voltage_L3', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'grid_current_L1', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'grid_current_L2', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'grid_current_L3', selector: { entity: { device_class: SensorDeviceClass.CURRENT } } },
+									{ name: 'grid_ct_power_total', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'grid_voltage', selector: { entity: { device_class: SensorDeviceClass.VOLTAGE } } },
+									{ name: 'grid_connected_status_194', selector: { entity: {} } },
+									{ name: 'energy_cost_buy', selector: { entity: {} } },
+									{ name: 'energy_cost_sell', selector: { entity: {} } },
+									{ name: 'prepaid_units', selector: { entity: {} } },
+									{ name: 'max_sell_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				type: 'expandable',
+				title: this._title('grid_load'),
+				schema: [
+					{
+						name: 'grid',
+						type: 'grid',
+						schema: [
+							{ name: 'show_nonessential', selector: { boolean: {} } },
+							{ name: 'ness_invert_flow', selector: { boolean: {} } },
+							{ name: 'additional_loads', selector: { number: { mode: 'box', min: 0, max: 6 } } },
+							{ name: 'nonessential_name', selector: { text: {} } },
+							{ name: 'nonessential_icon', selector: { icon: {} } },
+							{ name: 'show_nonessential_daily', selector: { boolean: {} } },
+							{ name: 'nonessential_daily_name', selector: { text: {} } },
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('grid_load_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									{ name: 'nonessential_power', selector: { entity: { device_class: SensorDeviceClass.POWER } } },
+									{ name: 'nonessential_energy', selector: { entity: { device_class: SensorDeviceClass.ENERGY } } },
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('grid_load_row_1'),
+						schema: [
+							{
+								name: 'grid',
+								type: 'grid',
+								schema: [
+									...this.generateGridLoadOptions('load', '1', ''),
+									...this.generateGridLoadOptions('load', '2', ''),
+									...this.generateGridLoadOptions('load', '3', ''),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('grid_load_row_1_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('non_essential_load', '1', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '2', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '3', load_extra2_enabled, ''),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('grid_load_row_2'),
+						schema: [
+							{
+								name: 'grid',
+								type: 'grid',
+								schema: [
+									...this.generateGridLoadOptions('load', '4', ''),
+									...this.generateGridLoadOptions('load', '5', ''),
+									...this.generateGridLoadOptions('load', '6', ''),
+								],
+							},
+						],
+					},
+					{
+						type: 'expandable',
+						title: this._title('grid_load_row_2_ent'),
+						schema: [
+							{
+								name: 'entities',
+								type: 'grid',
+								schema: [
+									...this.generateLoadEntities('non_essential_load', '4', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '5', load_extra2_enabled, ''),
+									...this.generateLoadEntities('non_essential_load', '6', load_extra2_enabled, ''),
+								],
+							},
+						],
+					},
 
-								],
-							},
+				],
+			},
 						]}
 						@value-changed=${this._valueChanged.bind(this)}
 					></ha-form>
@@ -1262,11 +1273,11 @@ export class ConfigurationCardEditor extends LitElement implements LovelaceCardE
 				}
 				return ` `;
 			})
-			.toLowerCase()
-			.replace(/([^a-zA-Z0-9]+)(.)/g, (_match: string, nonAlpha: string, chr: string) => {
-				return nonAlpha + chr.toUpperCase();
-			})
-			.replace(/^./, (match: string) => match.toUpperCase());
+				.toLowerCase()
+				.replace(/([^a-zA-Z0-9]+)(.)/g, (_match: string, nonAlpha: string, chr: string) => {
+					return nonAlpha + chr.toUpperCase();
+				})
+				.replace(/^./, (match: string) => match.toUpperCase());
 		}
 		return result;
 	}
