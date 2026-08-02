@@ -108,7 +108,7 @@ export class Battery {
 
 		return config.battery.use_battery_banks_values ? text : svg`
 		<a href="#" @click=${(e: Event) => Utils.handlePopup(e, data.stateBatteryCurrent.entity_id)}>
-            {text}
+            ${text}
         </a>       
 		`;
 	}
