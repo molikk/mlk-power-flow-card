@@ -51,7 +51,7 @@
     "eslint": "^9.33.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
-    "globals": "17.6.0",
+    "globals": "17.8.0",
     "npm": "11.16.0",
     "prettier": "3.8.3",
     "rollup": "4.61.0",
