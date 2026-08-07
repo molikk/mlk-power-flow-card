@@ -83,7 +83,6 @@ export class BatteryUtils {
 		return batteryTemperatureState.toNum(decimalPlaces);
 	}
 
-//FIXME requires dependency to battery bank size
 	static getBatterySocValue(
 		useBatteryBanksValues: boolean,
 		stateBatterySoc: CustomEntity,
@@ -98,7 +97,7 @@ export class BatteryUtils {
 			for (let i = 0; i < batteryBanks; i++) {
 				value += batteryBankSocState[i].toNum(1);
 			}
-			return Utils.toNum(value, 1);
+			return Utils.toNum(value/batteryBanks, 1);
 		}
 		return stateBatterySoc.toNum(1);
 	}
